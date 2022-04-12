@@ -16,6 +16,7 @@
     "expo-updates": "~0.8.2",
     "firebase": "^9.6.10",
     "formik": "^2.2.9",
+    "moment": "^2.29.2",
     "native-base": "^3.3.11",
     "react": "16.13.1",
     "react-dom": "16.13.1",

@@ -2,13 +2,14 @@ import React, {useEffect, useState} from "react";
 import {Box, Text, VStack,HStack, Image, Slider, Icon, Button} from "native-base";
 import {Alert, ScrollView} from "react-native";
 import {connect} from "react-redux";
+import logo from '../assets/logo.png'
 import productsDuck from "../redux/ducks/productsDuck";
 import bodyicon from '../assets/yourfeel/bodyicon.png'
 import mentalicon from '../assets/yourfeel/mentalicon.png'
 import relationicon from '../assets/yourfeel/relationicon.png'
 import finantialicon from '../assets/yourfeel/finantialicon.png'
 import uuid from 'react-native-uuid';
-import {db, auth, initFirebase} from '../utils/firebase'
+import {db, auth} from '../utils/firebase'
 import {doc,setDoc} from 'firebase/firestore'
 
 const YourFeelScreen = ({productsDuck,navigation}) => {
@@ -55,13 +56,17 @@ const YourFeelScreen = ({productsDuck,navigation}) => {
     return (
         <Box flex={1} bg="#fff" alignItems="center">
             <ScrollView w={'100%'}>
-                <HStack p={10}>
+                <HStack justifyContent={'center'} p={10}>
+                    <Image size={'md'} source={logo} />
+                </HStack>
+                <HStack p={1}>
+
                     <VStack mt={5} w={'100%'}>
                         <VStack mb={9} alignItems={'center'}>
-                            <Text color={'red.400'}>Del 1 al 10</Text>
-                            <Text color={'red.400'}>¿Cómo te sientes hoy?</Text>
+                            <Text bold size={'md'} color={'red.400'}>Del 1 al 10</Text>
+                            <Text bold  size={'md'} color={'red.400'}>¿Cómo te calificas en?</Text>
                         </VStack>
-                        <VStack p={9}>
+                        <VStack p={7}>
                             <Slider step={1} minValue={1} maxValue={10} defaultValue={1} colorScheme="red" onChange={(v)=>setPhysicalNumber(v)} size="lg">
                                 <Slider.Track bg={'red.100'}>
                                     <Slider.FilledTrack bg={'#FF2830'} />
@@ -101,7 +106,7 @@ const YourFeelScreen = ({productsDuck,navigation}) => {
                             <Text fontSize="sm" style={styles}> <Image source={relationicon}/> Relaciones Humanas ({relationNumber})</Text>
                         </VStack>
 
-                        <Button size="lg" isLoading={loading} isLoadingText={'Guardando'} colorScheme={'red'} onPress={()=>saveYourFeel()}>
+                        <Button m={4} size="lg" isLoading={loading} isLoadingText={'Guardando'} colorScheme={'red'} onPress={()=>saveYourFeel()}>
                             Guardar
                         </Button>
 

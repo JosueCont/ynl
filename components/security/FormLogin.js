@@ -71,7 +71,7 @@ export default (props) => {
                     <Button mt="1" isLoading={props.loading} isLoadingText={'Iniciando'} onPress={formik.handleSubmit} colorScheme="red">
                         Iniciar
                     </Button>
-                    <HStack mt="6" justifyContent="center">
+                    <HStack justifyContent="center">
                         <Button size="sm" colorScheme={'red'} onPress={()=>navigation.navigate('Register')} variant="link">
                             Registrarme
                         </Button>
