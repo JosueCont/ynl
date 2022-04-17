@@ -2,6 +2,7 @@ import {createStore, combineReducers, compose, applyMiddleware} from "redux"
 import thunk from "redux-thunk"
 import productsDuck from "./ducks/productsDuck";
 import {getAuth, onAuthStateChanged} from 'firebase/auth'
+import {getData, getDataObject} from '../utils/functions'
 import authDuck, {createSession} from "./ducks/authDuck";
 const rootReducer = combineReducers({
     productsDuck: productsDuck,
@@ -14,10 +15,16 @@ export const store = createStore(
 )
 
 export default () => {
-    const auth = getAuth();
-    onAuthStateChanged(auth,(user)=>{
-        createSession(user);
-    })
-    //savedSession()(store.dispatch)
+
+    (async ()=>{
+        try {
+            const user = await getDataObject('@user')
+            const jwt = await getDataObject('@jwt')
+            console.log('user======>', {user,jwt:jwt.jwt})
+            if(user){
+                createSession({user, jwt})(store.dispatch)
+            }
+        }catch (e){}
+    })()
     return store
 }

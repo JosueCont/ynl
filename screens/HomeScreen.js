@@ -2,10 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Box, Text, Button, VStack, HStack, Image} from "native-base";
 import {connect} from "react-redux";
 import {TouchableOpacity} from "react-native";
-import {db, auth} from '../utils/firebase'
 import productsDuck from "../redux/ducks/productsDuck";
-import { doc, onSnapshot, collection, query, orderBy, where, getDocs } from "firebase/firestore";
-import {getAuth, signOut} from "firebase/auth";
 import logo from '../assets/logo.png'
 
 const HomeScreen = ({productsDuck,navigation}) => {
@@ -23,20 +20,8 @@ const HomeScreen = ({productsDuck,navigation}) => {
 
     const getFeels=async ()=>{
         try{
-            console.log("uid====",auth)
-            const q = query(
-                collection(db,'yourFeels'),
-                where("createdBy","==", auth.currentUser.uid)
-            )
-            const feel = [];
-            const querySnapshot = await getDocs(q);
-            querySnapshot.forEach((doc)=>{
-                console.log(doc.id, " => ", doc.data());
-                feel.push(doc.data())
-            })
-            setFeelings(feel)
+
         }catch (e){
-            console.log('error', e)
         }
 
 
@@ -45,8 +30,6 @@ const HomeScreen = ({productsDuck,navigation}) => {
 
 
     const logOut=async ()=>{
-        const auth = getAuth()
-        await signOut(auth)
         navigation.navigate('Login')
     }
 

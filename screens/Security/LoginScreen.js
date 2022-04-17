@@ -4,26 +4,21 @@ import {connect} from "react-redux";
 import productsDuck from "../../redux/ducks/productsDuck";
 import {Alert, ScrollView} from 'react-native'
 import {getAuth, onAuthStateChanged, signInWithEmailAndPassword} from 'firebase/auth'
-import {createSession} from "../../redux/ducks/authDuck";
+import {loginEmail} from "../../redux/ducks/authDuck";
 import LoadingComponent from "../../components/Shared/LoadingComponent";
 import FormLogin from "../../components/security/FormLogin";
 
-const LoginScreen = ({productsDuck,navigation}) => {
+const LoginScreen = ({productsDuck,navigation, loginEmail, authDuck}) => {
 
     const [loading, setLoading] = useState(false)
     const [hasLogged, setHasLogged] = useState(false)
 
 
     useEffect(() => {
-        const auth = getAuth();
-        setLoading(true)
-        onAuthStateChanged(auth,(user)=>{
-            console.log('user',user)
-            createSession(user);
-            setLoading(false)
+        if(authDuck.isLogged){
             setHasLogged(true)
-        })
-    }, [])
+        }
+    }, [authDuck])
 
     useEffect(()=>{
         if(hasLogged){
@@ -35,11 +30,13 @@ const LoginScreen = ({productsDuck,navigation}) => {
 
         try{
             setLoading(true)
-            const auth = getAuth();
-            const res = await signInWithEmailAndPassword(auth, values.email, values.password)
-            console.log('login success=====',res.user)
-            setHasLogged(true)
-            navigation.navigate('Home')
+            const res = await loginEmail(values.email, values.password)
+            if(res){
+                console.log('login success=====',res)
+                setHasLogged(true)
+                navigation.navigate('Home')
+            }
+
         }catch (e){
             Alert.alert(
                 "Ups!",
@@ -59,7 +56,7 @@ const LoginScreen = ({productsDuck,navigation}) => {
     return (
         <>
 
-                <ScrollView><FormLogin loading={loading} onLogin={login} onGoRegister={goRegister}/></ScrollView>
+                <ScrollView><Text>user: {authDuck.user? JSON.stringify(authDuck.user):'Sin usuario'} {authDuck.jwt?JSON.stringify(authDuck.jwt):'sin jwt'}</Text><FormLogin loading={loading} onLogin={login} onGoRegister={goRegister}/></ScrollView>
 
 
         </>
@@ -68,8 +65,9 @@ const LoginScreen = ({productsDuck,navigation}) => {
 
 const mapState = (state) => {
     return {
-        productsDuck: state.productsDuck
+        productsDuck: state.productsDuck,
+        authDuck: state.authDuck
     }
 }
 
-export default connect(mapState,{createSession})(LoginScreen);
+export default connect(mapState,{loginEmail})(LoginScreen);
