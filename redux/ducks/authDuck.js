@@ -67,6 +67,21 @@ export let loginEmail=(username, password)=> async(dispatch)=>{
     }
 }
 
+export let loginGoogle=(accessToken)=> async(dispatch)=>{
+    dispatch({type: LOGIN_EMAIL});
+    console.log('accessToken=========',accessToken)
+    try{
+        let response = await ApiApp.loginWithGoogle(accessToken)
+        await saveUserData(response.data.user, response.data.jwt)
+        dispatch({type: LOGIN_EMAIL_SUCCESS, payload: {user:response.data.user, jwt: response.data.jwt}});
+        console.log('login exitoso con google',response.data)
+        return true
+    }catch (e){
+        console.log('errorr====>', e)
+        dispatch({type: LOGIN_EMAIL_ERROR});
+        return false
+    }
+}
 
 const saveUserData=async (userData,jwt=null)=>{
     try {

@@ -29,6 +29,10 @@ class ApiApp {
         return ApiApp.ApisType('/api/auth/local', 'post',data)
     }
 
+    static loginWithGoogle=(access_token)=>{
+        return ApiApp.ApisType(`/api/auth/google/callback?access_token=${access_token}`, 'get')
+    }
+
 
     static getUserProfile = (data) => {
         return ApiApp.ApisType("/person/person/save_person_jwt/", "post", data);

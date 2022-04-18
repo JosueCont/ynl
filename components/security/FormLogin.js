@@ -1,16 +1,43 @@
-import * as React from "react";
+import React, {useState} from "react";
 import { Box,Image, Heading,HStack,Text, VStack, FormControl, Input, Button, Center, NativeBaseProvider, Link } from "native-base";
 import logo from '../../assets/YNL.gif'
 import { useNavigation } from '@react-navigation/native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
-
+import * as Google from 'expo-google-app-auth';
+import {access} from "@babel/core/lib/config/validation/option-assertions";
 
 export default (props) => {
     const navigation = useNavigation();
+    const [googleSubmitting, setGoogleSubmitting] = useState(false)
+
+    const handleLoginGoogle=async ()=>{
+        setGoogleSubmitting(true)
+        const config={
+            iosClientId:`139145047906-9r09uc555jsi528qnrbjs440g84h1okt.apps.googleusercontent.com`,
+            androidClientId:`139145047906-u7lpmp4vuhk0cd3hc88f3k8tv9afe01b.apps.googleusercontent.com`,
+            scopes:['profile','email']
+        }
+
+        try{
+            const { type, accessToken, user } = await Google.logInAsync(config);
+            if(type==='success'){
+                const {email, name, photoUrl} = user;
+                console.log('userData', email, name, photoUrl)
+                console.log('accessToken', accessToken)
+                props.onLoginGoogle(accessToken)
+                alert('Login success')
+            }else{
+                alert('Login cancelado')
+            }
+        }catch (e){
+            console.log('error login google',e)
+        }finally {
+            setGoogleSubmitting(false)
+        }
 
 
-
+    }
 
     const FormLogin = () => {
         const formik = useFormik({
@@ -70,6 +97,9 @@ export default (props) => {
                     </FormControl>
                     <Button mt="1" isLoading={props.loading} isLoadingText={'Iniciando'} onPress={formik.handleSubmit} colorScheme="red">
                         Iniciar
+                    </Button>
+                    <Button mt="1" isLoading={props.loading} isLoadingText={'Iniciando'} onPress={handleLoginGoogle} colorScheme="red">
+                        Login con Google
                     </Button>
                     <HStack justifyContent="center">
                         <Button size="sm" colorScheme={'red'} onPress={()=>navigation.navigate('Register')} variant="link">

@@ -3,25 +3,20 @@ import {Box, Text, VStack,HStack, Image, Slider, Icon, Button} from "native-base
 import {Alert, ScrollView} from "react-native";
 import {connect} from "react-redux";
 import logo from '../assets/logo.png'
-import productsDuck from "../redux/ducks/productsDuck";
 import bodyicon from '../assets/yourfeel/bodyicon.png'
 import mentalicon from '../assets/yourfeel/mentalicon.png'
 import relationicon from '../assets/yourfeel/relationicon.png'
 import finantialicon from '../assets/yourfeel/finantialicon.png'
 import uuid from 'react-native-uuid';
-import {db, auth} from '../utils/firebase'
-import {doc,setDoc} from 'firebase/firestore'
 
-const YourFeelScreen = ({productsDuck,navigation}) => {
+const YourFeelScreen = ({authDuck,navigation}) => {
     const [loading, setLoading] = useState(false)
     const [physicalNumber, setPhysicalNumber] = useState(1)
     const [mentalNumber, setMentalNumber] = useState(1)
     const [finantialNumber, setFinantialNumber] = useState(1)
     const [relationNumber, setRelationNumber] = useState(1)
 
-    useEffect(() => {
-            console.log(auth.currentUser)
-    }, [])
+
 
     const saveYourFeel=async ()=>{
 
@@ -36,8 +31,6 @@ const YourFeelScreen = ({productsDuck,navigation}) => {
                 createdAt: new Date().getTime(),
                 createdBy: auth.currentUser.uid
             }
-            const res =  await setDoc(doc(db,'yourFeels', data.id), data)
-            console.log('guardado exitosamente',data)
             Alert.alert(
                 "Genial!",
                 "Se ha guardado exitosamente"
@@ -119,7 +112,7 @@ const YourFeelScreen = ({productsDuck,navigation}) => {
 
 const mapState = (state) => {
     return {
-        productsDuck: state.productsDuck
+        authDuck: state.authDuck
     }
 }
 

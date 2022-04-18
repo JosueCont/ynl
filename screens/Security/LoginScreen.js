@@ -4,11 +4,11 @@ import {connect} from "react-redux";
 import productsDuck from "../../redux/ducks/productsDuck";
 import {Alert, ScrollView} from 'react-native'
 import {getAuth, onAuthStateChanged, signInWithEmailAndPassword} from 'firebase/auth'
-import {loginEmail} from "../../redux/ducks/authDuck";
+import {loginEmail, loginGoogle} from "../../redux/ducks/authDuck";
 import LoadingComponent from "../../components/Shared/LoadingComponent";
 import FormLogin from "../../components/security/FormLogin";
 
-const LoginScreen = ({productsDuck,navigation, loginEmail, authDuck}) => {
+const LoginScreen = ({productsDuck,navigation, loginEmail,loginGoogle, authDuck}) => {
 
     const [loading, setLoading] = useState(false)
     const [hasLogged, setHasLogged] = useState(false)
@@ -25,6 +25,27 @@ const LoginScreen = ({productsDuck,navigation, loginEmail, authDuck}) => {
             navigation.navigate('Home')
         }
     },[hasLogged])
+
+    const loginWithGoogle =async (accessToken)=>{
+        try{
+            setLoading(true)
+            const res = await loginGoogle(accessToken)
+            if(res){
+                console.log('login success=====',res)
+                setHasLogged(true)
+                navigation.navigate('Home')
+            }
+
+        }catch (e){
+            Alert.alert(
+                "Ups!",
+                "Algo ha salido mal, porfavor intenta nuevamente"
+            );
+            setHasLogged(false)
+        }finally {
+            setLoading(false)
+        }
+    }
 
     const login=async (values)=>{
 
@@ -56,7 +77,7 @@ const LoginScreen = ({productsDuck,navigation, loginEmail, authDuck}) => {
     return (
         <>
 
-                <ScrollView><Text>user: {authDuck.user? JSON.stringify(authDuck.user):'Sin usuario'} {authDuck.jwt?JSON.stringify(authDuck.jwt):'sin jwt'}</Text><FormLogin loading={loading} onLogin={login} onGoRegister={goRegister}/></ScrollView>
+                <ScrollView><Text>user: {authDuck.user? JSON.stringify(authDuck.user):'Sin usuario'} {authDuck.jwt?JSON.stringify(authDuck.jwt):'sin jwt'}</Text><FormLogin loading={loading} onLoginGoogle={loginWithGoogle} onLogin={login} onGoRegister={goRegister}/></ScrollView>
 
 
         </>
@@ -70,4 +91,4 @@ const mapState = (state) => {
     }
 }
 
-export default connect(mapState,{loginEmail})(LoginScreen);
+export default connect(mapState,{loginEmail, loginGoogle})(LoginScreen);
