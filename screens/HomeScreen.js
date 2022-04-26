@@ -53,11 +53,10 @@ const HomeScreen = ({authDuck,navigation}) => {
                         <Text mb={3} size={'sm'} color={'red.400'}>Registros hasta el momento ({feelings ? feelings.length : 0})</Text>
                     </TouchableOpacity>
                     <Button  colorScheme={'red'} onPress={() => navigation.navigate('Emotions')}>Ruleta de emociones</Button>
+                    <Button  colorScheme={'red'} mt={3} onPress={() => navigation.navigate('MyGroups')}>Mis grupos</Button>
                     <Button mt={3} colorScheme={'red'} onPress={() => logOut()}>Cerrar Sesión</Button>
                 </VStack>
             </HStack>
-
-
         </Box>
     )
 }

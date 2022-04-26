@@ -77,7 +77,7 @@ const LoginScreen = ({productsDuck,navigation, loginEmail,loginGoogle, authDuck}
     return (
         <>
 
-                <ScrollView><Text>user: {authDuck.user? JSON.stringify(authDuck.user):'Sin usuario'} {authDuck.jwt?JSON.stringify(authDuck.jwt):'sin jwt'}</Text><FormLogin loading={loading} onLoginGoogle={loginWithGoogle} onLogin={login} onGoRegister={goRegister}/></ScrollView>
+                <ScrollView><Text>{authDuck.jwt?JSON.stringify(authDuck.jwt):'sin jwt'}</Text><FormLogin loading={loading} onLoginGoogle={loginWithGoogle} onLogin={login} onGoRegister={goRegister}/></ScrollView>
 
 
         </>
