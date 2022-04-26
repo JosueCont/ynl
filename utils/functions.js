@@ -38,3 +38,26 @@ export const getData = async (key='') => {
         // error reading value
     }
 }
+
+const arrayMonths=[
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'junio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre'
+]
+
+export const getDay=()=>{
+    return new Date().getDate();
+}
+
+export const getMonth=()=>{
+    let month = new Date().getMonth();
+    return arrayMonths[month]
+}

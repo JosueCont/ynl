@@ -2,6 +2,7 @@ import APIKit from "./AxiosApi";
 
 class ApiApp {
     static ApisType = (url, method = "post", params = {}) => {
+        console.log('url:', url, method, params)
         switch (method) {
             case "post":
                 return APIKit.post(url, params);
@@ -34,6 +35,20 @@ class ApiApp {
     }
 
 
+    static saveFeelAspects=(data)=>{
+        return ApiApp.ApisType('/api/feel-aspects','post', data)
+    }
+
+
+    static getFeelings=(query='')=>{
+        return ApiApp.ApisType('/api/feelings?populate=*&'+query,'get')
+    }
+
+    static saveFeeling=(data)=>{
+        return ApiApp.ApisType('/api/feeling-records','post',data)
+    }
+
+    ///examples
     static getUserProfile = (data) => {
         return ApiApp.ApisType("/person/person/save_person_jwt/", "post", data);
     };

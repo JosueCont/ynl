@@ -12,6 +12,9 @@ import {Provider} from "react-redux";
 import generateStore from './redux/store';
 import LoginScreen from "./screens/Security/LoginScreen";
 import RegisterScreen from "./screens/Security/RegisterScreen";
+import EmotionsPage from "./screens/EmotionsPage";
+import EmotionModal from "./screens/EmotionModal";
+
 
 const Stack = createStackNavigator();
 LogBox.ignoreAllLogs();
@@ -26,10 +29,12 @@ export default function App() {
             <NavigationContainer>
                 <Stack.Navigator>
                     <Stack.Screen name="Login" component={LoginScreen}/>
-                    <Stack.Screen name="Home" options={{headerShown: false}} component={HomeScreen}/>
+                    <Stack.Screen name="Home" options={{headerShown: false,title:''}} component={HomeScreen}/>
                     <Stack.Screen name="Register" component={RegisterScreen}/>
                     <Stack.Screen name="YourFeel" options={{gestureEnabled:false}} component={YourFeelScreen}/>
                     <Stack.Screen name="HistoryList" options={{gestureEnabled:false}} component={HistoryListScreen}/>
+                    <Stack.Screen name="Emotions" options={{gestureEnabled:false,title:'Emociones'}} component={EmotionsPage}/>
+                    <Stack.Screen name="EmotionModal" options={{gestureEnabled:false,title:''}} component={EmotionModal}/>
                 </Stack.Navigator>
             </NavigationContainer>
         </NativeBaseProvider>

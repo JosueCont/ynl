@@ -6,10 +6,31 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup'
 import * as Google from 'expo-google-app-auth';
 import {access} from "@babel/core/lib/config/validation/option-assertions";
+import LinkedInModal from 'react-native-linkedin'
 
 export default (props) => {
     const navigation = useNavigation();
     const [googleSubmitting, setGoogleSubmitting] = useState(false)
+    const
+    clientID="86jiyo54qdabji",
+    clientSecret="E9PD7bGIvYH6ClWE",
+    redirectUri="http://localhost:1337/";
+   /* const { linkedInLogin } = useLinkedIn({
+        clientId: '86jiyo54qdabji',
+        redirectUri: `http://localhost:1337/api/connect/linkedin/callback`, // for Next.js, you can use `${typeof window === 'object' && window.location.origin}/linkedin`
+        onSuccess: (code) => {
+            console.log('success login linkedin',code);
+        },
+        onError: (error) => {
+            console.log(error);
+        },
+    });*/
+
+    const linkedInLogin=()=>{
+
+    }
+
+
 
     const handleLoginGoogle=async ()=>{
         setGoogleSubmitting(true)
@@ -26,7 +47,6 @@ export default (props) => {
                 console.log('userData', email, name, photoUrl)
                 console.log('accessToken', accessToken)
                 props.onLoginGoogle(accessToken)
-                alert('Login success')
             }else{
                 alert('Login cancelado')
             }
@@ -101,6 +121,15 @@ export default (props) => {
                     <Button mt="1" isLoading={props.loading} isLoadingText={'Iniciando'} onPress={handleLoginGoogle} colorScheme="red">
                         Login con Google
                     </Button>
+                    <Button mt="1" isLoading={props.loading} isLoadingText={'Iniciando'} onPress={linkedInLogin} colorScheme="red">
+                        Login con LinkedIn
+                    </Button>
+                    <LinkedInModal
+                        clientID={clientID}
+                        clientSecret={clientSecret}
+                        redirectUri={redirectUri}
+                        onSuccess={token => console.log('token linkedin',token)}
+                    />
                     <HStack justifyContent="center">
                         <Button size="sm" colorScheme={'red'} onPress={()=>navigation.navigate('Register')} variant="link">
                             Registrarme

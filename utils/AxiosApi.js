@@ -3,7 +3,7 @@ import {getDataObject} from '../utils/functions'
 import Constants from "expo-constants";
 
 let config = {
-    baseURL: 'https://7f7a-2806-10be-9-6201-dce-af49-c44a-e2bb.ngrok.io',
+    baseURL: 'http://localhost:1337',
     headers: {
         Accept: "application/json",
     },

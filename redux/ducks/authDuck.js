@@ -16,7 +16,7 @@ const LOGIN_EMAIL_SUCCESS = 'LOGIN_EMAIL_SUCCESS';
 const LOGIN_EMAIL_ERROR = 'LOGIN_EMAIL_ERROR';
 
 
-const productsDuck = (state = initialData, action) => {
+const authDuck = (state = initialData, action) => {
     switch (action.type) {
         case START:
             return {...state}
@@ -97,4 +97,4 @@ const saveUserData=async (userData,jwt=null)=>{
     }
 }
 
-export default productsDuck;
+export default authDuck;

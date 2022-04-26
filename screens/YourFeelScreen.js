@@ -7,6 +7,7 @@ import bodyicon from '../assets/yourfeel/bodyicon.png'
 import mentalicon from '../assets/yourfeel/mentalicon.png'
 import relationicon from '../assets/yourfeel/relationicon.png'
 import finantialicon from '../assets/yourfeel/finantialicon.png'
+import ApiApp from "../utils/ApiApp";
 import uuid from 'react-native-uuid';
 
 const YourFeelScreen = ({authDuck,navigation}) => {
@@ -15,22 +16,31 @@ const YourFeelScreen = ({authDuck,navigation}) => {
     const [mentalNumber, setMentalNumber] = useState(1)
     const [finantialNumber, setFinantialNumber] = useState(1)
     const [relationNumber, setRelationNumber] = useState(1)
+    const [user, setUser] = useState(false)
 
+
+    useEffect(()=>{
+        if(authDuck.isLogged){
+            setUser(authDuck.user)
+        }
+    },[authDuck])
 
 
     const saveYourFeel=async ()=>{
 
         try {
             setLoading(true)
-            let data = {
-                physical: physicalNumber,
-                mental: mentalNumber,
-                finantial: finantialNumber,
-                relation:relationNumber,
-                id: uuid.v4(),
-                createdAt: new Date().getTime(),
-                createdBy: auth.currentUser.uid
+
+           let  data={
+                    finantial:finantialNumber,
+                    mental:mentalNumber,
+                    physical:physicalNumber,
+                    relations:relationNumber,
+                    user:user?user.id:null
             }
+            const res = await ApiApp.saveFeelAspects({data})
+            console.log('res', res)
+
             Alert.alert(
                 "Genial!",
                 "Se ha guardado exitosamente"
