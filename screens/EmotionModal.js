@@ -5,7 +5,7 @@ import {View,ImageBackground, ScrollView} from "react-native";
 import calendar from '../assets/calendaricon.png'
 import logo from '../assets/logo.png'
 import {getDay, getMonth} from '../utils/functions'
-import {saveEmotion} from "../redux/ducks/FeelingsDuck";
+import {saveEmotion} from "../redux/ducks/feelingsDuck";
 
 const EmotionModal = ({navigation,route,saveEmotion,authDuck}) => {
 
@@ -14,12 +14,13 @@ const EmotionModal = ({navigation,route,saveEmotion,authDuck}) => {
 
     const saveFeelings=async()=>{
         setLoading(true)
-        let data={
-            label:route.params.emotion[0].attributes.name,
-            feeling:route.params.emotion[0].id,
-            user:authDuck.user.id
-        }
+
          try{
+         let data={
+             label:route.params.emotion[0].attributes.name,
+             feeling:route.params.emotion[0].id,
+             user:authDuck.user.id
+         }
           let res =  await saveEmotion({data})
           if(res){
               alert('Guardado correctamente')

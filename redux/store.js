@@ -4,11 +4,13 @@ import productsDuck from "./ducks/productsDuck";
 import {getAuth, onAuthStateChanged} from 'firebase/auth'
 import {getData, getDataObject} from '../utils/functions'
 import authDuck, {createSession} from "./ducks/authDuck";
-import feelingsDuck from "./ducks/FeelingsDuck";
+import feelingsDuck from "./ducks/feelingsDuck";
+import groupDuck from "./ducks/groupDuck";
 const rootReducer = combineReducers({
     productsDuck: productsDuck,
     authDuck:authDuck,
-    feelingsDuck:  feelingsDuck
+    feelingsDuck:  feelingsDuck,
+    groupDuck:groupDuck
 })
 
 export const store = createStore(

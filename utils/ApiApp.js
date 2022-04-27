@@ -1,4 +1,5 @@
 import APIKit from "./AxiosApi";
+import {getMyGroups} from "../redux/ducks/groupDuck";
 
 class ApiApp {
     static ApisType = (url, method = "post", params = {}) => {
@@ -39,10 +40,28 @@ class ApiApp {
         return ApiApp.ApisType('/api/feel-aspects','post', data)
     }
 
-
     static getFeelings=(query='')=>{
         return ApiApp.ApisType('/api/feelings?populate=*&'+query,'get')
     }
+
+    //hace una busqueda basada en la palabra que le pasen como texto (username)
+    static getUsersByUsername=(usernameLike='')=>{
+        console.log(usernameLike)
+        return ApiApp.ApisType(`/api/users?filters[username][$contains]=${usernameLike}`,'get')
+    }
+
+    static getMyGroups=(userId='')=>{
+        let url = `/api/groups?populate=*&filters[owner][id][$eq]=${userId}`
+        console.log(url)
+        return ApiApp.ApisType(url,'get')
+    }
+
+    static getGroups=()=>{
+        return ApiApp.ApisType(`/api/groups?populate=*`,'get')
+    }
+
+
+
 
     static saveFeeling=(data)=>{
         return ApiApp.ApisType('/api/feeling-records','post',data)

@@ -14,7 +14,8 @@ import LoginScreen from "./screens/Security/LoginScreen";
 import RegisterScreen from "./screens/Security/RegisterScreen";
 import EmotionsPage from "./screens/EmotionsPage";
 import EmotionModal from "./screens/EmotionModal";
-import MyGroupsScreen from "./screens/MyGroupsScreen";
+import MyGroupsScreen from "./screens/Groups/MyGroupsScreen";
+import AddMemberScreen from "./screens/Groups/AddMemberScreen";
 
 
 const Stack = createStackNavigator();
@@ -37,6 +38,7 @@ export default function App() {
                     <Stack.Screen name="Emotions" options={{gestureEnabled:false,title:'Emociones'}} component={EmotionsPage}/>
                     <Stack.Screen name="EmotionModal" options={{gestureEnabled:false,title:''}} component={EmotionModal}/>
                     <Stack.Screen name="MyGroups" options={{gestureEnabled:false,title:'Mis grupos'}} component={MyGroupsScreen}/>
+                    <Stack.Screen name="AddMemberScreen" options={{gestureEnabled:false,title:'Añadir miembro al grupo'}} component={AddMemberScreen}/>
                 </Stack.Navigator>
             </NavigationContainer>
         </NativeBaseProvider>

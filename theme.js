@@ -3,9 +3,6 @@ import {extendTheme} from "native-base";
 export const theme = extendTheme({
     components: {
         Text: {
-            baseStyle: {
-                color: 'emerald.400'
-            },
             defaultProps: { size: 'lg' },
             sizes: {
                 xl: { fontSize: '64px' },
@@ -72,7 +69,7 @@ export const theme = extendTheme({
         },
     },
     config: {
-        initialColorMode: 'dark',
+        initialColorMode: 'light',
     },
     fonts: {
         heading: 'Roboto',

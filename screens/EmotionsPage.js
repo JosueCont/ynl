@@ -5,7 +5,7 @@ import {db, auth} from '../utils/firebase'
 import {TouchableOpacity, ScrollView} from "react-native";
 import logo from '../assets/logo.png'
 import _ from 'lodash'
-import feelingsDuck, {getEmotions} from '../redux/ducks/FeelingsDuck'
+import feelingsDuck, {getEmotions} from '../redux/ducks/feelingsDuck'
 import moment from 'moment'
 import ApiApp from "../utils/ApiApp";
 import SelectEmotion from "../components/SelectEmotion";
