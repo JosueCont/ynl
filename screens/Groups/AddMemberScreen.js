@@ -16,6 +16,9 @@ const AddMemberScreen = ({navigation,route,groupDuck, authDuck,getUsersByUserNam
     const [groupName, setGroupName] = useState(null)
     const [usersSelected, setUsersSelected] = useState([])
 
+    useEffect(()=>{
+        getUsersByUserName()
+    },[])
 
     useEffect(()=>{
         if(authDuck.isLogged){

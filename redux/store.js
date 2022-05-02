@@ -6,6 +6,8 @@ import {getData, getDataObject} from '../utils/functions'
 import authDuck, {createSession} from "./ducks/authDuck";
 import feelingsDuck from "./ducks/feelingsDuck";
 import groupDuck from "./ducks/groupDuck";
+
+
 const rootReducer = combineReducers({
     productsDuck: productsDuck,
     authDuck:authDuck,

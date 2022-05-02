@@ -19,6 +19,7 @@ export const getDataObject = async (key='') => {
 }
 
 
+
 export const storeData = async (key='@data',value) => {
     try {
         await AsyncStorage.setItem(key, value)
@@ -35,6 +36,15 @@ export const getData = async (key='') => {
             // value previously stored
         }
     } catch(e) {
+        // error reading value
+    }
+}
+
+export const removeAllData = async () => {
+    try {
+        await AsyncStorage.remove('@user')
+        await AsyncStorage.remove('@jwt')
+    } catch (e) {
         // error reading value
     }
 }

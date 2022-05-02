@@ -1,5 +1,5 @@
 import ApiApp from "../../utils/ApiApp";
-import {storeDataObject, getDataObject, storeData} from '../../utils/functions'
+import {storeDataObject, getDataObject, storeData, removeAllData} from '../../utils/functions'
 const initialData = {
     user: null,
     isLogged:false,
@@ -94,6 +94,15 @@ const saveUserData=async (userData,jwt=null)=>{
 
     }catch (e){
 
+    }
+}
+
+const logOut=async()=>{
+    try {
+        removeAllData()
+        return true
+    }catch (e){
+        return false
     }
 }
 

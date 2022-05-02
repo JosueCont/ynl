@@ -2,21 +2,16 @@ import React, {useEffect, useState} from "react";
 import {Box, Text, Button, VStack, HStack, Image} from "native-base";
 import {connect} from "react-redux";
 import {TouchableOpacity} from "react-native";
-import authDuck from '../redux/ducks/authDuck'
+import authDuck, {logOut} from '../redux/ducks/authDuck'
 
 import logo from '../assets/logo.png'
 
-const HomeScreen = ({authDuck,navigation}) => {
+const HomeScreen = ({authDuck,navigation,logOut}) => {
 
     const [feelings,setFeelings] = useState(null)
 
     useEffect(() => {
-
         getFeels();
-
-
-
-
     }, [])
 
     const getFeels=async ()=>{
@@ -24,13 +19,15 @@ const HomeScreen = ({authDuck,navigation}) => {
 
         }catch (e){
         }
-
-
-
     }
 
 
-    const logOut=async ()=>{
+    const _logOut=async ()=>{
+        try{
+            await logOut()
+        }catch (e){
+            console.log('e',e)
+        }
         navigation.navigate('Login')
     }
 
@@ -54,7 +51,7 @@ const HomeScreen = ({authDuck,navigation}) => {
                     </TouchableOpacity>
                     <Button  colorScheme={'red'} onPress={() => navigation.navigate('Emotions')}>Ruleta de emociones</Button>
                     <Button  colorScheme={'red'} mt={3} onPress={() => navigation.navigate('MyGroups')}>Mis grupos</Button>
-                    <Button mt={3} colorScheme={'red'} onPress={() => logOut()}>Cerrar Sesión</Button>
+                    <Button mt={3} colorScheme={'red'} onPress={() => _logOut()}>Cerrar Sesión</Button>
                 </VStack>
             </HStack>
         </Box>
@@ -67,4 +64,4 @@ const mapState = (state) => {
     }
 }
 
-export default connect(mapState)(HomeScreen);
+export default connect(mapState,{logOut})(HomeScreen);
