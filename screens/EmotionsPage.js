@@ -1,19 +1,20 @@
 import React, {useEffect, useState} from "react";
-import {Box, Text, Button, VStack, HStack, FlatList, Avatar, Spacer,Heading, Image, Modal} from "native-base";
+import {Box, Button, Heading, HStack, Image, Text, View, VStack} from "native-base";
 import {connect} from "react-redux";
-import {db, auth} from '../utils/firebase'
-import {TouchableOpacity, ScrollView} from "react-native";
+import {ScrollView} from "react-native";
 import logo from '../assets/logo.png'
 import _ from 'lodash'
-import feelingsDuck, {getEmotions} from '../redux/ducks/feelingsDuck'
+import {getEmotions} from '../redux/ducks/feelingsDuck'
 import moment from 'moment'
 import ApiApp from "../utils/ApiApp";
 import SelectEmotion from "../components/SelectEmotion";
-import authDuck from "../redux/ducks/authDuck";
+import Roulette from "react-native-roulette";
 
-const EmotionsPage = ({feelingsDuck,navigation, getEmotions}) => {
+import imagedemo from '../assets/yourfeel/relationicon.png';
 
-    const [mainfeelings,setMainFeelings] = useState([])
+const EmotionsPage = ({feelingsDuck, navigation, getEmotions}) => {
+
+    const [mainfeelings, setMainFeelings] = useState([])
     const [mainFeelingSelected, setMainFeelingSelected] = useState(null)
     const [currentFeelingSelected, setCurrentFeelingSelected] = useState(null)
     const [currentListFeeling, setCurrentListFeeling] = useState(null)
@@ -102,25 +103,56 @@ const EmotionsPage = ({feelingsDuck,navigation, getEmotions}) => {
         <Box flex={1} bg="#fff" alignItems="center">
             <HStack justifyContent={'center'} pt={5} pb={3}>
                 <VStack>
-                    <Image size={'xs'} source={logo} />
+                    <Image size={'xs'} source={logo}/>
                 </VStack>
             </HStack>
-            <ScrollView w={'100%'}>
-                <HStack  justifyContent={'center'}>
+            <ScrollView w={'100%'} bounces={false}>
+                <HStack justifyContent={'center'}>
                     <VStack w={'100%'} alignItems={'center'}>
-                        <Heading  mb={5} color={'#FF2830'} fontSize="xl" p="4" pb="3">
-                            <Text bold fontSize={'20px'}>{currentFeelingSelected ?`¿Por qué te sientes ${currentFeelingSelected.attributes.name}?`:'¿Cómo te sientes hoy?'}</Text>
+                        <Heading mb={5} color={'#FF2830'} fontSize="xl" p="4" pb="3">
+                            <Text bold
+                                  fontSize={'20px'}>{currentFeelingSelected ? `¿Por qué te sientes ${currentFeelingSelected.attributes.name}?` : '¿Cómo te sientes hoy?'}</Text>
                         </Heading>
                     </VStack>
 
                 </HStack>
-                <HStack w={'100%'} >
-                    <VStack w={'100%'} p={5} >
+                <HStack w={'100%'}>
+                    <VStack w={'100%'} p={5}>
+                        <Roulette enableUserRotate={true} rouletteRotate={0} customStyle={{backgroundColor: 'white'}}
+                                  customCenterStyle={{backgroundColor: 'white'}}
+                                  onRotate={(props) => console.log(props)}>
+
+                            <Image source={imagedemo} style={{resizeMode: 'cover', width: 50, height: 50}}
+                            />
+
+                            <View style={{backgroundColor: 'white'}}>
+                                <Image source={imagedemo} width={10} height={10}
+                                />
+                            </View>
+                            <View style={{backgroundColor: 'white'}}>
+                                <Image source={imagedemo} width={10} height={10}
+                                />
+                            </View>
+                            <View style={{backgroundColor: 'white'}}>
+                                <Image source={imagedemo} width={10} height={10}
+                                />
+                            </View>
+                            <View style={{backgroundColor: 'white'}}>
+                                <Image source={imagedemo} width={10} height={10}
+                                />
+                            </View>
+                            <View style={{backgroundColor: 'white'}}>
+                                <Image source={imagedemo} width={10} height={10}
+                                />
+                            </View>
+
+
+                        </Roulette>
 
                         {
                             (!mainFeelingSelected) ?
-                                mainfeelings && mainfeelings.map((ele,i)=>{
-                                    return <Button block key={i} onPress={()=>{
+                                mainfeelings && mainfeelings.map((ele, i) => {
+                                    return <Button block key={i} onPress={() => {
                                         setMainFeelingSelected(ele.id)
                                         setCurrentFeelingSelected(ele)
                                         getListFromParent(ele.id)

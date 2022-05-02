@@ -1,9 +1,9 @@
 import axios from "axios";
 import {getDataObject} from '../utils/functions'
-import Constants from "expo-constants";
-const isprod=false
+
+const isprod = true
 let config = {
-    baseURL: isprod?'https://ynl-api.herokuapp.com':'http://localhost:1337',
+    baseURL: isprod ? 'https://ynl-api.herokuapp.com' : 'http://localhost:1337',
     headers: {
         Accept: "application/json",
     },
