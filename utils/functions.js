@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Platform} from "react-native";
 
 export const storeDataObject = async (key='@data', value) => {
     try {
@@ -63,11 +64,15 @@ const arrayMonths=[
     'Diciembre'
 ]
 
-export const getDay=()=>{
+export const getDay = () => {
     return new Date().getDate();
 }
 
-export const getMonth=()=>{
+export const getMonth = () => {
     let month = new Date().getMonth();
     return arrayMonths[month]
+}
+
+export const resolvePlatform = (ios, android) => {
+    return Platform.OS === 'ios' ? ios : android;
 }

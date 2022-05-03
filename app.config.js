@@ -40,7 +40,7 @@ module.exports = () => {
         return {
             ...commonConfig,
             name: "YNL",
-            slug: "YNL",
+            slug: "ynl",
             version: "1.0.0",
             ios: ios,
         };
@@ -48,7 +48,7 @@ module.exports = () => {
         return {
             ...commonConfig,
             name: "YNL",
-            slug: "YNL",
+            slug: "ynl",
             version: "1.0.0",
             android: android,
         };
@@ -56,7 +56,7 @@ module.exports = () => {
         return {
             ...commonConfig,
             name: "YNL",
-            slug: "YNL",
+            slug: "ynl-dev",
             version: "1.0.0",
             ios: ios,
             android: android,

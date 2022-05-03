@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
-import {Box, Text, Button, VStack, HStack, Image} from "native-base";
+import {Box, Button, HStack, Image, Text, VStack} from "native-base";
 import {connect} from "react-redux";
 import {TouchableOpacity} from "react-native";
-import authDuck, {logOut} from '../redux/ducks/authDuck'
+import {logOut} from '../redux/ducks/authDuck'
 
 import logo from '../assets/logo.png'
 
@@ -44,13 +44,23 @@ const HomeScreen = ({authDuck,navigation,logOut}) => {
             </HStack>
             <HStack>
                 <VStack>
-                    <Text size={'lg'} color={'red.400'}>Bienvenido a YNL!  { authDuck.user? authDuck.user.email:'' }</Text>
-                    <Button  colorScheme={'red'} onPress={() => navigation.navigate('YourFeel')}>¿Cómo te calificas en ?</Button>
-                    <TouchableOpacity onPress={()=>{HistoryPage()}}>
-                        <Text mb={3} size={'sm'} color={'red.400'}>Registros hasta el momento ({feelings ? feelings.length : 0})</Text>
+                    <Text size={'lg'} color={'red.400'}>Bienvenido a
+                        YNL! {authDuck.user ? authDuck.user.email : ''}</Text>
+                    <Button colorScheme={'red'} onPress={() => navigation.navigate('ProfileScreen')}
+                            mb={2}>Perfil</Button>
+
+                    <Button colorScheme={'red'} onPress={() => navigation.navigate('YourFeel')}>¿Cómo te calificas en
+                        ?</Button>
+                    <TouchableOpacity onPress={() => {
+                        HistoryPage()
+                    }}>
+                        <Text mb={3} size={'sm'} color={'red.400'}>Registros hasta el momento
+                            ({feelings ? feelings.length : 0})</Text>
                     </TouchableOpacity>
-                    <Button  colorScheme={'red'} onPress={() => navigation.navigate('Emotions')}>Ruleta de emociones</Button>
-                    <Button  colorScheme={'red'} mt={3} onPress={() => navigation.navigate('MyGroups')}>Mis grupos</Button>
+                    <Button colorScheme={'red'} onPress={() => navigation.navigate('Emotions')}>Ruleta de
+                        emociones</Button>
+                    <Button colorScheme={'red'} mt={3} onPress={() => navigation.navigate('MyGroups')}>Mis
+                        grupos</Button>
                     <Button mt={3} colorScheme={'red'} onPress={() => _logOut()}>Cerrar Sesión</Button>
                 </VStack>
             </HStack>
