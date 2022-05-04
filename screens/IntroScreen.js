@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {Dimensions, TouchableOpacity, View} from 'react-native';
-import {Ionicons} from "@expo/vector-icons";
+import {Ionicons, MaterialIcons} from "@expo/vector-icons";
 import AppIntroSlider from 'react-native-app-intro-slider';
 import {Icon} from 'native-base';
 import {styles} from './Intro/IntroStyleSheet';
-import OneScreen from "./Intro/OneScreen";
-import TwoScreen from "./Intro/TwoScreen";
-import ThreeScreen from "./Intro/ThreeScreen";
-import FourScreen from "./Intro/FourScreen";
+import Intro1Screen from "./Intro/Intro1Screen";
+import Intro2Screen from "./Intro/Intro2Screen";
+import Intro3Screen from "./Intro/Intro3Screen";
+import Intro4Screen from "./Intro/Intro4Screen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {Colors} from "../utils/Colors";
 
 const IntroScreen = ({navigation}) => {
 
@@ -43,22 +44,22 @@ const IntroScreen = ({navigation}) => {
     const renderItem = ({item, index}) => {
         if (item.screen === 0) {
             return (
-                <OneScreen></OneScreen>
+                <Intro1Screen></Intro1Screen>
             );
         }
         if (item.screen === 1) {
             return (
-                <TwoScreen></TwoScreen>
+                <Intro2Screen></Intro2Screen>
             );
         }
         if (item.screen === 2) {
             return (
-                <ThreeScreen></ThreeScreen>
+                <Intro3Screen></Intro3Screen>
             );
         }
         if (item.screen === 3) {
             return (
-                <FourScreen navigation={navigation}></FourScreen>
+                <Intro4Screen navigation={navigation}></Intro4Screen>
             );
         }
 
@@ -80,12 +81,7 @@ const IntroScreen = ({navigation}) => {
         return (
             <View style={styles.buttonCircle}>
                 <TouchableOpacity onPress={() => nextScreen()}>
-                    <Icon
-                        name="done"
-                        type={'MaterialIcons'}
-                        style={{color: 'white'}}
-                        size={24}
-                    />
+                    <Icon as={MaterialIcons} name="done" size={5} color={'white'}/>
                 </TouchableOpacity>
 
             </View>
@@ -99,7 +95,8 @@ const IntroScreen = ({navigation}) => {
             renderItem={renderItem}
             renderDoneButton={renderDoneButton}
             renderNextButton={renderNextButton}
-            dotStyle={{backgroundColor: 'gray'}}
+            dotStyle={{backgroundColor: Colors.gray, borderWidth: 1, borderColor: 'red'}}
+            activeDotStyle={{backgroundColor: 'red', borderWidth: 1, borderColor: 'red'}}
             showDoneButton={true}
             showNextButton={false}
             keyExtractor={(item, index) => index.toString()}

@@ -47,7 +47,8 @@ export default function App() {
                                   options={{gestureEnabled: false, title: 'Añadir miembro al grupo'}}
                                   component={AddMemberScreen}/>
                     <Stack.Screen name="ProfileScreen" options={{gestureEnabled: false}} component={ProfileScreen}/>
-                    <Stack.Screen name="IntroScreen" options={{gestureEnabled: false}} component={IntroScreen}/>
+                    <Stack.Screen name="IntroScreen" options={{gestureEnabled: false, headerShown: false}}
+                                  component={IntroScreen}/>
 
                 </Stack.Navigator>
             </NavigationContainer>

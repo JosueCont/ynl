@@ -1,5 +1,4 @@
 import {StyleSheet} from "react-native";
-import {Colors} from "../../utils/Colors";
 
 export const styles = StyleSheet.create({
     container: {
@@ -60,9 +59,9 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
     },
     buttonCircle: {
-        width: 40,
-        height: 40,
-        backgroundColor: Colors.marino,
+        width: 30,
+        height: 30,
+        backgroundColor: 'red',
         borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
