@@ -1,11 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {Box, Text} from "native-base";
 import {connect} from "react-redux";
-import productsDuck from "../../redux/ducks/productsDuck";
 import {Alert, ScrollView} from 'react-native'
-import {getAuth, onAuthStateChanged, signInWithEmailAndPassword} from 'firebase/auth'
 import {loginEmail, loginGoogle} from "../../redux/ducks/authDuck";
-import LoadingComponent from "../../components/Shared/LoadingComponent";
 import FormLogin from "../../components/security/FormLogin";
 
 const LoginScreen = ({productsDuck,navigation, loginEmail,loginGoogle, authDuck}) => {
@@ -22,7 +18,7 @@ const LoginScreen = ({productsDuck,navigation, loginEmail,loginGoogle, authDuck}
 
     useEffect(()=>{
         if(hasLogged){
-            navigation.navigate('Home')
+            navigation.navigate('HomeScreen')
         }
     },[hasLogged])
 
@@ -33,7 +29,7 @@ const LoginScreen = ({productsDuck,navigation, loginEmail,loginGoogle, authDuck}
             if(res){
                 console.log('login success=====',res)
                 setHasLogged(true)
-                navigation.navigate('Home')
+                navigation.navigate('HomeScreen')
             }
 
         }catch (e){
@@ -55,7 +51,7 @@ const LoginScreen = ({productsDuck,navigation, loginEmail,loginGoogle, authDuck}
             if(res){
                 console.log('login success=====',res)
                 setHasLogged(true)
-                navigation.navigate('Home')
+                navigation.navigate('HomeScreen')
             }
 
         }catch (e){

@@ -46,6 +46,7 @@ export const removeAllData = async () => {
         await AsyncStorage.remove('@user')
         await AsyncStorage.remove('@jwt')
     } catch (e) {
+        console.log(e)
         // error reading value
     }
 }

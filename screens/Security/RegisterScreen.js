@@ -1,15 +1,12 @@
 import React, {useEffect, useState} from "react";
-import {Box} from "native-base";
 import {connect} from "react-redux";
-import productsDuck from "../../redux/ducks/productsDuck";
-import {ScrollView, Alert} from 'react-native'
-import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth'
+import {Alert, ScrollView} from 'react-native'
+import {createUserWithEmailAndPassword, getAuth} from 'firebase/auth'
 import {createSession} from "../../redux/ducks/authDuck";
-import LoadingComponent from "../../components/Shared/LoadingComponent";
 import FormRegister from "../../components/security/FormRegister";
 
 
-const RegisterScreen = ({productsDuck,navigation}) => {
+const RegisterScreen = ({productsDuck, navigation}) => {
 
     const [loading, setLoading] = useState(false)
 
@@ -26,7 +23,7 @@ const RegisterScreen = ({productsDuck,navigation}) => {
                 values.password
             )
             console.log(res)
-            navigation.navigate('Home')
+            navigation.navigate('HomeScreen')
         }catch (e){
             console.log(e)
             Alert.alert(

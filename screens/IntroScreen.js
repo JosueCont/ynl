@@ -27,18 +27,18 @@ const IntroScreen = ({navigation}) => {
         } catch (e) {
             console.log(e)
         }
-        navigation.navigate('PreLogin')
+        navigation.navigate('LoginScreen')
     }
 
     const introStatus = async () => {
-        try {
-            let intro = await AsyncStorage.getItem('@intro');
-            if (intro) {
-                navigation.navigate('PreLogin');
-            }
-        } catch (e) {
-            console.log(e);
-        }
+        // try {
+        //     let intro = await AsyncStorage.getItem('@intro');
+        //     if (intro) {
+        //         navigation.navigate('PreLogin');
+        //     }
+        // } catch (e) {
+        //     console.log(e);
+        // }
     }
 
     const renderItem = ({item, index}) => {

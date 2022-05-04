@@ -1,15 +1,15 @@
-import React, {useEffect, useState} from "react";
-import {Box, Text, Button, VStack, HStack, FlatList, Avatar, Spacer,Heading, Image} from "native-base";
+import React, {useState} from "react";
+import {Button, Heading, HStack, Image, Text, VStack} from "native-base";
 import {connect} from "react-redux";
-import {View,ImageBackground, ScrollView} from "react-native";
+import {ImageBackground, ScrollView, View} from "react-native";
 import calendar from '../assets/calendaricon.png'
 import logo from '../assets/logo.png'
 import {getDay, getMonth} from '../utils/functions'
 import {saveEmotion} from "../redux/ducks/feelingsDuck";
 
-const EmotionModal = ({navigation,route,saveEmotion,authDuck}) => {
+const EmotionModal = ({navigation, route, saveEmotion, authDuck}) => {
 
-    const [loading,setLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
 
 
     const saveFeelings=async()=>{
@@ -26,7 +26,7 @@ const EmotionModal = ({navigation,route,saveEmotion,authDuck}) => {
               alert('Guardado correctamente')
               navigation.reset({
                   index: 0,
-                  routes: [{ name: 'Home' }],
+                  routes: [{name: 'HomeScreen'}],
               });
           }
          }catch (e){

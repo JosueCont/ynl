@@ -28,7 +28,7 @@ const HomeScreen = ({authDuck,navigation,logOut}) => {
         }catch (e){
             console.log('e',e)
         }
-        navigation.navigate('Login')
+        navigation.navigate('LoginScreen')
     }
 
     const HistoryPage=()=>{
