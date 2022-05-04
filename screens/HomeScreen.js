@@ -49,6 +49,9 @@ const HomeScreen = ({authDuck,navigation,logOut}) => {
                     <Button colorScheme={'red'} onPress={() => navigation.navigate('ProfileScreen')}
                             mb={2}>Perfil</Button>
 
+                    <Button colorScheme={'red'} onPress={() => navigation.navigate('IntroScreen')}
+                            mb={2}>Intro</Button>
+
                     <Button colorScheme={'red'} onPress={() => navigation.navigate('YourFeel')}>¿Cómo te calificas en
                         ?</Button>
                     <TouchableOpacity onPress={() => {
