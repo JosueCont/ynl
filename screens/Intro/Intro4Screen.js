@@ -15,7 +15,8 @@ const Intro4Screen = () => {
                     </View>
                     <View flex={1}>
 
-                        <Text color={'white'} px={4}>Descubre poco a poco nuevas herramientas que te ayudarán en tu
+                        <Text color={'white'} textAlign={'center'} px={4}>Descubre poco a poco nuevas herramientas que
+                            te ayudarán en tu
                             desarrollo</Text>
                     </View>
                 </ImageBackground>

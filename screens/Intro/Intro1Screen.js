@@ -14,7 +14,8 @@ const Intro1Screen = () => {
                         <Image source={logoSmall}></Image>
                     </View>
                     <View flex={1}>
-                        <Text color={'white'} px={4}>Bienvenido a tu espacio de crecimiento personal</Text>
+                        <Text color={'white'} textAlign={'center'} px={4}>Bienvenido a tu espacio de crecimiento
+                            personal</Text>
                     </View>
                 </ImageBackground>
             </View>
