@@ -72,7 +72,7 @@ const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle, authDuc
     }
 
     return (
-        <ScrollView>
+        <ScrollView bounces={false}>
             <FormLogin loading={loading} onLoginGoogle={loginWithGoogle} onLogin={login} onGoRegister={goRegister}/>
         </ScrollView>
     )

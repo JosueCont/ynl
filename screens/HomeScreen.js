@@ -2,36 +2,35 @@ import React, {useEffect, useState} from "react";
 import {Box, Button, HStack, Image, Text, VStack} from "native-base";
 import {connect} from "react-redux";
 import {TouchableOpacity} from "react-native";
-import {logOut} from '../redux/ducks/authDuck'
+import {logOutAction} from "../redux/ducks/authDuck";
 
 import logo from '../assets/logo.png'
 
-const HomeScreen = ({authDuck,navigation,logOut}) => {
+const HomeScreen = ({authDuck, navigation, logOutAction}) => {
 
-    const [feelings,setFeelings] = useState(null)
+    const [feelings, setFeelings] = useState(null)
 
     useEffect(() => {
         getFeels();
     }, [])
 
-    const getFeels=async ()=>{
-        try{
+    const getFeels = async () => {
+        try {
 
-        }catch (e){
+        } catch (e) {
         }
     }
 
 
-    const _logOut=async ()=>{
-        try{
-            await logOut()
-        }catch (e){
-            console.log('e',e)
+    const _logOut = async () => {
+        try {
+            await logOutAction()
+        } catch (ex) {
+            console.log('e', ex)
         }
-        navigation.navigate('LoginScreen')
     }
 
-    const HistoryPage=()=>{
+    const HistoryPage = () => {
         navigation.navigate('HistoryList')
     }
 
@@ -39,7 +38,7 @@ const HomeScreen = ({authDuck,navigation,logOut}) => {
         <Box flex={1} bg="#fff" alignItems="center" justifyContent="center">
             <HStack justifyContent={'center'} pt={5} pb={3}>
                 <VStack>
-                    <Image size={'md'} source={logo} />
+                    <Image size={'md'} source={logo}/>
                 </VStack>
             </HStack>
             <HStack>
@@ -77,4 +76,4 @@ const mapState = (state) => {
     }
 }
 
-export default connect(mapState,{logOut})(HomeScreen);
+export default connect(mapState, {logOutAction})(HomeScreen);

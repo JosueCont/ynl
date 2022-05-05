@@ -1,5 +1,6 @@
 import ApiApp from "../../utils/ApiApp";
-import {removeAllData, storeDataObject} from '../../utils/functions'
+import {storeDataObject} from '../../utils/functions'
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const initialData = {
     user: null,
@@ -10,6 +11,8 @@ const initialData = {
 
 const START = 'START';
 const SUCCESS = 'SUCCESS';
+const LOGOUT = 'LOGOUT';
+
 const ERROR = 'ERROR';
 const ERROR_SERVER = 'ERROR_SERVER';
 const LOGIN_EMAIL = 'LOGIN_EMAIL';
@@ -29,6 +32,8 @@ const authDuck = (state = initialData, action) => {
             return {...state, loading: false, user: action.payload.user, jwt: action.payload.jwt, isLogged: true}
         case SUCCESS:
             return {...state, ...action.payload}
+        case LOGOUT:
+            return {...state, loading: false, isLogged: false}
         case ERROR:
             return {...state, error: action.payload}
         case ERROR_SERVER:
@@ -40,7 +45,6 @@ const authDuck = (state = initialData, action) => {
 
 
 export let createSession = (data) => async (dispatch) => {
-    console.log('from duck redux', data)
     try {
         dispatch({type: LOGIN_EMAIL_SUCCESS, payload: {user: data.user, jwt: data.jwt}});
         return true
@@ -103,12 +107,15 @@ const saveUserData = async (userData, jwt = null) => {
     }
 }
 
-const logOut = async () => {
+
+export let logOutAction = () => async (dispatch) => {
     try {
-        removeAllData()
-        return true
-    } catch (e) {
-        return false
+        await AsyncStorage.removeItem('@user')
+        await AsyncStorage.removeItem('@jwt')
+        dispatch({type: LOGOUT});
+    } catch (ex) {
+        console.log(ex)
+        // error reading value
     }
 }
 

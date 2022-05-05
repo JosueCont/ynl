@@ -42,13 +42,7 @@ export const getData = async (key='') => {
 }
 
 export const removeAllData = async () => {
-    try {
-        await AsyncStorage.remove('@user')
-        await AsyncStorage.remove('@jwt')
-    } catch (e) {
-        console.log(e)
-        // error reading value
-    }
+
 }
 
 const arrayMonths=[

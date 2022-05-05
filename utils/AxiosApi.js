@@ -13,7 +13,7 @@ let APIKit = axios.create(config);
 
 APIKit.interceptors.request.use(async function (config) {
     try {
-        console.log(config)
+
         console.log(config.baseURL)
         // let token = await getDataObject('@jwt');
         // if (token) config.headers.Authorization =`Bearer ${token.jwt}`;
@@ -25,7 +25,6 @@ APIKit.interceptors.request.use(async function (config) {
 });
 
 APIKit.interceptors.response.use(function (config) {
-    console.log(config, 28)
     return config;
 });
 

@@ -1,8 +1,7 @@
-import {createStore, combineReducers, compose, applyMiddleware} from "redux"
+import {applyMiddleware, combineReducers, createStore} from "redux"
 import thunk from "redux-thunk"
 import productsDuck from "./ducks/productsDuck";
-import {getAuth, onAuthStateChanged} from 'firebase/auth'
-import {getData, getDataObject} from '../utils/functions'
+import {getDataObject} from '../utils/functions'
 import authDuck, {createSession} from "./ducks/authDuck";
 import feelingsDuck from "./ducks/feelingsDuck";
 import groupDuck from "./ducks/groupDuck";
@@ -21,16 +20,17 @@ export const store = createStore(
 )
 
 export default () => {
-
-    (async ()=>{
+    (async () => {
         try {
             const user = await getDataObject('@user')
             const jwt = await getDataObject('@jwt')
-            console.log('user======>', {user,jwt:jwt.jwt})
-            if(user){
+            if (user) {
                 createSession({user, jwt})(store.dispatch)
             }
-        }catch (e){}
+        } catch (ex) {
+            console.log(ex)
+        }
     })()
     return store
 }
+
