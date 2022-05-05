@@ -10,6 +10,8 @@ const StackAuth = ({}) => {
 
     return (
         <Stack.Navigator screenOptions={{headerShown: false}}>
+            {/*<Stack.Screen name="RotateCustom" options={{gestureEnabled: false, headerShown: false}}*/}
+            {/*              component={RotateCustom}/>*/}
             <Stack.Screen name="IntroScreen" options={{gestureEnabled: false, headerShown: false}}
                           component={IntroScreen}/>
             <Stack.Screen name="LoginScreen" component={LoginScreen}/>
