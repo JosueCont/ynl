@@ -1,5 +1,5 @@
 import APIKit from "./AxiosApi";
-import {getMyGroups} from "../redux/ducks/groupDuck";
+import _ from "lodash";
 
 class ApiApp {
     static ApisType = (url, method = "post", params = {}) => {
@@ -24,47 +24,44 @@ class ApiApp {
     };
 
 
-
     ///AUTH
 
-    static loginWithEmail=(data)=>{
-        return ApiApp.ApisType('/api/auth/local', 'post',data)
+    static loginWithEmail = (data) => {
+        return ApiApp.ApisType('/api/auth/local', 'post', data)
     }
 
-    static loginWithGoogle=(access_token)=>{
+    static loginWithGoogle = (access_token) => {
         return ApiApp.ApisType(`/api/auth/google/callback?access_token=${access_token}`, 'get')
     }
 
 
-    static saveFeelAspects=(data)=>{
-        return ApiApp.ApisType('/api/feel-aspects','post', data)
+    static saveFeelAspects = (data) => {
+        return ApiApp.ApisType('/api/feel-aspects', 'post', data)
     }
 
-    static getFeelings=(query='')=>{
-        return ApiApp.ApisType('/api/feelings?populate=*&'+query,'get')
+    static getFeelings = (query = '') => {
+        return ApiApp.ApisType('/api/feelings?populate=*&' + query, 'get')
     }
 
     //hace una busqueda basada en la palabra que le pasen como texto (username)
-    static getUsersByUsername=(usernameLike='')=>{
+    static getUsersByUsername = (usernameLike = '') => {
         console.log(usernameLike)
-        return ApiApp.ApisType(`/api/users?filters[username][$contains]=${usernameLike}`,'get')
+        return ApiApp.ApisType(`/api/users?filters[username][$contains]=${usernameLike}`, 'get')
     }
 
-    static getMyGroups=(userId='')=>{
+    static getMyGroups = (userId = '') => {
         let url = `/api/groups?populate=*&filters[owner][id][$eq]=${userId}`
         console.log(url)
-        return ApiApp.ApisType(url,'get')
+        return ApiApp.ApisType(url, 'get')
     }
 
-    static getGroups=()=>{
-        return ApiApp.ApisType(`/api/groups?populate=*`,'get')
+    static getGroups = () => {
+        return ApiApp.ApisType(`/api/groups?populate=*`, 'get')
     }
 
 
-
-
-    static saveFeeling=(data)=>{
-        return ApiApp.ApisType('/api/feeling-records','post',data)
+    static saveFeeling = (data) => {
+        return ApiApp.ApisType('/api/feeling-records', 'post', data)
     }
 
     ///examples
@@ -88,7 +85,7 @@ class ApiApp {
         return ApiApp.ApisType(
             `/noticenter/user-notification/get_notification_user/`,
             "post",
-            { person: data }
+            {person: data}
         );
     };
 
@@ -100,6 +97,20 @@ class ApiApp {
         return ApiApp.ApisType(`/payroll/payroll-voucher/?${data}`, "get");
     };
 
+
+    static register = (data) => {
+        return ApiApp.ApisType(`/api/auth/local/register`, 'post', data)
+    }
+
+    static resolveError = async (response) => {
+        if (response.status <= 500) {
+            if (_.has(response.data, 'error')) {
+                return response.data.error.message;
+            } else {
+                return response.data;
+            }
+        }
+    }
 }
 
 export default ApiApp;

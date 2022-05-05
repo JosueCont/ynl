@@ -22,12 +22,12 @@ const commonConfig = {
     }
 };
 
-let ios = {
+const ios = {
     supportsTablet: false,
     bundleIdentifier: "com.hiumanlab.ynl"
 };
 
-let android = {
+const android = {
     adaptiveIcon: {
         foregroundImage: "./assets/adaptive-icon.png",
         backgroundColor: "#FFFFFF"

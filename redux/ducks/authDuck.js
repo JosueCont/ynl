@@ -1,10 +1,11 @@
 import ApiApp from "../../utils/ApiApp";
-import {storeDataObject, getDataObject, storeData, removeAllData} from '../../utils/functions'
+import {removeAllData, storeDataObject} from '../../utils/functions'
+
 const initialData = {
     user: null,
-    isLogged:false,
-    loading:false,
-    jwt:null
+    isLogged: false,
+    loading: false,
+    jwt: null
 }
 
 const START = 'START';
@@ -25,9 +26,9 @@ const authDuck = (state = initialData, action) => {
         case LOGIN_EMAIL_ERROR:
             return {...state, loading: false, isLogged: false}
         case LOGIN_EMAIL_SUCCESS:
-            return {...state, loading: false, user: action.payload.user, jwt:action.payload.jwt ,isLogged:true}
+            return {...state, loading: false, user: action.payload.user, jwt: action.payload.jwt, isLogged: true}
         case SUCCESS:
-            return {...state, insurances: action.payload}
+            return {...state, ...action.payload}
         case ERROR:
             return {...state, error: action.payload}
         case ERROR_SERVER:
@@ -38,71 +39,90 @@ const authDuck = (state = initialData, action) => {
 }
 
 
-export let createSession = (data) => async (dispatch)=>{
+export let createSession = (data) => async (dispatch) => {
     console.log('from duck redux', data)
-    try{
-        dispatch({type: LOGIN_EMAIL_SUCCESS, payload: {user:data.user, jwt: data.jwt}});
+    try {
+        dispatch({type: LOGIN_EMAIL_SUCCESS, payload: {user: data.user, jwt: data.jwt}});
         return true
-    }catch (e){
+    } catch (e) {
         return false
     }
 }
 
-export let loginEmail=(username, password)=> async(dispatch)=>{
+export let loginEmail = (username, password) => async (dispatch) => {
     dispatch({type: LOGIN_EMAIL});
-    console.log('loginEmail=========',username,password)
-    try{
+    console.log('loginEmail=========', username, password)
+    try {
+
+        console.log(username, password)
         let response = await ApiApp.loginWithEmail({
-            identifier:username,
+            identifier: username,
             password: password
         })
+
+
+        console.log(response, 60)
         await saveUserData(response.data.user, response.data.jwt)
-        dispatch({type: LOGIN_EMAIL_SUCCESS, payload: {user:response.data.user, jwt: response.data.jwt}});
-        console.log('login exitoso con email',response.data)
+        dispatch({type: LOGIN_EMAIL_SUCCESS, payload: {user: response.data.user, jwt: response.data.jwt}});
+        console.log('login exitoso con email', response.data)
         return true
-    }catch (e){
-        console.log('errorr====>', e)
+    } catch (e) {
+        console.log('errorr====>', e, 66)
         dispatch({type: LOGIN_EMAIL_ERROR});
         return false
     }
 }
 
-export let loginGoogle=(accessToken)=> async(dispatch)=>{
+export let loginGoogle = (accessToken) => async (dispatch) => {
     dispatch({type: LOGIN_EMAIL});
-    console.log('accessToken=========',accessToken)
-    try{
+    console.log('accessToken=========', accessToken)
+    try {
         let response = await ApiApp.loginWithGoogle(accessToken)
         await saveUserData(response.data.user, response.data.jwt)
-        dispatch({type: LOGIN_EMAIL_SUCCESS, payload: {user:response.data.user, jwt: response.data.jwt}});
-        console.log('login exitoso con google',response.data)
+        dispatch({type: LOGIN_EMAIL_SUCCESS, payload: {user: response.data.user, jwt: response.data.jwt}});
+        console.log('login exitoso con google', response.data)
         return true
-    }catch (e){
+    } catch (e) {
         console.log('errorr====>', e)
         dispatch({type: LOGIN_EMAIL_ERROR});
         return false
     }
 }
 
-const saveUserData=async (userData,jwt=null)=>{
+const saveUserData = async (userData, jwt = null) => {
     try {
-        await storeDataObject('@user',userData)
-        if(jwt){
+        await storeDataObject('@user', userData)
+        if (jwt) {
             console.log('jwt=====>', jwt)
             await storeDataObject('@jwt', {jwt})
             console.log('jwt saved =====>', jwt)
         }
 
-    }catch (e){
+    } catch (e) {
 
     }
 }
 
-const logOut=async()=>{
+const logOut = async () => {
     try {
         removeAllData()
         return true
-    }catch (e){
+    } catch (e) {
         return false
+    }
+}
+
+
+export let registerAction = (data) => async (dispatch) => {
+    dispatch({type: START});
+    try {
+        let response = await ApiApp.register(data);
+        console.log(response, 120)
+        dispatch({type: SUCCESS});
+
+    } catch (e) {
+        console.log(e.response)
+        throw await ApiApp.resolveError(e.response);
     }
 }
 

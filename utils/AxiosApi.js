@@ -1,5 +1,4 @@
 import axios from "axios";
-import {getDataObject} from '../utils/functions'
 
 const isprod = true
 let config = {
@@ -9,18 +8,24 @@ let config = {
     },
 };
 
+
 let APIKit = axios.create(config);
 
 APIKit.interceptors.request.use(async function (config) {
     try {
-        let token = await getDataObject('@jwt');
-        if (token) config.headers.Authorization =`Bearer ${token.jwt}`;
-    } catch (e) {}
+        console.log(config)
+        console.log(config.baseURL)
+        // let token = await getDataObject('@jwt');
+        // if (token) config.headers.Authorization =`Bearer ${token.jwt}`;
+    } catch (e) {
+        console.log(e)
+    }
 
     return config;
 });
 
 APIKit.interceptors.response.use(function (config) {
+    console.log(config, 28)
     return config;
 });
 

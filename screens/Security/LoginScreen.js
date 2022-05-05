@@ -4,79 +4,77 @@ import {Alert, ScrollView} from 'react-native'
 import {loginEmail, loginGoogle} from "../../redux/ducks/authDuck";
 import FormLogin from "../../components/security/FormLogin";
 
-const LoginScreen = ({productsDuck,navigation, loginEmail,loginGoogle, authDuck}) => {
+const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle, authDuck}) => {
 
     const [loading, setLoading] = useState(false)
     const [hasLogged, setHasLogged] = useState(false)
 
 
     useEffect(() => {
-        if(authDuck.isLogged){
+        if (authDuck.isLogged) {
             setHasLogged(true)
         }
     }, [authDuck])
 
-    useEffect(()=>{
-        if(hasLogged){
+    useEffect(() => {
+        if (hasLogged) {
             navigation.navigate('HomeScreen')
         }
-    },[hasLogged])
+    }, [hasLogged])
 
-    const loginWithGoogle =async (accessToken)=>{
-        try{
+    const loginWithGoogle = async (accessToken) => {
+        try {
             setLoading(true)
             const res = await loginGoogle(accessToken)
-            if(res){
-                console.log('login success=====',res)
+            if (res) {
+                console.log('login success=====', res)
                 setHasLogged(true)
                 navigation.navigate('HomeScreen')
             }
 
-        }catch (e){
+        } catch (e) {
             Alert.alert(
                 "Ups!",
                 "Algo ha salido mal, porfavor intenta nuevamente"
             );
             setHasLogged(false)
-        }finally {
+        } finally {
             setLoading(false)
         }
     }
 
-    const login=async (values)=>{
+    const login = async (values) => {
 
-        try{
+        try {
             setLoading(true)
             const res = await loginEmail(values.email, values.password)
-            if(res){
-                console.log('login success=====',res)
+
+            console.log(res, 52)
+            if (res) {
                 setHasLogged(true)
                 navigation.navigate('HomeScreen')
             }
 
-        }catch (e){
+        } catch (e) {
             Alert.alert(
                 "Ups!",
                 "Algo ha salido mal, porfavor intenta nuevamente"
             );
             setHasLogged(false)
-        }finally {
+        } finally {
             setLoading(false)
         }
 
     }
 
-    const goRegister=()=>{
+    const goRegister = () => {
         navigation.navigate('Register')
     }
 
     return (
-        <>
-
-                <ScrollView><FormLogin loading={loading} onLoginGoogle={loginWithGoogle} onLogin={login} onGoRegister={goRegister}/></ScrollView>
-
-
-        </>
+        <ScrollView>
+            <FormLogin loading={loading} onLoginGoogle={loginWithGoogle} onLogin={login} onGoRegister={goRegister}/>
+        </ScrollView>
     )
 }
 
@@ -87,4 +85,4 @@ const mapState = (state) => {
     }
 }
 
-export default connect(mapState,{loginEmail, loginGoogle})(LoginScreen);
+export default connect(mapState, {loginEmail, loginGoogle})(LoginScreen);
