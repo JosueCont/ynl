@@ -12,7 +12,7 @@ const DrawerConfig = ({accountDuck}) => {
 
 
     return (
-        <Drawer.Navigator backBehavior={'history'} drawerContent={(props) => <CustomDrawerContent {...props} />}>
+        <Drawer.Navigator backBehavior={'history'} drawerContent={(props) => <CustomDrawerContent  {...props} />}>
             <Drawer.Screen name={'HomeScreen'} component={HomeScreen}/>
         </Drawer.Navigator>
     );
