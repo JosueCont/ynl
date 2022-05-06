@@ -51,7 +51,8 @@ const HomeScreen = ({authDuck, navigation, logOutAction}) => {
                     <Button colorScheme={'red'} onPress={() => navigation.navigate('IntroScreen')}
                             mb={2}>Intro</Button>
 
-                    <Button colorScheme={'red'} onPress={() => navigation.navigate('YourFeel')}>¿Cómo te calificas en
+                    <Button colorScheme={'red'} onPress={() => navigation.navigate('YourFeelScreen')}>¿Cómo te calificas
+                        en
                         ?</Button>
                     <TouchableOpacity onPress={() => {
                         HistoryPage()
