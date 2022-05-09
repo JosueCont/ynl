@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Box, Button, HStack, Image, Slider, Text, View, VStack} from "native-base";
+import {Box, Button, HStack, Image, Skeleton, Slider, Text, View, VStack} from "native-base";
 import {Alert, ScrollView} from "react-native";
 import {connect} from "react-redux";
 import logo from '../assets/logo.png'
@@ -24,6 +24,10 @@ const YourFeelScreen = ({authDuck, navigation}) => {
         }
     }, [authDuck])
 
+    useEffect(() => {
+        getYourFeel(authDuck.user.id);
+    }, [])
+
 
     const saveYourFeel = async () => {
 
@@ -44,13 +48,30 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                 "Genial!",
                 "Se ha guardado exitosamente"
             );
-            navigation.goBack();
+            // navigation.goBack();
         } catch (e) {
             console.log('errror', e)
         } finally {
             setLoading(false)
         }
 
+    }
+
+
+    const getYourFeel = async () => {
+        try {
+            setLoading(true)
+            const response = await ApiApp.getFeelings(authDuck.user.id);
+            const {physical, finantial, mental, relations} = response.data.data[0].attributes;
+            setPhysicalNumber(physical);
+            setFinantialNumber(finantial);
+            setMentalNumber(mental);
+            setRelationNumber(relations);
+        } catch (ex) {
+            console.log(ex)
+        } finally {
+            setLoading(false)
+        }
     }
 
 
@@ -67,88 +88,120 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                             <Text bold size={'md'} color={'red.400'} textAlign={'center'}>Del 1 al 10{'\n'}¿Cómo te
                                 calificas en?</Text>
                         </VStack>
-                        <VStack p={9}>
-                            <Slider step={1} minValue={1} maxValue={10} defaultValue={1} colorScheme="red"
-                                    onChange={(v) => setPhysicalNumber(v)} size="lg">
-                                <Slider.Track bg={'red.100'}>
-                                    <Slider.FilledTrack bg={'#FF2830'}/>
-                                </Slider.Track>
-                                <Slider.Thumb bg={'#FF2830'}/>
-                            </Slider>
-                            <View flexDirection={'row'}>
-                                <View justifyContent={'center'}>
-                                    <Image source={bodyicon} width={4} style={{resizeMode: 'contain'}}/>
-                                </View>
-                                <View justifyContent={'center'}>
-                                    <Text fontSize="md" style={styles}>Física ({physicalNumber})</Text>
+                        {
+                            loading ?
+                                <VStack p={9} pb={0}>
+                                    <Skeleton h={10}></Skeleton>
+                                </VStack>
+                                :
+                                <VStack p={9} pb={5}>
+                                    <Slider step={1} minValue={1} maxValue={10} value={physicalNumber} colorScheme="red"
+                                            onChange={(v) => setPhysicalNumber(v)} size="lg">
+                                        <Slider.Track bg={'red.100'}>
+                                            <Slider.FilledTrack bg={'#FF2830'}/>
+                                        </Slider.Track>
+                                        <Slider.Thumb bg={'#FF2830'}/>
+                                    </Slider>
+                                    <View flexDirection={'row'}>
+                                        <View justifyContent={'center'}>
+                                            <Image source={bodyicon} width={4} style={{resizeMode: 'contain'}}/>
+                                        </View>
+                                        <View justifyContent={'center'}>
+                                            <Text fontSize="md" style={styles}>Física ({physicalNumber})</Text>
 
-                                </View>
-                            </View>
-                        </VStack>
+                                        </View>
+                                    </View>
+                                </VStack>
+                        }
+                        {
+                            loading ?
+                                <VStack p={9} pb={0}>
+                                    <Skeleton h={10}></Skeleton>
+                                </VStack>
+                                : <VStack p={9} pb={5}>
+                                    <Slider step={1} minValue={1} maxValue={10} value={mentalNumber} colorScheme="red"
+                                            onChange={(v) => setMentalNumber(v)} size="lg">
+                                        <Slider.Track bg={'red.100'}>
+                                            <Slider.FilledTrack bg={'#FF2830'}/>
+                                        </Slider.Track>
+                                        <Slider.Thumb bg={'#FF2830'}/>
+                                    </Slider>
 
-                        <VStack p={9}>
-                            <Slider step={1} minValue={1} maxValue={10} defaultValue={1} colorScheme="red"
-                                    onChange={(v) => setMentalNumber(v)} size="lg">
-                                <Slider.Track bg={'red.100'}>
-                                    <Slider.FilledTrack bg={'#FF2830'}/>
-                                </Slider.Track>
-                                <Slider.Thumb bg={'#FF2830'}/>
-                            </Slider>
+                                    <View flexDirection={'row'}>
+                                        <View justifyContent={'center'}>
+                                            <Image source={mentalicon} width={4} style={{resizeMode: 'contain'}}/>
+                                        </View>
+                                        <View justifyContent={'center'}>
+                                            <Text fontSize="md" style={styles}> Mental ({mentalNumber})</Text>
 
-                            <View flexDirection={'row'}>
-                                <View justifyContent={'center'}>
-                                    <Image source={mentalicon} width={4} style={{resizeMode: 'contain'}}/>
-                                </View>
-                                <View justifyContent={'center'}>
-                                    <Text fontSize="md" style={styles}> Mental ({mentalNumber})</Text>
+                                        </View>
+                                    </View>
+                                </VStack>
+                        }
 
-                                </View>
-                            </View>
-                        </VStack>
+                        {
+                            loading ?
+                                <VStack p={9} pb={0}>
+                                    <Skeleton h={10}></Skeleton>
+                                </VStack> :
+                                <VStack p={9} pb={5}>
+                                    <Slider step={1} minValue={1} maxValue={10} value={finantialNumber}
+                                            colorScheme="red"
+                                            onChange={(v) => setFinantialNumber(v)} size="lg">
+                                        <Slider.Track bg={'red.100'}>
+                                            <Slider.FilledTrack bg={'#FF2830'}/>
+                                        </Slider.Track>
+                                        <Slider.Thumb bg={'#FF2830'}/>
+                                    </Slider>
+                                    <View flexDirection={'row'}>
+                                        <View justifyContent={'center'}>
+                                            <Image source={finantialicon} width={4} style={{resizeMode: 'contain'}}/>
+                                        </View>
+                                        <View justifyContent={'center'}>
+                                            <Text fontSize="md" style={styles}>Financiera ({finantialNumber})</Text>
 
-                        <VStack p={9}>
-                            <Slider step={1} minValue={1} maxValue={10} defaultValue={1} colorScheme="red"
-                                    onChange={(v) => setFinantialNumber(v)} size="lg">
-                                <Slider.Track bg={'red.100'}>
-                                    <Slider.FilledTrack bg={'#FF2830'}/>
-                                </Slider.Track>
-                                <Slider.Thumb bg={'#FF2830'}/>
-                            </Slider>
-                            <View flexDirection={'row'}>
-                                <View justifyContent={'center'}>
-                                    <Image source={finantialicon} width={4} style={{resizeMode: 'contain'}}/>
-                                </View>
-                                <View justifyContent={'center'}>
-                                    <Text fontSize="md" style={styles}>Financiera ({finantialNumber})</Text>
+                                        </View>
+                                    </View>
 
-                                </View>
-                            </View>
+                                </VStack>
+                        }
+                        {
+                            loading ?
+                                <VStack p={9} pb={0}>
+                                    <Skeleton h={10}></Skeleton>
+                                </VStack> :
+                                <VStack p={9} pb={5}>
+                                    <Slider step={1} minValue={1} maxValue={10} value={relationNumber} colorScheme="red"
+                                            onChange={(v) => setRelationNumber(v)} size="lg">
+                                        <Slider.Track bg={'red.100'}>
+                                            <Slider.FilledTrack bg={'#FF2830'}/>
+                                        </Slider.Track>
+                                        <Slider.Thumb bg={'#FF2830'}/>
+                                    </Slider>
+                                    <View flexDirection={'row'}>
+                                        <View justifyContent={'center'}>
+                                            <Image source={relationicon} width={4} style={{resizeMode: 'contain'}}/>
+                                        </View>
+                                        <View justifyContent={'center'}>
+                                            <Text fontSize="md" style={styles}> Relaciones Humanas
+                                                ({relationNumber})</Text>
+                                        </View>
+                                    </View>
 
-                        </VStack>
+                                </VStack>
 
-                        <VStack p={9}>
-                            <Slider step={1} minValue={1} maxValue={10} defaultValue={1} colorScheme="red"
-                                    onChange={(v) => setRelationNumber(v)} size="lg">
-                                <Slider.Track bg={'red.100'}>
-                                    <Slider.FilledTrack bg={'#FF2830'}/>
-                                </Slider.Track>
-                                <Slider.Thumb bg={'#FF2830'}/>
-                            </Slider>
-                            <View flexDirection={'row'}>
-                                <View justifyContent={'center'}>
-                                    <Image source={relationicon} width={4} style={{resizeMode: 'contain'}}/>
-                                </View>
-                                <View justifyContent={'center'}>
-                                    <Text fontSize="md" style={styles}> Relaciones Humanas ({relationNumber})</Text>
-                                </View>
-                            </View>
-
-                        </VStack>
-
-                        <Button m={4} size="lg" isLoading={loading} isLoadingText={'Guardando'} colorScheme={'red'}
-                                onPress={() => saveYourFeel()}>
-                            Guardar
-                        </Button>
+                        }
+                        {
+                            loading ?
+                                <VStack p={9} pb={0}>
+                                    <Skeleton h={10}></Skeleton>
+                                </VStack> :
+                                <Button m={4} size="lg" isLoading={loading} isLoadingText={'Guardando'}
+                                        colorScheme={'red'}
+                                        onPress={() => saveYourFeel()}>
+                                    Guardar
+                                </Button>
+                        }
 
                     </VStack>
                 </HStack>

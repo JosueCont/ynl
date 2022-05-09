@@ -39,8 +39,8 @@ class ApiApp {
         return ApiApp.ApisType('/api/feel-aspects', 'post', data)
     }
 
-    static getFeelings = (query = '') => {
-        return ApiApp.ApisType('/api/feelings?populate=*&' + query, 'get')
+    static getFeelings = (userId) => {
+        return ApiApp.ApisType(`/api/feel-aspects?filters[user][id][$eq]=${userId}&pagination[page]=1&pagination[pageSize]=1&sort[0]=updatedAt:desc`, 'get')
     }
 
     //hace una busqueda basada en la palabra que le pasen como texto (username)
