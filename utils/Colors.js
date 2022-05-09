@@ -1,4 +1,4 @@
 export const Colors = {
-    marino: 'red',
-    gray: '#F2F2F2'
+    red: 'red.200',
+    gray: '#F2F2F2',
 }

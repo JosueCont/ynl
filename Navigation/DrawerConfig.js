@@ -10,6 +10,8 @@ import {Icon} from "native-base";
 import {Colors} from "../utils/Colors";
 import {TouchableOpacity} from "react-native";
 import {MaterialIcons} from "@expo/vector-icons";
+import MyGroupsScreen from "../screens/MyGroupsScreen";
+import GroupsScreen from "../screens/GroupsScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -67,6 +69,9 @@ const DrawerConfig = ({accountDuck}) => {
                           drawerContent={(props) => <CustomDrawerContent  {...props} />}>
             <Drawer.Screen name={'HomeScreen'} component={HomeScreen}/>
             <Drawer.Screen name={'YourFeelScreen'} component={YourFeelScreen}/>
+            <Drawer.Screen name={'GroupsScreen'} component={GroupsScreen}/>
+            <Drawer.Screen name={'MyGroupsScreen'} component={MyGroupsScreen}/>
+
         </Drawer.Navigator>
     );
 }

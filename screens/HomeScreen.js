@@ -62,7 +62,7 @@ const HomeScreen = ({authDuck, navigation, logOutAction}) => {
                     </TouchableOpacity>
                     <Button colorScheme={'red'} onPress={() => navigation.navigate('Emotions')}>Ruleta de
                         emociones</Button>
-                    <Button colorScheme={'red'} mt={3} onPress={() => navigation.navigate('MyGroups')}>Mis
+                    <Button colorScheme={'red'} mt={3} onPress={() => navigation.navigate('GroupsScreen')}>Mis
                         grupos</Button>
                     <Button mt={3} colorScheme={'red'} onPress={() => _logOut()}>Cerrar Sesión</Button>
                 </VStack>

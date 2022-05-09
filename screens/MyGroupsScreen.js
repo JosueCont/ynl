@@ -1,37 +1,15 @@
 import React, {useEffect, useState} from "react";
-import {
-    Box,
-    Text,
-    VStack,
-    HStack,
-    Image,
-    Slider,
-    Icon,
-    Button,
-    Input,
-    FlatList,
-    Avatar,
-    NativeBaseProvider,
-    Spacer,
-    FormControl
-} from "native-base";
-import {Alert, ScrollView, ImageBackground, TouchableOpacity, SafeAreaView} from "react-native";
+import {Avatar, Box, Button, FlatList, HStack, Image, Input, Spacer, Text, VStack} from "native-base";
+import {ImageBackground, SafeAreaView, ScrollView, TouchableOpacity} from "react-native";
 import {connect} from "react-redux";
-import logo from '../../assets/logo.png'
-import groupicon from '../../assets/groupicon.png'
-import backgroundGroup from '../../assets/backGroups.png'
-import ApiApp from "../../utils/ApiApp";
-import authDuck from "../../redux/ducks/authDuck";
-import groupDuck, {getMyGroups} from '../../redux/ducks/groupDuck'
-import uuid from 'react-native-uuid';
-import { useFormik } from 'formik';
-import group from "native-base/src/components/composites/Avatar/Group";
+import logo from '../assets/logo.png'
+import groupicon from '../assets/groupicon.png'
+import backgroundGroup from '../assets/backGroups.png'
+import {getMyGroups} from '../redux/ducks/groupDuck'
 import {Ionicons} from "@expo/vector-icons";
-import {colors} from '../../utils/Constants'
-import _ from 'lodash'
-import * as Yup from "yup";
+import {colors} from '../utils/Constants'
 
-const MyGroupsScreen = ({authDuck,navigation,groupDuck,getMyGroups}) => {
+const MyGroupsScreen = ({authDuck, navigation, groupDuck, getMyGroups}) => {
     const [loading, setLoading] = useState(false)
     const [user, setUser] = useState(null)
     const [groupName, setGroupName] = useState(null)

@@ -49,14 +49,17 @@ class ApiApp {
         return ApiApp.ApisType(`/api/users?filters[username][$contains]=${usernameLike}`, 'get')
     }
 
-    static getMyGroups = (userId = '') => {
+    static getMyGroups = (userId) => {
         let url = `/api/groups?populate=*&filters[owner][id][$eq]=${userId}`
-        console.log(url)
         return ApiApp.ApisType(url, 'get')
     }
 
     static getGroups = () => {
         return ApiApp.ApisType(`/api/groups?populate=*`, 'get')
+    }
+
+    static createGroup = (data) => {
+        return ApiApp.ApisType('/api/groups', 'post', data)
     }
 
 
