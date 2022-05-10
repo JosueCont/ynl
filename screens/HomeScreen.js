@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
-import {Box, Button, HStack, Image, Text, VStack} from "native-base";
+import {Button, Icon, Image, Text, View} from "native-base";
 import {connect} from "react-redux";
-import {TouchableOpacity} from "react-native";
+import {SafeAreaView, TouchableOpacity} from "react-native";
 import {logOutAction} from "../redux/ducks/authDuck";
-
-import logo from '../assets/logo.png'
 import {getMyGroups} from "../redux/ducks/groupDuck";
 import {useIsFocused} from "@react-navigation/native";
+import profile from '../assets/profile.jpg';
+import {Colors} from "../utils/Colors";
+import {MaterialIcons} from "@expo/vector-icons";
 
 const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
 
@@ -17,9 +18,8 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
         if (isFocused) {
             getGroups()
         }
+        console.log(authDuck.user)
     }, [isFocused])
-
-
 
 
     const _logOut = async () => {
@@ -45,46 +45,97 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
     }
 
     return (
-        <Box flex={1} bg="#fff" alignItems="center" justifyContent="center">
-            <HStack justifyContent={'center'} pt={5} pb={3}>
-                <VStack>
-                    <Image size={'md'} source={logo}/>
-                </VStack>
-            </HStack>
-            <HStack>
-                <VStack>
-                    <Text size={'lg'} color={'red.400'}>Bienvenido a
-                        YNL! {authDuck.user ? authDuck.user.email : ''}</Text>
-                    <Button colorScheme={'red'} onPress={() => navigation.navigate('ProfileScreen')}
-                            mb={2}>Perfil</Button>
+        <SafeAreaView style={{flex: 1}}>
+            <View flex={0.5} mb={6} alignItems={'center'} backgroundColor={Colors.red} borderBottomLeftRadius={60}>
+                <Image w={200} h={200} source={profile} style={{resizeMode: 'cover', position: 'absolute', bottom: -20}}
+                       borderRadius={100} borderWidth={2} borderColor={'white'}/>
+            </View>
+            <View flex={1} mx={4}>
 
-                    <Button colorScheme={'red'} onPress={() => navigation.navigate('IntroScreen')}
-                            mb={2}>Intro</Button>
+                <Text mb={6} fontSize={24} color={'red.400'} textAlign={'center'}>{authDuck.user.username}</Text>
 
-                    <Button colorScheme={'red'} onPress={() => navigation.navigate('YourFeelScreen')}>¿Cómo te calificas
-                        en
-                        ?</Button>
-                    <TouchableOpacity onPress={() => {
-                        HistoryPage()
-                    }}>
-                        <Text mb={3} size={'sm'} color={'red.400'}>Registros hasta el momento
-                            ({feelings ? feelings.length : 0})</Text>
-                    </TouchableOpacity>
-                    <Button colorScheme={'red'} onPress={() => navigation.navigate('Emotions')}>Ruleta de
-                        emociones</Button>
-                    <Button colorScheme={'red'} mt={3} onPress={() => {
-                        if (groupDuck.groups.length > 0) {
-                            navigation.navigate('GroupsStartScreen')
-                        } else {
-                            navigation.navigate('GroupsScreen')
-                        }
+                <View flexDir={'row'} mb={2}>
+                    <View flex={1} height={70} mr={1}>
+                        <TouchableOpacity
+                            style={{
+                                flex: 1,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                backgroundColor: Colors.red,
+                                borderRadius: 10
+                            }}
+                            onPress={() => navigation.navigate('YourFeelScreen')}>
+                            <Icon as={MaterialIcons} name={'mood'} size={9} color={'white'}></Icon>
+                            <Text color={'white'} size={'sm'}>¿Cómo te
+                                calificas?</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View flex={1} mr={1}>
+                        <TouchableOpacity
+                            style={{
+                                flex: 1,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                backgroundColor: Colors.red,
+                                borderRadius: 10
+                            }}
+                            onPress={() => {
+                                HistoryPage()
+                            }}>
+                            <Icon as={MaterialIcons} name={'donut-large'} size={7} color={'white'}></Icon>
+                            <Text color={'white'} size={'sm'}>Registros hasta el momento
+                                ({feelings ? feelings.length : 0})</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                <View flex={1} flexDir={'row'} mb={2}>
+                    <View flex={1} height={70} mr={1}>
 
-                    }}>Mis
-                        grupos</Button>
-                    <Button mt={3} colorScheme={'red'} onPress={() => _logOut()}>Cerrar Sesión</Button>
-                </VStack>
-            </HStack>
-        </Box>
+                        <TouchableOpacity
+                            style={{
+                                flex: 1,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                backgroundColor: Colors.red,
+                                borderRadius: 10
+                            }}
+                            onPress={() => {
+                                navigation.navigate('Emotions')
+                            }}>
+                            <Icon as={MaterialIcons} name={'nat'} size={7} color={'white'}></Icon>
+                            <Text color={'white'} size={'sm'}>Ruleta de
+                                emociones</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View flex={1} height={70} mr={1}>
+
+                        <TouchableOpacity
+                            style={{
+                                flex: 1,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                backgroundColor: Colors.red,
+                                borderRadius: 10
+                            }}
+                            onPress={() => {
+                                if (groupDuck.groups.length > 0) {
+                                    navigation.navigate('GroupsStartScreen')
+                                } else {
+                                    navigation.navigate('GroupsScreen')
+                                }
+                            }}>
+                            <Icon as={MaterialIcons} name={'groups'} size={7} color={'white'}></Icon>
+                            <Text color={'white'} size={'sm'}>Mis
+                                grupos</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                </View>
+                <View justifyContent={'center'}>
+                    <Button colorScheme={'red'} onPress={() => _logOut()}>Cerrar Sesión</Button>
+                </View>
+            </View>
+        </SafeAreaView>
     )
 }
 
