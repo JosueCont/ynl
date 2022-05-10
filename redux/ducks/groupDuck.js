@@ -40,7 +40,6 @@ export let getMyGroups=(userId='')=> async(dispatch)=>{
     dispatch({type: GET_MY_GROUPS});
     try{
         let response = await ApiApp.getMyGroups(userId)
-        console.log('data from edux',response.data.data)
         dispatch({type: GET_MY_GROUPS_SUCCESS, payload:response.data.data});
         return response.data.data
     }catch (e){

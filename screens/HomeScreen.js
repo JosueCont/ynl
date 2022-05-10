@@ -5,21 +5,21 @@ import {TouchableOpacity} from "react-native";
 import {logOutAction} from "../redux/ducks/authDuck";
 
 import logo from '../assets/logo.png'
+import {getMyGroups} from "../redux/ducks/groupDuck";
+import {useIsFocused} from "@react-navigation/native";
 
-const HomeScreen = ({authDuck, navigation, logOutAction}) => {
+const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
 
-    const [feelings, setFeelings] = useState(null)
+    const [feelings, setFeelings] = useState(null);
+    const isFocused = useIsFocused();
 
     useEffect(() => {
-        getFeels();
-    }, [])
-
-    const getFeels = async () => {
-        try {
-
-        } catch (e) {
+        if (isFocused) {
+            getGroups()
         }
-    }
+    }, [isFocused])
+
+
 
 
     const _logOut = async () => {
@@ -32,6 +32,16 @@ const HomeScreen = ({authDuck, navigation, logOutAction}) => {
 
     const HistoryPage = () => {
         navigation.navigate('HistoryList')
+    }
+
+    const getGroups = async () => {
+        if (authDuck.user) {
+            try {
+                const res = await getMyGroups(authDuck.user.id)
+            } catch (e) {
+                console.log(e)
+            }
+        }
     }
 
     return (
@@ -62,7 +72,14 @@ const HomeScreen = ({authDuck, navigation, logOutAction}) => {
                     </TouchableOpacity>
                     <Button colorScheme={'red'} onPress={() => navigation.navigate('Emotions')}>Ruleta de
                         emociones</Button>
-                    <Button colorScheme={'red'} mt={3} onPress={() => navigation.navigate('GroupsScreen')}>Mis
+                    <Button colorScheme={'red'} mt={3} onPress={() => {
+                        if (groupDuck.groups.length > 0) {
+                            navigation.navigate('GroupsStartScreen')
+                        } else {
+                            navigation.navigate('GroupsScreen')
+                        }
+
+                    }}>Mis
                         grupos</Button>
                     <Button mt={3} colorScheme={'red'} onPress={() => _logOut()}>Cerrar Sesión</Button>
                 </VStack>
@@ -73,8 +90,9 @@ const HomeScreen = ({authDuck, navigation, logOutAction}) => {
 
 const mapState = (state) => {
     return {
-        authDuck: state.authDuck
+        authDuck: state.authDuck,
+        groupDuck: state.groupDuck
     }
 }
 
-export default connect(mapState, {logOutAction})(HomeScreen);
+export default connect(mapState, {logOutAction, getMyGroups})(HomeScreen);

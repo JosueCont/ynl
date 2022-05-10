@@ -10,9 +10,9 @@ import {Icon} from "native-base";
 import {Colors} from "../utils/Colors";
 import {TouchableOpacity} from "react-native";
 import {MaterialIcons} from "@expo/vector-icons";
-import MyGroupsScreen from "../screens/MyGroupsScreen";
 import GroupsScreen from "../screens/GroupsScreen";
 import GroupsMembersAdd from "../screens/GroupsMembersAdd";
+import GroupsStartScreen from "../screens/GroupsStartScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -27,8 +27,11 @@ const DrawerConfig = ({accountDuck}) => {
                                   return (
                                       <TouchableOpacity onPress={async () => {
 
-                                          navigation.goBack(0)
-
+                                          if (route.name.includes('GroupsScreen')) {
+                                              navigation.navigate('HomeScreen')
+                                          } else {
+                                              navigation.goBack(0)
+                                          }
 
                                       }} style={{
                                           width: 50,
@@ -71,7 +74,7 @@ const DrawerConfig = ({accountDuck}) => {
             <Drawer.Screen name={'HomeScreen'} component={HomeScreen}/>
             <Drawer.Screen name={'YourFeelScreen'} component={YourFeelScreen}/>
             <Drawer.Screen name={'GroupsScreen'} component={GroupsScreen}/>
-            <Drawer.Screen name={'MyGroupsScreen'} component={MyGroupsScreen}/>
+            <Drawer.Screen name={'GroupsStartScreen'} component={GroupsStartScreen}/>
             <Drawer.Screen name={'GroupsMembersAdd'} component={GroupsMembersAdd}/>
 
         </Drawer.Navigator>
