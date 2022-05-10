@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Divider, Icon, Image, Input, ScrollView, Spinner, View, VStack} from "native-base";
 import {connect} from "react-redux";
 import logo from '../assets/logo.png'
@@ -15,13 +15,14 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
     const [groupName, setGroupName] = useState(null)
     const [usersSelected, setUsersSelected] = useState([])
     const [text, setText] = useState(null);
+    const searchBox = useRef();
 
 
     useFocusEffect(
         React.useCallback(() => {
             return () => {
                 setUsersSelected([])
-                setText(null)
+                searchBox.current.clear()
             };
         }, [])
     );
@@ -66,7 +67,6 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
 
     const searchUsers = async (value) => {
         try {
-            setText(value)
             const response = await getUsersByUserName(value.trim())
         } catch (e) {
             console.log(e)
@@ -119,7 +119,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
             <View flex={1}>
                 <VStack my="4" space={5} w="100%" maxW="350px">
                     <VStack w="100%" space={5} alignSelf="center">
-                        <Input value={text} placeholder={`Buscar amigos para añadir a ${groupName}`}
+                        <Input ref={searchBox} placeholder={`Buscar amigos para añadir a ${groupName}`}
                                width="100%"
                                height={10}
                                autoCapitalize="none"
