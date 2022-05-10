@@ -1,5 +1,5 @@
 import ApiApp from "../../utils/ApiApp";
-import {storeDataObject, getDataObject, storeData} from '../../utils/functions'
+
 const initialData = {
     users: null, // listado de usuarios que se buscan
     loading:false,
@@ -54,8 +54,6 @@ export let getUsersByUserName=(username='')=> async(dispatch)=>{
     try{
         let response = await ApiApp.getUsersByUsername(username)
         dispatch({type: GET_USERS_SUCCESS, payload:response.data});
-        console.log('datos users=====',response.data)
-        return response.data
     }catch (e){
         console.log('errorr====>', e)
         dispatch({type: ERROR_FETCH});

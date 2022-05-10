@@ -12,6 +12,7 @@ import {TouchableOpacity} from "react-native";
 import {MaterialIcons} from "@expo/vector-icons";
 import MyGroupsScreen from "../screens/MyGroupsScreen";
 import GroupsScreen from "../screens/GroupsScreen";
+import GroupsMembersAdd from "../screens/GroupsMembersAdd";
 
 const Drawer = createDrawerNavigator();
 
@@ -71,6 +72,7 @@ const DrawerConfig = ({accountDuck}) => {
             <Drawer.Screen name={'YourFeelScreen'} component={YourFeelScreen}/>
             <Drawer.Screen name={'GroupsScreen'} component={GroupsScreen}/>
             <Drawer.Screen name={'MyGroupsScreen'} component={MyGroupsScreen}/>
+            <Drawer.Screen name={'GroupsMembersAdd'} component={GroupsMembersAdd}/>
 
         </Drawer.Navigator>
     );

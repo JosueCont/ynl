@@ -8,7 +8,7 @@ import {connect} from "react-redux";
 import {useIsFocused} from "@react-navigation/native";
 import GroupsModalCreate from "./Groups/Components/GroupsModalCreate";
 
-const GroupsScreen = ({authDuck}) => {
+const GroupsScreen = ({authDuck, navigation}) => {
     const isFocused = useIsFocused();
 
     const [modalGroupsCreate, setModalGroupsCreate] = useState(null);
@@ -36,22 +36,9 @@ const GroupsScreen = ({authDuck}) => {
 
     const createGroup = async (value) => {
         setModalGroupsCreate(false)
-        try {
-            let data = {
-                data: {
-                    name: value,
-                    owner: authDuck.user.id,
-                    description: ""
-                }
-            }
-            let response = await ApiApp.createGroup(data)
-            if (response.status === 200) {
-                console.log('success')
-            }
-            getGroups();
-        } catch (ex) {
-            console.log(ex)
-        }
+
+        navigation.navigate('GroupsMembersAdd', {groupName: value})
+
 
     }
 
@@ -75,9 +62,9 @@ const GroupsScreen = ({authDuck}) => {
                     {
                         loading == false &&
                         groups.map((item) => {
-                            console.log()
+                            console.log(item.id)
                             return (
-                                <GroupsItem title={item.attributes.name}/>
+                                <GroupsItem groupId={item.id} title={item.attributes.name} navigation={navigation}/>
                             )
                         })
                     }
