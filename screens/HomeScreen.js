@@ -88,9 +88,8 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View flex={1} flexDir={'row'} mb={2}>
+                <View flexDir={'row'} mb={2}>
                     <View flex={1} height={70} mr={1}>
-
                         <TouchableOpacity
                             style={{
                                 flex: 1,
@@ -108,7 +107,6 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
                         </TouchableOpacity>
                     </View>
                     <View flex={1} height={70} mr={1}>
-
                         <TouchableOpacity
                             style={{
                                 flex: 1,
@@ -129,9 +127,29 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
                                 grupos</Text>
                         </TouchableOpacity>
                     </View>
-
                 </View>
-                <View justifyContent={'center'}>
+                <View flexDir={'row'} mb={2}>
+                    <View flex={1} height={70} mr={1}>
+                        <TouchableOpacity
+                            style={{
+                                flex: 1,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                backgroundColor: Colors.red,
+                                borderRadius: 10
+                            }}
+                            onPress={() => {
+                                navigation.navigate('StatisticsScreen')
+                            }}>
+                            <Icon as={MaterialIcons} name={'insert-chart-outlined'} size={7} color={'white'}></Icon>
+                            <Text color={'white'} size={'sm'}>Estadísticas</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View flex={1} height={70} mr={1}>
+
+                    </View>
+                </View>
+                <View flex={1} justifyContent={'flex-end'}>
                     <Button colorScheme={'red'} onPress={() => _logOut()}>Cerrar Sesión</Button>
                 </View>
             </View>
