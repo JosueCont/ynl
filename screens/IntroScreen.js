@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Dimensions, TouchableOpacity, View} from 'react-native';
+import {Dimensions, SafeAreaView, TouchableOpacity, View} from 'react-native';
 import {Ionicons, MaterialIcons} from "@expo/vector-icons";
 import AppIntroSlider from 'react-native-app-intro-slider';
 import {Icon} from 'native-base';
@@ -90,17 +90,20 @@ const IntroScreen = ({navigation}) => {
 
 
     return (
-        <AppIntroSlider
-            data={slides}
-            renderItem={renderItem}
-            renderDoneButton={renderDoneButton}
-            renderNextButton={renderNextButton}
-            dotStyle={{backgroundColor: Colors.gray, borderWidth: 1, borderColor: 'red'}}
-            activeDotStyle={{backgroundColor: 'red', borderWidth: 1, borderColor: 'red'}}
-            showDoneButton={true}
-            showNextButton={false}
-            keyExtractor={(item, index) => index.toString()}
-        />
+        <SafeAreaView style={{flex: 1, backgroundColor: Colors.gray}}>
+
+            <AppIntroSlider
+                data={slides}
+                renderItem={renderItem}
+                renderDoneButton={renderDoneButton}
+                renderNextButton={renderNextButton}
+                dotStyle={{backgroundColor: Colors.gray, borderWidth: 1, borderColor: 'red'}}
+                activeDotStyle={{backgroundColor: 'red', borderWidth: 1, borderColor: 'red'}}
+                showDoneButton={true}
+                showNextButton={false}
+                keyExtractor={(item, index) => index.toString()}
+            />
+        </SafeAreaView>
     )
 }
 

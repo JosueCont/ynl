@@ -80,12 +80,12 @@ const DrawerConfig = ({accountDuck}) => {
                 ),
             })}
             drawerContent={(props) => <CustomDrawerContent  {...props} />}>
-            <Drawer.Screen name={'HomeScreen'} component={HomeScreen}/>
+            <Drawer.Screen name={'HomeScreen'} component={HomeScreen} options={{title: ''}}/>
             <Drawer.Screen name={'YourFeelScreen'} component={YourFeelScreen}/>
-            <Drawer.Screen name={'GroupsScreen'} component={GroupsScreen}/>
+            <Drawer.Screen name={'GroupsScreen'} component={GroupsScreen} options={{title: 'Mis grupos'}}/>
             <Drawer.Screen name={'GroupsStartScreen'} component={GroupsStartScreen}/>
             <Drawer.Screen name={'GroupsMembersAdd'} component={GroupsMembersAdd}/>
-            <Drawer.Screen name={'StatisticsScreen'} component={StatisticsScreen}/>
+            <Drawer.Screen name={'StatisticsScreen'} component={StatisticsScreen} options={{title: 'Estadísticas'}}/>
 
         </Drawer.Navigator>
     );

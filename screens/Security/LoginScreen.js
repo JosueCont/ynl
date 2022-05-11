@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
-import {Alert, ScrollView} from 'react-native'
+import {Alert, SafeAreaView} from 'react-native'
 import {loginEmail, loginGoogle} from "../../redux/ducks/authDuck";
 import FormLogin from "../../components/security/FormLogin";
+import {KeyboardAvoidingView, ScrollView} from "native-base";
 
 const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle, authDuck}) => {
 
@@ -72,9 +73,16 @@ const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle, authDuc
     }
 
     return (
-        <ScrollView bounces={false}>
-            <FormLogin loading={loading} onLoginGoogle={loginWithGoogle} onLogin={login} onGoRegister={goRegister}/>
-        </ScrollView>
+        <SafeAreaView style={{flex: 1}}>
+            <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
+                                  style={{flex: 1, backgroundColor: 'white'}}>
+                <ScrollView>
+                    <FormLogin loading={loading} onLoginGoogle={loginWithGoogle} onLogin={login}
+                               onGoRegister={goRegister}/>
+                </ScrollView>
+            </KeyboardAvoidingView>
+        </SafeAreaView>
+
     )
 }
 

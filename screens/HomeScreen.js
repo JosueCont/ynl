@@ -150,7 +150,7 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
 
                     </View>
                 </View>
-                <View flex={1} justifyContent={'flex-end'}>
+                <View flex={1} justifyContent={'center'}>
                     <Button colorScheme={'red'} onPress={() => _logOut()}>Cerrar Sesión</Button>
                 </View>
             </View>
