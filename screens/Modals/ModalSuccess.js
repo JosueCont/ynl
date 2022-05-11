@@ -18,9 +18,9 @@ const ModalError = ({visible, setVisible}) => {
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
 
-                    <View width={'100%'} borderTopRadius={20} h={100} bgColor={'red.600'} alignItems={'center'}
+                    <View width={'100%'} borderTopRadius={20} h={100} bgColor={'green.600'} alignItems={'center'}
                           justifyContent={'center'}>
-                        <Icon as={MaterialIcons} name={'error-outline'} color={'white'} size={'6xl'}/>
+                        <Icon as={MaterialIcons} name={'check-circle-outline'} color={'white'} size={'6xl'}/>
                         <TouchableOpacity style={{position: 'absolute', right: 10, top: 15}}
                                           onPress={() => setVisible(false)}>
                             <Icon as={MaterialIcons} name={'close'} color={'gray'} size={'xl'}></Icon>
@@ -28,7 +28,7 @@ const ModalError = ({visible, setVisible}) => {
                     </View>
                     <View p={30}>
                         <Text textAlign={'center'} fontSize={22}>Aviso</Text>
-                        <Text fontSize={18} style={styles.modalText}>Ocurrio un error, intentalo más tarde</Text>
+                        <Text fontSize={18} style={styles.modalText}>Registro exitoso</Text>
                     </View>
                 </View>
             </View>

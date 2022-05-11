@@ -13,6 +13,7 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
 
     const [feelings, setFeelings] = useState(null);
     const isFocused = useIsFocused();
+    const [visible, setVisible] = useState(true);
 
     useEffect(() => {
         if (isFocused) {
