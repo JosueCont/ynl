@@ -39,7 +39,7 @@ module.exports = () => {
     if (process.env.APP_ENV === "ios") {
         return {
             ...commonConfig,
-            name: "YNL",
+            name: "Your Next Level",
             slug: "ynl",
             version: "1.0.0",
             ios: ios,
@@ -47,7 +47,7 @@ module.exports = () => {
     } else if (process.env.APP_ENV === "android") {
         return {
             ...commonConfig,
-            name: "YNL",
+            name: "Your Next Level",
             slug: "ynl",
             version: "1.0.0",
             android: android,
@@ -55,7 +55,7 @@ module.exports = () => {
     } else if (process.env.APP_ENV === "expo") {
         return {
             ...commonConfig,
-            name: "YNL",
+            name: "Your Next Level",
             slug: "ynl-dev",
             version: "1.0.0",
             ios: ios,

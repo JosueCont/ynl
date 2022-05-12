@@ -18,6 +18,7 @@ import EmotionsPage from "../screens/EmotionsPage";
 import GroupsMembersScreen from "../screens/GroupsMembersScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import EmotionModal from "../screens/EmotionModal";
+import RotateCustom from "../screens/RotateCustom";
 
 const Drawer = createDrawerNavigator();
 
@@ -100,6 +101,8 @@ const DrawerConfig = ({accountDuck, authDuck}) => {
             <Drawer.Screen name={'EmotionsPage'} component={EmotionsPage} options={{title: ''}}/>
             <Drawer.Screen name={'EmotionModal'} component={EmotionModal} options={{title: ''}}/>
             <Drawer.Screen name={'ProfileScreen'} component={ProfileScreen} options={{title: 'Perfil'}}/>
+            <Drawer.Screen name={'RotateCustom'} component={RotateCustom} options={{title: 'Ruleta'}}/>
+
         </Drawer.Navigator>
     );
 }

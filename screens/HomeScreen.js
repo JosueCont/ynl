@@ -211,6 +211,25 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
                             </TouchableOpacity>
                         </View>
                     </View>
+                    <View flexDir={'row'} mb={2}>
+                        <View flex={1} height={70} mr={1}>
+                            <TouchableOpacity
+                                style={{
+                                    flex: 1,
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    backgroundColor: Colors.red,
+                                    borderRadius: 10
+                                }}
+                                onPress={() => {
+                                    navigation.navigate('RotateCustom')
+                                }}>
+                                <Icon as={MaterialIcons} name={'nat'} size={7} color={'white'}></Icon>
+                                <Text color={'white'} size={'sm'}>Ruleta de
+                                    emociones V2</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                     <View flex={1} justifyContent={'center'}>
                         <Button colorScheme={'red'} onPress={() => _logOut()}>Cerrar Sesión</Button>
                     </View>
