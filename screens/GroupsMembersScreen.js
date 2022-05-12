@@ -38,8 +38,8 @@ const GroupsMembersScreen = ({route}) => {
             for (let item of response.data.data.group[0].members) {
                 membersArray.push({
                     id: item.id,
-                    name: item.user.email,
-                    status: item.status
+                    name: item.email,
+                    status: 1
                 })
             }
             setMembers(membersArray)
@@ -67,7 +67,6 @@ const GroupsMembersScreen = ({route}) => {
                 loading == false &&
                 members.map((item) => {
                     return (
-                        // <GroupsItem groupId={item.id} title={item.attributes.name}/>
                         <GroupsMemberItem title={item.name}
                                           pending={(item.status === 0 || item.status === 2) ? true : false}/>
                     )

@@ -16,13 +16,16 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
     const isFocused = useIsFocused();
     const [visible, setVisible] = useState(true);
     const [loading, setLoading] = useState(false);
+    const [groups, setGroups] = useState(null);
+
 
     useEffect(() => {
         if (isFocused) {
+            console.log('focused')
             getGroups()
         }
-        console.log(authDuck.user)
     }, [isFocused])
+
 
 
     const _logOut = async () => {
@@ -50,16 +53,17 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
     }
 
     const getGroups = async () => {
-        if (authDuck.user) {
             try {
                 setLoading(true)
-                const res = await getMyGroups(authDuck.user.id)
+                const response = await ApiApp.getMyGroups(authDuck.user.id)
+                console.log(response.data)
+                setGroups(response.data.data)
             } catch (e) {
-                console.log(e)
+                console.log(e, 61)
             } finally {
                 setLoading(false)
             }
-        }
+
     }
 
     return (
@@ -144,7 +148,7 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
                                     borderRadius: 10
                                 }}
                                 onPress={() => {
-                                    if (groupDuck.groups.length > 0) {
+                                    if (groups.length === 0) {
                                         navigation.navigate('GroupsStartScreen')
                                     } else {
                                         navigation.navigate('GroupsScreen')
@@ -174,7 +178,20 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
                             </TouchableOpacity>
                         </View>
                         <View flex={1} height={70} mr={1}>
-
+                            <TouchableOpacity
+                                style={{
+                                    flex: 1,
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    backgroundColor: Colors.red,
+                                    borderRadius: 10
+                                }}
+                                onPress={() => {
+                                    navigation.navigate('ProfileScreen')
+                                }}>
+                                <Icon as={MaterialIcons} name={'person-outline'} size={7} color={'white'}></Icon>
+                                <Text color={'white'} size={'sm'}>Perfil</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                     <View flex={1} justifyContent={'center'}>

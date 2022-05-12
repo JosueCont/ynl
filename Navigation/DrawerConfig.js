@@ -16,6 +16,7 @@ import GroupsStartScreen from "../screens/GroupsStartScreen";
 import StatisticsScreen from "../screens/StatisticsScreen";
 import EmotionsPage from "../screens/EmotionsPage";
 import GroupsMembersScreen from "../screens/GroupsMembersScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -90,6 +91,7 @@ const DrawerConfig = ({accountDuck}) => {
             <Drawer.Screen name={'GroupsMembersScreen'} component={GroupsMembersScreen} options={{title: 'Miembros'}}/>
             <Drawer.Screen name={'StatisticsScreen'} component={StatisticsScreen} options={{title: 'Estadísticas'}}/>
             <Drawer.Screen name={'EmotionsPage'} component={EmotionsPage} options={{title: 'Estadísticas'}}/>
+            <Drawer.Screen name={'ProfileScreen'} component={ProfileScreen} options={{title: 'Perfil'}}/>
 
         </Drawer.Navigator>
     );
