@@ -1,73 +1,43 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import {Select} from "native-base";
-import _ from "lodash";
 
 
-const SelectEmotion=({parent,emotions,...props})=>{
-
-    const [child, setChild]=useState(null)
+const SelectEmotion = ({item}) => {
 
 
     useEffect(() => {
-        console.log(parent.id, 18)
-        if (parent) {
-            getListFromParent()
-        }
-    }, [parent])
-
-    /**
-     * Obtenemos un listado de emociones dado un id de parent
-     * @returns {*[]}
-     */
-    const getListFromParent=()=>{
-        try{
-            console.log(Object.keys(emotions), 'linea 30')
-            if(emotions){
-                let newaarray =[];
-                emotions.forEach((item,i)=> {
-
-                    console.log(Object.keys(item), 'aqui es el keys')
-
-
-                    console.log(parent.id, item.attributes.parent, 'linea 34')
-                    if (_.get(item, 'attributes.parent.data.id', 0) === parent.id) {
-                        console.log('linea 42')
-                        newaarray.push(item)
-                    }
-
-                })
-
-                console.log('setchild', newaarray)
-                setChild(newaarray)
-            }
-        }catch (e){
-            console.log('errors', e, 49, 'code')
-        }
-    }
+        console.log(item, 12)
+    }, [])
 
     return (
-        <Select borderColor="red.500" fontWeight="bold"
+        <Select key={item.id} borderColor="red.500" fontWeight="bold"
                 fontSize={18}
                 borderRadius={10}
                 p={5}
                 color={'gray.700'}
-                onValueChange={itemValue => props.onSelectEmotion(itemValue)}
+                onValueChange={itemValue => console.log(itemValue)}
                 accessibility={true}
-                style={styleSelect} mb={2}
-                placeholder={parent.attributes.name}>
-            {
-                child ? child.map((item, i) => {
-                    return <Select.Item color={'black'} fontSize={20} fontWeight="bold" key={i} value={item.id}
-                                        label={item.attributes.name}/>
-                }) : null
-            }
+                style={styleSelect} mb={2}>
+            {/*placeholder={item.attributes.name}*/}
+            >
+            <Select.Item label="UX Research" value="ux"/>
+            <Select.Item label="Web Development" value="web"/>
+            <Select.Item label="Cross Platform Development" value="cross"/>
+            <Select.Item label="UI Designing" value="ui"/>
+            <Select.Item label="Backend Development" value="backend"/>
+            {/*{*/}
+            {/*    child ? child.map((item, i) => {*/}
+            {/*        return <Select.Item color={'black'} fontSize={20} fontWeight="bold" key={i} value={item.id}*/}
+            {/*                            label={item.attributes.name}/>*/}
+            {/*    }) : null*/}
+            {/*}*/}
         </Select>
     )
 }
 
-const styleSelect={
-    border:'red',
-    padding:10
+const styleSelect = {
+    border: 'red',
+    padding: 10
 }
 
 export default SelectEmotion;

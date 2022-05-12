@@ -17,6 +17,7 @@ import StatisticsScreen from "../screens/StatisticsScreen";
 import EmotionsPage from "../screens/EmotionsPage";
 import GroupsMembersScreen from "../screens/GroupsMembersScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import EmotionModal from "../screens/EmotionModal";
 
 const Drawer = createDrawerNavigator();
 
@@ -83,6 +84,8 @@ const DrawerConfig = ({accountDuck}) => {
                 ),
             })}
             drawerContent={(props) => <CustomDrawerContent  {...props} />}>
+            <Drawer.Screen name={'EmotionsPage'} component={EmotionsPage} options={{title: ''}}/>
+
             <Drawer.Screen name={'HomeScreen'} component={HomeScreen} options={{title: ''}}/>
             <Drawer.Screen name={'YourFeelScreen'} component={YourFeelScreen}/>
             <Drawer.Screen name={'GroupsScreen'} component={GroupsScreen} options={{title: 'Mis grupos'}}/>
@@ -90,7 +93,8 @@ const DrawerConfig = ({accountDuck}) => {
             <Drawer.Screen name={'GroupsMembersAdd'} component={GroupsMembersAdd}/>
             <Drawer.Screen name={'GroupsMembersScreen'} component={GroupsMembersScreen} options={{title: 'Miembros'}}/>
             <Drawer.Screen name={'StatisticsScreen'} component={StatisticsScreen} options={{title: 'Estadísticas'}}/>
-            <Drawer.Screen name={'EmotionsPage'} component={EmotionsPage} options={{title: 'Estadísticas'}}/>
+            <Drawer.Screen name={'EmotionModal'} component={EmotionModal} options={{title: ''}}/>
+
             <Drawer.Screen name={'ProfileScreen'} component={ProfileScreen} options={{title: 'Perfil'}}/>
 
         </Drawer.Navigator>

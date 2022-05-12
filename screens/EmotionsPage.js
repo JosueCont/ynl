@@ -7,34 +7,75 @@ import _ from 'lodash'
 import {getEmotions, getEmotionsV3} from '../redux/ducks/feelingsDuck'
 import moment from 'moment'
 import ApiApp from "../utils/ApiApp";
-import SelectEmotion from "../components/SelectEmotion";
 
 const EmotionsPage = ({feelingsDuck, navigation, getEmotions, getEmotionsV3, authDuck}) => {
 
     const [mainfeelings, setMainFeelings] = useState([])
     const [mainFeelingSelected, setMainFeelingSelected] = useState(null)
     const [currentFeelingSelected, setCurrentFeelingSelected] = useState(null)
-    const [currentListFeeling, setCurrentListFeeling] = useState(null)
+    const [currentListFeeling, setCurrentListFeeling] = useState(null);
+    const [parents, setParents] = useState(null);
+    const [loading, setLoading] = useState(null);
+    const [parentSelected, setParentSelected] = useState(null);
+    const [subParents, setSubParents] = useState(null);
+    const [children, setChildren] = useState(null);
+    const [subParentSelected, setSubParentSelected] = useState(null);
 
 
     useEffect(() => {
-        getMainEmotionsList();
+        getParents();
     }, [])
 
     useEffect(() => {
-        getEmotionsList();
+        //getMainEmotionsList();
     }, [])
 
     useEffect(() => {
-        if (navigation) {
-            console.log('cambia el navgation')
+        // getEmotionsList();
+    }, [])
+
+
+    const getParents = async () => {
+        try {
+            setLoading(true);
+            let response = await ApiApp.getFeelingsV2('filters[$and][0][parent][id][$null]=true')
+            setParents(response.data.data)
+        } catch (e) {
+            console.log(e.response)
+        } finally {
+            setLoading(false)
         }
-    }, [navigation])
+    }
+
+    const getSubParents = async (parentId) => {
+        try {
+            setLoading(true);
+            let response = await ApiApp.getFeelingsV2(`filters[$and][0][parent][id][$eq]=${parentId}`)
+            console.log(response.data, 53)
+            setSubParents(response.data.data)
+        } catch (e) {
+            console.log(e.response)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const getChildren = async (parentId) => {
+        try {
+            setLoading(true);
+            let response = await ApiApp.getFeelingsV2(`filters[$and][0][parent][id][$eq]=${parentId}`)
+            setChildren(response.data.data)
+        } catch (e) {
+            console.log(e.response)
+        } finally {
+            setLoading(false)
+        }
+    }
 
 
     const getMainEmotionsList = async () => {
         try {
-            let response = await ApiApp.getFeelingsV2('filters[$and][0][parent][id][$null]=true')
+            let response = await ApiApp.getFeelingsV2('/api/feelings?populate=*&filters[parent][id][$eq]=1')
 
             console.log(response.data)
             setMainFeelings(response.data.data)
@@ -88,9 +129,9 @@ const EmotionsPage = ({feelingsDuck, navigation, getEmotions, getEmotionsV3, aut
     }
 
 
-    const onSelectEmotion = (emotionId) => {
+    const onSelectEmotion = (emotion) => {
         navigation.navigate('EmotionModal', {
-            emotion: feelingsDuck.feelings.filter(o => o.id === emotionId)
+            emotion: emotion
         })
     }
 
@@ -125,33 +166,52 @@ const EmotionsPage = ({feelingsDuck, navigation, getEmotions, getEmotionsV3, aut
                 </HStack>
                 <HStack w={'100%'}>
                     <VStack w={'100%'} p={5}>
-
                         {
-                            (!mainFeelingSelected) ?
-                                mainfeelings && mainfeelings.map((ele, i) => {
-                                    return <Button block key={i} onPress={() => {
-                                        console.log(ele.id, 134)
-                                        setMainFeelingSelected(ele.id)
-                                        setCurrentFeelingSelected(ele)
-                                        getListFromParent(ele.id)
-                                    }
-                                    } mt={10}>{ele.attributes.name}</Button>
-                                }) : null
+                            (!parentSelected && loading === false) &&
+                            parents.map((item, i) => {
+                                return (
+                                    <Button block key={i} onPress={() => {
+                                        setParentSelected(item.id)
+                                        setCurrentFeelingSelected(item)
+                                        getSubParents(item.id)
+                                    }} mb={2}>
+                                        {item.attributes.name}
+                                    </Button>
+                                )
+                            })
                         }
 
 
                         {
-                            (currentListFeeling && mainFeelingSelected) ?
-                                currentListFeeling.map((ele, i) => {
-                                    return <SelectEmotion onSelectEmotion={onSelectEmotion}
-                                                          emotions={feelingsDuck.feelings} parent={ele}/>
-                                }) : null
+                            (subParents && parentSelected && !subParentSelected) &&
+                            subParents.map((item, i) => {
+                                console.log(item)
+                                return (
+                                    <Button block key={i} onPress={() => {
+                                        setSubParentSelected(item.id)
+                                        getChildren(item.id)
+                                    }} mb={2}>
+                                        {item.attributes.name}
+                                    </Button>
+                                )
+                            })
+                        }
+
+                        {
+                            (children && subParentSelected) &&
+                            children.map((item, i) => {
+                                return (
+                                    <Button block key={i} onPress={() => {
+                                        onSelectEmotion(item)
+                                    }} mb={2}>
+                                        {item.attributes.name}
+                                    </Button>
+                                )
+                            })
                         }
                     </VStack>
                 </HStack>
             </ScrollView>
-
-
         </Box>
     )
 }

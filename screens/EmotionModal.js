@@ -17,9 +17,9 @@ const EmotionModal = ({navigation, route, saveEmotion, authDuck}) => {
 
          try{
          let data={
-             label:route.params.emotion[0].attributes.name,
-             feeling:route.params.emotion[0].id,
-             user:authDuck.user.id
+             label: route.params.emotion.attributes.name,
+             feeling: route.params.emotion.id,
+             user: authDuck.user.id
          }
           let res =  await saveEmotion({data})
           if(res){
@@ -48,7 +48,8 @@ const EmotionModal = ({navigation, route, saveEmotion, authDuck}) => {
                     <VStack alignItems={'center'}>
                         <Text style={{fontSize: 20, color: 'black'}}>Hoy me siento</Text>
                         <Heading mb={5} color={'#FF2830'} fontSize="xl" p="4" pb="3">
-                            <Text bold fontSize={'40px'}>{route.params.emotion && route.params.emotion[0].attributes.name.toUpperCase()}</Text>
+                            <Text bold
+                                  fontSize={'40px'}>{route.params.emotion && route.params.emotion.attributes.name.toUpperCase()}</Text>
                         </Heading>
                     </VStack>
                 </HStack>

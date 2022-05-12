@@ -17,12 +17,13 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
     const [visible, setVisible] = useState(true);
     const [loading, setLoading] = useState(false);
     const [groups, setGroups] = useState(null);
-
+    const [lastEmotion, setLastEmotion] = useState(null);
 
     useEffect(() => {
         if (isFocused) {
             console.log('focused')
             getGroups()
+            getHome()
         }
     }, [isFocused])
 
@@ -45,6 +46,7 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
             setLoading(true)
 
             const res = await ApiApp.getHomeData(authDuck.user.id)
+            setLastEmotion(res.data.data.lastEmotion.label)
         } catch (e) {
             console.log(e)
         } finally {
@@ -85,6 +87,22 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
                 <View flex={1} mx={4}>
 
                     <Text mb={6} fontSize={24} color={'red.400'} textAlign={'center'}>{authDuck.user.username}</Text>
+                    <View flexDir={'row'} mb={2}>
+                        <View flex={1} height={70} mr={1}>
+                            <TouchableOpacity
+                                style={{
+                                    flex: 1,
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    backgroundColor: Colors.red,
+                                    borderRadius: 10
+                                }}
+                                onPress={() => navigation.navigate('YourFeelScreen')}>
+                                <Text color={'white'} fontSize={18}>Última emoción</Text>
+                                <Text color={'white'} fontSize={18}>{lastEmotion}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
 
                     <View flexDir={'row'} mb={2}>
                         <View flex={1} height={70} mr={1}>
@@ -115,8 +133,7 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
                                     HistoryPage()
                                 }}>
                                 <Icon as={MaterialIcons} name={'donut-large'} size={7} color={'white'}></Icon>
-                                <Text color={'white'} size={'sm'}>Registros hasta el momento
-                                    ({feelings ? feelings.length : 0})</Text>
+                                <Text color={'white'} size={'sm'}>Historial</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
