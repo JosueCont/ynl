@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import {getDataObject} from "../utils/functions"
 const isprod = true
 let config = {
     baseURL: isprod ? 'https://ynl-api.herokuapp.com' : 'http://localhost:1337',
@@ -15,8 +15,8 @@ APIKit.interceptors.request.use(async function (config) {
     try {
 
         console.log(config.baseURL)
-        // let token = await getDataObject('@jwt');
-        // if (token) config.headers.Authorization =`Bearer ${token.jwt}`;
+         let token = await getDataObject('@jwt');
+         if (token) config.headers.Authorization =`Bearer ${token.jwt}`;
     } catch (e) {
         console.log(e)
     }
