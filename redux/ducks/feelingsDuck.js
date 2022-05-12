@@ -1,5 +1,5 @@
 import ApiApp from "../../utils/ApiApp";
-import {storeDataObject, getDataObject, storeData} from '../../utils/functions'
+
 const initialData = {
     feelings: null,
     loading:false
@@ -26,22 +26,37 @@ const feelingsDuck = (state = initialData, action) => {
 }
 
 
-export let getEmotions=(query='')=> async(dispatch)=>{
+export let getEmotions = (query = '') => async (dispatch) => {
     dispatch({type: GET_FEELINGS});
 
-    try{
-        let response = await ApiApp.getFeelings(query)
-        dispatch({type: GET_FEELINGS_SUCCESS, payload:response.data.data});
+    try {
+        let response = await ApiApp.getFeelingsV2(query)
+        dispatch({type: GET_FEELINGS_SUCCESS, payload: response.data.data});
         return response.data
-    }catch (e){
-        console.log('errorr====>', e)
+    } catch (e) {
+        console.log('errorr====>', e.response)
         return false
     }
 }
 
-export let saveEmotion=(data)=>async(dispatch)=>{
-    dispatch({type:FEELINGS_SAVE})
-    try{
+export let getEmotionsV3 = (query = '') => async (dispatch) => {
+    dispatch({type: GET_FEELINGS});
+
+    try {
+        let response = await ApiApp.getFeelingsV3()
+        console.log(response.data.data, 47)
+        dispatch({type: GET_FEELINGS_SUCCESS, payload: response.data.data});
+        return response.data
+    } catch (e) {
+        console.log('errorr====>', e.response)
+        return false
+    }
+}
+
+
+export let saveEmotion = (data) => async (dispatch) => {
+    dispatch({type: FEELINGS_SAVE})
+    try {
         let response = await ApiApp.saveFeeling(data)
         return true
     }catch (e){

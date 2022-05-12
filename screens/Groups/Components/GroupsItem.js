@@ -11,7 +11,7 @@ const GroupsItem = ({groupId, title, navigation}) => {
                     <Avatar size="md" source={imageLogo}/>
                 </View>
                 <View flex={1} justifyContent={'center'}>
-                    <Text>{title}</Text>
+                    <Text fontSize={18} n>{title}</Text>
                 </View>
             </View>
         </TouchableOpacity>

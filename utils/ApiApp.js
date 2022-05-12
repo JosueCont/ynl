@@ -34,6 +34,9 @@ class ApiApp {
         return ApiApp.ApisType(`/api/auth/google/callback?access_token=${access_token}`, 'get')
     }
 
+    static getHomeData = (userId) => {
+        return ApiApp.ApisType(`/api/home/user_main?userId=${userId}`, 'get')
+    }
 
     static saveFeelAspects = (data) => {
         return ApiApp.ApisType('/api/feel-aspects', 'post', data)
@@ -41,6 +44,14 @@ class ApiApp {
 
     static getFeelings = (userId) => {
         return ApiApp.ApisType(`/api/feel-aspects?filters[user][id][$eq]=${userId}&pagination[page]=1&pagination[pageSize]=1&sort[0]=updatedAt:desc`, 'get')
+    }
+
+    static getFeelingsV2 = (query = '') => {
+        return ApiApp.ApisType('/api/feelings?populate=*&' + query, 'get')
+    }
+
+    static getFeelingsV3 = (query = '') => {
+        return ApiApp.ApisType('/api/feelings?populate=*', 'get')
     }
 
     //hace una busqueda basada en la palabra que le pasen como texto (username)
