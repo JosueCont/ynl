@@ -1,4 +1,4 @@
-import {Button, ScrollView, Text, View} from "native-base";
+import {Button, ScrollView, View} from "native-base";
 import {RefreshControl, SafeAreaView} from "react-native";
 import GroupsItem from "./Groups/Components/GroupsItem";
 import React, {useEffect, useState} from "react";
@@ -46,8 +46,9 @@ const GroupsScreen = ({authDuck, navigation}) => {
     return (
         <SafeAreaView flex={1}>
             <View flex={1} px={2} style={{backgroundColor: Colors.gray}}>
-                <Text textAlign={'center'} fontSize={24}>Mis grupos/Clubs</Text>
+                {/*<Text textAlign={'center'} fontSize={24}>Mis grupos/Clubs</Text>*/}
                 <ScrollView
+                    flex={1}
                     nestedScrollEnabled={true}
                     my={4}
                     backgroundColor={'white'}
@@ -69,7 +70,9 @@ const GroupsScreen = ({authDuck, navigation}) => {
                         })
                     }
                 </ScrollView>
-                <Button colorScheme={'red'} onPress={() => setModalGroupsCreate(true)}>Crear nuevo grupo</Button>
+                <View flex={0.1}>
+                    <Button colorScheme={'red'} onPress={() => setModalGroupsCreate(true)}>Crear nuevo grupo</Button>
+                </View>
                 <GroupsModalCreate visible={modalGroupsCreate} setVisible={setModalGroupsCreate} action={createGroup}/>
             </View>
         </SafeAreaView>

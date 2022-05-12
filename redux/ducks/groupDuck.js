@@ -40,8 +40,8 @@ export let getMyGroups=(userId='')=> async(dispatch)=>{
     dispatch({type: GET_MY_GROUPS});
     try{
         let response = await ApiApp.getMyGroups(userId)
-        dispatch({type: GET_MY_GROUPS_SUCCESS, payload:response.data.data});
-        return response.data.data
+        console.log(response.data, 43)
+        dispatch({type: GET_MY_GROUPS_SUCCESS, payload: response.data.data});
     }catch (e){
         dispatch({type: ERROR_FETCH});
         return false

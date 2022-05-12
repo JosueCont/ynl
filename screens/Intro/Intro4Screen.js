@@ -8,7 +8,7 @@ import {Colors} from "../../utils/Colors";
 const Intro4Screen = () => {
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: Colors.gray}}>
-            <View flex={1} mx={4} mb={10}>
+            <View flex={1} mx={2} my={6}>
                 <ImageBackground source={bgIntro4} style={{flex: 1}} resizeMode={'contain'}>
                     <View flex={1} alignItems={'center'} justifyContent={'center'}>
                         <Image source={logoSmall}></Image>

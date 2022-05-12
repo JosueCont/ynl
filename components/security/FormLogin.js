@@ -10,6 +10,7 @@ import {
     Input,
     Link,
     NativeBaseProvider,
+    View,
     VStack
 } from "native-base";
 import logo from '../../assets/YNL.gif'
@@ -18,6 +19,7 @@ import {useFormik} from 'formik';
 import * as Yup from 'yup'
 import * as Google from 'expo-google-app-auth';
 import LinkedInModal from 'react-native-linkedin'
+import {resolvePlatform} from "../../utils/functions";
 
 export default (props) => {
     const navigation = useNavigation();
@@ -89,68 +91,77 @@ export default (props) => {
 
         return <Center w="100%">
             <Box safeArea p="2" py="8" w="90%" maxW="290">
-                <Heading size="lg" fontWeight="600" color="coolGray.800" _dark={{
-                    color: "warmGray.50"
-                }}>
-                    <VStack alignItems={'center'}>
-                        <Image source={logo}/>
-                    </VStack>
-                </Heading>
-                <Heading mt="1" _dark={{
-                    color: "warmGray.200"
-                }} color="coolGray.600" fontWeight="medium" size="xs">
-                    Sign in to continue!
-                </Heading>
+                {/*<Heading flex={1} size="lg" fontWeight="600" color="coolGray.800" _dark={{*/}
+                {/*    color: "warmGray.50"*/}
+                {/*}}>*/}
+                {/*    <VStack flex={1} alignItems={'center'}>*/}
+                {/*       */}
+                {/*    </VStack>*/}
+                {/*</Heading>*/}
+                <View flex={0.3} alignItems={'center'} justifyContent={'center'}>
+                    <Image source={logo} w={resolvePlatform(250, 200)} h={resolvePlatform(250, 200)}/>
+                </View>
+                <View flex={1}>
 
-                <VStack space={3} mt="5">
-                    <FormControl isInvalid={formik.errors.email}>
-                        <FormControl.Label>Email</FormControl.Label>
-                        <Input autoCapitalize="none"
-                               onChangeText={text => formik.setFieldValue('email', text)}/>
-                        <FormControl.ErrorMessage>
-                            {formik.errors.email}
-                        </FormControl.ErrorMessage>
-                    </FormControl>
-                    <FormControl isInvalid={formik.errors.password}>
-                        <FormControl.Label>Password</FormControl.Label>
-                        <Input type="password"
-                               onChangeText={text => formik.setFieldValue('password', text)}/>
-                        <FormControl.ErrorMessage>
-                            {formik.errors.password}
-                        </FormControl.ErrorMessage>
-                        <Link _text={{
-                            fontSize: "xs",
-                            fontWeight: "500",
-                            color: "red.500"
-                        }} alignSelf="flex-end" mt="1">
-                            Forget Password?
-                        </Link>
-                    </FormControl>
-                    <Button mt="1" isLoading={props.loading} isLoadingText={'Iniciando'} onPress={formik.handleSubmit}
-                            colorScheme="red">
-                        Iniciar
-                    </Button>
-                    <Button mt="1" isLoading={props.loading} isLoadingText={'Iniciando'} onPress={handleLoginGoogle}
-                            colorScheme="red">
-                        Login con Google
-                    </Button>
-                    <Button mt="1" isLoading={props.loading} isLoadingText={'Iniciando'} onPress={linkedInLogin}
-                            colorScheme="red">
-                        Login con LinkedIn
-                    </Button>
-                    <LinkedInModal
-                        clientID={clientID}
-                        clientSecret={clientSecret}
-                        redirectUri={redirectUri}
-                        onSuccess={token => console.log('token linkedin', token)}
-                    />
-                    <HStack justifyContent="center">
-                        <Button size="sm" colorScheme={'red'} onPress={() => navigation.navigate('Register')}
-                                variant="link">
-                            Registrarme
+
+                    <Heading mt="1" _dark={{
+                        color: "warmGray.200"
+                    }} color="coolGray.600" fontWeight="medium" size="xs">
+                        Sign in to continue!
+                    </Heading>
+
+                    <VStack space={3} mt="5">
+                        <FormControl isInvalid={formik.errors.email}>
+                            <FormControl.Label>Email</FormControl.Label>
+                            <Input autoCapitalize="none"
+                                   onChangeText={text => formik.setFieldValue('email', text)} returnKeyType={'done'}/>
+                            <FormControl.ErrorMessage>
+                                {formik.errors.email}
+                            </FormControl.ErrorMessage>
+                        </FormControl>
+                        <FormControl isInvalid={formik.errors.password}>
+                            <FormControl.Label>Password</FormControl.Label>
+                            <Input type="password"
+                                   onChangeText={text => formik.setFieldValue('password', text)}
+                                   returnKeyType={'done'}/>
+                            <FormControl.ErrorMessage>
+                                {formik.errors.password}
+                            </FormControl.ErrorMessage>
+                            <Link _text={{
+                                fontSize: "xs",
+                                fontWeight: "500",
+                                color: "red.500"
+                            }} alignSelf="flex-end" mt="1">
+                                Forget Password?
+                            </Link>
+                        </FormControl>
+                        <Button mt="1" isLoading={props.loading} isLoadingText={'Iniciando'}
+                                onPress={formik.handleSubmit}
+                                colorScheme="red">
+                            Iniciar
                         </Button>
-                    </HStack>
-                </VStack>
+                        <Button mt="1" isLoading={props.loading} isLoadingText={'Iniciando'} onPress={handleLoginGoogle}
+                                colorScheme="red">
+                            Login con Google
+                        </Button>
+                        <Button mt="1" isLoading={props.loading} isLoadingText={'Iniciando'} onPress={linkedInLogin}
+                                colorScheme="red">
+                            Login con LinkedIn
+                        </Button>
+                        <LinkedInModal
+                            clientID={clientID}
+                            clientSecret={clientSecret}
+                            redirectUri={redirectUri}
+                            onSuccess={token => console.log('token linkedin', token)}
+                        />
+                        <HStack justifyContent="center">
+                            <Button size="sm" colorScheme={'red'} onPress={() => navigation.navigate('Register')}
+                                    variant="link">
+                                Registrarme
+                            </Button>
+                        </HStack>
+                    </VStack>
+                </View>
             </Box>
         </Center>;
     };
