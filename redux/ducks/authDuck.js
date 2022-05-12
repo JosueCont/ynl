@@ -53,6 +53,16 @@ export let createSession = (data) => async (dispatch) => {
     }
 }
 
+export let emotionStatusAction = (userId) => async (dispatch) => {
+    try {
+        dispatch({type: START});
+        let response = await ApiApp.getEmotionStatus(userId);
+        dispatch({type: SUCCESS, payload: {emotionStatus: response.data.data.length}});
+    } catch (e) {
+        console.log(e)
+    }
+}
+
 export let loginEmail = (username, password) => async (dispatch) => {
     dispatch({type: LOGIN_EMAIL});
     console.log('loginEmail=========', username, password)

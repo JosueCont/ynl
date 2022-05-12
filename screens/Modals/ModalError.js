@@ -4,7 +4,7 @@ import {styles} from "./ModalStyleSheet";
 import {Icon, Text, View} from "native-base";
 import {MaterialIcons} from "@expo/vector-icons";
 
-const ModalError = ({visible, setVisible}) => {
+const ModalError = ({visible, setVisible, text = 'Ocurrio un error, intentalo más tarde'}) => {
     return (
         <Modal
             animationType={'slide'}
@@ -28,7 +28,7 @@ const ModalError = ({visible, setVisible}) => {
                     </View>
                     <View p={30}>
                         <Text textAlign={'center'} fontSize={22}>Aviso</Text>
-                        <Text fontSize={18} style={styles.modalText}>Ocurrio un error, intentalo más tarde</Text>
+                        <Text fontSize={18} style={styles.modalText}>{text}</Text>
                     </View>
                 </View>
             </View>

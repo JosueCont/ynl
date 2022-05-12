@@ -18,8 +18,6 @@ const NavigationContainerConfig = () => {
                     <StackLogged/> :
                     <StackAuth/>
             }
-
-            {/*<StackLogged />*/}
         </NavigationContainer>
 
     )

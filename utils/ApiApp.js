@@ -1,5 +1,6 @@
 import APIKit from "./AxiosApi";
 import _ from "lodash";
+import moment from "moment";
 
 class ApiApp {
     static ApisType = (url, method = "post", params = {}) => {
@@ -23,6 +24,11 @@ class ApiApp {
         }
     };
 
+
+    static getEmotionStatus = (userId) => {
+        return ApiApp.ApisType(`/api/feeling-records?filters[user][id][$eq]=${userId}&filters[createdAt][$gte]=${moment().format('YYYY-MM-DD')}&sort[0]=createdAt:desc&pagination[page]=1&pagination[pageSize]=1`, 'get')
+
+    }
 
     ///AUTH
 

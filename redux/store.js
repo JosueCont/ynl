@@ -2,7 +2,7 @@ import {applyMiddleware, combineReducers, createStore} from "redux"
 import thunk from "redux-thunk"
 import productsDuck from "./ducks/productsDuck";
 import {getDataObject} from '../utils/functions'
-import authDuck, {createSession} from "./ducks/authDuck";
+import authDuck, {createSession, emotionStatusAction} from "./ducks/authDuck";
 import feelingsDuck from "./ducks/feelingsDuck";
 import groupDuck from "./ducks/groupDuck";
 
@@ -26,6 +26,8 @@ export default () => {
             const jwt = await getDataObject('@jwt')
             if (user) {
                 createSession({user, jwt})(store.dispatch)
+                emotionStatusAction(user.id)(store.dispatch)
+
             }
         } catch (ex) {
             console.log(ex)

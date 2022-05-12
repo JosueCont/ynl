@@ -4,11 +4,13 @@ import {Alert, SafeAreaView} from 'react-native'
 import {loginEmail, loginGoogle} from "../../redux/ducks/authDuck";
 import FormLogin from "../../components/security/FormLogin";
 import {KeyboardAvoidingView, ScrollView} from "native-base";
+import ModalError from "../Modals/ModalError";
 
 const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle, authDuck}) => {
 
-    const [loading, setLoading] = useState(false)
-    const [hasLogged, setHasLogged] = useState(false)
+    const [loading, setLoading] = useState(false);
+    const [hasLogged, setHasLogged] = useState(false);
+    const [modalErrorVisible, setModalErrorVisible] = useState(null);
 
 
     useEffect(() => {
@@ -49,18 +51,16 @@ const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle, authDuc
         try {
             setLoading(true)
             const res = await loginEmail(values.email, values.password)
-
-            console.log(res, 52)
             if (res) {
                 setHasLogged(true)
                 navigation.navigate('IntroScreen')
+            } else {
+                setModalErrorVisible(true)
             }
 
         } catch (e) {
-            Alert.alert(
-                "Ups!",
-                "Algo ha salido mal, porfavor intenta nuevamente"
-            );
+            console.log(e)
+            setModalErrorVisible(true)
             setHasLogged(false)
         } finally {
             setLoading(false)
@@ -79,6 +79,8 @@ const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle, authDuc
                 <ScrollView>
                     <FormLogin loading={loading} onLoginGoogle={loginWithGoogle} onLogin={login}
                                onGoRegister={goRegister}/>
+                    <ModalError visible={modalErrorVisible} setVisible={setModalErrorVisible}
+                                text={'Algo ha salido mal, porfavor intenta nuevamente'}/>
                 </ScrollView>
             </KeyboardAvoidingView>
         </SafeAreaView>

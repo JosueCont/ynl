@@ -79,12 +79,9 @@ const IntroScreen = ({navigation}) => {
 
     const renderDoneButton = () => {
         return (
-            <View style={styles.buttonCircle}>
-                <TouchableOpacity onPress={() => nextScreen()}>
-                    <Icon as={MaterialIcons} name="done" size={5} color={'white'}/>
-                </TouchableOpacity>
-
-            </View>
+            <TouchableOpacity style={styles.buttonCircle} onPress={() => nextScreen()}>
+                <Icon as={MaterialIcons} name="done" size={5} color={'white'}/>
+            </TouchableOpacity>
         );
     };
 

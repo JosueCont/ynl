@@ -80,7 +80,7 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
                     />
                 }>
                 <View flex={1} mb={6} alignItems={'center'} backgroundColor={Colors.red} borderBottomLeftRadius={60}>
-                    <Image w={200} h={200} source={profile}
+                    <Image w={150} h={150} source={profile}
                            style={{resizeMode: 'cover', position: 'absolute', bottom: -20}}
                            borderRadius={100} borderWidth={2} borderColor={'white'}/>
                 </View>
