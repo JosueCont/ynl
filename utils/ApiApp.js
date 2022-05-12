@@ -70,7 +70,7 @@ class ApiApp {
     }
 
     static createGroup = (data) => {
-        return ApiApp.ApisType('/api/groups', 'post', data)
+        return ApiApp.ApisType('/api/create-group', 'post', data)
     }
 
 
