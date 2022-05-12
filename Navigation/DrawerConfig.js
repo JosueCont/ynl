@@ -15,6 +15,7 @@ import GroupsMembersAdd from "../screens/GroupsMembersAdd";
 import GroupsStartScreen from "../screens/GroupsStartScreen";
 import StatisticsScreen from "../screens/StatisticsScreen";
 import EmotionsPage from "../screens/EmotionsPage";
+import GroupsMembersScreen from "../screens/GroupsMembersScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -86,6 +87,7 @@ const DrawerConfig = ({accountDuck}) => {
             <Drawer.Screen name={'GroupsScreen'} component={GroupsScreen} options={{title: 'Mis grupos'}}/>
             <Drawer.Screen name={'GroupsStartScreen'} component={GroupsStartScreen}/>
             <Drawer.Screen name={'GroupsMembersAdd'} component={GroupsMembersAdd}/>
+            <Drawer.Screen name={'GroupsMembersScreen'} component={GroupsMembersScreen} options={{title: 'Miembros'}}/>
             <Drawer.Screen name={'StatisticsScreen'} component={StatisticsScreen} options={{title: 'Estadísticas'}}/>
             <Drawer.Screen name={'EmotionsPage'} component={EmotionsPage} options={{title: 'Estadísticas'}}/>
 

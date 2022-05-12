@@ -24,10 +24,10 @@ const IntroScreen = ({navigation}) => {
     const nextScreen = async () => {
         try {
             await AsyncStorage.setItem('@intro', '1');
+            navigation.navigate('DrawerNavigator')
         } catch (e) {
             console.log(e)
         }
-        navigation.navigate('LoginScreen')
     }
 
     const introStatus = async () => {
@@ -91,7 +91,6 @@ const IntroScreen = ({navigation}) => {
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: Colors.gray}}>
-
             <AppIntroSlider
                 data={slides}
                 renderItem={renderItem}

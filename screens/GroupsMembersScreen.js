@@ -1,30 +1,48 @@
+import React, {useEffect, useState} from "react";
 import {RefreshControl} from "react-native";
-import GroupsItem from "./Groups/Components/GroupsItem";
 import {ScrollView} from "native-base";
-import React, {useEffect, useState} from "@types/react";
 import {useIsFocused} from "@react-navigation/native";
 import ApiApp from "../utils/ApiApp";
+import GroupsMemberItem from "./Groups/Components/GroupsMemberItem";
 
-const GroupsMembersScreen = () => {
+const GroupsMembersScreen = ({route}) => {
 
     const isFocused = useIsFocused();
-
-    const [modalGroupsCreate, setModalGroupsCreate] = useState(null);
-    const [groups, setGroups] = useState(null);
+    const [members, setMembers] = useState([]);
     const [loading, setLoading] = useState(null);
 
 
     useEffect(() => {
         if (isFocused) {
-            getGroups();
+            getGroupsMembersFunction();
         }
     }, [isFocused])
 
-    const getGroups = async () => {
+    const getGroupsMembersFunction = async () => {
         try {
             setLoading(true)
-            const response = await ApiApp.getMyGroups(authDuck.user.id)
-            setGroups(response.data.data)
+            const response = await ApiApp.getGroupMembers(route.params.groupId)
+            console.log(response.data.data);
+            let membersArray = [];
+
+            for (let item of response.data.data.requests) {
+                console.log(item)
+
+                membersArray.push({
+                    id: item.user.id,
+                    name: item.user.email,
+                    status: item.status
+                })
+            }
+
+            for (let item of response.data.data.group[0].members) {
+                membersArray.push({
+                    id: item.id,
+                    name: item.user.email,
+                    status: item.status
+                })
+            }
+            setMembers(membersArray)
         } catch (ex) {
             console.log(ex)
         } finally {
@@ -42,15 +60,16 @@ const GroupsMembersScreen = () => {
             refreshControl={
                 <RefreshControl
                     refreshing={loading}
-                    onRefresh={() => getGroups()}
+                    onRefresh={() => getGroupsMembersFunction()}
                 />
             }>
             {
                 loading == false &&
-                groups.map((item) => {
-                    console.log(item.id)
+                members.map((item) => {
                     return (
-                        <GroupsItem groupId={item.id} title={item.attributes.name} navigation={navigation}/>
+                        // <GroupsItem groupId={item.id} title={item.attributes.name}/>
+                        <GroupsMemberItem title={item.name}
+                                          pending={(item.status === 0 || item.status === 2) ? true : false}/>
                     )
                 })
             }

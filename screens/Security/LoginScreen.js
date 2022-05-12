@@ -53,7 +53,7 @@ const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle, authDuc
             console.log(res, 52)
             if (res) {
                 setHasLogged(true)
-                navigation.navigate('HomeScreen')
+                navigation.navigate('IntroScreen')
             }
 
         } catch (e) {

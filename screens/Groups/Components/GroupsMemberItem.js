@@ -3,20 +3,19 @@ import imageLogo from '../../../assets/logo.png'
 import {Colors} from "../../../utils/Colors";
 import {TouchableOpacity} from "react-native";
 
-const GroupsItem = ({groupId, title, navigation}) => {
+const GroupsMemberItem = ({title, pending = true}) => {
     return (
-        <TouchableOpacity style={{flex: 1}}
-                          onPress={() => navigation.navigate('GroupsMembersScreen', {groupId: groupId})}>
+        <TouchableOpacity style={{flex: 1}}>
             <View flexDir={'row'} my={3} borderBottomWidth={0.5} borderBottomColor={Colors.red} mx={2} pb={4}>
                 <View flex={0.3} alignItems={'center'} justifyContent={'center'}>
-                    <Avatar size="md" source={imageLogo}/>
+                    <Avatar size="md" source={imageLogo} style={{opacity: pending ? 0.5 : 1}}/>
                 </View>
                 <View flex={1} justifyContent={'center'}>
-                    <Text fontSize={18} n>{title}</Text>
+                    <Text fontSize={18} style={{opacity: pending ? 0.5 : 1}}>{title}</Text>
                 </View>
             </View>
         </TouchableOpacity>
     )
 }
 
-export default GroupsItem;
+export default GroupsMemberItem;

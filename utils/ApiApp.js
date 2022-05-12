@@ -69,6 +69,10 @@ class ApiApp {
         return ApiApp.ApisType(`/api/groups?populate=*`, 'get')
     }
 
+    static getGroupMembers = (groupId) => {
+        return ApiApp.ApisType(`/api/group_detail?id=${groupId}`, 'get')
+    }
+
     static createGroup = (data) => {
         return ApiApp.ApisType('/api/create-group', 'post', data)
     }
