@@ -89,6 +89,7 @@ const DrawerConfig = ({accountDuck, authDuck}) => {
                 authDuck.emotionStatus === 0 &&
                 <Drawer.Screen name={'EmotionsPage'} component={EmotionsPage} options={{title: ''}}/>
 
+
             }
 
             <Drawer.Screen name={'HomeScreen'} component={HomeScreen} options={{title: ''}}/>
@@ -98,7 +99,7 @@ const DrawerConfig = ({accountDuck, authDuck}) => {
             <Drawer.Screen name={'GroupsMembersAdd'} component={GroupsMembersAdd}/>
             <Drawer.Screen name={'GroupsMembersScreen'} component={GroupsMembersScreen} options={{title: 'Miembros'}}/>
             <Drawer.Screen name={'StatisticsScreen'} component={StatisticsScreen} options={{title: 'Estadísticas'}}/>
-            <Drawer.Screen name={'EmotionsPage'} component={EmotionsPage} options={{title: ''}}/>
+            <Drawer.Screen name={'EmotionsPageV2'} component={EmotionsPage} options={{title: ''}}/>
             <Drawer.Screen name={'EmotionModal'} component={EmotionModal} options={{title: ''}}/>
             <Drawer.Screen name={'ProfileScreen'} component={ProfileScreen} options={{title: 'Perfil'}}/>
             <Drawer.Screen name={'RotateCustom'} component={RotateCustom} options={{title: 'Ruleta'}}/>

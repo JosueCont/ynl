@@ -58,7 +58,6 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
             try {
                 setLoading(true)
                 const response = await ApiApp.getMyGroups(authDuck.user.id)
-                console.log(response.data)
                 setGroups(response.data.data)
             } catch (e) {
                 console.log(e, 61)
