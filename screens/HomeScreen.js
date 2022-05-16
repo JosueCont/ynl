@@ -28,7 +28,6 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
     }, [isFocused])
 
 
-
     const _logOut = async () => {
         try {
             await logOutAction()
@@ -55,50 +54,73 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
     }
 
     const getGroups = async () => {
-            try {
-                setLoading(true)
-                const response = await ApiApp.getMyGroups(authDuck.user.id)
-                setGroups(response.data.data)
-            } catch (e) {
-                console.log(e, 61)
-            } finally {
-                setLoading(false)
-            }
+        try {
+            setLoading(true)
+            const response = await ApiApp.getMyGroups(authDuck.user.id)
+            setGroups(response.data.data)
+        } catch (e) {
+            console.log(e, 61)
+        } finally {
+            setLoading(false)
+        }
 
+    }
+
+    const shadowStyle = {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 15,
+            height: 4,
+        },
+        shadowOpacity: 0.24,
+        shadowRadius: 15.27,
+        elevation: 20,
     }
 
     return (
         <SafeAreaView style={{flex: 1}}>
             <ScrollView
-                contentContainerStyle={{flexGrow: 1}}
+                contentContainerStyle={{flexGrow: 1, backgroundColor: Colors.white}}
                 refreshControl={
                     <RefreshControl
-                        style={{backgroundColor: Colors.red}}
-                        tintColor={'white'}
+                        style={{backgroundColor: 'white'}}
+                        tintColor={Colors.red}
                         refreshing={loading}
                     />
                 }>
-                <View flex={1} mb={6} alignItems={'center'} backgroundColor={Colors.red} borderBottomLeftRadius={60}>
-                    <Image w={150} h={150} source={profile}
-                           style={{resizeMode: 'cover', position: 'absolute', bottom: -20}}
-                           borderRadius={100} borderWidth={2} borderColor={'white'}/>
+                <View flex={1} alignItems={'center'}>
+                    <Image w={220} h={220} source={profile}
+                           style={[
+                               {resizeMode: 'cover'}]}
+                           borderRadius={110} borderWidth={2} borderColor={'white'}/>
                 </View>
                 <View flex={1} mx={4}>
 
-                    <Text mb={6} fontSize={24} color={'red.400'} textAlign={'center'}>{authDuck.user.username}</Text>
-                    <View flexDir={'row'} mb={2}>
+                    <Text fontSize={24} color={Colors.red} textAlign={'center'}>{authDuck.user.username}</Text>
+                    <Text mb={6} fontSize={16} color={Colors.red} textAlign={'center'}>17/Mayo/202</Text>
+
+                    <View
+                        flexDir={'row'}
+                        mb={8}
+                        bgColor={Colors.gray}
+                        style={shadowStyle}
+                        borderRadius={10}
+                        p={3}>
+                        <View flex={1} height={70} alignItems={'center'} justifyContent={'center'}>
+                            <Icon as={MaterialIcons} name={'mood'} size={'6xl'} color={Colors.red}></Icon>
+                        </View>
                         <View flex={1} height={70} mr={1}>
                             <TouchableOpacity
                                 style={{
                                     flex: 1,
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    backgroundColor: Colors.red,
                                     borderRadius: 10
                                 }}
                                 onPress={() => navigation.navigate('YourFeelScreen')}>
-                                <Text color={'white'} fontSize={18}>Última emoción</Text>
-                                <Text color={'white'} fontSize={18}>{lastEmotion}</Text>
+                                <Text fontSize={12}>Última emoción</Text>
+                                <Text fontSize={26} color={Colors.red}>{lastEmotion}</Text>
+                                <Text fontSize={12}>Juguetón - Descarado</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -115,8 +137,7 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
                                 }}
                                 onPress={() => navigation.navigate('YourFeelScreen')}>
                                 <Icon as={MaterialIcons} name={'mood'} size={9} color={'white'}></Icon>
-                                <Text color={'white'} size={'sm'}>¿Cómo te
-                                    calificas?</Text>
+                                <Text color={'white'} size={'sm'}>Del 1 al 10</Text>
                             </TouchableOpacity>
                         </View>
                         <View flex={1} mr={1}>
@@ -132,7 +153,7 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
                                     HistoryPage()
                                 }}>
                                 <Icon as={MaterialIcons} name={'donut-large'} size={7} color={'white'}></Icon>
-                                <Text color={'white'} size={'sm'}>Historial</Text>
+                                <Text color={'white'} size={'sm'}>Mi Avance</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -150,8 +171,7 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
                                     navigation.navigate('EmotionsPage')
                                 }}>
                                 <Icon as={MaterialIcons} name={'nat'} size={7} color={'white'}></Icon>
-                                <Text color={'white'} size={'sm'}>Ruleta de
-                                    emociones</Text>
+                                <Text color={'white'} size={'sm'}>Nueva emoción</Text>
                             </TouchableOpacity>
                         </View>
                         <View flex={1} height={70} mr={1}>
@@ -221,7 +241,7 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
                                     borderRadius: 10
                                 }}
                                 onPress={() => {
-                                    navigation.navigate('RotateCustom')
+                                    navigation.navigate('RotateCustomScreen')
                                 }}>
                                 <Icon as={MaterialIcons} name={'nat'} size={7} color={'white'}></Icon>
                                 <Text color={'white'} size={'sm'}>Ruleta de
@@ -230,10 +250,9 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
                         </View>
                     </View>
                     <View flex={1} justifyContent={'center'}>
-                        <Button colorScheme={'red'} onPress={() => _logOut()}>Cerrar Sesión</Button>
+                        <Button colorScheme={'orange'} onPress={() => _logOut()}>Cerrar Sesión</Button>
                     </View>
                 </View>
-
             </ScrollView>
         </SafeAreaView>
     )

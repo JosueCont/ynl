@@ -18,7 +18,7 @@ import EmotionsPage from "../screens/EmotionsPage";
 import GroupsMembersScreen from "../screens/GroupsMembersScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import EmotionModal from "../screens/EmotionModal";
-import RotateCustom from "../screens/RotateCustom";
+import RotateCustomScreen from "../screens/RotateCustomScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -53,13 +53,13 @@ const DrawerConfig = ({accountDuck, authDuck}) => {
                                 borderRadius: 5,
                                 marginLeft: 10
                             }}>
-                                <Icon as={MaterialIcons} name={'arrow-back-ios'} color={'white'}/>
+                                <Icon as={MaterialIcons} name={'arrow-back-ios'} color={Colors.red}/>
 
                             </TouchableOpacity>
                         )
                     }
                 },
-                headerStyle: {backgroundColor: Colors.red},
+                headerStyle: {backgroundColor: Colors.white},
                 headerTitleAlign: 'center',
                 headerTitleStyle: {color: 'black'},
                 // headerTitle: () => {
@@ -80,7 +80,7 @@ const DrawerConfig = ({accountDuck, authDuck}) => {
                     }}>
                         {/*<Image source={menuImage} resizeMode={'contain'} width={30} height={30}*/}
                         {/*       style={{tintColor: Colors.gray}}/>*/}
-                        <Icon as={MaterialIcons} color={'white'} name={'menu'}></Icon>
+                        <Icon as={MaterialIcons} color={Colors.red} name={'menu'}></Icon>
                     </TouchableOpacity>
                 ),
             })}
@@ -102,7 +102,7 @@ const DrawerConfig = ({accountDuck, authDuck}) => {
             <Drawer.Screen name={'EmotionsPageV2'} component={EmotionsPage} options={{title: ''}}/>
             <Drawer.Screen name={'EmotionModal'} component={EmotionModal} options={{title: ''}}/>
             <Drawer.Screen name={'ProfileScreen'} component={ProfileScreen} options={{title: 'Perfil'}}/>
-            <Drawer.Screen name={'RotateCustom'} component={RotateCustom} options={{title: 'Ruleta'}}/>
+            <Drawer.Screen name={'RotateCustomScreen'} component={RotateCustomScreen} options={{title: ''}}/>
 
         </Drawer.Navigator>
     );

@@ -1,13 +1,15 @@
 import React, {useRef, useState} from 'react';
-import {Alert, Animated, SafeAreaView} from 'react-native';
+import {Animated} from 'react-native';
 import circleParts from '../assets/circlev2.png';
-import {useAnimatedStyle, useSharedValue} from "react-native-reanimated";
+import {useSharedValue} from "react-native-reanimated";
 import {Gesture, GestureDetector} from "react-native-gesture-handler";
 import * as Haptics from 'expo-haptics';
 import {Icon, Text, View} from "native-base";
 import {FontAwesome} from "@expo/vector-icons";
+import ScreenBaseV1 from "./Components/ScreenBaseV1";
+import {Colors} from "../utils/Colors";
 
-const RotateCustom = () => {
+const RotateCustomScreen = () => {
 
 
     const emotions = [
@@ -48,51 +50,39 @@ const RotateCustom = () => {
             console.log('end')
 
         })
-    const singleTap = Gesture.Tap()
-        .maxDuration(250)
-        .onStart(() => {
-            setDeg(deg + 45)
-        });
-
-    const doubleTap = Gesture.Tap()
-        .maxDuration(250)
-        .onStart(() => {
-            Alert.alert('Double tap!');
-        });
-
-
-    const animatedStyle = useAnimatedStyle(() => ({
-        transform: [{rotateZ: `${(rotation.value / Math.PI) * 180}deg`}]
-    }));
 
 
     return (
-        <SafeAreaView style={{flex: 1}}>
-            <View flex={1} alignItems={'center'} justifyContent={'center'}>
-                <View flex={0.4} alignItems={'center'} justifyContent={'flex-end'}>
-                    <Icon as={FontAwesome} name={'arrow-down'} size={'2xl'}></Icon>
-                </View>
+        <ScreenBaseV1>
+            <View>
 
-                <View flex={1}>
-                    <GestureDetector gesture={Gesture.Exclusive(rotationGesture)}>
-                        <Animated.Image ref={imageRef} source={circleParts} style={{
-                            width: 300,
-                            height: 300,
-                            transform: [{rotate: deg + `deg`}],
-                            borderRadius: 150
-                        }}/>
-                    </GestureDetector>
+                <Text color={Colors.red} size={'lg'} textAlign={'center'}>¿Cómo te sientes hoy?</Text>
+                <Text color={Colors.red} size={'md'} textAlign={'center'}>17/Mayo/2022</Text>
 
-                </View>
-
-                <View>
-                    {
-                        <Text fontSize={24}>{emotions[emotionPosition].name}</Text>
-                    }
-                </View>
             </View>
-        </SafeAreaView>
+            <View flex={0.4} alignItems={'center'} justifyContent={'flex-end'}>
+                <Icon as={FontAwesome} name={'arrow-down'} size={'2xl'}></Icon>
+            </View>
+
+            <View flex={1}>
+                <GestureDetector gesture={Gesture.Exclusive(rotationGesture)}>
+                    <Animated.Image ref={imageRef} source={circleParts} style={{
+                        width: 300,
+                        height: 300,
+                        transform: [{rotate: deg + `deg`}],
+                        borderRadius: 150
+                    }}/>
+                </GestureDetector>
+
+            </View>
+
+            <View>
+                {
+                    <Text fontSize={24}>{emotions[emotionPosition].name}</Text>
+                }
+            </View>
+        </ScreenBaseV1>
     );
 };
 
-export default RotateCustom;
+export default RotateCustomScreen;
