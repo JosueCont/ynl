@@ -134,13 +134,20 @@ export let registerAction = (data) => async (dispatch) => {
     dispatch({type: START});
     try {
         let response = await ApiApp.register(data);
-        console.log(response, 120)
         dispatch({type: SUCCESS});
 
     } catch (e) {
-        console.log(e.response)
+        console.log(e.response, 140)
         throw await ApiApp.resolveError(e.response);
     }
 }
+
+
+export let setAttribute = (key, value) => {
+    return async (dispatch, getState) => {
+        dispatch({type: SUCCESS, payload: {[key]: value}})
+    };
+}
+
 
 export default authDuck;

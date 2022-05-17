@@ -1,10 +1,8 @@
 import * as React from "react";
-import { Box,Image, Heading,HStack,Text, VStack, FormControl, Input, Button, Center, NativeBaseProvider, Link } from "native-base";
+import {Box, Button, Center, FormControl, Heading, Image, Input, NativeBaseProvider, VStack} from "native-base";
 import logo from '../../assets/YNL.gif'
-import { useFormik } from 'formik';
+import {useFormik} from 'formik';
 import * as Yup from 'yup'
-import {useEffect} from "react";
-
 
 
 export default (props) => {
@@ -70,7 +68,7 @@ export default (props) => {
                             </FormControl.ErrorMessage>
                         </FormControl>
                         <Button isLoading={props.loading} isLoadingText={'Registrando'} mt="2" onPress={formik.handleSubmit} colorScheme="red">
-                            Registrarme
+                            Continuar
                         </Button>
                     </VStack>
 

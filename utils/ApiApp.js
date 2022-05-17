@@ -25,6 +25,19 @@ class ApiApp {
     };
 
 
+    static registerPhone = (data) => {
+        return ApiApp.ApisType(`/api/phone-verifications`, 'post', data)
+    }
+
+    static registerPhoneVerify = (data) => {
+        return ApiApp.ApisType(`/api/phone-verifications/verify`, 'post', data)
+    }
+
+
+    static register = (data) => {
+        return ApiApp.ApisType(`/api/auth/local/register`, 'post', data)
+    }
+
     static getEmotionStatus = (userId) => {
         return ApiApp.ApisType(`/api/feeling-records?filters[user][id][$eq]=${userId}&filters[createdAt][$gte]=${moment().format('YYYY-MM-DD')}&sort[0]=createdAt:desc&pagination[page]=1&pagination[pageSize]=1`, 'get')
 
@@ -121,10 +134,6 @@ class ApiApp {
         return ApiApp.ApisType(`/payroll/payroll-voucher/?${data}`, "get");
     };
 
-
-    static register = (data) => {
-        return ApiApp.ApisType(`/api/auth/local/register`, 'post', data)
-    }
 
     static resolveError = async (response) => {
         if (response.status <= 500) {
