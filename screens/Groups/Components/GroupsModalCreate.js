@@ -23,12 +23,12 @@ const GroupsModalCreate = ({visible, setVisible, action}) => {
                     <Input fontSize={12} onChangeText={(v) => setValue(v)}></Input>
                     <View flexDir={'row'} mt={4}>
                         <View flex={1} mr={1}>
-                            <Button size={'sm'} colorScheme={'red'} onPress={() => {
+                            <Button size={'sm'} colorScheme={'orange'} onPress={() => {
                                 setVisible(false)
                             }}>Cancelar</Button>
                         </View>
                         <View flex={1} ml={1}>
-                            <Button size={'sm'} colorScheme={'red'} onPress={() => action(value)}>Crear</Button>
+                            <Button size={'sm'} colorScheme={'orange'} onPress={() => action(value)}>Crear</Button>
                         </View>
                     </View>
 

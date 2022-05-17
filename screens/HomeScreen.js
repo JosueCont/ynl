@@ -37,7 +37,7 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
     }
 
     const HistoryPage = () => {
-        navigation.navigate('HistoryList')
+       // navigation.navigate('HistoryList')
     }
 
     const getHome = async () => {

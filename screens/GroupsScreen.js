@@ -71,7 +71,7 @@ const GroupsScreen = ({authDuck, navigation}) => {
                     }
                 </ScrollView>
                 <View flex={0.1}>
-                    <Button colorScheme={'red'} onPress={() => setModalGroupsCreate(true)}>Crear nuevo grupo</Button>
+                    <Button colorScheme={'orange'} onPress={() => setModalGroupsCreate(true)}>Crear nuevo grupo</Button>
                 </View>
                 <GroupsModalCreate visible={modalGroupsCreate} setVisible={setModalGroupsCreate} action={createGroup}/>
             </View>

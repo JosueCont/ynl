@@ -53,7 +53,6 @@ const GroupsMembersScreen = ({route}) => {
         <ScrollView
             flex={1}
             nestedScrollEnabled={true}
-            my={4}
             backgroundColor={'white'}
             borderRadius={10}
             pt={5}

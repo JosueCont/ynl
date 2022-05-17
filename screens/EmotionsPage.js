@@ -170,7 +170,7 @@ const EmotionsPage = ({feelingsDuck, navigation, getEmotions, getEmotionsV3, aut
                             (!parentSelected && loading === false) &&
                             parents.map((item, i) => {
                                 return (
-                                    <Button block key={i} onPress={() => {
+                                    <Button colorScheme={'orange'} block key={i} onPress={() => {
                                         setParentSelected(item.id)
                                         setCurrentFeelingSelected(item)
                                         getSubParents(item.id)
@@ -187,7 +187,7 @@ const EmotionsPage = ({feelingsDuck, navigation, getEmotions, getEmotionsV3, aut
                             subParents.map((item, i) => {
                                 console.log(item)
                                 return (
-                                    <Button block key={i} onPress={() => {
+                                    <Button colorScheme={'orange'} block key={i} onPress={() => {
                                         setSubParentSelected(item.id)
                                         getChildren(item.id)
                                     }} mb={2}>
@@ -201,7 +201,7 @@ const EmotionsPage = ({feelingsDuck, navigation, getEmotions, getEmotionsV3, aut
                             (children && subParentSelected) &&
                             children.map((item, i) => {
                                 return (
-                                    <Button block key={i} onPress={() => {
+                                    <Button colorScheme={'orange'} block key={i} onPress={() => {
                                         onSelectEmotion(item)
                                     }} mb={2}>
                                         {item.attributes.name}
