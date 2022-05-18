@@ -106,8 +106,8 @@ class ApiApp {
         return ApiApp.ApisType("/person/person/save_person_jwt/", "post", data);
     };
 
-    static updateProfile = (data) => {
-        return ApiApp.ApisType(`/person/person/${data.id}/`, "put", data);
+    static updateProfile = (userId, data) => {
+        return ApiApp.ApisType(`/api/users/${userId}`, "put", data);
     };
 
     static updatePhoto = (data) => {
@@ -132,6 +132,11 @@ class ApiApp {
 
     static getPayrollVouchers = (data) => {
         return ApiApp.ApisType(`/payroll/payroll-voucher/?${data}`, "get");
+    };
+
+
+    static getProfile = (userId) => {
+        return ApiApp.ApisType(`/api/users/${userId}`, "get");
     };
 
 

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Text, View} from "native-base";
+import {Button, Icon, Text, View} from "native-base";
 import {CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell,} from 'react-native-confirmation-code-field';
 import {KeyboardAvoidingView, SafeAreaView} from "react-native";
 import {Colors} from "../../utils/Colors";
@@ -8,6 +8,7 @@ import ApiApp from "../../utils/ApiApp";
 import {connect} from "react-redux";
 import {registerAction} from "../../redux/ducks/authDuck";
 import ModalError from "../Modals/ModalError";
+import {MaterialIcons} from "@expo/vector-icons";
 
 const CELL_COUNT = 4;
 
@@ -41,6 +42,7 @@ const VerificationCodeScreen = ({navigation, route, authDuck, registerAction}) =
                     email: email,
                     password: password
                 })
+
                 navigation.navigate('SuccessScreen')
 
 
@@ -60,8 +62,11 @@ const VerificationCodeScreen = ({navigation, route, authDuck, registerAction}) =
     return (
         <SafeAreaView style={{flex: 1}}>
             <KeyboardAvoidingView flex={1} behavior={'padding'}>
-                <View flex={1} bgColor={Colors.red}>
-
+                <View flex={1} bgColor={Colors.red} alignItems={'center'} justifyContent={'center'}
+                      borderBottomRadius={40}>
+                    <Icon as={MaterialIcons} name={'message'} size={'5xl'} color={'white'}/>
+                    <Text color={'white'}>Código de verificacion</Text>
+                    <Text color={'white'} size={'md'}>Por favor digita el código enviado a {route.params.phone}</Text>
                 </View>
                 <View flex={1} mx={10}>
                     <View flex={1} justifyContent={'center'}>

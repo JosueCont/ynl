@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Button, Icon, Image, Text, View} from "native-base";
+import {Button, Icon, Image, Skeleton, Text, View} from "native-base";
 import {connect} from "react-redux";
 import {RefreshControl, SafeAreaView, ScrollView, TouchableOpacity} from "react-native";
 import {logOutAction} from "../redux/ducks/authDuck";
@@ -9,6 +9,7 @@ import profile from '../assets/profile.jpg';
 import {Colors} from "../utils/Colors";
 import {MaterialIcons} from "@expo/vector-icons";
 import ApiApp from "../utils/ApiApp";
+import bg1 from '../assets/bg1.png'
 
 const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
 
@@ -18,6 +19,9 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
     const [loading, setLoading] = useState(false);
     const [groups, setGroups] = useState(null);
     const [lastEmotion, setLastEmotion] = useState(null);
+    const [days, setDays] = useState([]);
+    const [fullName, setFullName] = useState(null);
+
 
     useEffect(() => {
         if (isFocused) {
@@ -45,7 +49,10 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
             setLoading(true)
 
             const res = await ApiApp.getHomeData(authDuck.user.id)
+            console.log(res.data)
+            setDays(res.data.data.days)
             setLastEmotion(res.data.data.lastEmotion.label)
+            setFullName(res.data.data.userInfo.fullName)
         } catch (e) {
             console.log(e)
         } finally {
@@ -88,16 +95,47 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
                         refreshing={loading}
                     />
                 }>
-                <View flex={1} alignItems={'center'}>
+                <View flex={1} alignItems={'center'} justifyContent={'center'} mb={2}>
                     <Image w={220} h={220} source={profile}
                            style={[
                                {resizeMode: 'cover'}]}
                            borderRadius={110} borderWidth={2} borderColor={'white'}/>
+                    <Image source={bg1} style={{
+                        position: 'absolute',
+                        resizeMode: 'contain',
+                        zIndex: -1,
+                        width: '150%',
+                        height: 100
+                    }}></Image>
                 </View>
                 <View flex={1} mx={4}>
 
-                    <Text fontSize={24} color={Colors.red} textAlign={'center'}>{authDuck.user.username}</Text>
-                    <Text mb={6} fontSize={16} color={Colors.red} textAlign={'center'}>17/Mayo/202</Text>
+                    <Text mb={4} fontSize={24} color={Colors.red} textAlign={'center'}>{fullName}</Text>
+                    <Text fontSize={14} color={Colors.red} textAlign={'center'}>17/Mayo/202</Text>
+
+                    {
+                        loading === true ?
+                            <Skeleton height={60} my={2}/> :
+                            <View my={2} width={'70%'} alignSelf={'center'} height={60} flexDir={'row'}
+                                  alignItems={'center'} justifyContent={'center'}>
+
+                                {
+                                    days.map((item) => {
+                                        console.log(item)
+                                        return (
+                                            <View flex={1} alignItems={'center'} justifyContent={'center'}>
+                                                <Text fontSize={7} textAlign={'center'} mb={1}>{item.alias}</Text>
+                                                <View style={{width: 20, height: 20}} bgColor={'#' + item.color}
+                                                      borderRadius={15} borderWidth={0.5} borderColor={Colors.red}>
+
+                                                </View>
+                                            </View>
+                                        )
+                                    })
+                                }
+
+                            </View>
+                    }
 
                     <View
                         flexDir={'row'}
@@ -214,20 +252,6 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
                             </TouchableOpacity>
                         </View>
                         <View flex={1} height={70} mr={1}>
-                            <TouchableOpacity
-                                style={{
-                                    flex: 1,
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    backgroundColor: Colors.red,
-                                    borderRadius: 10
-                                }}
-                                onPress={() => {
-                                    navigation.navigate('ProfileScreen')
-                                }}>
-                                <Icon as={MaterialIcons} name={'person-outline'} size={7} color={'white'}></Icon>
-                                <Text color={'white'} size={'sm'}>Perfil</Text>
-                            </TouchableOpacity>
                         </View>
                     </View>
                     <View flexDir={'row'} mb={2}>

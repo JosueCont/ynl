@@ -20,6 +20,7 @@ import * as Yup from 'yup'
 import * as Google from 'expo-google-app-auth';
 import LinkedInModal from 'react-native-linkedin'
 import {resolvePlatform} from "../../utils/functions";
+import {Colors} from "../../utils/Colors";
 
 export default (props) => {
     const navigation = useNavigation();
@@ -130,22 +131,22 @@ export default (props) => {
                             <Link _text={{
                                 fontSize: "xs",
                                 fontWeight: "500",
-                                color: "red.500"
+                                color: Colors.red
                             }} alignSelf="flex-end" mt="1">
                                 Forget Password?
                             </Link>
                         </FormControl>
                         <Button mt="1" isLoading={props.loading} isLoadingText={'Iniciando'}
                                 onPress={formik.handleSubmit}
-                                colorScheme="red">
+                                colorScheme='orange'>
                             Iniciar
                         </Button>
                         <Button mt="1" isLoading={props.loading} isLoadingText={'Iniciando'} onPress={handleLoginGoogle}
-                                colorScheme="red">
+                                colorScheme="orange">
                             Login con Google
                         </Button>
                         <Button mt="1" isLoading={props.loading} isLoadingText={'Iniciando'} onPress={linkedInLogin}
-                                colorScheme="red">
+                                colorScheme="orange">
                             Login con LinkedIn
                         </Button>
                         <LinkedInModal
@@ -155,7 +156,7 @@ export default (props) => {
                             onSuccess={token => console.log('token linkedin', token)}
                         />
                         <HStack justifyContent="center">
-                            <Button size="sm" colorScheme={'red'} onPress={() => navigation.navigate('Register')}
+                            <Button size="sm" colorScheme={'orange'} onPress={() => navigation.navigate('Register')}
                                     variant="link">
                                 Registrarme
                             </Button>
