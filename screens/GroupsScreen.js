@@ -63,7 +63,7 @@ const GroupsScreen = ({authDuck, navigation}) => {
                     {
                         loading == false &&
                         groups.map((item) => {
-                            console.log(item.id)
+                            console.log(item)
                             return (
                                 <GroupsItem groupId={item.id} title={item.attributes.name} navigation={navigation}/>
                             )
