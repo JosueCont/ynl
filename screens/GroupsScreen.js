@@ -1,7 +1,7 @@
-import {Button, ScrollView, View} from "native-base";
+import React, {useEffect, useState} from "react";
+import {Button, ScrollView, Text, View} from "native-base";
 import {RefreshControl, SafeAreaView} from "react-native";
 import GroupsItem from "./Groups/Components/GroupsItem";
-import React, {useEffect, useState} from "react";
 import {Colors} from "../utils/Colors";
 import ApiApp from "../utils/ApiApp";
 import {connect} from "react-redux";
@@ -12,7 +12,7 @@ const GroupsScreen = ({authDuck, navigation}) => {
     const isFocused = useIsFocused();
 
     const [modalGroupsCreate, setModalGroupsCreate] = useState(null);
-    const [groups, setGroups] = useState(null);
+    const [groups, setGroups] = useState([]);
     const [loading, setLoading] = useState(null);
 
 
@@ -49,6 +49,7 @@ const GroupsScreen = ({authDuck, navigation}) => {
                 {/*<Text textAlign={'center'} fontSize={24}>Mis grupos/Clubs</Text>*/}
                 <ScrollView
                     flex={1}
+
                     nestedScrollEnabled={true}
                     my={4}
                     backgroundColor={'white'}
@@ -60,14 +61,44 @@ const GroupsScreen = ({authDuck, navigation}) => {
                             onRefresh={() => getGroups()}
                         />
                     }>
+
                     {
-                        loading == false &&
-                        groups.map((item) => {
-                            console.log(item)
-                            return (
-                                <GroupsItem groupId={item.id} title={item.attributes.name} navigation={navigation}/>
-                            )
-                        })
+                        loading == false && groups.length > 0 ?
+                            <View>
+                                <Text fontSize={24} color={Colors.red} textAlign={'center'}>Invitación a grupos</Text>
+                                {
+                                    groups.map((item) => {
+                                        return (
+                                            <GroupsItem groupId={item.id} title={item.attributes.name}
+                                                        navigation={navigation}/>
+                                        )
+                                    })
+                                }
+                            </View>
+                            :
+                            loading === false && groups.length === 0 &&
+                            <View flex={1} alignItems={'center'} justifyContent={'center'}>
+                                <Text fontSize={20}>Sin grupos</Text>
+                            </View>
+                    }
+                    {
+                        loading == false && groups.length > 0 ?
+                            <View>
+                                <Text fontSize={24} color={Colors.red} textAlign={'center'}>Mis grupos</Text>
+                                {
+                                    groups.map((item) => {
+                                        return (
+                                            <GroupsItem groupId={item.id} title={item.attributes.name}
+                                                        navigation={navigation}/>
+                                        )
+                                    })
+                                }
+                            </View>
+                            :
+                            loading === false && groups.length === 0 &&
+                            <View flex={1} alignItems={'center'} justifyContent={'center'}>
+                                <Text fontSize={20}>Sin grupos</Text>
+                            </View>
                     }
                 </ScrollView>
                 <View flex={0.1}>
