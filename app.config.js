@@ -34,7 +34,8 @@ const android = {
         foregroundImage: "./assets/adaptive-icon.png",
         backgroundColor: "#FFFFFF"
     },
-    package: "com.hiumanlab.ynl"
+    package: "com.hiumanlab.ynl",
+    permissions: []
 };
 
 module.exports = () => {
