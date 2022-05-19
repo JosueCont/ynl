@@ -24,11 +24,12 @@ const IntroScreen = ({navigation}) => {
     const nextScreen = async () => {
         try {
             await AsyncStorage.setItem('@intro', '1');
-            navigation.navigate('HomeScreen')
+            navigation.navigate('DrawerNavigator')
         } catch (e) {
             console.log(e)
         }
     }
+
 
     const introStatus = async () => {
         // try {

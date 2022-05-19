@@ -84,6 +84,16 @@ class ApiApp {
         return ApiApp.ApisType(url, 'get')
     }
 
+    static getGroupsRequests = (userId) => {
+        let url = `/api/group-requests?populate=*&filters[user][id][$eq]=${userId}`
+        return ApiApp.ApisType(url, 'get')
+    }
+
+    static groupAcceptInvite = (token, accept) => {
+        let url = `api/accept_invite?token=${token}&accept=${accept}`
+        return ApiApp.ApisType(url, 'get')
+    }
+
     static getGroups = () => {
         return ApiApp.ApisType(`/api/groups?populate=*`, 'get')
     }
