@@ -115,6 +115,7 @@ export default (props) => {
                         <FormControl isInvalid={formik.errors.email}>
                             <FormControl.Label>Email</FormControl.Label>
                             <Input autoCapitalize="none"
+                                   autoCorrect={false}
                                    onChangeText={text => formik.setFieldValue('email', text)} returnKeyType={'done'}/>
                             <FormControl.ErrorMessage>
                                 {formik.errors.email}
