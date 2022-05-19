@@ -1,10 +1,11 @@
 import React, {useRef, useState} from 'react';
-import {Button, View} from "native-base";
+import {Button, Icon, Text, View} from "native-base";
 import {Keyboard, KeyboardAvoidingView, SafeAreaView, TouchableWithoutFeedback} from "react-native";
 import {Colors} from "../../utils/Colors";
 import PhoneInput from "react-native-phone-number-input";
 import ApiApp from "../../utils/ApiApp";
 import ModalError from "../Modals/ModalError";
+import {MaterialIcons} from "@expo/vector-icons";
 
 const PhoneScreen = ({navigation}) => {
     const [value, setValue] = useState(null);
@@ -35,8 +36,11 @@ const PhoneScreen = ({navigation}) => {
             }}>
 
                 <KeyboardAvoidingView flex={1} behavior={'padding'}>
-                    <View flex={1} bgColor={Colors.red}>
-
+                    <View flex={1} bgColor={Colors.red} alignItems={'center'} justifyContent={'center'}
+                          borderBottomRadius={40}>
+                        <Icon as={MaterialIcons} name={'phone'} size={'5xl'} color={'white'}/>
+                        <Text color={'white'}>Verifica tu número</Text>
+                        <Text color={'white'} size={'md'}>Por favor digita tu número telefónico</Text>
                     </View>
                     <View flex={1} mx={10}>
                         <View mt={10} justifyContent={'center'}>

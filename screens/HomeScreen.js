@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from "react";
-import {Button, Icon, Image, Text, View} from "native-base";
+import {Icon, Image, Skeleton, Text, View} from "native-base";
 import {connect} from "react-redux";
 import {RefreshControl, SafeAreaView, ScrollView, TouchableOpacity} from "react-native";
-import {logOutAction} from "../redux/ducks/authDuck";
 import {getMyGroups} from "../redux/ducks/groupDuck";
 import {useIsFocused} from "@react-navigation/native";
 import profile from '../assets/profile.jpg';
 import {Colors} from "../utils/Colors";
 import {MaterialIcons} from "@expo/vector-icons";
 import ApiApp from "../utils/ApiApp";
+import bg1 from '../assets/bg1.png'
+import {getShadowCircleStyle} from "../utils/functions";
 
-const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
+const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
     const [feelings, setFeelings] = useState(null);
     const isFocused = useIsFocused();
@@ -18,6 +19,9 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
     const [loading, setLoading] = useState(false);
     const [groups, setGroups] = useState(null);
     const [lastEmotion, setLastEmotion] = useState(null);
+    const [days, setDays] = useState([]);
+    const [fullName, setFullName] = useState(null);
+
 
     useEffect(() => {
         if (isFocused) {
@@ -28,13 +32,7 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
     }, [isFocused])
 
 
-    const _logOut = async () => {
-        try {
-            await logOutAction()
-        } catch (ex) {
-            console.log('e', ex)
-        }
-    }
+
 
     const HistoryPage = () => {
        // navigation.navigate('HistoryList')
@@ -45,7 +43,10 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
             setLoading(true)
 
             const res = await ApiApp.getHomeData(authDuck.user.id)
+            console.log(res.data)
+            setDays(res.data.data.days)
             setLastEmotion(res.data.data.lastEmotion.label)
+            setFullName(res.data.data.userInfo.fullName)
         } catch (e) {
             console.log(e)
         } finally {
@@ -66,16 +67,7 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
 
     }
 
-    const shadowStyle = {
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 15,
-            height: 4,
-        },
-        shadowOpacity: 0.24,
-        shadowRadius: 15.27,
-        elevation: 20,
-    }
+
 
     return (
         <SafeAreaView style={{flex: 1}}>
@@ -88,22 +80,58 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
                         refreshing={loading}
                     />
                 }>
-                <View flex={1} alignItems={'center'}>
-                    <Image w={220} h={220} source={profile}
-                           style={[
-                               {resizeMode: 'cover'}]}
-                           borderRadius={110} borderWidth={2} borderColor={'white'}/>
+                <View flex={1} alignItems={'center'} justifyContent={'center'} mb={2}>
+                    <View style={getShadowCircleStyle(10, 10)}>
+                        <Image w={220} h={220} source={profile}
+                               style={[
+                                   {resizeMode: 'cover'}]}
+                               borderRadius={110} borderWidth={2} borderColor={'white'}/>
+                    </View>
+
+                    <Image source={bg1} style={{
+                        position: 'absolute',
+                        resizeMode: 'contain',
+                        zIndex: -1,
+                        width: '150%',
+                        height: 100
+                    }}></Image>
                 </View>
                 <View flex={1} mx={4}>
 
-                    <Text fontSize={24} color={Colors.red} textAlign={'center'}>{authDuck.user.username}</Text>
-                    <Text mb={6} fontSize={16} color={Colors.red} textAlign={'center'}>17/Mayo/202</Text>
+                    <Text mb={4} fontSize={24} color={Colors.red} textAlign={'center'}>{fullName}</Text>
+                    <Text fontSize={14} color={Colors.red} textAlign={'center'}>17/Mayo/202</Text>
+
+                    {
+                        loading === true ?
+                            <Skeleton height={60} my={2}/> :
+                            <View my={2} width={'70%'} alignSelf={'center'} height={60} flexDir={'row'}
+                                  alignItems={'center'} justifyContent={'center'}>
+
+                                {
+                                    days.map((item) => {
+                                        console.log(item)
+                                        return (
+                                            <View flex={1} height={20} style={getShadowCircleStyle(5, 5)}
+                                                  alignItems={'center'} justifyContent={'center'}>
+                                                <Text fontSize={7} textAlign={'center'} mb={1}
+                                                      color={Colors.red}>{item.alias}</Text>
+                                                <View style={{width: 20, height: 20}} bgColor={'#' + item.color}
+                                                      borderRadius={15} borderWidth={0.5} borderColor={Colors.red}>
+
+                                                </View>
+                                            </View>
+                                        )
+                                    })
+                                }
+
+                            </View>
+                    }
 
                     <View
                         flexDir={'row'}
                         mb={8}
                         bgColor={Colors.gray}
-                        style={shadowStyle}
+                        style={getShadowCircleStyle(10, 10)}
                         borderRadius={10}
                         p={3}>
                         <View flex={1} height={70} alignItems={'center'} justifyContent={'center'}>
@@ -125,30 +153,30 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
                         </View>
                     </View>
 
-                    <View flexDir={'row'} mb={2}>
-                        <View flex={1} height={70} mr={1}>
+                    <View flexDir={'row'} mb={4} height={70}>
+                        <View flex={1} mr={2}>
                             <TouchableOpacity
-                                style={{
+                                style={[{
                                     flex: 1,
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     backgroundColor: Colors.red,
                                     borderRadius: 10
-                                }}
+                                }, getShadowCircleStyle(10, 10)]}
                                 onPress={() => navigation.navigate('YourFeelScreen')}>
                                 <Icon as={MaterialIcons} name={'mood'} size={9} color={'white'}></Icon>
                                 <Text color={'white'} size={'sm'}>Del 1 al 10</Text>
                             </TouchableOpacity>
                         </View>
-                        <View flex={1} mr={1}>
+                        <View flex={1} ml={2}>
                             <TouchableOpacity
-                                style={{
+                                style={[{
                                     flex: 1,
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     backgroundColor: Colors.red,
                                     borderRadius: 10
-                                }}
+                                }, getShadowCircleStyle(10, 10)]}
                                 onPress={() => {
                                     HistoryPage()
                                 }}>
@@ -157,16 +185,16 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View flexDir={'row'} mb={2}>
-                        <View flex={1} height={70} mr={1}>
+                    <View flexDir={'row'} mb={4} height={70}>
+                        <View flex={1} mr={2}>
                             <TouchableOpacity
-                                style={{
+                                style={[{
                                     flex: 1,
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     backgroundColor: Colors.red,
                                     borderRadius: 10
-                                }}
+                                }, getShadowCircleStyle(10, 10)]}
                                 onPress={() => {
                                     navigation.navigate('EmotionsPage')
                                 }}>
@@ -174,15 +202,15 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
                                 <Text color={'white'} size={'sm'}>Nueva emoción</Text>
                             </TouchableOpacity>
                         </View>
-                        <View flex={1} height={70} mr={1}>
+                        <View flex={1} height={70} ml={2}>
                             <TouchableOpacity
-                                style={{
+                                style={[{
                                     flex: 1,
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     backgroundColor: Colors.red,
                                     borderRadius: 10
-                                }}
+                                }, getShadowCircleStyle(10, 10)]}
                                 onPress={() => {
                                     if (groups.length === 0) {
                                         navigation.navigate('GroupsStartScreen')
@@ -196,16 +224,16 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View flexDir={'row'} mb={2}>
-                        <View flex={1} height={70} mr={1}>
+                    <View flexDir={'row'} mb={4} height={70}>
+                        <View flex={1} mr={2}>
                             <TouchableOpacity
-                                style={{
+                                style={[{
                                     flex: 1,
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     backgroundColor: Colors.red,
                                     borderRadius: 10
-                                }}
+                                }, getShadowCircleStyle(10, 10)]}
                                 onPress={() => {
                                     navigation.navigate('StatisticsScreen')
                                 }}>
@@ -213,33 +241,15 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
                                 <Text color={'white'} size={'sm'}>Estadísticas</Text>
                             </TouchableOpacity>
                         </View>
-                        <View flex={1} height={70} mr={1}>
+                        <View flex={1} height={70} ml={2}>
                             <TouchableOpacity
-                                style={{
+                                style={[{
                                     flex: 1,
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     backgroundColor: Colors.red,
                                     borderRadius: 10
-                                }}
-                                onPress={() => {
-                                    navigation.navigate('ProfileScreen')
-                                }}>
-                                <Icon as={MaterialIcons} name={'person-outline'} size={7} color={'white'}></Icon>
-                                <Text color={'white'} size={'sm'}>Perfil</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                    <View flexDir={'row'} mb={2}>
-                        <View flex={1} height={70} mr={1}>
-                            <TouchableOpacity
-                                style={{
-                                    flex: 1,
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    backgroundColor: Colors.red,
-                                    borderRadius: 10
-                                }}
+                                }, getShadowCircleStyle(10, 10)]}
                                 onPress={() => {
                                     navigation.navigate('RotateCustomScreen')
                                 }}>
@@ -249,9 +259,7 @@ const HomeScreen = ({authDuck, navigation, logOutAction, groupDuck}) => {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View flex={1} justifyContent={'center'}>
-                        <Button colorScheme={'orange'} onPress={() => _logOut()}>Cerrar Sesión</Button>
-                    </View>
+
                 </View>
             </ScrollView>
         </SafeAreaView>
@@ -265,4 +273,4 @@ const mapState = (state) => {
     }
 }
 
-export default connect(mapState, {logOutAction, getMyGroups})(HomeScreen);
+export default connect(mapState, {getMyGroups})(HomeScreen);

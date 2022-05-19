@@ -1,24 +1,24 @@
 import React, {useRef, useState} from 'react';
 import {Animated} from 'react-native';
-import circleParts from '../assets/circlev2.png';
+import circleParts from '../assets/circulev3.png';
 import {useSharedValue} from "react-native-reanimated";
 import {Gesture, GestureDetector} from "react-native-gesture-handler";
 import * as Haptics from 'expo-haptics';
-import {Icon, Text, View} from "native-base";
-import {FontAwesome} from "@expo/vector-icons";
+import {Image, Text, View} from "native-base";
 import ScreenBaseV1 from "./Components/ScreenBaseV1";
 import {Colors} from "../utils/Colors";
+import pointerImage from '../assets/arrow2.png'
 
 const RotateCustomScreen = () => {
 
 
     const emotions = [
         {name: 'Contento', range: [0, 60]},
-        {name: 'Confundido', range: [60, 120]},
+        {name: 'Abierto', range: [60, 120]},
         {name: 'Inspirado', range: [120, 180]},
-        {name: 'Enfadado', range: [180, 240]},
+        {name: 'Amoroso', range: [180, 240]},
         {name: 'En paz', range: [240, 300]},
-        {name: 'Deprimido', range: [300, 360]},
+        {name: 'Fuerte', range: [300, 360]},
     ]
 
 
@@ -61,7 +61,7 @@ const RotateCustomScreen = () => {
 
             </View>
             <View flex={0.4} alignItems={'center'} justifyContent={'flex-end'}>
-                <Icon as={FontAwesome} name={'arrow-down'} size={'2xl'}></Icon>
+                <Image source={pointerImage} style={{resizeMode: 'contain'}} width={10} height={10}></Image>
             </View>
 
             <View flex={1}>

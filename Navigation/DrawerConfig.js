@@ -53,7 +53,7 @@ const DrawerConfig = ({accountDuck, authDuck}) => {
                                 borderRadius: 5,
                                 marginLeft: 10
                             }}>
-                                <Icon as={MaterialIcons} name={'arrow-back-ios'} color={Colors.red}/>
+                                <Icon as={MaterialIcons} name={'arrow-back-ios'} color={Colors.red} size={'xl'}/>
 
                             </TouchableOpacity>
                         )
@@ -62,14 +62,14 @@ const DrawerConfig = ({accountDuck, authDuck}) => {
                 headerStyle: {backgroundColor: Colors.white},
                 headerTitleAlign: 'center',
                 headerTitleStyle: {color: 'black'},
-                // headerTitle: () => {
-                //     return (
-                //         <View flex={1}>
-                //
-                //         </View>
-                //     )
-                //
-                // },
+                headerTitle: () => {
+                    return (
+                        <View flex={1}>
+
+                        </View>
+                    )
+
+                },
                 headerRight: () => (
                     <TouchableOpacity onPress={() => navigation.toggleDrawer()} style={{
                         width: 50,
@@ -80,7 +80,7 @@ const DrawerConfig = ({accountDuck, authDuck}) => {
                     }}>
                         {/*<Image source={menuImage} resizeMode={'contain'} width={30} height={30}*/}
                         {/*       style={{tintColor: Colors.gray}}/>*/}
-                        <Icon as={MaterialIcons} color={Colors.red} name={'menu'}></Icon>
+                        <Icon as={MaterialIcons} color={Colors.red} name={'menu'} size={'xl'}></Icon>
                     </TouchableOpacity>
                 ),
             })}

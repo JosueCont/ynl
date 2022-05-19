@@ -30,6 +30,7 @@ const IntroScreen = ({navigation}) => {
         }
     }
 
+
     const introStatus = async () => {
         // try {
         //     let intro = await AsyncStorage.getItem('@intro');

@@ -23,16 +23,19 @@ const commonConfig = {
 };
 
 const ios = {
+    buildNumber: "2",
     supportsTablet: false,
     bundleIdentifier: "com.hiumanlab.ynl"
 };
 
 const android = {
+    versionCode: 2,
     adaptiveIcon: {
         foregroundImage: "./assets/adaptive-icon.png",
         backgroundColor: "#FFFFFF"
     },
-    package: "com.hiumanlab.ynl"
+    package: "com.hiumanlab.ynl",
+    permissions: []
 };
 
 module.exports = () => {

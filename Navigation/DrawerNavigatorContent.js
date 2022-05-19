@@ -5,10 +5,19 @@ import {ImageBackground, TouchableOpacity} from "react-native";
 import sidebarImage from "../assets/sidebar.png";
 import {Image, Text, View} from "native-base";
 import logoSmall from "../assets/logoSmall.png";
+import {logOutAction} from "../redux/ducks/authDuck";
 
 
-const CustomDrawerContent = ({navigation, navigationDuck, accountDuck, ...props}) => {
+const CustomDrawerContent = ({navigation, navigationDuck, accountDuck, logOutAction, ...props}) => {
 
+
+    const logoutFunction = async () => {
+        try {
+            await logOutAction()
+        } catch (ex) {
+            console.log('e', ex)
+        }
+    }
 
     return (
         <DrawerContentScrollView
@@ -32,6 +41,12 @@ const CustomDrawerContent = ({navigation, navigationDuck, accountDuck, ...props}
                         <Text color={'white'} fontSize={20} my={2}>Historial</Text>
                     </TouchableOpacity>
                 </View>
+                <View flex={0.5} alignItems={'center'}>
+                    <TouchableOpacity onPress={() => logoutFunction()}>
+                        <Text color={'white'} fontSize={14} style={{textDecorationLine: 'underline'}} my={2}>Cerrar
+                            sesión</Text>
+                    </TouchableOpacity>
+                </View>
             </ImageBackground>
 
         </DrawerContentScrollView>
@@ -46,4 +61,4 @@ const mapState = (state) => {
     }
 }
 
-export default connect(mapState)(CustomDrawerContent);
+export default connect(mapState, {logOutAction})(CustomDrawerContent);

@@ -21,6 +21,7 @@ import * as Yup from 'yup'
 import * as Google from 'expo-google-app-auth';
 //import LinkedInModal from 'react-native-linkedin'
 import {resolvePlatform} from "../../utils/functions";
+import {Colors} from "../../utils/Colors";
 
 import { StyleSheet, Text, View as V, SafeAreaView } from 'react-native';
 import WebView from "react-native-webview";
@@ -165,6 +166,7 @@ export default (props) => {
                         <FormControl isInvalid={formik.errors.email}>
                             <FormControl.Label>Email</FormControl.Label>
                             <Input autoCapitalize="none"
+                                   autoCorrect={false}
                                    onChangeText={text => formik.setFieldValue('email', text)} returnKeyType={'done'}/>
                             <FormControl.ErrorMessage>
                                 {formik.errors.email}
@@ -181,33 +183,27 @@ export default (props) => {
                             <Link _text={{
                                 fontSize: "xs",
                                 fontWeight: "500",
-                                color: "red.500"
+                                color: Colors.red
                             }} alignSelf="flex-end" mt="1">
                                 Forget Password?
                             </Link>
                         </FormControl>
                         <Button mt="1" isLoading={props.loading} isLoadingText={'Iniciando'}
                                 onPress={formik.handleSubmit}
-                                colorScheme="red">
+                                colorScheme='orange'>
                             Iniciar
                         </Button>
                         <Button mt="1" isLoading={props.loading} isLoadingText={'Iniciando'} onPress={handleLoginGoogle}
-                                colorScheme="red">
+                                colorScheme="orange">
                             Login con Google
                         </Button>
-                        <Button mt="1" isLoading={props.loading} isLoadingText={'Iniciando'} onPress={()=>{setOpenLinkedIn(true)}}
-                                colorScheme="red">
-                             {/* <LinkedInModal
-                            linkText="Login con LinkedIn"                                                        
-                            clientID={clientID}
-                            clientSecret={clientSecret}
-                            redirectUri={redirectUri}
-                            onSuccess={token => console.log('token linkedin', token)}
-                            /> */}Login con LinkedIn
+                        <Button mt="1" isLoading={props.loading} isLoadingText={'Iniciando'} onPress={linkedInLogin}
+                                colorScheme="orange">
+                            Login con LinkedIn
                         </Button>
                        
                         <HStack justifyContent="center">
-                            <Button size="sm" colorScheme={'red'} onPress={() => navigation.navigate('Register')}
+                            <Button size="sm" colorScheme={'orange'} onPress={() => navigation.navigate('Register')}
                                     variant="link">
                                 Registrarme
                             </Button>

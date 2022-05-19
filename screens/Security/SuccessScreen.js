@@ -3,8 +3,21 @@ import {ImageBackground} from "react-native";
 import {Button, Image, Text, View} from "native-base";
 import logoSmall from "../../assets/logoSmall.png";
 import bgIntro from "../../assets/bgIntro.png";
+import {connect} from "react-redux";
+import {loginEmail} from "../../redux/ducks/authDuck";
 
-const SuccessScreen = ({navigation}) => {
+const SuccessScreen = ({navigation, authDuck, loginEmail}) => {
+
+    const loginAutomatic = async () => {
+        console.log(authDuck);
+        try {
+            const res = await loginEmail(authDuck.registerData.email, authDuck.registerData.password)
+            console.log(res)
+        } catch (ex) {
+            navigation.navigate('LoginScreen')
+        }
+    }
+
     return (
         <ImageBackground source={bgIntro} style={{flex: 1}} resizeMode={'cover'}>
             <View flex={1} alignItems={'center'} justifyContent={'center'}>
@@ -14,7 +27,8 @@ const SuccessScreen = ({navigation}) => {
                 <Text color={'white'} textAlign={'center'} px={4}>Registro realizado exitosamente.</Text>
             </View>
             <View flex={0.5} mx={20}>
-                <Button colorScheme="orange" onPress={() => navigation.navigate('VerificationCodeScreen')}>
+                <Button colorScheme="orange" onPress={() => navigation.navigate('VerificationCodeScreen')}
+                        onPress={() => loginAutomatic()}>
                     Iniciar
                 </Button>
             </View>
@@ -22,4 +36,11 @@ const SuccessScreen = ({navigation}) => {
     )
 }
 
-export default SuccessScreen;
+
+const mapState = (state) => {
+    return {
+        authDuck: state.authDuck
+    }
+}
+
+export default connect(mapState, {loginEmail})(SuccessScreen);

@@ -71,3 +71,18 @@ export const getMonth = () => {
 export const resolvePlatform = (ios, android) => {
     return Platform.OS === 'ios' ? ios : android;
 }
+
+
+export const getShadowCircleStyle = (width, height) => {
+    return {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: width,
+            height: height,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 5,
+
+    }
+}
