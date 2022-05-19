@@ -66,7 +66,7 @@ const StackAuth = ({}) => {
             {/*<Stack.Screen name="RotateCustom" options={{gestureEnabled: false, headerShown: false}}*/}
             {/*              component={RotateCustom}/>*/}
 
-            <Stack.Screen name="LoginScreen" component={LoginScreen}/>
+            <Stack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown: false}}/>
             <Stack.Screen name="Register" component={RegisterScreen}/>
             <Stack.Screen name="PhoneScreen" component={PhoneScreen}/>
             <Stack.Screen name="VerificationCodeScreen" component={VerificationCodeScreen}/>

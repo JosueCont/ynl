@@ -4,23 +4,23 @@ import {
     Button,
     Center,
     FormControl,
-    Heading,
     HStack,
     Image,
     Input,
     Link,
     NativeBaseProvider,
+    Text,
     View,
     VStack
 } from "native-base";
-import logo from '../../assets/YNL.gif'
 import {useNavigation} from '@react-navigation/native';
 import {useFormik} from 'formik';
 import * as Yup from 'yup'
 import * as Google from 'expo-google-app-auth';
 import LinkedInModal from 'react-native-linkedin'
-import {resolvePlatform} from "../../utils/functions";
+import {getShadowCircleStyle, resolvePlatform} from "../../utils/functions";
 import {Colors} from "../../utils/Colors";
+import loginImage from '../../assets/login.png';
 
 export default (props) => {
     const navigation = useNavigation();
@@ -100,32 +100,45 @@ export default (props) => {
                 {/*    </VStack>*/}
                 {/*</Heading>*/}
                 <View flex={0.3} alignItems={'center'} justifyContent={'center'}>
-                    <Image source={logo} w={resolvePlatform(250, 200)} h={resolvePlatform(250, 200)}/>
+                    <Image source={loginImage} style={{resizeMode: 'contain'}} w={resolvePlatform(250, 200)}
+                           h={resolvePlatform(250, 200)}/>
                 </View>
                 <View flex={1}>
 
 
-                    <Heading mt="1" _dark={{
-                        color: "warmGray.200"
-                    }} color="coolGray.600" fontWeight="medium" size="xs">
-                        Sign in to continue!
-                    </Heading>
+                    <Text textAlign={'center'} color={Colors.red} fontSize={42}>¡Hola!</Text>
+                    <Text textAlign={'center'} color={Colors.red} fontSize={24}>¿Cómo te sientes?</Text>
+
+                    <Text textAlign={'center'} textDecorationLine={'underline'} fontSize={12}>Iniciar sesión</Text>
 
                     <VStack space={3} mt="5">
                         <FormControl isInvalid={formik.errors.email}>
-                            <FormControl.Label>Email</FormControl.Label>
-                            <Input autoCapitalize="none"
-                                   autoCorrect={false}
-                                   onChangeText={text => formik.setFieldValue('email', text)} returnKeyType={'done'}/>
+                            <View flex={1} mb={4} style={getShadowCircleStyle(5, 5)}>
+                                <Input
+                                    height={50}
+                                    autoCapitalize="none"
+                                    placeholder={'Correo electrónico'}
+                                    autoCorrect={false}
+                                    onChangeText={text => formik.setFieldValue('email', text)}
+                                    returnKeyType={'done'}
+                                    bgColor={'white'}
+                                />
+                            </View>
                             <FormControl.ErrorMessage>
                                 {formik.errors.email}
                             </FormControl.ErrorMessage>
                         </FormControl>
                         <FormControl isInvalid={formik.errors.password}>
-                            <FormControl.Label>Password</FormControl.Label>
-                            <Input type="password"
-                                   onChangeText={text => formik.setFieldValue('password', text)}
-                                   returnKeyType={'done'}/>
+                            <View flex={1} mb={4} style={getShadowCircleStyle(5, 5)}>
+                                <Input
+                                    height={50}
+                                    placeholder={'Contraseña'}
+                                    type="password"
+                                    onChangeText={text => formik.setFieldValue('password', text)}
+                                    returnKeyType={'done'}
+                                    bgColor={'white'}
+                                />
+                            </View>
                             <FormControl.ErrorMessage>
                                 {formik.errors.password}
                             </FormControl.ErrorMessage>

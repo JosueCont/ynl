@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
-import {Alert, SafeAreaView} from 'react-native'
+import {Alert, Platform} from 'react-native'
 import {loginEmail, loginGoogle} from "../../redux/ducks/authDuck";
 import FormLogin from "../../components/security/FormLogin";
 import {KeyboardAvoidingView, ScrollView} from "native-base";
@@ -73,18 +73,15 @@ const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle, authDuc
     }
 
     return (
-        <SafeAreaView style={{flex: 1}}>
-            <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
-                                  style={{flex: 1, backgroundColor: 'white'}}>
-                <ScrollView>
-                    <FormLogin loading={loading} onLoginGoogle={loginWithGoogle} onLogin={login}
-                               onGoRegister={goRegister}/>
-                    <ModalError visible={modalErrorVisible} setVisible={setModalErrorVisible}
-                                text={'Algo ha salido mal, porfavor intenta nuevamente'}/>
-                </ScrollView>
-            </KeyboardAvoidingView>
-        </SafeAreaView>
-
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
+                              style={{flex: 1, backgroundColor: 'white'}}>
+            <ScrollView bounces={false}>
+                <FormLogin loading={loading} onLoginGoogle={loginWithGoogle} onLogin={login}
+                           onGoRegister={goRegister}/>
+                <ModalError visible={modalErrorVisible} setVisible={setModalErrorVisible}
+                            text={'Algo ha salido mal, porfavor intenta nuevamente'}/>
+            </ScrollView>
+        </KeyboardAvoidingView>
     )
 }
 
