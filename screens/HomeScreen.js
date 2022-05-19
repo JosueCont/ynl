@@ -9,6 +9,7 @@ import {Colors} from "../utils/Colors";
 import {MaterialIcons} from "@expo/vector-icons";
 import ApiApp from "../utils/ApiApp";
 import bg1 from '../assets/bg1.png'
+import {getShadowCircleStyle} from "../utils/functions";
 
 const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
@@ -66,31 +67,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
     }
 
-    const shadowStyle = {
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 10,
-            height: 10,
-        },
-        shadowOpacity: 0.24,
-        shadowRadius: 10,
-        elevation: 5,
-    }
 
-
-    const getShadowCircleStyle = (width, height) => {
-        return {
-            shadowColor: "#000",
-            shadowOffset: {
-                width: width,
-                height: height,
-            },
-            shadowOpacity: 0.1,
-            shadowRadius: 5,
-            elevation: 5,
-
-        }
-    }
 
     return (
         <SafeAreaView style={{flex: 1}}>
@@ -154,7 +131,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                         flexDir={'row'}
                         mb={8}
                         bgColor={Colors.gray}
-                        style={shadowStyle}
+                        style={getShadowCircleStyle(10, 10)}
                         borderRadius={10}
                         p={3}>
                         <View flex={1} height={70} alignItems={'center'} justifyContent={'center'}>
