@@ -94,8 +94,8 @@ export let loginGoogle = (accessToken) => async (dispatch) => {
         let response = await ApiApp.loginWithGoogle(accessToken)
         await saveUserData(response.data.user, response.data.jwt)
         dispatch({type: LOGIN_EMAIL_SUCCESS, payload: {user: response.data.user, jwt: response.data.jwt}});
-        console.log('login exitoso con google', response.data)
-        return true
+        console.log('login exitoso con google', response.data.user)        
+        return true;
     } catch (e) {
         console.log('errorr====>', e)
         dispatch({type: LOGIN_EMAIL_ERROR});
@@ -108,26 +108,26 @@ export let loginLinkedIn = (accessToken) => async (dispatch) => {
     console.log('accessToken=========', accessToken)
     try {
         let response = await ApiApp.loginWithLinked(accessToken)
-        let responseEmail = await ApiApp.loginWithLinkedEmail(accessToken)        
+        let responseData = await ApiApp.loginWithLinkedData(accessToken)               
         let data = {
-            jwt: response.data.id,
+            jwt: response.data.jwt,
             user:{
-                blocked: false,
-                confirmed: true,
-                createdAt: "",
-                email: responseEmail['data']['elements'][0]['handle~']['emailAddress'],
-                firstName: response.data.localizedFirstName,
-                gender: 1,
-                id: response.data.id,
-                lastName: response.data.localizedLastName,
-                phone: null,
-                provider: "linkedin",
-                shareMyData: false,
-                updatedAt: "",
-                username: response.data.localizedFirstName,
+                blocked: response.data.user.blocked,
+                confirmed: response.data.user.confirmed,
+                createdAt: response.data.user.createdAt,
+                email: response.data.user.email,
+                firstName: responseData.data.localizedFirstName,
+                gender: response.data.user.gender,
+                id: response.data.user.id,
+                lastName: responseData.data.localizedLastName,
+                phone: response.data.user.phone,
+                provider: response.data.user.provider,
+                shareMyData: response.data.user.shareMyData,
+                updatedAt: response.data.user.updatedAt,
+                username: response.data.user.username,
             }
         }
-        await saveUserData(data.user)
+        await saveUserData(data.user, data.jwt)        
         dispatch({type: LOGIN_EMAIL_SUCCESS, payload: {user: data.user, jwt: data.jwt}});
         console.log('login exitoso con LinkedIn', data.user)
         return true
