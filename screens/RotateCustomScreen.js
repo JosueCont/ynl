@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {Animated} from 'react-native';
 import circleParts from '../assets/circulev3.png';
 import {useSharedValue} from "react-native-reanimated";
@@ -25,7 +25,6 @@ const RotateCustomScreen = () => {
     const [deg, setDeg] = useState(0);
     const [emotionPosition, setEmotionPosition] = useState(0);
 
-    const imageRef = useRef();
 
     const rotation = useSharedValue(1);
     const savedRotation = useSharedValue(1);
@@ -46,7 +45,6 @@ const RotateCustomScreen = () => {
         })
         .onEnd(() => {
             savedRotation.value = rotation.value;
-            // console.log(Object.keys(imageRef.current))
             console.log('end')
 
         })
@@ -66,7 +64,7 @@ const RotateCustomScreen = () => {
 
             <View flex={1}>
                 <GestureDetector gesture={Gesture.Exclusive(rotationGesture)}>
-                    <Animated.Image ref={imageRef} source={circleParts} style={{
+                    <Animated.Image source={circleParts} style={{
                         width: 300,
                         height: 300,
                         transform: [{rotate: deg + `deg`}],
