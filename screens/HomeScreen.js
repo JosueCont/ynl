@@ -70,7 +70,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
 
     return (
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
             <ScrollView
                 contentContainerStyle={{flexGrow: 1, backgroundColor: Colors.white}}
                 refreshControl={

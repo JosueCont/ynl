@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {
-    Box,
     Button,
     Center,
     FormControl,
@@ -9,6 +8,7 @@ import {
     Input,
     Link,
     NativeBaseProvider,
+    ScrollView,
     Text,
     View,
     VStack
@@ -21,6 +21,9 @@ import LinkedInModal from 'react-native-linkedin'
 import {getShadowCircleStyle, resolvePlatform} from "../../utils/functions";
 import {Colors} from "../../utils/Colors";
 import loginImage from '../../assets/login.png';
+import facebookImage from '../../assets/facebook.png'
+import linkedInImage from '../../assets/linkedin.png'
+import googleImage from '../../assets/google.png'
 
 export default (props) => {
     const navigation = useNavigation();
@@ -90,8 +93,8 @@ export default (props) => {
         });
 
 
-        return <Center w="100%">
-            <Box safeArea p="2" py="8" w="90%" maxW="290">
+        return (
+            <ScrollView p={10} bounces={false} flexGrow={1}>
                 {/*<Heading flex={1} size="lg" fontWeight="600" color="coolGray.800" _dark={{*/}
                 {/*    color: "warmGray.50"*/}
                 {/*}}>*/}
@@ -155,6 +158,21 @@ export default (props) => {
                                 colorScheme='orange'>
                             Iniciar
                         </Button>
+
+                        <View flexDir={'row'}>
+                            <View flex={1} alignItems={'center'} justifyContent={'center'}
+                                  style={getShadowCircleStyle(10, 10)}>
+                                <Image source={facebookImage} w={10} h={10}></Image>
+                            </View>
+                            <View flex={1} alignItems={'center'} justifyContent={'center'}
+                                  style={getShadowCircleStyle(10, 10)}>
+                                <Image source={linkedInImage} w={10} h={10}></Image>
+                            </View>
+                            <View flex={1} alignItems={'center'} justifyContent={'center'}
+                                  style={getShadowCircleStyle(10, 10)}>
+                                <Image source={googleImage} w={10} h={10}></Image>
+                            </View>
+                        </View>
                         <Button mt="1" isLoading={props.loading} isLoadingText={'Iniciando'} onPress={handleLoginGoogle}
                                 colorScheme="orange">
                             Login con Google
@@ -177,8 +195,8 @@ export default (props) => {
                         </HStack>
                     </VStack>
                 </View>
-            </Box>
-        </Center>;
+            </ScrollView>
+        );
     };
 
 
