@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import {Alert, SafeAreaView} from 'react-native'
-import {loginEmail, loginGoogle} from "../../redux/ducks/authDuck";
+import {loginEmail, loginGoogle, loginLinkedIn} from "../../redux/ducks/authDuck";
 import FormLogin from "../../components/security/FormLogin";
 import {KeyboardAvoidingView, ScrollView} from "native-base";
 import ModalError from "../Modals/ModalError";
 
-const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle, authDuck}) => {
+const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle, loginLinkedIn, authDuck}) => {
 
     const [loading, setLoading] = useState(false);
     const [hasLogged, setHasLogged] = useState(false);
@@ -29,6 +29,27 @@ const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle, authDuc
         try {
             setLoading(true)
             const res = await loginGoogle(accessToken)
+            if (res) {
+                console.log('login success=====', res)
+                setHasLogged(true)
+                navigation.navigate('HomeScreen')
+            }
+
+        } catch (e) {
+            Alert.alert(
+                "Ups!",
+                "Algo ha salido mal, porfavor intenta nuevamente"
+            );
+            setHasLogged(false)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const loginWithLinkedIn = async (accessToken) => {
+        try {
+            setLoading(true)
+            const res = await loginLinkedIn(accessToken)
             if (res) {
                 console.log('login success=====', res)
                 setHasLogged(true)
@@ -78,7 +99,7 @@ const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle, authDuc
                                   style={{flex: 1, backgroundColor: 'white'}}>
                 <ScrollView>
                     <FormLogin loading={loading} onLoginGoogle={loginWithGoogle} onLogin={login}
-                               onGoRegister={goRegister}/>
+                               onGoRegister={goRegister} onLoginLinked={loginWithLinkedIn} />
                     <ModalError visible={modalErrorVisible} setVisible={setModalErrorVisible}
                                 text={'Algo ha salido mal, porfavor intenta nuevamente'}/>
                 </ScrollView>
@@ -95,4 +116,4 @@ const mapState = (state) => {
     }
 }
 
-export default connect(mapState, {loginEmail, loginGoogle})(LoginScreen);
+export default connect(mapState, {loginEmail, loginGoogle, loginLinkedIn})(LoginScreen);

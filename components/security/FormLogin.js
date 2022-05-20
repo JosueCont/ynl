@@ -41,15 +41,15 @@ export default (props) => {
     const CLIENT_ID = "86mom3hfgl2rvj"; // you can get it from the linked in apps panel
     const CLIENT_SECRET = "z7YYg1E3i39fI9Kf"; // you can get it from the linked in apps panel
     const AUTH_BASE = "https://www.linkedin.com/oauth/v2/authorization";
-
+    //https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=86mom3hfgl2rvj&redirect_uri=https://ynl-api.herokuapp.com/api/connect/linkedin/&state=foobar&scope=r_liteprofile
     
 
      const qs = [
         `response_type=code`,
         `client_id=${CLIENT_ID}`,
-        `scope=r_liteprofile`,
-        `state=123456`,
         `redirect_uri=${REDIRECT_URI}`,
+        `state=123456`,
+        `scope=r_liteprofile`,
       ]; 
       const AUTH_ENDPOINT = `${AUTH_BASE}?${qs.join('&')}`
      
@@ -62,29 +62,38 @@ export default (props) => {
         //The browser has redirected to our url of choice, the url would look like:
         //http://your.redirect.url?code=<access_token>&state=<anyauthstate-this-is-optional>
         const matches = url.match(REDIRECT_URI);
+        const matchesRed = url.match('ynl-api.herokuapp');
         const matchesCancel = url.match('login-cancel');
         const matchesRedirect = url.match('session_redirect');
         const matchesAuthCancel = url.match('authorization-cancel');
+        const matchesLogin = url.match('session_redirect');
         console.log("MATCHES::: "+matches);
-        console.log("MATCHES CANCEL:::"+ url.match('login-cancel'));
+        console.log("MATCHES CANCEL:::"+ matchesCancel); 
+        console.log("MATCHES AUTHCANCEL:::"+ matchesAuthCancel); 
+        console.log("MATCHES REDIR:::"+ matchesRed); 
+        console.log("MATCHES LOGIN:::"+ matchesLogin); 
+        console.log("TOKEN:::"+token);
 
-        if(matchesCancel || matchesAuthCancel && !matchesRedirect){
+        if((matchesCancel || matchesAuthCancel) && matchesLogin==null){
+            console.log(matchesLogin == null);
             setOpenLinkedIn(false);
             return; 
         }
 
-        if (matches && matches.length) {
+        if ((matches || matchesRed) && token=='') {
           // We have the correct URL, parse it out to get the token
           const obj = querystring.parse(url.split('?').pop());
           console.log("OBJ::"+JSON.stringify(obj));
           if (obj.code) {
               console.log(obj.code)
               setToken(obj.code);
+              props.onLoginLinked(obj.code);
               setOpenLinkedIn(false);
           }
           if (obj.access_token) {
               console.log(obj.access_token)
               setToken(obj.access_token);
+              props.onLoginLinked(obj.access_token);
               setOpenLinkedIn(false);
           }
 
@@ -109,7 +118,7 @@ export default (props) => {
                 const {email, name, photoUrl} = user;
                 console.log('userData', email, name, photoUrl)
                 console.log('accessToken', accessToken)
-                props.onLoginGoogle(accessToken) 
+                props.onLoginGoogle(accessToken)                 
             } else {
                 alert('Login cancelado')
             }
@@ -197,7 +206,7 @@ export default (props) => {
                                 colorScheme="orange">
                             Login con Google
                         </Button>
-                        <Button mt="1" isLoading={props.loading} isLoadingText={'Iniciando'} onPress={linkedInLogin}
+                        <Button mt="1" isLoading={props.loading} isLoadingText={'Iniciando'}  onPress={()=>{setOpenLinkedIn(true); setToken('');}}
                                 colorScheme="orange">
                             Login con LinkedIn
                         </Button>

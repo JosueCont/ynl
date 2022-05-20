@@ -103,6 +103,41 @@ export let loginGoogle = (accessToken) => async (dispatch) => {
     }
 }
 
+export let loginLinkedIn = (accessToken) => async (dispatch) => {
+    dispatch({type: LOGIN_EMAIL});
+    console.log('accessToken=========', accessToken)
+    try {
+        let response = await ApiApp.loginWithLinked(accessToken)
+        let responseEmail = await ApiApp.loginWithLinkedEmail(accessToken)        
+        let data = {
+            jwt: response.data.id,
+            user:{
+                blocked: false,
+                confirmed: true,
+                createdAt: "",
+                email: responseEmail['data']['elements'][0]['handle~']['emailAddress'],
+                firstName: response.data.localizedFirstName,
+                gender: 1,
+                id: response.data.id,
+                lastName: response.data.localizedLastName,
+                phone: null,
+                provider: "linkedin",
+                shareMyData: false,
+                updatedAt: "",
+                username: response.data.localizedFirstName,
+            }
+        }
+        await saveUserData(data.user)
+        dispatch({type: LOGIN_EMAIL_SUCCESS, payload: {user: data.user, jwt: data.jwt}});
+        console.log('login exitoso con LinkedIn', data.user)
+        return true
+    } catch (e) {
+        console.log('errorr====>', e)
+        dispatch({type: LOGIN_EMAIL_ERROR});
+        return false
+    }
+}
+
 const saveUserData = async (userData, jwt = null) => {
     try {
         await storeDataObject('@user', userData)

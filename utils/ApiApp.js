@@ -53,6 +53,14 @@ class ApiApp {
         return ApiApp.ApisType(`/api/auth/google/callback?access_token=${access_token}`, 'get')
     }
 
+    static loginWithLinked = (access_token) => {
+        return APIKit.get(`https://api.linkedin.com/v2/me?oauth2_access_token=${access_token}`)
+    }
+
+    static loginWithLinkedEmail = (access_token)=>{
+        return APIKit.get(`https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))&oauth2_access_token=${access_token}`)
+    }
+
     static getHomeData = (userId) => {
         return ApiApp.ApisType(`/api/home/user_main?userId=${userId}`, 'get')
     }
