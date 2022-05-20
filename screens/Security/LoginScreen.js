@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
-import {Alert, Platform} from 'react-native'
+import {Alert, SafeAreaView} from 'react-native'
 import {loginEmail, loginGoogle} from "../../redux/ducks/authDuck";
 import FormLogin from "../../components/security/FormLogin";
 import {KeyboardAvoidingView, ScrollView} from "native-base";
@@ -46,6 +46,27 @@ const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle, authDuc
         }
     }
 
+    const loginWithLinkedIn = async (accessToken) => {
+        try {
+            setLoading(true)
+            const res = await loginLinkedIn(accessToken)
+            if (res) {
+                console.log('login success=====', res)
+                setHasLogged(true)
+                navigation.navigate('HomeScreen')
+            }
+
+        } catch (e) {
+            Alert.alert(
+                "Ups!",
+                "Algo ha salido mal, porfavor intenta nuevamente"
+            );
+            setHasLogged(false)
+        } finally {
+            setLoading(false)
+        }
+    }
+
     const login = async (values) => {
 
         try {
@@ -73,15 +94,16 @@ const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle, authDuc
     }
 
     return (
-        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
-                              style={{flex: 1, backgroundColor: 'white'}}>
-            <ScrollView bounces={false}>
-                <FormLogin loading={loading} onLoginGoogle={loginWithGoogle} onLogin={login}
-                           onGoRegister={goRegister}/>
-                <ModalError visible={modalErrorVisible} setVisible={setModalErrorVisible}
-                            text={'Algo ha salido mal, porfavor intenta nuevamente'}/>
-            </ScrollView>
-        </KeyboardAvoidingView>
+            <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
+                                  style={{flex: 1, backgroundColor: 'white'}}>
+                <ScrollView>
+                    <FormLogin loading={loading} onLoginGoogle={loginWithGoogle} onLogin={login}
+                               onGoRegister={goRegister} onLoginLinked={loginWithLinkedIn} />
+                    <ModalError visible={modalErrorVisible} setVisible={setModalErrorVisible}
+                                text={'Algo ha salido mal, porfavor intenta nuevamente'}/>
+                </ScrollView>
+            </KeyboardAvoidingView>
+
     )
 }
 
