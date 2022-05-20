@@ -182,6 +182,9 @@ export default (props) => {
                                     onChangeText={text => formik.setFieldValue('email', text)}
                                     returnKeyType={'done'}
                                     bgColor={'white'}
+                                    borderRadius={20}
+                                    color={Colors.red}
+                                    placeholderTextColor={Colors.red}
                                 />
                             </View>
                             <FormControl.ErrorMessage>
@@ -197,6 +200,9 @@ export default (props) => {
                                     onChangeText={text => formik.setFieldValue('password', text)}
                                     returnKeyType={'done'}
                                     bgColor={'white'}
+                                    borderRadius={20}
+                                    color={Colors.red}
+                                    placeholderTextColor={Colors.red}
                                 />
                             </View>
                             <FormControl.ErrorMessage>

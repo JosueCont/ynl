@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
-import {Alert, SafeAreaView} from 'react-native'
+import {Alert, Platform} from 'react-native'
 import {loginEmail, loginGoogle} from "../../redux/ducks/authDuck";
 import FormLogin from "../../components/security/FormLogin";
 import {KeyboardAvoidingView, ScrollView} from "native-base";

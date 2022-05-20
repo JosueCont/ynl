@@ -123,7 +123,8 @@ const ProfileScreen = ({authDuck, navigation}) => {
                         <View flex={1} mb={4} style={getShadowCircleStyle(10, 10)}>
                             <Input size={'2xl'} height={50} placeholder={'Apellidos'}
                                    borderRadius={20}
-                                   placeholderTextColor={Colors.red} textAlign={'center'}
+                                   placeholderTextColor={Colors.red}
+                                   textAlign={'center'}
                                    value={lastName}
                                    onChangeText={val => setLastName(val)}
                                    backgroundColor={Colors.white}
