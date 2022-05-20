@@ -11,29 +11,23 @@ import {
     ScrollView,
     Text,
     View,
-    VStack,
-    Modal
+    VStack
 } from "native-base";
-import logo from '../../assets/YNL.gif'
 import {useNavigation} from '@react-navigation/native';
 import {useFormik} from 'formik';
 import * as Yup from 'yup'
 import * as Google from 'expo-google-app-auth';
-import LinkedInModal from 'react-native-linkedin'
 import {getShadowCircleStyle, resolvePlatform} from "../../utils/functions";
 //import LinkedInModal from 'react-native-linkedin'
-import {resolvePlatform} from "../../utils/functions";
 import {Colors} from "../../utils/Colors";
 import loginImage from '../../assets/login.png';
 import facebookImage from '../../assets/facebook.png'
 import linkedInImage from '../../assets/linkedin.png'
 import googleImage from '../../assets/google.png'
 
-import { StyleSheet, Text, View as V, SafeAreaView } from 'react-native';
+import {Dimensions, SafeAreaView, StyleSheet, TouchableOpacity} from 'react-native';
 import WebView from "react-native-webview";
 import querystring from 'querystring';
-import {Dimensions} from "react-native";
-
 
 
 export default (props) => {
@@ -208,42 +202,39 @@ export default (props) => {
                             <FormControl.ErrorMessage>
                                 {formik.errors.password}
                             </FormControl.ErrorMessage>
-                            <Link _text={{
-                                fontSize: "xs",
-                                fontWeight: "500",
-                                color: Colors.red
-                            }} alignSelf="flex-end" mt="1">
-                                Forget Password?
-                            </Link>
+
                         </FormControl>
-                        <Button mt="1" isLoading={props.loading} isLoadingText={'Iniciando'}
+                        <Button mt={2} mb={2} isLoading={props.loading} isLoadingText={'Iniciando'}
                                 onPress={formik.handleSubmit}
                                 colorScheme='orange'>
                             Iniciar
                         </Button>
-
-                        <View flexDir={'row'}>
-                            <View flex={1} alignItems={'center'} justifyContent={'center'}
-                                  style={getShadowCircleStyle(10, 10)}>
-                                <Image source={facebookImage} w={10} h={10}></Image>
-                            </View>
-                            <View flex={1} alignItems={'center'} justifyContent={'center'}
-                                  style={getShadowCircleStyle(10, 10)}>
+                        <Link mb={4} _text={{
+                            fontSize: "xs",
+                            fontWeight: "500",
+                            color: Colors.red
+                        }} alignSelf="flex-end" mt="1">
+                            Forget Password?
+                        </Link>
+                        <View flexDir={'row'} mb={2}>
+                            <TouchableOpacity onPress={() => {
+                                setOpenLinkedIn(true);
+                                setToken('');
+                            }}
+                                              style={[{flex: 1, alignItems: 'center'}, getShadowCircleStyle(10, 10)]}>
                                 <Image source={linkedInImage} w={10} h={10}></Image>
-                            </View>
-                            <View flex={1} alignItems={'center'} justifyContent={'center'}
-                                  style={getShadowCircleStyle(10, 10)}>
+                            </TouchableOpacity>
+                            <TouchableOpacity alignItems={'center'} justifyContent={'center'}
+                                              style={[{flex: 1, alignItems: 'center'}, getShadowCircleStyle(10, 10)]}>
+                                <Image source={facebookImage} w={10} h={10}></Image>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity onPress={handleLoginGoogle} flex={1} alignItems={'center'}
+                                              justifyContent={'center'}
+                                              style={[{flex: 1, alignItems: 'center'}, getShadowCircleStyle(10, 10)]}>
                                 <Image source={googleImage} w={10} h={10}></Image>
-                            </View>
+                            </TouchableOpacity>
                         </View>
-                        <Button mt="1" isLoading={props.loading} isLoadingText={'Iniciando'} onPress={handleLoginGoogle}
-                                colorScheme="orange">
-                            Login con Google
-                        </Button>
-                        <Button mt="1" isLoading={props.loading} isLoadingText={'Iniciando'}  onPress={()=>{setOpenLinkedIn(true); setToken('');}}
-                                colorScheme="orange">
-                            Login con LinkedIn
-                        </Button>
 
                         <HStack justifyContent="center">
                             <Button size="sm" colorScheme={'orange'} onPress={() => navigation.navigate('Register')}

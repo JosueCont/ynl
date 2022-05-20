@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {ScrollView} from 'react-native'
 import {createSession, registerAction, setAttribute} from "../../redux/ducks/authDuck";
 import FormRegister from "../../components/security/FormRegister";
+import {Colors} from "../../utils/Colors";
 
 const RegisterScreen = ({productsDuck, navigation, registerAction, setAttribute}) => {
 
@@ -19,7 +20,7 @@ const RegisterScreen = ({productsDuck, navigation, registerAction, setAttribute}
     }
 
     return (
-        <ScrollView>
+        <ScrollView style={{backgroundColor: Colors.white}}>
             <FormRegister loading={loading} onRegister={register}/>
         </ScrollView>
     )
