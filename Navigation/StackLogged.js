@@ -28,7 +28,7 @@ const StackLogged = ({}) => {
     }
 
     return (
-        <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Navigator screenOptions={{headerShown: false, gestureEnabled: true}}>
             <Stack.Screen name="IntroScreen" component={IntroScreen}/>
             <Stack.Screen name="DrawerNavigator" component={DrawerConfig}/>
 

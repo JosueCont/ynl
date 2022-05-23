@@ -83,6 +83,7 @@ const DrawerConfig = ({accountDuck, authDuck}) => {
                         <Icon as={MaterialIcons} color={Colors.red} name={'menu'} size={'xl'}></Icon>
                     </TouchableOpacity>
                 ),
+                swipeEnabled: false
             })}
             drawerContent={(props) => <CustomDrawerContent  {...props} />}>
             {
