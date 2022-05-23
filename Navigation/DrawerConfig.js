@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import CustomDrawerContent from "./DrawerNavigatorContent";
 import HomeScreen from "../screens/HomeScreen";
@@ -20,12 +20,30 @@ import ProfileScreen from "../screens/ProfileScreen";
 import EmotionModal from "../screens/EmotionModal";
 import RotateCustomScreen from "../screens/RotateCustomScreen";
 import IntroScreen from "../screens/IntroScreen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Drawer = createDrawerNavigator();
 
 const DrawerConfig = ({accountDuck, authDuck}) => {
+    const [introStatus, setIntroStatus] = useState(null);
 
+    useEffect(() => {
+        getIntroStatus()
+    }, [])
 
+    const getIntroStatus = async () => {
+        try {
+            let intro = await AsyncStorage.getItem('@intro');
+            console.log(intro)
+            if (parseInt(intro) === 1) {
+                setIntroStatus(parseInt(intro))
+            } else {
+                setIntroStatus(parseInt(intro))
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
     return (
         <Drawer.Navigator
             backBehavior={'history'}
@@ -93,8 +111,12 @@ const DrawerConfig = ({accountDuck, authDuck}) => {
 
 
             }
+            {
+                introStatus === 0 &&
+                <Drawer.Screen name="IntroScreen" component={IntroScreen} options={{headerShown: false}}/>
 
-            <Drawer.Screen name="IntroScreen" component={IntroScreen} options={{headerShown: false}}/>
+            }
+
 
             <Drawer.Screen name={'HomeScreen'} component={HomeScreen} options={{title: ''}}/>
             <Drawer.Screen name={'YourFeelScreen'} component={YourFeelScreen}/>
