@@ -87,6 +87,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
             }
 
             const response = await ApiApp.updatePassword(data)
+            console.log(response.data)
             setModalPasswordUpdateVisible(false)
             toast.show({
                 duration: 2000,

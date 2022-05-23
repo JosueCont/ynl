@@ -215,12 +215,12 @@ export default (props) => {
                                 colorScheme='orange'>
                             Iniciar
                         </Button>
-                        <Link mb={4} _text={{
+                        <Link onPress={() => navigation.navigate('PasswordRecoveryScreen')} mb={4} _text={{
                             fontSize: "xs",
                             fontWeight: "500",
                             color: Colors.red
                         }} alignSelf="flex-end" mt="1">
-                            Forget Password?
+                            ¿Olvidaste tu contraseña?
                         </Link>
                         <View flexDir={'row'} mb={2}>
                             <TouchableOpacity onPress={() => {

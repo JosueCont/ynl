@@ -9,6 +9,7 @@ import {Colors} from "../utils/Colors";
 import VerificationCodeScreen from "../screens/Security/VerificationCodeScreen";
 import PhoneScreen from "../screens/Security/PhoneScreen";
 import SuccessScreen from "../screens/Security/SuccessScreen";
+import PasswordRecoveryScreen from "../screens/Security/PasswordRecoveryScreen";
 
 const Stack = createStackNavigator();
 
@@ -67,7 +68,9 @@ const StackAuth = ({}) => {
             {/*              component={RotateCustom}/>*/}
 
             <Stack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown: false}}/>
-            <Stack.Screen name="Register" component={RegisterScreen}/>
+            <Stack.Screen name="Register" component={RegisterScreen} options={{title: ''}}/>
+            <Stack.Screen name="PasswordRecoveryScreen" component={PasswordRecoveryScreen} options={{title: ''}}/>
+
             <Stack.Screen name="PhoneScreen" component={PhoneScreen}/>
             <Stack.Screen name="VerificationCodeScreen" component={VerificationCodeScreen}/>
             <Stack.Screen name="SuccessScreen" component={SuccessScreen} options={{headerShown: false}}/>
