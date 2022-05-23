@@ -13,7 +13,8 @@ const PasswordRecoveryScreen = ({productsDuck, navigation, registerAction, setAt
     }, [])
 
     const register = async (values) => {
-
+        console.log(values)
+        navigation.navigate('PasswordRecoverySuccessScreen')
     }
 
     return (

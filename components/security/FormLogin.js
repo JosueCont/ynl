@@ -37,21 +37,36 @@ export default (props) => {
     const [openLinkedIn, setOpenLinkedIn] = useState(false)
 
 
-     const REDIRECT_URI = "https://ynl-api.herokuapp.com/api/connect/linkedin/"; // this needs to be the same as your linkedin app panel
+    const REDIRECT_URI = "https://ynl-api.herokuapp.com/api/connect/linkedin/"; // this needs to be the same as your linkedin app panel
     const CLIENT_ID = "86mom3hfgl2rvj"; // you can get it from the linked in apps panel
     const CLIENT_SECRET = "z7YYg1E3i39fI9Kf"; // you can get it from the linked in apps panel
     const AUTH_BASE = "https://www.linkedin.com/oauth/v2/authorization";
     //https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=86mom3hfgl2rvj&redirect_uri=https://ynl-api.herokuapp.com/api/connect/linkedin/&state=foobar&scope=r_liteprofile
 
 
-     const qs = [
+    const {touched, handleSubmit, errors, setFieldValue} = useFormik({
+        initialValues: {
+            email: '',
+            password: ''
+        },
+        onSubmit: (formValue) => {
+            props.onLogin(formValue)
+        },
+        validateOnChange: false,
+        validationSchema: Yup.object({
+            email: Yup.string().email("El email no es correcto").required("El email es obligatorio"),
+            password: Yup.string().required("La contraseña es obligatoria"),
+        })
+    });
+
+    const qs = [
         `response_type=code`,
         `client_id=${CLIENT_ID}`,
         `redirect_uri=${REDIRECT_URI}`,
         `state=123456`,
         `scope=r_liteprofile`,
-      ];
-      const AUTH_ENDPOINT = `${AUTH_BASE}?${qs.join('&')}`
+    ];
+    const AUTH_ENDPOINT = `${AUTH_BASE}?${qs.join('&')}`
 
 
     const linkedInLogin = ({ url }) => {
@@ -132,146 +147,139 @@ export default (props) => {
     }
 
 
-
-    const FormLogin = () => {
-        const formik = useFormik({
-            initialValues: {
-                email: '',
-                password: ''
-            },
-            onSubmit: (formValue) => {
-                props.onLogin(formValue)
-            },
-            validateOnChange: false,
-            validationSchema: Yup.object({
-                email: Yup.string().email("El email no es correcto").required("El email es obligatorio"),
-                password: Yup.string().required("La contraseña es obligatoria"),
-            })
-        });
-
-
-        return (
-            <ScrollView p={10} bounces={false} flexGrow={1}>
-                {/*<Heading flex={1} size="lg" fontWeight="600" color="coolGray.800" _dark={{*/}
-                {/*    color: "warmGray.50"*/}
-                {/*}}>*/}
-                {/*    <VStack flex={1} alignItems={'center'}>*/}
-                {/*       */}
-                {/*    </VStack>*/}
-                {/*</Heading>*/}
-                <View flex={0.3} alignItems={'center'} justifyContent={'center'}>
-                    <Image source={loginImage} style={{resizeMode: 'contain'}} w={resolvePlatform(250, 200)}
-                           h={resolvePlatform(250, 200)}/>
-                </View>
-                <View flex={1}>
-
-
-                    <Text textAlign={'center'} color={Colors.red} fontSize={42}>¡Hola!</Text>
-                    <Text textAlign={'center'} color={Colors.red} fontSize={24}>¿Cómo te sientes?</Text>
-
-                    <Text textAlign={'center'} textDecorationLine={'underline'} fontSize={12}>Iniciar sesión</Text>
-
-                    <VStack space={3} mt="5">
-                        <FormControl isInvalid={formik.errors.email}>
-                            <View flex={1} mb={4} style={getShadowCircleStyle(5, 5)}>
-                                <Input
-                                    height={50}
-                                    autoCapitalize="none"
-                                    placeholder={'Correo electrónico'}
-                                    autoCorrect={false}
-                                    onChangeText={text => formik.setFieldValue('email', text)}
-                                    returnKeyType={'done'}
-                                    bgColor={'white'}
-                                    borderRadius={20}
-                                    color={Colors.red}
-                                    placeholderTextColor={Colors.red}
-                                />
-                            </View>
-                            <FormControl.ErrorMessage>
-                                {formik.errors.email}
-                            </FormControl.ErrorMessage>
-                        </FormControl>
-                        <FormControl isInvalid={formik.errors.password}>
-                            <View flex={1} mb={4} style={getShadowCircleStyle(5, 5)}>
-                                <Input
-                                    height={50}
-                                    placeholder={'Contraseña'}
-                                    type="password"
-                                    onChangeText={text => formik.setFieldValue('password', text)}
-                                    returnKeyType={'done'}
-                                    bgColor={'white'}
-                                    borderRadius={20}
-                                    color={Colors.red}
-                                    placeholderTextColor={Colors.red}
-                                />
-                            </View>
-                            <FormControl.ErrorMessage>
-                                {formik.errors.password}
-                            </FormControl.ErrorMessage>
-
-                        </FormControl>
-                        <Button mt={2} mb={2} isLoading={props.loading} isLoadingText={'Iniciando'}
-                                onPress={formik.handleSubmit}
-                                colorScheme='orange'>
-                            Iniciar
-                        </Button>
-                        <Link onPress={() => navigation.navigate('PasswordRecoveryScreen')} mb={4} _text={{
-                            fontSize: "xs",
-                            fontWeight: "500",
-                            color: Colors.red
-                        }} alignSelf="flex-end" mt="1">
-                            ¿Olvidaste tu contraseña?
-                        </Link>
-                        <View flexDir={'row'} mb={2}>
-                            <TouchableOpacity onPress={() => {
-                                setOpenLinkedIn(true);
-                                setToken('');
-                            }}
-                                              style={[{flex: 1, alignItems: 'center'}, getShadowCircleStyle(10, 10)]}>
-                                <Image source={linkedInImage} w={10} h={10}></Image>
-                            </TouchableOpacity>
-                            <TouchableOpacity alignItems={'center'} justifyContent={'center'}
-                                              style={[{flex: 1, alignItems: 'center'}, getShadowCircleStyle(10, 10)]}>
-                                <Image source={facebookImage} w={10} h={10}></Image>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity onPress={handleLoginGoogle} flex={1} alignItems={'center'}
-                                              justifyContent={'center'}
-                                              style={[{flex: 1, alignItems: 'center'}, getShadowCircleStyle(10, 10)]}>
-                                <Image source={googleImage} w={10} h={10}></Image>
-                            </TouchableOpacity>
-                        </View>
-
-                        <HStack justifyContent="center">
-                            <Button size="sm" colorScheme={'orange'} onPress={() => navigation.navigate('Register')}
-                                    variant="link">
-                                Registrarme
-                            </Button>
-                        </HStack>
-                    </VStack>
-                </View>
-            </ScrollView>
-        );
-    };
-
     return (
         <NativeBaseProvider>
             <Center flex={1} px="3">
 
-                { openLinkedIn &&
+                {openLinkedIn &&
                     <SafeAreaView style={{flex: 1}}>
                         <View style={stylesLI.container2}>
                             <WebView style={stylesLI.wv}
-                                source={{uri: AUTH_ENDPOINT}}
-                                javaScriptEnabled
-                                domStorageEnabled
-                                onNavigationStateChange={linkedInLogin}
-                                >
+                                     source={{uri: AUTH_ENDPOINT}}
+                                     javaScriptEnabled
+                                     domStorageEnabled
+                                     onNavigationStateChange={linkedInLogin}
+                            >
                             </WebView>
                         </View>
                     </SafeAreaView>
                 }
-                {!openLinkedIn && <FormLogin/>}
+                {
+                    !openLinkedIn &&
+                    <ScrollView p={10} bounces={false} flexGrow={1}>
+                        {/*<Heading flex={1} size="lg" fontWeight="600" color="coolGray.800" _dark={{*/}
+                        {/*    color: "warmGray.50"*/}
+                        {/*}}>*/}
+                        {/*    <VStack flex={1} alignItems={'center'}>*/}
+                        {/*       */}
+                        {/*    </VStack>*/}
+                        {/*</Heading>*/}
+                        <View flex={0.3} alignItems={'center'} justifyContent={'center'}>
+                            <Image source={loginImage} style={{resizeMode: 'contain'}} w={resolvePlatform(250, 200)}
+                                   h={resolvePlatform(250, 200)}/>
+                        </View>
+                        <View flex={1}>
+
+
+                            <Text textAlign={'center'} color={Colors.red} fontSize={42}>¡Hola!</Text>
+                            <Text textAlign={'center'} color={Colors.red} fontSize={24}>¿Cómo te sientes?</Text>
+
+                            <Text textAlign={'center'} textDecorationLine={'underline'} fontSize={12}>Iniciar
+                                sesión</Text>
+
+                            <VStack space={3} mt="5">
+                                <FormControl isInvalid={errors.email}>
+                                    <View flex={1} mb={4} style={getShadowCircleStyle(5, 5)}>
+                                        <Input
+                                            height={50}
+                                            autoCapitalize="none"
+                                            placeholder={'Correo electrónico'}
+                                            autoCorrect={false}
+                                            onChangeText={text => setFieldValue('email', text)}
+                                            value={touched.email}
+                                            returnKeyType={'done'}
+                                            bgColor={'white'}
+                                            borderRadius={20}
+                                            color={Colors.red}
+                                            placeholderTextColor={Colors.red}
+                                        />
+                                    </View>
+                                    <FormControl.ErrorMessage>
+                                        {errors.email}
+                                    </FormControl.ErrorMessage>
+                                </FormControl>
+                                <FormControl isInvalid={errors.password}>
+                                    <View flex={1} mb={4} style={getShadowCircleStyle(5, 5)}>
+                                        <Input
+                                            height={50}
+                                            placeholder={'Contraseña'}
+                                            type="password"
+                                            onChangeText={text => setFieldValue('password', text)}
+                                            value={touched.password}
+                                            returnKeyType={'done'}
+                                            bgColor={'white'}
+                                            borderRadius={20}
+                                            color={Colors.red}
+                                            placeholderTextColor={Colors.red}
+                                        />
+                                    </View>
+                                    <FormControl.ErrorMessage>
+                                        {errors.password}
+                                    </FormControl.ErrorMessage>
+
+                                </FormControl>
+                                <Button mt={2} mb={2} isLoading={props.loading} isLoadingText={'Iniciando'}
+                                        onPress={handleSubmit}
+                                        colorScheme='orange'>
+                                    Iniciar
+                                </Button>
+                                <Link onPress={() => navigation.navigate('PasswordRecoveryScreen')} mb={4} _text={{
+                                    fontSize: "xs",
+                                    fontWeight: "500",
+                                    color: Colors.red
+                                }} alignSelf="flex-end" mt="1">
+                                    ¿Olvidaste tu contraseña?
+                                </Link>
+                                <View flexDir={'row'} mb={2}>
+                                    <TouchableOpacity onPress={() => {
+                                        setOpenLinkedIn(true);
+                                        setToken('');
+                                    }}
+                                                      style={[{
+                                                          flex: 1,
+                                                          alignItems: 'center'
+                                                      }, getShadowCircleStyle(10, 10)]}>
+                                        <Image source={linkedInImage} w={10} h={10}></Image>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity alignItems={'center'} justifyContent={'center'}
+                                                      style={[{
+                                                          flex: 1,
+                                                          alignItems: 'center'
+                                                      }, getShadowCircleStyle(10, 10)]}>
+                                        <Image source={facebookImage} w={10} h={10}></Image>
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity onPress={handleLoginGoogle} flex={1} alignItems={'center'}
+                                                      justifyContent={'center'}
+                                                      style={[{
+                                                          flex: 1,
+                                                          alignItems: 'center'
+                                                      }, getShadowCircleStyle(10, 10)]}>
+                                        <Image source={googleImage} w={10} h={10}></Image>
+                                    </TouchableOpacity>
+                                </View>
+
+                                <HStack justifyContent="center">
+                                    <Button size="sm" colorScheme={'orange'}
+                                            onPress={() => navigation.navigate('Register')}
+                                            variant="link">
+                                        Registrarme
+                                    </Button>
+                                </HStack>
+                            </VStack>
+                        </View>
+                    </ScrollView>
+                }
             </Center>
         </NativeBaseProvider>
     );

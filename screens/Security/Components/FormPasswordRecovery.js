@@ -8,11 +8,9 @@ import * as Yup from 'yup'
 export default ({onRegister, loading}) => {
 
 
-    const formik = useFormik({
+    const {handleSubmit, errors, setFieldValue, touched} = useFormik({
         initialValues: {
             email: '',
-            password: '',
-            repeatPassword: ''
         },
         onSubmit: (formValue) => {
             onRegister(formValue)
@@ -20,9 +18,8 @@ export default ({onRegister, loading}) => {
         validateOnChange: false,
         validationSchema: Yup.object({
             email: Yup.string().email("El email no es correcto").required("El email es obligatorio"),
-            password: Yup.string().required("La contraseña es obligatoria"),
-            repeatPassword: Yup.string().required("La contraseña es obligatoria").oneOf([Yup.ref('password')], "Las contraseñas tienen que ser iguales"),
-        })
+        }),
+        enableReinitialize: false
     });
 
 
@@ -45,20 +42,21 @@ export default ({onRegister, loading}) => {
 
                     <VStack space={3} mt="5">
                         <VStack>
-                            <FormControl isInvalid={formik.errors.email}>
+                            <FormControl isInvalid={errors.email}>
                                 <Input
                                     placeholder={'Correo electrónico'}
                                     autoCapitalize="none"
-                                    onChangeText={text => formik.setFieldValue('email', text)}
-
+                                    onChangeText={text => setFieldValue('email', text)}
+                                    value={touched.email}
+                                    autoCorrect={false}
                                 />
                                 <FormControl.ErrorMessage>
-                                    {formik.errors.email}
+                                    {errors.email}
                                 </FormControl.ErrorMessage>
                             </FormControl>
 
                             <Button isLoading={loading} isLoadingText={'Registrando'} mt="2"
-                                    onPress={formik.handleSubmit} colorScheme="red">
+                                    onPress={handleSubmit} colorScheme="red">
                                 Continuar
                             </Button>
                         </VStack>
