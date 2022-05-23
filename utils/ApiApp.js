@@ -84,7 +84,8 @@ class ApiApp {
     //hace una busqueda basada en la palabra que le pasen como texto (username)
     static getUsersByUsername = (usernameLike = '') => {
         console.log(usernameLike)
-        return ApiApp.ApisType(`/api/users?filters[username][$contains]=${usernameLike}`, 'get')
+
+        return ApiApp.ApisType(`/api/users?filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}`, 'get')
     }
 
     static getMyGroups = (userId) => {

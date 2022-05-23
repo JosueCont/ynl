@@ -52,7 +52,12 @@ export let getUsersByUserName=(username='')=> async(dispatch)=>{
     dispatch({type: GET_USERS});
     try{
         let response = await ApiApp.getUsersByUsername(username)
-        dispatch({type: GET_USERS_SUCCESS, payload:response.data});
+
+        console.log(response.data)
+        dispatch({
+            type: GET_USERS_SUCCESS,
+            payload: response.data.length > 0 ? response.data : [{id: null, email: username, username: username}]
+        });
     }catch (e){
         console.log('errorr====>', e)
         dispatch({type: ERROR_FETCH});

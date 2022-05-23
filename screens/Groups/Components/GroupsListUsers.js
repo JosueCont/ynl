@@ -1,9 +1,9 @@
 import React from "react";
 import {Avatar, Box, Button, FlatList, HStack, Spacer, Text, VStack} from "native-base";
-import {TouchableOpacity} from "react-native";
 import {Ionicons} from "@expo/vector-icons";
 import {connect} from "react-redux";
 import {getUsersByUserName} from "../../../redux/ducks/groupDuck";
+import {TouchableOpacity} from "react-native";
 
 const GroupsListUsers = ({usersSelected, groupDuck, registerGroup, isUserSelected, addUserToList}) => {
     return (
@@ -23,7 +23,7 @@ const GroupsListUsers = ({usersSelected, groupDuck, registerGroup, isUserSelecte
                     }
                 </HStack>
 
-                <Text size={'sm'}>Sugerencias</Text>
+                <Text size={'sm'} mb={4}>Sugerencias</Text>
                 <FlatList data={groupDuck.users} renderItem={({item}) =>
                     <Box borderBottomWidth="1" _dark={{
                         borderColor: "gray.600"

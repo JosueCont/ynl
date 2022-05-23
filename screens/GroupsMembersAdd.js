@@ -6,7 +6,6 @@ import {Ionicons} from "@expo/vector-icons";
 import {getUsersByUserName} from '../redux/ducks/groupDuck'
 import _ from 'lodash'
 import GroupsListUsers from "./Groups/Components/GroupsListUsers";
-import ApiApp from "../utils/ApiApp";
 import {useFocusEffect} from "@react-navigation/native";
 
 const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUserName}) => {
@@ -47,19 +46,31 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
 
     const registerGroup = async () => {
         try {
+
+
+            let members = _.filter(usersSelected, function (o) {
+                return o.id !== null;
+            });
+            console.log(members)
+            let publicEmails = _.filter(usersSelected, function (o) {
+                return o.id === null;
+            });
             let data = {
                 data: {
                     name: groupName,
                     owner: authDuck.user.id,
                     description: "",
-                    members: usersSelected.map(obj => obj.id)
+                    members: members.map((item) => item.id),
+                    publicEmails: publicEmails.map((item) => item.email)
+
                 }
             }
-            let response = await ApiApp.createGroup(data)
-            if (response.status === 200) {
-                console.log('success')
-            }
-            navigation.navigate('GroupsScreen')
+            console.log(data)
+            // let response = await ApiApp.createGroup(data)
+            // if (response.status === 200) {
+            //     console.log('success')
+            // }
+            // navigation.navigate('GroupsScreen')
         } catch (ex) {
             console.log(ex)
         }
@@ -74,7 +85,6 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
     }
 
     const addUserToList = (user) => {
-        console.log(_.uniq([...usersSelected, user]))
         let newArray = _.uniq([...usersSelected, user])
         //validamos si ya fue seleccionado previamente
         if (isUserSelected(user)) {
