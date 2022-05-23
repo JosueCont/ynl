@@ -1,5 +1,4 @@
-import {Avatar, Icon, Text, View} from "native-base";
-import imageLogo from '../../../assets/logo.png'
+import {Icon, Text, View} from "native-base";
 import {Colors} from "../../../utils/Colors";
 import {TouchableOpacity} from "react-native";
 import {MaterialIcons} from "@expo/vector-icons";
@@ -10,10 +9,15 @@ const GroupsItem = ({groupId, title, navigation, acceptInvite = false, token = n
                           onPress={() => navigation.navigate('GroupsMembersScreen', {groupId: groupId})}>
             <View flexDir={'row'} my={3} borderBottomWidth={0.5} borderBottomColor={Colors.red} mx={2} pb={4}>
                 <View flex={0.4} alignItems={'center'} justifyContent={'center'}>
-                    <Avatar size="md" source={imageLogo}/>
+
+                    <View style={{width: 35, height: 35}} backgroundColor={Colors.red} borderRadius={20}
+                          alignItems={'center'} justifyContent={'center'}>
+                        <Icon as={MaterialIcons} name={'group'} color={'white'} fontSize={20}></Icon>
+                    </View>
+
                 </View>
                 <View flex={1} justifyContent={'center'}>
-                    <Text fontSize={18} n>{title}</Text>
+                    <Text fontSize={16} color={Colors.red}>{title}</Text>
                 </View>
                 {
                     acceptInvite === true ?

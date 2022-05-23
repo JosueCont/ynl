@@ -16,6 +16,8 @@ LogBox.ignoreAllLogs();
 const store = generateStore();
 
 export default function App() {
+
+
     return (
         <SSRProvider>
             <Provider store={store}>

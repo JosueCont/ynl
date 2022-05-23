@@ -23,12 +23,10 @@ import IntroScreen from "../screens/IntroScreen";
 
 const Drawer = createDrawerNavigator();
 
-const DrawerConfig = ({accountDuck, authDuck, navigation, introStatus, emotionStatus}) => {
+const DrawerConfig = ({accountDuck, authDuck, navigation}) => {
 
-    console.log(introStatus, emotionStatus)
     return (
         <Drawer.Navigator
-            initialRouteName={introStatus === 0 ? 'IntroScreen' : emotionStatus === 1 ? 'EmotionsPage' : 'HomeScreen'}
             backBehavior={'history'}
             screenOptions={({navigation, route}) => ({
                 drawerPosition: 'right',
@@ -88,8 +86,7 @@ const DrawerConfig = ({accountDuck, authDuck, navigation, introStatus, emotionSt
                 swipeEnabled: false
             })}
             drawerContent={(props) => <CustomDrawerContent  {...props} />}>
-
-            <Drawer.Screen name={'IntroScreen'} component={IntroScreen} options={{headerShown: false}}/>
+            <Drawer.Screen name="IntroScreen" component={IntroScreen} options={{headerShown: false}}/>
             <Drawer.Screen name={'EmotionsPage'} component={EmotionsPage} options={{title: ''}}/>
             <Drawer.Screen name={'HomeScreen'} component={HomeScreen} options={{title: ''}}/>
             <Drawer.Screen name={'YourFeelScreen'} component={YourFeelScreen}/>

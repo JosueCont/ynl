@@ -188,14 +188,19 @@ const ProfileScreen = ({authDuck, navigation}) => {
                                 <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
                                           value="danger" colorScheme="orange" isChecked={gender === 0 ? true : false}
                                           onChange={(v) => {
-                                              setGender(v ? 0 : 1)
+                                              if (v) {
+                                                  setGender(0)
+                                              }
+
                                           }}>
                                     <Text color={Colors.red} fontSize={12}>Femenino</Text>
                                 </Checkbox>
                                 <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
                                           value="info" colorScheme="orange" isChecked={gender === 1 ? true : false}
                                           onChange={(v) => {
-                                              setGender(v ? 1 : 0)
+                                              if (v) {
+                                                  setGender(1)
+                                              }
                                           }}>
                                     <Text color={Colors.red} fontSize={12}>Masculino</Text>
                                 </Checkbox>

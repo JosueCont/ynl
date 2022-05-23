@@ -11,7 +11,7 @@ const GroupsMemberItem = ({title, pending = true}) => {
                     <Avatar size="md" source={imageLogo} style={{opacity: pending ? 0.5 : 1}}/>
                 </View>
                 <View flex={1} justifyContent={'center'}>
-                    <Text fontSize={18} style={{opacity: pending ? 0.5 : 1}}>{title}</Text>
+                    <Text fontSize={16} style={{opacity: pending ? 0.5 : 1}} color={Colors.red}>{title}</Text>
                 </View>
             </View>
         </TouchableOpacity>
