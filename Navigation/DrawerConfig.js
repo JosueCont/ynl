@@ -90,7 +90,7 @@ const DrawerConfig = ({accountDuck, authDuck}) => {
 
                 },
                 headerRight: () => (
-                    <TouchableOpacity onPress={() => navigation.toggleDrawer()} style={{
+                    <TouchableOpacity onPress={() => navigation.openDrawer()} style={{
                         width: 50,
                         height: '100%',
                         alignItems: 'center',

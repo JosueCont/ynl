@@ -1,11 +1,15 @@
-import React from "react";
+import React, {useState} from "react";
 import {Alert, Modal, TouchableOpacity} from "react-native";
 import {styles} from "./ModalStyleSheet";
 import {Button, FormControl, Icon, Input, Text, View} from "native-base";
 import {MaterialIcons} from "@expo/vector-icons";
 import {Colors} from "../../utils/Colors";
 
-const ModalPasswordUpdate = ({visible, setVisible}) => {
+const ModalPasswordUpdate = ({visible, setVisible, action}) => {
+    const [oldPassword, setOldPassword] = useState(null)
+    const [password, setPassword] = useState(null)
+    const [passwordConfirm, setPasswordConfirm] = useState(null)
+
     return (
         <Modal
             animationType={'slide'}
@@ -27,13 +31,16 @@ const ModalPasswordUpdate = ({visible, setVisible}) => {
                     </View>
                     <View p={5} width={'100%'}>
                         <FormControl isInvalid w="100%">
-                            <Input size={'md'} height={50} mb={4} placeholder={'Contraseña anterior'} borderRadius={25}
+                            <Input onChangeText={val => setOldPassword(val)} value={oldPassword} size={'md'} height={50}
+                                   mb={4} placeholder={'Contraseña anterior'} borderRadius={25}
                                    placeholderTextColor={Colors.red} textAlign={'center'}
                             />
-                            <Input size={'md'} height={50} mb={4} placeholder={'Contaseña nueva'} borderRadius={25}
+                            <Input onChangeText={val => setPassword(val)} value={password} size={'md'} height={50}
+                                   mb={4} placeholder={'Contraseña nueva'} borderRadius={25}
                                    placeholderTextColor={Colors.red} textAlign={'center'}
                             />
-                            <Input size={'md'} height={50} mb={4} placeholder={'Confirmar contraseña nueva'}
+                            <Input onChangeText={val => setPasswordConfirm(val)} value={passwordConfirm} size={'md'}
+                                   height={50} mb={4} placeholder={'Confirmar contraseña nueva'}
                                    borderRadius={25}
                                    placeholderTextColor={Colors.red} textAlign={'center'}
                             />
@@ -45,7 +52,7 @@ const ModalPasswordUpdate = ({visible, setVisible}) => {
                                 </View>
                                 <View flex={1} ml={1}>
                                     <Button size={'sm'} colorScheme={'orange'}
-                                            onPress={() => action(value)}>Actualizar</Button>
+                                            onPress={() => action(oldPassword, password, passwordConfirm)}>Actualizar</Button>
                                 </View>
                             </View>
                         </FormControl>

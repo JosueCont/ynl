@@ -77,6 +77,40 @@ const ProfileScreen = ({authDuck, navigation}) => {
         setGender(response.data.gender)
     }
 
+    const updatePasswordFunction = async (currentPassword, newPassword, confirmNewPassword) => {
+        try {
+            setLoading(true)
+            let data = {
+                currentPassword: currentPassword,
+                newPassword: newPassword,
+                confirmNewPassword: confirmNewPassword
+            }
+
+            const response = await ApiApp.updatePassword(data)
+            setModalPasswordUpdateVisible(false)
+            toast.show({
+                duration: 2000,
+                render: () => {
+                    return <Box bg="emerald.500" rounded="sm">
+                        <Text color={"white"} fontSize={16} p={3}>Actualizado correctamente.</Text>
+                    </Box>;
+                }
+            });
+        } catch (ex) {
+            setModalPasswordUpdateVisible(false)
+            toast.show({
+                duration: 2000,
+                render: () => {
+                    return <Box bg="red.500" rounded="sm">
+                        <Text color={"white"} fontSize={16} p={3}>{ex.response.data.error.message}</Text>
+                    </Box>;
+                }
+            });
+        } finally {
+            setLoading(false)
+        }
+    }
+
 
     return (
         <ScrollView style={{flex: 1}} contentContainerStyle={{backgroundColor: Colors.white}}>
@@ -176,7 +210,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                         <Button isLoading={loading} colorScheme={'orange'} onPress={() => updateProfileFunction()}
                                 mb={4}>Actualizar</Button>
 
-                        <ModalPasswordUpdate visible={modalPasswordUpdateVisible}
+                        <ModalPasswordUpdate action={updatePasswordFunction} visible={modalPasswordUpdateVisible}
                                              setVisible={setModalPasswordUpdateVisible}></ModalPasswordUpdate>
                     </FormControl>
 
