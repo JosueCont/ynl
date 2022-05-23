@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Animated} from 'react-native';
-import circleParts from '../assets/circulev3.png';
+import circleParts from '../assets/ruleta.png';
 import {useSharedValue} from "react-native-reanimated";
 import {Gesture, GestureDetector} from "react-native-gesture-handler";
 import * as Haptics from 'expo-haptics';
@@ -13,12 +13,13 @@ const RotateCustomScreen = () => {
 
 
     const emotions = [
-        {name: 'Contento', range: [0, 60]},
-        {name: 'Abierto', range: [60, 120]},
-        {name: 'Inspirado', range: [120, 180]},
-        {name: 'Amoroso', range: [180, 240]},
-        {name: 'En paz', range: [240, 300]},
-        {name: 'Fuerte', range: [300, 360]},
+        {name: 'Feliz', range: [0, 60]},
+        {name: 'Sorprendido', range: [60, 120]},
+        {name: 'Mal', range: [120, 180]},
+        {name: 'Temerozo', range: [180, 240]},
+        {name: 'Enojado', range: [240, 300]},
+        {name: 'Disgustado', range: [300, 360]},
+        {name: 'Triste', range: [300, 360]},
     ]
 
 
@@ -34,8 +35,8 @@ const RotateCustomScreen = () => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
             let spins = (deg / 360);
             let spingResolve = spins >= 1 ? spins - parseInt((spins + "").split(".")[0]) : spins;
-            let emotionPositionVal = parseInt(((((spingResolve * 360) + 30) / 60) + "").split(".")[0]);
-            if (emotionPositionVal < 6) {
+            let emotionPositionVal = parseInt(((((spingResolve * 360) + 0) / (360 / 7)) + "").split(".")[0]);
+            if (emotionPositionVal < 7) {
                 setEmotionPosition(emotionPositionVal)
             }
             setDeg(deg + 3)

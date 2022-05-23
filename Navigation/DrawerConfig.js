@@ -19,6 +19,7 @@ import GroupsMembersScreen from "../screens/GroupsMembersScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import EmotionModal from "../screens/EmotionModal";
 import RotateCustomScreen from "../screens/RotateCustomScreen";
+import IntroScreen from "../screens/IntroScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -92,6 +93,8 @@ const DrawerConfig = ({accountDuck, authDuck}) => {
 
 
             }
+
+            <Drawer.Screen name="IntroScreen" component={IntroScreen} options={{headerShown: false}}/>
 
             <Drawer.Screen name={'HomeScreen'} component={HomeScreen} options={{title: ''}}/>
             <Drawer.Screen name={'YourFeelScreen'} component={YourFeelScreen}/>

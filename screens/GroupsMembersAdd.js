@@ -113,7 +113,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
 
     return (
 
-        <ScrollView _contentContainerStyle={{alignItems: 'center'}}>
+        <ScrollView _contentContainerStyle={{alignItems: 'center', backgroundColor: 'white'}}>
 
             <Image size={'xs'} source={logo}/>
             <View flex={1}>
@@ -130,7 +130,9 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
                                onChangeText={_.debounce(searchUsers, 1000)}
                                borderColor={'red.500'}
                                InputLeftElement={<Icon ml="2" size="4" color="gray.400"
-                                                       as={<Ionicons name="ios-search"/>}/>}/>
+                                                       as={<Ionicons name="ios-search"/>}/>}
+                               autoCorrect={false}
+                        />
                         <Divider/>
                     </VStack>
                 </VStack>

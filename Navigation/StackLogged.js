@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {createStackNavigator} from '@react-navigation/stack';
 import DrawerConfig from "./DrawerConfig";
-import IntroScreen from "../screens/IntroScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createStackNavigator();
@@ -29,8 +28,8 @@ const StackLogged = ({}) => {
 
     return (
         <Stack.Navigator screenOptions={{headerShown: false, gestureEnabled: true}}>
-            <Stack.Screen name="IntroScreen" component={IntroScreen}/>
-            <Stack.Screen name="DrawerNavigator" component={DrawerConfig}/>
+
+        <Stack.Screen name="DrawerNavigator" component={DrawerConfig}/>
 
         </Stack.Navigator>
     );
