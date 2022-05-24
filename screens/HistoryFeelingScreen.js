@@ -9,6 +9,7 @@ import {useIsFocused} from "@react-navigation/native";
 import {getShadowCircleStyle} from "../utils/functions";
 import bg1 from "../assets/bg1.png";
 import _ from "lodash";
+import moment from 'moment'
 
 
 const HistoryFeelingScreen = ({authDuck, navigation}) => {
@@ -16,6 +17,7 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
     const isFocused = useIsFocused();
     const toast = useToast();
     const [historyData, setHistoryData] = useState(null)
+    const [historyDataDetail, setHistoryDataDetail] = useState(null)
 
     useEffect(() => {
         if (isFocused) {
@@ -38,10 +40,10 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
                 return dataItem;
             })
 
+            setHistoryDataDetail(arrayDates)
             arrayDates = _.orderBy(arrayDates, ['date'],['desc']);
             arrayDates= _.uniqBy(arrayDates,'shortDate');
             setHistoryData(arrayDates)
-
         }catch (e){
             console.log(e)
         }
@@ -77,7 +79,7 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
                                         }}
                                     >
                                         <Text fontSize={26} >{ele.feeling.attributes.name}</Text>
-                                        <Text fontSize={12}>{ele.date}</Text>
+                                        <Text fontSize={12}>{moment(ele.date).format('L HH:mm')}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>

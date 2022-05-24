@@ -45,13 +45,13 @@ const StatisticsScreen = ({authDuck,navigation, ...props}) => {
 
     return (
         <ScrollView flexGrow={1} bgColor={Colors.gray}>
-            <LineChartCustom/>
+            {/*<LineChartCustom/>*/}
             <CalendarChartCustom historyData={historyData}/>
             <View mx={2} my={2} alignItems={'left'}>
                 <TouchableOpacity onPress={()=>
                     navigation.navigate('HistoryFeelingScreen')
                 }>
-                    <Text style={{fontSize:10}} mx={8}>
+                    <Text style={{fontSize:16, color:'#FF5E00'}} mx={8}>
                         Ver detalle
                     </Text>
                 </TouchableOpacity>
