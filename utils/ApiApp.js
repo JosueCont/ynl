@@ -171,6 +171,17 @@ class ApiApp {
             }
         }
     }
+
+
+    /**
+     * Estadisticas
+     */
+
+    static getHistoryFeelings = async (startDate, endDate, userId)=>{
+        return ApiApp.ApisType(`/api/feeling-records?populate=*&filters[createdAt][$gte]=${startDate}&filters[createdAt][$lt]=${endDate}&filters[user][id]=${userId}`, "get");
+    }
+
+
 }
 
 export default ApiApp;

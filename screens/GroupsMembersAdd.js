@@ -1,10 +1,12 @@
 import React, {useEffect, useRef, useState} from "react";
 import {Divider, Icon, Image, Input, ScrollView, Spinner, View, VStack} from "native-base";
 import {connect} from "react-redux";
+import ApiApp from "../utils/ApiApp";
 import logo from '../assets/logo.png'
 import {Ionicons} from "@expo/vector-icons";
 import {getUsersByUserName} from '../redux/ducks/groupDuck'
 import _ from 'lodash'
+
 import GroupsListUsers from "./Groups/Components/GroupsListUsers";
 import {useFocusEffect} from "@react-navigation/native";
 
@@ -66,11 +68,11 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
                 }
             }
             console.log(data)
-            // let response = await ApiApp.createGroup(data)
-            // if (response.status === 200) {
-            //     console.log('success')
-            // }
-            // navigation.navigate('GroupsScreen')
+             let response = await ApiApp.createGroup(data)
+             if (response.status === 200) {
+               console.log('success')
+             }
+             navigation.navigate('GroupsScreen')
         } catch (ex) {
             console.log(ex)
         }
