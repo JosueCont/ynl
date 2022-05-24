@@ -12,51 +12,18 @@ import _ from "lodash";
 import moment from 'moment'
 
 
-const HistoryFeelingScreen = ({authDuck, navigation}) => {
+const HistoryFeelingScreenDetail = ({authDuck, route,navigation}) => {
 
     const isFocused = useIsFocused();
-    const toast = useToast();
-    const [historyData, setHistoryData] = useState(null)
-    const [historyDataDetail, setHistoryDataDetail] = useState(null)
-    const [mainHistory, setMainHistory] = useState(true)
-
+    const { detail, date } = route.params;
 
     useEffect(() => {
         if (isFocused) {
-            getHistoryData(authDuck.user.id)
+            console.log('detail',detail)
         }
     }, [isFocused])
 
-    const getHistoryData=async (userId)=>{
-        console.log('entra getHistory')
-        try{
-            let startDate = '2020-01-01',enDate = '2100-01-01';
-            const res = await ApiApp.getHistoryFeelings(startDate,enDate,userId)
-            let arrayDates  = _.map(res.data.data, (obj)=>{
-                let dataItem = {
-                    shortDate: obj.attributes.createdAt.split('T')[0],
-                    date: obj.attributes.createdAt,
-                    color: obj.attributes.feeling.data.attributes.color,
-                    feeling: obj.attributes.feeling.data,
-                }
-                return dataItem;
-            })
 
-            setHistoryDataDetail(arrayDates)
-            arrayDates = _.orderBy(arrayDates, ['date'],['desc']);
-            arrayDates= _.uniqBy(arrayDates,'shortDate');
-            setHistoryData(arrayDates)
-        }catch (e){
-            console.log(e)
-        }
-    }
-
-
-    const goToDetailHistory=(feel)=>{
-        let arrayDetail = _.filter(historyDataDetail, { 'shortDate': feel.shortDate});
-        console.log('arrayDetail',arrayDetail.length, arrayDetail)
-        navigation.navigate('HistoryFeelingScreenDetail', {detail:arrayDetail, date:feel.shortDate})
-    }
 
 
     return (
@@ -64,10 +31,10 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
 
             <View flex={1} alignItems={'center'}>
                 <Stack space={4} w="90%">
-                    <Text style={{fontSize:20, color:'#FF5E00', textAlign:'center',fontWeight:'bolder'}}>Mi Historial</Text>
+                    <Text style={{fontSize:20, color:'#FF5E00', textAlign:'center',fontWeight:'bolder'}}>{date}</Text>
 
                     {
-                        mainHistory && historyData && historyData.map((ele,i)=>{
+                        detail && detail.map((ele,i)=>{
                             return  <View
                                 flexDir={'row'}
                                 mb={8}
@@ -86,13 +53,9 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
                                             justifyContent: 'center',
                                             borderRadius: 10
                                         }}
-                                        onPress={() => {
-                                            goToDetailHistory(ele)
-                                           }
-                                        }
                                     >
                                         <Text fontSize={26} >{ele.feeling.attributes.name}</Text>
-                                        <Text fontSize={12}>{moment(ele.date).format('L HH:mm')}</Text>
+                                        <Text fontSize={12}>{moment(ele.date).format('HH:mm')}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -113,4 +76,4 @@ const mapState = (state) => {
 }
 
 
-export default connect(mapState)(HistoryFeelingScreen);
+export default connect(mapState)(HistoryFeelingScreenDetail);
