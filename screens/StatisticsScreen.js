@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView} from "native-base";
+import {ScrollView, Text} from "native-base";
 import {Colors} from "../utils/Colors";
 import {connect} from "react-redux";
 import {useIsFocused} from "@react-navigation/native";
@@ -7,8 +7,9 @@ import LineChartCustom from "./Charts/LineChartCustom";
 import CalendarChartCustom from "./Charts/CalendarChartCustom";
 import ApiApp from "../utils/ApiApp";
 import _ from 'lodash'
+import {TouchableOpacity, View} from "react-native";
 
-const StatisticsScreen = ({authDuck, ...props}) => {
+const StatisticsScreen = ({authDuck,navigation, ...props}) => {
     const isFocused = useIsFocused();
     const [historyData, setHistoryData] = useState(null)
 
@@ -46,6 +47,16 @@ const StatisticsScreen = ({authDuck, ...props}) => {
         <ScrollView flexGrow={1} bgColor={Colors.gray}>
             <LineChartCustom/>
             <CalendarChartCustom historyData={historyData}/>
+            <View mx={2} my={2} alignItems={'left'}>
+                <TouchableOpacity onPress={()=>
+                    navigation.navigate('HistoryFeelingScreen')
+                }>
+                    <Text style={{fontSize:10}} mx={8}>
+                        Ver detalle
+                    </Text>
+                </TouchableOpacity>
+            </View>
+
         </ScrollView>
     )
 }

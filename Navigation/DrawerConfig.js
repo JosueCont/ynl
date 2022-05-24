@@ -17,6 +17,7 @@ import IntroScreen from "../screens/IntroScreen";
 import RouletteStep1Screen from "../screens/RouletteStep1Screen";
 import RouletteStep2Screen from "../screens/RouletteStep2Screen";
 import RouletteStep3Screen from "../screens/RouletteStep3Screen";
+import HistoryFeelingScreen from "../screens/HistoryFeelingScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -98,6 +99,7 @@ const DrawerConfig = () => {
             <Drawer.Screen name={'GroupsMembersScreen'} component={GroupsMembersScreen} options={{title: 'Miembros'}}/>
             <Drawer.Screen name={'StatisticsScreen'} component={StatisticsScreen} options={{title: 'Estadísticas'}}/>
             <Drawer.Screen name={'ProfileScreen'} component={ProfileScreen} options={{title: 'Perfil'}}/>
+            <Drawer.Screen name={'HistoryFeelingScreen'} component={HistoryFeelingScreen} options={{title: 'Historial'}}/>
 
             <Drawer.Screen name="IntroScreen" component={IntroScreen} options={{headerShown: false}}/>
             <Drawer.Screen name={'RouletteStep1Screen'} component={RouletteStep1Screen} options={{title: ''}}/>
