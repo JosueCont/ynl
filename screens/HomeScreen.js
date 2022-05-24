@@ -172,8 +172,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     borderRadius: 10
-                                }}
-                                onPress={() => navigation.navigate('YourFeelScreen')}>
+                                }}>
                                 <Text fontSize={12}>Última emoción</Text>
                                 <Text fontSize={26} color={Colors.red}>{lastEmotion2}</Text>
                                 <Text fontSize={12}>{lastEmotion1} - {lastEmotion}</Text>
@@ -192,8 +191,8 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                     borderRadius: 10
                                 }, getShadowCircleStyle(10, 10)]}
                                 onPress={() => navigation.navigate('YourFeelScreen')}>
-                                <Icon as={MaterialIcons} name={'mood'} size={9} color={'white'}></Icon>
-                                <Text color={'white'} size={'sm'}>Del 1 al 10</Text>
+                                <Icon as={MaterialIcons} name={'mood'} size={6} color={'white'} mb={1}></Icon>
+                                <Text color={'white'} fontSize={11}>Del 1 al 10</Text>
                             </TouchableOpacity>
                         </View>
                         <View flex={1} ml={2}>
@@ -208,8 +207,8 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                 onPress={() => {
                                     navigation.navigate('StatisticsScreen')
                                 }}>
-                                <Icon as={MaterialIcons} name={'donut-large'} size={7} color={'white'}></Icon>
-                                <Text color={'white'} size={'sm'}>Mis Avances</Text>
+                                <Icon as={MaterialIcons} name={'donut-large'} size={6} color={'white'} mb={1}></Icon>
+                                <Text color={'white'} fontSize={11}>Mis Avances</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -226,8 +225,8 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                 onPress={() => {
                                     navigation.navigate('RouletteStep1Screen')
                                 }}>
-                                <Icon as={MaterialIcons} name={'nat'} size={7} color={'white'}></Icon>
-                                <Text color={'white'} size={'sm'}>Nueva emoción</Text>
+                                <Icon as={MaterialIcons} name={'nat'} size={6} color={'white'} mb={1}></Icon>
+                                <Text color={'white'} fontSize={11}>Nueva emoción</Text>
                             </TouchableOpacity>
                         </View>
                         <View flex={1} height={70} ml={2}>
@@ -246,45 +245,10 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                         navigation.navigate('GroupsScreen')
                                     }
                                 }}>
-                                <Icon as={MaterialIcons} name={'groups'} size={7} color={'white'}></Icon>
-                                <Text color={'white'} size={'sm'}>Mis
+                                <Icon as={MaterialIcons} name={'groups'} size={6} color={'white'} mb={1}></Icon>
+                                <Text color={'white'} fontSize={11}>Mis
                                     grupos</Text>
                             </TouchableOpacity>
-                        </View>
-                    </View>
-                    <View flexDir={'row'} mb={4} height={70}>
-                        <View flex={1} mr={2}>
-                            {/*<TouchableOpacity*/}
-                            {/*    style={[{*/}
-                            {/*        flex: 1,*/}
-                            {/*        alignItems: 'center',*/}
-                            {/*        justifyContent: 'center',*/}
-                            {/*        backgroundColor: Colors.red,*/}
-                            {/*        borderRadius: 10*/}
-                            {/*    }, getShadowCircleStyle(10, 10)]}*/}
-                            {/*    onPress={() => {*/}
-                            {/*        navigation.navigate('StatisticsScreen')*/}
-                            {/*    }}>*/}
-                            {/*    <Icon as={MaterialIcons} name={'insert-chart-outlined'} size={7} color={'white'}></Icon>*/}
-                            {/*    <Text color={'white'} size={'sm'}>Estadísticas</Text>*/}
-                            {/*</TouchableOpacity>*/}
-                        </View>
-                        <View flex={1} height={70} ml={2}>
-                            {/*<TouchableOpacity*/}
-                            {/*    style={[{*/}
-                            {/*        flex: 1,*/}
-                            {/*        alignItems: 'center',*/}
-                            {/*        justifyContent: 'center',*/}
-                            {/*        backgroundColor: Colors.red,*/}
-                            {/*        borderRadius: 10*/}
-                            {/*    }, getShadowCircleStyle(10, 10)]}*/}
-                            {/*    onPress={() => {*/}
-                            {/*        navigation.navigate('RotateCustomScreen')*/}
-                            {/*    }}>*/}
-                            {/*    <Icon as={MaterialIcons} name={'nat'} size={7} color={'white'}></Icon>*/}
-                            {/*    <Text color={'white'} size={'sm'}>Ruleta de*/}
-                            {/*        emociones V2</Text>*/}
-                            {/*</TouchableOpacity>*/}
                         </View>
                     </View>
 
