@@ -13,13 +13,13 @@ const RouletteStep1Screen = ({navigation}) => {
 
 
     const emotions = [
-        {name: 'Feliz', range: [0, 60]},
-        {name: 'Sorprendido', range: [60, 120]},
-        {name: 'Mal', range: [120, 180]},
-        {name: 'Temerozo', range: [180, 240]},
-        {name: 'Enojado', range: [240, 300]},
-        {name: 'Disgustado', range: [300, 360]},
-        {name: 'Triste', range: [300, 360]},
+        {id: 1, name: 'Feliz', range: [0, 60]},
+        {id: 7, name: 'Sorprendido', range: [60, 120]},
+        {id: 6, name: 'Mal', range: [120, 180]},
+        {id: 5, name: 'Temerozo', range: [180, 240]},
+        {id: 4, name: 'Enojado', range: [240, 300]},
+        {id: 3, name: 'Disgustado', range: [300, 360]},
+        {id: 2, name: 'Triste', range: [300, 360]},
     ]
 
 
@@ -85,7 +85,8 @@ const RouletteStep1Screen = ({navigation}) => {
                 {/*</View>*/}
 
                 <View flex={0.1} mx={4}>
-                    <Button colorScheme={'orange'} onPress={() => navigation.navigate('')}>Continuar</Button>
+                    <Button colorScheme={'orange'}
+                            onPress={() => navigation.navigate('RouletteStep2Screen', {parentItem: emotions[emotionPosition]})}>Continuar</Button>
                 </View>
             </View>
         </ScreenBaseV1>

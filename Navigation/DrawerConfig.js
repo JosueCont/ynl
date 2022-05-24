@@ -11,12 +11,12 @@ import GroupsScreen from "../screens/GroupsScreen";
 import GroupsMembersAdd from "../screens/GroupsMembersAdd";
 import GroupsStartScreen from "../screens/GroupsStartScreen";
 import StatisticsScreen from "../screens/StatisticsScreen";
-import EmotionsPage from "../screens/EmotionsPage";
 import GroupsMembersScreen from "../screens/GroupsMembersScreen";
 import ProfileScreen from "../screens/ProfileScreen";
-import EmotionModal from "../screens/EmotionModal";
 import IntroScreen from "../screens/IntroScreen";
 import RouletteStep1Screen from "../screens/RouletteStep1Screen";
+import RouletteStep2Screen from "../screens/RouletteStep2Screen";
+import RouletteStep3Screen from "../screens/RouletteStep3Screen";
 
 const Drawer = createDrawerNavigator();
 
@@ -97,14 +97,12 @@ const DrawerConfig = () => {
             <Drawer.Screen name={'GroupsMembersAdd'} component={GroupsMembersAdd}/>
             <Drawer.Screen name={'GroupsMembersScreen'} component={GroupsMembersScreen} options={{title: 'Miembros'}}/>
             <Drawer.Screen name={'StatisticsScreen'} component={StatisticsScreen} options={{title: 'Estadísticas'}}/>
-            <Drawer.Screen name={'EmotionsPageV2'} component={EmotionsPage} options={{title: ''}}/>
-            <Drawer.Screen name={'EmotionModal'} component={EmotionModal} options={{title: ''}}/>
             <Drawer.Screen name={'ProfileScreen'} component={ProfileScreen} options={{title: 'Perfil'}}/>
 
             <Drawer.Screen name="IntroScreen" component={IntroScreen} options={{headerShown: false}}/>
             <Drawer.Screen name={'RouletteStep1Screen'} component={RouletteStep1Screen} options={{title: ''}}/>
-            <Drawer.Screen name={'EmotionsPage'} component={EmotionsPage} options={{title: ''}}/>
-
+            <Drawer.Screen name={'RouletteStep2Screen'} component={RouletteStep2Screen} options={{title: ''}}/>
+            <Drawer.Screen name={'RouletteStep3Screen'} component={RouletteStep3Screen} options={{title: ''}}/>
         </Drawer.Navigator>
     );
 }
