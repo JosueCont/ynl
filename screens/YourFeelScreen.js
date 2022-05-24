@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Box, Button, HStack, Image, Skeleton, Slider, Text, View, VStack} from "native-base";
-import {Alert, ScrollView} from "react-native";
+import {ScrollView} from "react-native";
 import {connect} from "react-redux";
 import logo from '../assets/logo.png'
 import bodyicon from '../assets/yourfeel/bodyicon.png'
@@ -9,6 +9,8 @@ import relationicon from '../assets/yourfeel/relationicon.png'
 import finantialicon from '../assets/yourfeel/finantialicon.png'
 import ApiApp from "../utils/ApiApp";
 import {Colors} from "../utils/Colors";
+import ModalSuccess from "./Modals/ModalSuccess";
+import ModalError from "./Modals/ModalError";
 
 const YourFeelScreen = ({authDuck, navigation}) => {
     const [loading, setLoading] = useState(false)
@@ -17,6 +19,8 @@ const YourFeelScreen = ({authDuck, navigation}) => {
     const [finantialNumber, setFinantialNumber] = useState(1)
     const [relationNumber, setRelationNumber] = useState(1)
     const [user, setUser] = useState(false)
+    const [modalSuccessVisible, setModalSuccessVisible] = useState(null)
+    const [modalErrorVisible, setModalErrorVisible] = useState(null)
 
 
     useEffect(() => {
@@ -45,13 +49,10 @@ const YourFeelScreen = ({authDuck, navigation}) => {
             const res = await ApiApp.saveFeelAspects({data})
             console.log('res', res)
 
-            Alert.alert(
-                "Genial!",
-                "Se ha guardado exitosamente"
-            );
-            // navigation.goBack();
+            setModalSuccessVisible(true)
         } catch (e) {
             console.log('errror', e)
+            setModalErrorVisible(true)
         } finally {
             setLoading(false)
         }
@@ -212,6 +213,9 @@ const YourFeelScreen = ({authDuck, navigation}) => {
 
                     </VStack>
                 </HStack>
+                <ModalSuccess visible={modalSuccessVisible} setVisible={setModalSuccessVisible}></ModalSuccess>
+                <ModalError visible={modalErrorVisible} setVisible={setModalErrorVisible}></ModalError>
+
             </ScrollView>
         </Box>
     )
