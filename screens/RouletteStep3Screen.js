@@ -1,113 +1,83 @@
-import React, {useState} from "react";
-import {Button, Image, Text, View} from "native-base";
+import React, {useEffect, useState} from "react";
+import {CheckIcon, Select, Text, View} from "native-base";
 import {connect} from "react-redux";
-import {ImageBackground} from "react-native";
-import calendar from '../assets/calendaricon.png'
-import logo from '../assets/logo.png'
-import {getDay, getMonth} from '../utils/functions'
-import {saveEmotion} from "../redux/ducks/feelingsDuck";
+import {ScrollView} from "react-native";
+import ApiApp from "../utils/ApiApp";
 import {Colors} from "../utils/Colors";
-import ScreenBaseV1 from "./Components/ScreenBaseV1";
 
-const RouletteStep3Screen = ({navigation, route, saveEmotion, authDuck}) => {
+const RouletteStep3Screen = ({route, navigation}) => {
 
-    const [loading, setLoading] = useState(false)
+    const [service, setService] = useState(null);
+    const [loading, setLoading] = useState(null);
+    const [subParentSelected, setSubParentSelected] = useState(null);
+    const [children, setChildren] = useState(null);
 
 
-    const saveFeelings = async () => {
-        setLoading(true)
+    useEffect(() => {
+        console.log(route.params.parentItem)
+        getChildren(route.params.parentItem.id)
+        navigation.setOptions({
+            headerStyle: {backgroundColor: '#' + route.params.parentItem.attributes.color}
+        })
+    }, [route.params.parentItem.id])
 
+
+    const getChildren = async (parentId) => {
         try {
-            let data = {
-                label: route.params.emotion.attributes.name,
-                feeling: route.params.emotion.id,
-                user: authDuck.user.id
-            }
-            let res = await saveEmotion({data})
-            if (res) {
-
-                navigation.reset({
-                    index: 0,
-                    routes: [{name: 'HomeScreen'}],
-                });
-            }
+            setLoading(true);
+            let response = await ApiApp.getFeelingsV2(`filters[$and][0][parent][id][$eq]=${parentId}`)
+            setChildren(response.data.data)
         } catch (e) {
-
+            console.log(e.response)
         } finally {
             setLoading(false)
         }
     }
-
     return (
-        <ScreenBaseV1>
-            <View flex={1} mx={4}>
+        <ScrollView style={{flex: 1, backgroundColor: '#' + route.params.parentItem.attributes.color}}
+                    contentContainerStyle={{flex: 1}}>
 
-                <View flex={0.5} alignItems={'center'} mt={4}>
-                    <Image size={'xs'} source={logo}/>
-                </View>
+            <View flex={1} alignItems={'center'}>
+                <Text
+                    fontSize={28} textAlign={'center'}>Hoy te sientes...</Text>
+                <View w={200} h={200} bgColor={'green.200'} borderRadius={100} my={10}>
+                    {/*{*/}
+                    {/*    _.has(route.params.parentItem.attributes.icon.data.attributes.url) &&*/}
+                    {/*    <Image source={{uri: Constants.manifest.extra.URL + route.params.parentItem.attributes.icon.data.attributes.url}} style={{width:200, height:200, resizeMode:'contain'}}></Image>*/}
 
-                <View flex={1} alignItems={'center'}>
-                    <Text style={{fontSize: 20, color: 'black'}}>Hoy me siento</Text>
-
-                    <Text bold color={Colors.red}
-                          fontSize={'40px'}>{route.params.emotion && route.params.emotion.attributes.name.toUpperCase()}</Text>
-
-                    <ImageBackground source={calendar} style={{width: 80}} resizeMode={'contain'}>
-                        <Text style={styles.textMonth}>{getMonth()}</Text>
-                        <Text style={styles.textDay}>{getDay()}</Text>
-                    </ImageBackground>
-                </View>
-
-                <View flex={0.1}>
-                    <Button isLoading={loading} size="sm" colorScheme={'orange'}
-                            onPress={() => saveFeelings()}>
-                        Terminar
-                    </Button>
+                    {/*}*/}
 
                 </View>
+                <Text mb={2}>{`${route.params.parentItem.attributes.name}`}</Text>
+                <Select placeholderTextColor={Colors.red} backgroundColor={Colors.white} selectedValue={service}
+                        minWidth="250" placeholder="Selecciona" _selectedItem={{
+                    bg: "red.100",
+                    endIcon: <CheckIcon size="5"/>
+                }} mt={1} onValueChange={itemValue => {
+
+                    setService(itemValue)
+                    navigation.navigate('RouletteStep4Screen', {emotion: itemValue})
+
+                }}>
+                    {
+                        (children) &&
+                        children.map((item, i) => {
+                            return (
+                                <Select.Item label={item.attributes.name} value={item}/>
+                            )
+                        })
+                    }
+                </Select>
             </View>
-
-        </ScreenBaseV1>
+        </ScrollView>
     )
 }
 
 const mapState = (state) => {
     return {
-        productsDuck: state.productsDuck,
+        feelingsDuck: state.feelingsDuck,
         authDuck: state.authDuck
     }
 }
 
-const styles = {
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-        padding: 10,
-        paddingTop: '50%',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    image: {
-        flex: 1,
-        justifyContent: "center",
-        height: 80,
-        width: 80,
-    },
-    textDay: {
-        color: 'black',
-        fontSize: 30,
-        position: 'relative',
-        marginBottom: 20,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-    textMonth: {
-        color: 'white',
-        fontSize: 15,
-        marginTop: 10,
-        textAlign: 'center'
-    }
-};
-
-
-export default connect(mapState, {saveEmotion})(RouletteStep3Screen);
+export default connect(mapState)(RouletteStep3Screen);
