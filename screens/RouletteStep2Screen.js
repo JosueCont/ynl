@@ -1,32 +1,25 @@
 import React, {useEffect, useState} from "react";
-import {Box, Button, Heading, HStack, Image, Text, VStack} from "native-base";
+import {CheckIcon, Select, Text, View} from "native-base";
 import {connect} from "react-redux";
 import {ScrollView} from "react-native";
-import logo from '../assets/logo.png'
-import _ from 'lodash'
-import {getEmotions, getEmotionsV3} from '../redux/ducks/feelingsDuck'
-import moment from 'moment'
 import ApiApp from "../utils/ApiApp";
+import {Colors} from "../utils/Colors";
+import Constants from 'expo-constants';
 
-const RouletteStep2Screen = ({feelingsDuck, navigation, getEmotions, getEmotionsV3, authDuck, route}) => {
+const RouletteStep2Screen = ({route, navigation}) => {
 
-    const [mainfeelings, setMainFeelings] = useState([])
-    const [mainFeelingSelected, setMainFeelingSelected] = useState(null)
-    const [currentFeelingSelected, setCurrentFeelingSelected] = useState(null)
-    const [currentListFeeling, setCurrentListFeeling] = useState(null);
-    const [parents, setParents] = useState(null);
-    const [loading, setLoading] = useState(null);
-    const [parentSelected, setParentSelected] = useState(null);
+    const [service, setService] = useState(null);
     const [subParents, setSubParents] = useState(null);
-    const [children, setChildren] = useState(null);
+    const [loading, setLoading] = useState(null);
     const [subParentSelected, setSubParentSelected] = useState(null);
 
-
     useEffect(() => {
+        console.log(Constants.manifest.extra.URL + route.params.parentItem.attributes.icon.data.attributes.url)
         getSubParents(route.params.parentItem.id)
-    }, [])
-
-
+        navigation.setOptions({
+            headerStyle: {backgroundColor: '#' + route.params.parentItem.attributes.color}
+        })
+    }, [route.params.parentItem.id])
 
     const getSubParents = async (parentId) => {
         try {
@@ -40,161 +33,47 @@ const RouletteStep2Screen = ({feelingsDuck, navigation, getEmotions, getEmotions
         }
     }
 
-    const getChildren = async (parentId) => {
-        try {
-            setLoading(true);
-            let response = await ApiApp.getFeelingsV2(`filters[$and][0][parent][id][$eq]=${parentId}`)
-            setChildren(response.data.data)
-        } catch (e) {
-            console.log(e.response)
-        } finally {
-            setLoading(false)
-        }
-    }
-
-
-    const getMainEmotionsList = async () => {
-        try {
-            let response = await ApiApp.getFeelingsV2('/api/feelings?populate=*&filters[parent][id][$eq]=1')
-
-            console.log(response.data)
-            setMainFeelings(response.data.data)
-        } catch (e) {
-            console.log(e.response)
-        }
-    }
-
-
-    const getEmotionsList = async (query = null) => {
-        try {
-            const res = await getEmotionsV3()
-            return res.data
-        } catch (e) {
-            console.log('errors ====> ', e.response)
-            return []
-        }
-    }
-
-    /**
-     * Obtenemos un listado de emociones dado un id de parent
-     * @param parentId id del parent
-     * @param fromMain es desde la ruleta principal?
-     * @returns {*[]}
-     */
-    const getListFromParent = (parentId, fromMain = true) => {
-        try {
-            if (feelingsDuck.feelings) {
-                let newaarray = [];
-
-                feelingsDuck.feelings.forEach((item, i) => {
-                    console.log(_.get(item, 'attributes.parent.data.id', 0), 71, parentId)
-
-                    if (_.get(item, 'attributes.parent.data.id', 0) === parentId) {
-                        newaarray.push(item)
-                    }
-
-                })
-
-                if (fromMain) {
-                    setCurrentListFeeling(newaarray)
-                } else {
-                    return newaarray
-                }
-            }
-
-        } catch (e) {
-            console.log(e)
-        }
-
-    }
-
-
-    const onSelectEmotion = (emotion) => {
-        navigation.navigate('RouletteStep3Screen', {
-            emotion: emotion
-        })
-    }
-
-
-    const formatDate = (datetime) => {
-        const date = new Date(datetime)
-        return moment(date).format('DD/mm/YYYY , h:mm'); // June 1, 2019
-    }
-
-
-    const reset = () => {
-        setMainFeelingSelected(null)
-        setCurrentFeelingSelected(null)
-    }
-
     return (
-        <Box flex={1} bg="#fff" alignItems="center">
-            <HStack justifyContent={'center'} pt={5} pb={3}>
-                <VStack>
-                    <Image size={'xs'} source={logo}/>
-                </VStack>
-            </HStack>
-            <ScrollView w={'100%'}>
-                <HStack justifyContent={'center'}>
-                    <VStack w={'100%'} alignItems={'center'}>
-                        <Heading mb={5} color={'#FF2830'} fontSize="xl" p="4" pb="3">
-                            <Text bold
-                                  fontSize={'20px'}>{`¿Por qué te sientes ${route.params.parentItem.name}?`}</Text>
-                        </Heading>
-                    </VStack>
+        <ScrollView style={{flex: 1, backgroundColor: '#' + route.params.parentItem.attributes.color}}
+                    contentContainerStyle={{flex: 1}}>
 
-                </HStack>
-                <HStack w={'100%'}>
-                    <VStack w={'100%'} p={5}>
-                        {/*{*/}
-                        {/*    (!parentSelected && loading === false) &&*/}
-                        {/*    parents.map((item, i) => {*/}
-                        {/*        return (*/}
-                        {/*            <Button colorScheme={'orange'} block key={i} onPress={() => {*/}
-                        {/*                setParentSelected(item.id)*/}
-                        {/*                setCurrentFeelingSelected(item)*/}
-                        {/*                getSubParents(item.id)*/}
-                        {/*            }} mb={2}>*/}
-                        {/*                {item.attributes.name}*/}
-                        {/*            </Button>*/}
-                        {/*        )*/}
-                        {/*    })*/}
-                        {/*}*/}
+            <View flex={1} alignItems={'center'}>
+                <Text
+                    fontSize={28} textAlign={'center'} color={'white'}>Hoy te sientes...</Text>
+                <View w={200} h={200} bgColor={'green.200'} borderRadius={100} my={10}>
+                    {/*{*/}
+                    {/*    _.has(route.params.parentItem.attributes.icon.data.attributes.url) &&*/}
+                    {/*    <Image source={{uri: Constants.manifest.extra.URL + route.params.parentItem.attributes.icon.data.attributes.url}} style={{width:200, height:200, resizeMode:'contain'}}></Image>*/}
 
+                    {/*}*/}
+                </View>
+                <Text mb={2} color={'white'}>{`${route.params.parentItem.attributes.name}`}</Text>
+                <Select
 
-                        {
-                            (subParents && !subParentSelected) &&
-                            subParents.map((item, i) => {
-                                console.log(item)
-                                return (
-                                    <Button colorScheme={'orange'} block key={i} onPress={() => {
-                                        setSubParentSelected(item.id)
-                                        getChildren(item.id)
-                                    }} mb={2}>
-                                        {item.attributes.name}
-                                    </Button>
-                                )
-                            })
-                        }
+                    placeholderTextColor={Colors.red} selectedValue={service} minWidth="250"
+                    backgroundColor={Colors.white} placeholder="Selecciona" _selectedItem={{
+                    backgroundColor: 'red.50',
+                    endIcon: <CheckIcon size="5"/>,
+                    bgColor: 'red.50'
+                }} mt={1} onValueChange={itemValue => {
+                    setService(itemValue)
+                    navigation.navigate('RouletteStep3Screen', {parentItem: itemValue})
+                }}>
 
-                        {
-                            (children && subParentSelected) &&
-                            children.map((item, i) => {
-                                return (
-                                    <Button colorScheme={'orange'} block key={i} onPress={() => {
-                                        onSelectEmotion(item)
-                                    }} mb={2}>
-                                        {item.attributes.name}
-                                    </Button>
-                                )
-                            })
-                        }
-                    </VStack>
-                </HStack>
-            </ScrollView>
-        </Box>
+                    {
+                        (subParents && !subParentSelected) &&
+                        subParents.map((item, i) => {
+                            return (
+                                <Select.Item label={item.attributes.name} value={item}/>
+                            )
+                        })
+                    }
+                </Select>
+            </View>
+        </ScrollView>
     )
 }
+
 
 const mapState = (state) => {
     return {
@@ -203,4 +82,4 @@ const mapState = (state) => {
     }
 }
 
-export default connect(mapState, {getEmotions, getEmotionsV3})(RouletteStep2Screen);
+export default connect(mapState)(RouletteStep2Screen);

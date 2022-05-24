@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Animated} from 'react-native';
 import circleParts from '../assets/ruleta.png';
 import {useSharedValue} from "react-native-reanimated";
@@ -7,20 +7,41 @@ import {Button, Image, Text, View} from "native-base";
 import ScreenBaseV1 from "./Components/ScreenBaseV1";
 import {Colors} from "../utils/Colors";
 import pointerImage from '../assets/arrow2.png'
+import ApiApp from "../utils/ApiApp";
+import _ from "lodash";
 
 const RouletteStep1Screen = ({navigation}) => {
 
+    const [loading, setLoading] = useState(null);
+    const [parents, setParents] = useState([]);
 
     const emotions = [
-        {id: 1, name: 'Feliz', range: [0, 60]},
-        {id: 7, name: 'Sorprendido', range: [60, 120]},
-        {id: 6, name: 'Mal', range: [120, 180]},
-        {id: 5, name: 'Temerozo', range: [180, 240]},
-        {id: 4, name: 'Enojado', range: [240, 300]},
-        {id: 3, name: 'Disgustado', range: [300, 360]},
-        {id: 2, name: 'Triste', range: [300, 360]},
+        {id: 1, name: 'Feliz', range: [0, 60], color: '#F9CF67'},
+        {id: 7, name: 'Sorprendido', range: [60, 120], color: '#F0A4BB'},
+        {id: 6, name: 'Mal', range: [120, 180], color: '#F6AA80'},
+        {id: 5, name: 'Temerozo', range: [180, 240], color: '#CFBBEF'},
+        {id: 4, name: 'Enojado', range: [240, 300], color: '#EF7C7C'},
+        {id: 3, name: 'Disgustado', range: [300, 360], color: '#BDEE9D'},
+        {id: 2, name: 'Triste', range: [300, 360], color: '#B9CFEE'}
     ]
 
+    useEffect(() => {
+        getParents()
+    }, [])
+
+
+    const getParents = async () => {
+        try {
+            setLoading(true);
+            let response = await ApiApp.getFeelingsV2(`filters[parent][id][$null]=true`)
+            console.log(response.data.data)
+            setParents(response.data.data)
+        } catch (e) {
+            console.log(e)
+        } finally {
+            setLoading(false)
+        }
+    }
 
     const [deg, setDeg] = useState(0);
     const [emotionPosition, setEmotionPosition] = useState(0);
@@ -38,6 +59,7 @@ const RouletteStep1Screen = ({navigation}) => {
             if (emotionPositionVal < 7) {
                 setEmotionPosition(emotionPositionVal)
             }
+
             setDeg(deg + 3)
         })
         .onUpdate((e) => {
@@ -85,7 +107,7 @@ const RouletteStep1Screen = ({navigation}) => {
 
                 <View flex={0.1} mx={4}>
                     <Button colorScheme={'orange'}
-                            onPress={() => navigation.navigate('RouletteStep2Screen', {parentItem: emotions[emotionPosition]})}>Continuar</Button>
+                            onPress={() => navigation.navigate('RouletteStep2Screen', {parentItem: _.find(parents, {id: emotions[emotionPosition].id})})}>Continuar</Button>
                 </View>
             </View>
         </ScreenBaseV1>

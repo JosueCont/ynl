@@ -17,6 +17,7 @@ import IntroScreen from "../screens/IntroScreen";
 import RouletteStep1Screen from "../screens/RouletteStep1Screen";
 import RouletteStep2Screen from "../screens/RouletteStep2Screen";
 import RouletteStep3Screen from "../screens/RouletteStep3Screen";
+import RouletteStep4Screen from "../screens/RouletteStep4Screen";
 
 const Drawer = createDrawerNavigator();
 
@@ -103,6 +104,7 @@ const DrawerConfig = () => {
             <Drawer.Screen name={'RouletteStep1Screen'} component={RouletteStep1Screen} options={{title: ''}}/>
             <Drawer.Screen name={'RouletteStep2Screen'} component={RouletteStep2Screen} options={{title: ''}}/>
             <Drawer.Screen name={'RouletteStep3Screen'} component={RouletteStep3Screen} options={{title: ''}}/>
+            <Drawer.Screen name={'RouletteStep4Screen'} component={RouletteStep4Screen} options={{title: ''}}/>
         </Drawer.Navigator>
     );
 }

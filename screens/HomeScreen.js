@@ -174,8 +174,10 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                     borderRadius: 10
                                 }}>
                                 <Text fontSize={12}>Última emoción</Text>
-                                <Text fontSize={26} color={Colors.red}>{lastEmotion2}</Text>
-                                <Text fontSize={12}>{lastEmotion1} - {lastEmotion}</Text>
+                                <Text fontSize={26} color={Colors.red} numberOfLines={1}
+                                      adjustsFontSizeToFit>{lastEmotion2}</Text>
+                                <Text fontSize={12} adjustsFontSizeToFit
+                                      numberOfLines={1}>{lastEmotion1} - {lastEmotion}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

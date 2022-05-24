@@ -100,7 +100,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                                     <Slider step={1} minValue={1} maxValue={10} value={physicalNumber}
                                             colorScheme="orange"
                                             onChange={(v) => setPhysicalNumber(v)} size="lg">
-                                        <Slider.Track bg={Colors.red}>
+                                        <Slider.Track bg={'red.100'}>
                                             <Slider.FilledTrack bg={Colors.red}/>
                                         </Slider.Track>
                                         <Slider.Thumb bg={Colors.red}/>
@@ -125,7 +125,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                                 : <VStack p={9} pb={5}>
                                     <Slider step={1} minValue={1} maxValue={10} value={mentalNumber} colorScheme="orange"
                                             onChange={(v) => setMentalNumber(v)} size="lg">
-                                        <Slider.Track bg={Colors.red}>
+                                        <Slider.Track bg={'red.100'}>
                                             <Slider.FilledTrack bg={Colors.red}/>
                                         </Slider.Track>
                                         <Slider.Thumb bg={Colors.red}/>
@@ -153,7 +153,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                                     <Slider step={1} minValue={1} maxValue={10} value={finantialNumber}
                                             colorScheme="orange"
                                             onChange={(v) => setFinantialNumber(v)} size="lg">
-                                        <Slider.Track bg={Colors.red}>
+                                        <Slider.Track bg={'red.100'}>
                                             <Slider.FilledTrack bg={Colors.red}/>
                                         </Slider.Track>
                                         <Slider.Thumb bg={Colors.red}/>
@@ -180,7 +180,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                                     <Slider step={1} minValue={1} maxValue={10} value={relationNumber}
                                             colorScheme="orange"
                                             onChange={(v) => setRelationNumber(v)} size="lg">
-                                        <Slider.Track bg={Colors.red}>
+                                        <Slider.Track bg={'red.100'}>
                                             <Slider.FilledTrack bg={Colors.red}/>
                                         </Slider.Track>
                                         <Slider.Thumb bg={Colors.red}/>
