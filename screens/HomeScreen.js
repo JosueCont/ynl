@@ -19,6 +19,9 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const [loading, setLoading] = useState(false);
     const [groups, setGroups] = useState(null);
     const [lastEmotion, setLastEmotion] = useState(null);
+    const [lastEmotion1, setLastEmotion1] = useState(null);
+    const [lastEmotion2, setLastEmotion2] = useState(null);
+
     const [days, setDays] = useState([]);
     const [fullName, setFullName] = useState(null);
 
@@ -33,19 +36,17 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
 
 
-
-    const HistoryPage = () => {
-       // navigation.navigate('HistoryList')
-    }
-
     const getHome = async () => {
         try {
             setLoading(true)
 
             const res = await ApiApp.getHomeData(authDuck.user.id)
-            console.log(res.data)
+
             setDays(res.data.data.days)
-            setLastEmotion(res.data.data.lastEmotion.label)
+            setLastEmotion(res.data.data.lastEmotion.name)
+            setLastEmotion1(res.data.data.lastEmotion.child.name)
+            setLastEmotion2(res.data.data.lastEmotion.child.child.name)
+
             setFullName(res.data.data.userInfo.fullName)
         } catch (e) {
             console.log(e)
@@ -109,7 +110,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
                                 {
                                     days.map((item) => {
-                                        console.log(item)
+                                        console.log(item, 107)
                                         return (
                                             <View flex={1} height={20} style={getShadowCircleStyle(5, 5)}
                                                   alignItems={'center'} justifyContent={'center'}>
@@ -147,8 +148,8 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                 }}
                                 onPress={() => navigation.navigate('YourFeelScreen')}>
                                 <Text fontSize={12}>Última emoción</Text>
-                                <Text fontSize={26} color={Colors.red}>{lastEmotion}</Text>
-                                <Text fontSize={12}>Juguetón - Descarado</Text>
+                                <Text fontSize={26} color={Colors.red}>{lastEmotion2}</Text>
+                                <Text fontSize={12}>{lastEmotion1} - {lastEmotion}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
