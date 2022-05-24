@@ -10,6 +10,7 @@ import {MaterialIcons} from "@expo/vector-icons";
 import ApiApp from "../utils/ApiApp";
 import bg1 from '../assets/bg1.png'
 import {getShadowCircleStyle} from "../utils/functions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
@@ -25,6 +26,35 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const [days, setDays] = useState([]);
     const [fullName, setFullName] = useState(null);
 
+    const [introStatus, setIntroStatus] = useState(null);
+
+    useEffect(() => {
+        getIntroStatus()
+    }, [])
+
+    const getIntroStatus = async () => {
+        try {
+            let intro = await AsyncStorage.getItem('@intro');
+            console.log(intro, 38)
+            if (!intro) {
+                intro = 0;
+            }
+
+            setIntroStatus(parseInt(intro))
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+
+    useEffect(() => {
+        if (introStatus === 0) {
+            navigation.navigate('IntroScreen')
+        } else if (authDuck.emotionStatus === 0) {
+            navigation.navigate('RouletteStep1Screen')
+        }
+
+    }, [authDuck.emotionStatus])
 
     useEffect(() => {
         if (isFocused) {
@@ -33,7 +63,6 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             getHome()
         }
     }, [isFocused])
-
 
 
     const getHome = async () => {
@@ -67,7 +96,6 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
         }
 
     }
-
 
 
     return (
@@ -110,7 +138,6 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
                                 {
                                     days.map((item) => {
-                                        console.log(item, 107)
                                         return (
                                             <View flex={1} height={20} style={getShadowCircleStyle(5, 5)}
                                                   alignItems={'center'} justifyContent={'center'}>
@@ -197,7 +224,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                     borderRadius: 10
                                 }, getShadowCircleStyle(10, 10)]}
                                 onPress={() => {
-                                    navigation.navigate('EmotionsPage')
+                                    navigation.navigate('RouletteStep1Screen')
                                 }}>
                                 <Icon as={MaterialIcons} name={'nat'} size={7} color={'white'}></Icon>
                                 <Text color={'white'} size={'sm'}>Nueva emoción</Text>
@@ -243,21 +270,21 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                             </TouchableOpacity>
                         </View>
                         <View flex={1} height={70} ml={2}>
-                            <TouchableOpacity
-                                style={[{
-                                    flex: 1,
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    backgroundColor: Colors.red,
-                                    borderRadius: 10
-                                }, getShadowCircleStyle(10, 10)]}
-                                onPress={() => {
-                                    navigation.navigate('RotateCustomScreen')
-                                }}>
-                                <Icon as={MaterialIcons} name={'nat'} size={7} color={'white'}></Icon>
-                                <Text color={'white'} size={'sm'}>Ruleta de
-                                    emociones V2</Text>
-                            </TouchableOpacity>
+                            {/*<TouchableOpacity*/}
+                            {/*    style={[{*/}
+                            {/*        flex: 1,*/}
+                            {/*        alignItems: 'center',*/}
+                            {/*        justifyContent: 'center',*/}
+                            {/*        backgroundColor: Colors.red,*/}
+                            {/*        borderRadius: 10*/}
+                            {/*    }, getShadowCircleStyle(10, 10)]}*/}
+                            {/*    onPress={() => {*/}
+                            {/*        navigation.navigate('RotateCustomScreen')*/}
+                            {/*    }}>*/}
+                            {/*    <Icon as={MaterialIcons} name={'nat'} size={7} color={'white'}></Icon>*/}
+                            {/*    <Text color={'white'} size={'sm'}>Ruleta de*/}
+                            {/*        emociones V2</Text>*/}
+                            {/*</TouchableOpacity>*/}
                         </View>
                     </View>
 

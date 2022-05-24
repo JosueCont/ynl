@@ -4,12 +4,12 @@ import circleParts from '../assets/ruleta.png';
 import {useSharedValue} from "react-native-reanimated";
 import {Gesture, GestureDetector} from "react-native-gesture-handler";
 import * as Haptics from 'expo-haptics';
-import {Image, Text, View} from "native-base";
+import {Button, Image, Text, View} from "native-base";
 import ScreenBaseV1 from "./Components/ScreenBaseV1";
 import {Colors} from "../utils/Colors";
 import pointerImage from '../assets/arrow2.png'
 
-const RotateCustomScreen = () => {
+const RouletteStep1Screen = ({navigation}) => {
 
 
     const emotions = [
@@ -53,35 +53,43 @@ const RotateCustomScreen = () => {
 
     return (
         <ScreenBaseV1>
-            <View>
+            <View flex={1} width={'100%'}>
 
-                <Text color={Colors.red} size={'lg'} textAlign={'center'}>¿Cómo te sientes hoy?</Text>
-                <Text color={Colors.red} size={'md'} textAlign={'center'}>17/Mayo/2022</Text>
 
-            </View>
-            <View flex={0.4} alignItems={'center'} justifyContent={'flex-end'}>
-                <Image source={pointerImage} style={{resizeMode: 'contain'}} width={10} height={10}></Image>
-            </View>
+                <View flex={0.1}>
 
-            <View flex={1}>
-                <GestureDetector gesture={Gesture.Exclusive(rotationGesture)}>
-                    <Animated.Image source={circleParts} style={{
-                        width: 300,
-                        height: 300,
-                        transform: [{rotate: deg + `deg`}],
-                        borderRadius: 150
-                    }}/>
-                </GestureDetector>
+                    <Text color={Colors.red} size={'lg'} textAlign={'center'}>¿Cómo te sientes hoy?</Text>
+                    <Text color={Colors.red} size={'md'} textAlign={'center'}>17/Mayo/2022</Text>
 
-            </View>
+                </View>
+                <View flex={0.4} alignItems={'center'} justifyContent={'flex-end'}>
+                    <Image source={pointerImage} style={{resizeMode: 'contain'}} width={10} height={10}></Image>
+                </View>
 
-            <View>
-                {
-                    <Text fontSize={24}>{emotions[emotionPosition].name}</Text>
-                }
+                <View flex={1} alignItems={'center'}>
+                    <GestureDetector gesture={Gesture.Exclusive(rotationGesture)}>
+                        <Animated.Image source={circleParts} style={{
+                            width: 300,
+                            height: 300,
+                            transform: [{rotate: deg + `deg`}],
+                            borderRadius: 150
+                        }}/>
+                    </GestureDetector>
+
+                </View>
+
+                {/*<View>*/}
+                {/*    {*/}
+                {/*        <Text fontSize={24}>{emotions[emotionPosition].name}</Text>*/}
+                {/*    }*/}
+                {/*</View>*/}
+
+                <View flex={0.1} mx={4}>
+                    <Button colorScheme={'orange'} onPress={() => navigation.navigate('')}>Continuar</Button>
+                </View>
             </View>
         </ScreenBaseV1>
     );
 };
 
-export default RotateCustomScreen;
+export default RouletteStep1Screen;
