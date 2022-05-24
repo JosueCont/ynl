@@ -35,7 +35,6 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const getIntroStatus = async () => {
         try {
             let intro = await AsyncStorage.getItem('@intro');
-            console.log(intro, 38)
             if (!intro) {
                 intro = 0;
             }
