@@ -1,22 +1,33 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Calendar} from "react-native-calendars";
-import {View} from "native-base";
+import {View, Text} from "native-base";
 import {Dimensions} from "react-native";
-
+import _ from 'lodash'
 const screenWidth = Dimensions.get("window").width;
 
-const CalendarChartCustom = () => {
+const CalendarChartCustom = ({historyData}) => {
+
+    const [arrayDate,setArrayDates] = useState({})
+
+    useEffect(()=>{
+         if(historyData){
+             let arr = {}
+             console.log(typeof  historyData, 'tipo de dato', historyData)
+             historyData.forEach((obj, i)=>{
+                 console.log('entra ====>' , i)
+                 arr[obj.date.split('T')[0]] = {textColor:'white',color: `#${obj.color}`, endingDay: true, startingDay: true}
+             })
+
+             setArrayDates(arr)
+         }
+    },[historyData])
+
     return (
         <View mx={2} my={2} alignItems={'center'}>
             <Calendar
                 style={{width: screenWidth / 1.1, borderRadius: 10}}
                 markingType={'period'}
-                markedDates={{
-                    '2022-05-20': {textColor: 'green'},
-                    '2022-05-22': {startingDay: true, color: 'green'},
-                    '2022-05-23': {selected: true, endingDay: true, color: 'green', textColor: 'gray'},
-                    '2022-05-04': {disabled: true, startingDay: true, color: 'green', endingDay: true}
-                }}
+                markedDates={arrayDate}
             />
         </View>
     )
