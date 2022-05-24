@@ -10,8 +10,9 @@ import Intro3Screen from "./Intro/Intro3Screen";
 import Intro4Screen from "./Intro/Intro4Screen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {Colors} from "../utils/Colors";
+import {connect} from "react-redux";
 
-const IntroScreen = ({navigation}) => {
+const IntroScreen = ({navigation, authDuck}) => {
 
     const {width, height} = Dimensions.get('window');
 
@@ -24,7 +25,12 @@ const IntroScreen = ({navigation}) => {
     const nextScreen = async () => {
         try {
             await AsyncStorage.setItem('@intro', '1');
-            navigation.navigate('HomeScreen')
+            if (authDuck.emotionStatus === 0) {
+                navigation.navigate('EmotionsPage')
+            } else {
+                navigation.navigate('HomeScreen')
+            }
+
         } catch (e) {
             console.log(e)
         }
@@ -104,5 +110,11 @@ const IntroScreen = ({navigation}) => {
     )
 }
 
+const mapState = (state) => {
+    return {
+        accountDuck: state.accountDuck,
+        authDuck: state.authDuck
+    }
+}
 
-export default IntroScreen;
+export default connect(mapState)(IntroScreen);

@@ -3,9 +3,6 @@ import {createDrawerNavigator} from "@react-navigation/drawer";
 import CustomDrawerContent from "./DrawerNavigatorContent";
 import HomeScreen from "../screens/HomeScreen";
 import YourFeelScreen from "../screens/YourFeelScreen";
-
-
-import {connect} from "react-redux";
 import {Icon, View} from "native-base";
 import {Colors} from "../utils/Colors";
 import {TouchableOpacity} from "react-native";
@@ -23,7 +20,7 @@ import IntroScreen from "../screens/IntroScreen";
 
 const Drawer = createDrawerNavigator();
 
-const DrawerConfig = ({accountDuck, authDuck, navigation}) => {
+const DrawerConfig = () => {
 
     return (
         <Drawer.Navigator
@@ -103,12 +100,4 @@ const DrawerConfig = ({accountDuck, authDuck, navigation}) => {
     );
 }
 
-
-const mapState = (state) => {
-    return {
-        accountDuck: state.accountDuck,
-        authDuck: state.authDuck
-    }
-}
-
-export default connect(mapState)(DrawerConfig);
+export default DrawerConfig;

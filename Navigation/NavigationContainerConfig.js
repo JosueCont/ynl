@@ -1,57 +1,29 @@
-import React, {useLayoutEffect, useState} from "react";
+import React from "react";
 
 import {NavigationContainer} from "@react-navigation/native";
 
 import {createStackNavigator} from "@react-navigation/stack";
 import StackAuth from "./StackAuth";
-import {connect, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import DrawerConfig from "./DrawerConfig";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import DrawerConfigIntro from "./DrawerConfigIntro";
 
 const Stack = createStackNavigator();
 
-const NavigationContainerConfig = ({authDuck}) => {
+const NavigationContainerConfig = ({authDuck, introStatus}) => {
     const status = useSelector(state => state.authDuck.isLogged);
 
-
-    const [introStatus, setIntroStatus] = useState(null);
-
-    useLayoutEffect(() => {
-        getIntroStatus()
-        console.log(authDuck)
-    }, [])
-
-    const getIntroStatus = async () => {
-        try {
-            let intro = await AsyncStorage.getItem('@intro');
-            if (!intro) {
-                intro = 0;
-            }
-            console.log(intro)
-
-            setIntroStatus(parseInt(intro))
-        } catch (e) {
-            console.log(e);
-        }
-    }
+    console.log(authDuck, status, typeof introStatus)
 
     return (
         <NavigationContainer>
             {
-                status ?
-                    <DrawerConfig introStatus={introStatus} emotionStatus={authDuck.emotionStatus}/> :
-                    <StackAuth/>
+                (status && introStatus === 0) ? <DrawerConfigIntro/> : !status ? <StackAuth/> : <DrawerConfig/>
             }
         </NavigationContainer>
 
     )
 }
 
-const mapState = (state) => {
-    return {
-        accountDuck: state.accountDuck,
-        authDuck: state.authDuck
-    }
-}
 
-export default connect(mapState)(NavigationContainerConfig);
+export default NavigationContainerConfig;
