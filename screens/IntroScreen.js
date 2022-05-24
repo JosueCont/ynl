@@ -26,7 +26,7 @@ const IntroScreen = ({navigation, authDuck}) => {
         try {
             await AsyncStorage.setItem('@intro', '1');
             if (authDuck.emotionStatus === 0) {
-                navigation.navigate('EmotionsPage')
+                navigation.navigate('RouletteStep1Screen', {from: 'intro'})
             } else {
                 navigation.navigate('HomeScreen')
             }

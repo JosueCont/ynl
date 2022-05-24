@@ -3,9 +3,6 @@ import {createDrawerNavigator} from "@react-navigation/drawer";
 import CustomDrawerContent from "./DrawerNavigatorContent";
 import HomeScreen from "../screens/HomeScreen";
 import YourFeelScreen from "../screens/YourFeelScreen";
-
-
-import {connect} from "react-redux";
 import {Icon, View} from "native-base";
 import {Colors} from "../utils/Colors";
 import {TouchableOpacity} from "react-native";
@@ -18,11 +15,12 @@ import EmotionsPage from "../screens/EmotionsPage";
 import GroupsMembersScreen from "../screens/GroupsMembersScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import EmotionModal from "../screens/EmotionModal";
-import RotateCustomScreen from "../screens/RotateCustomScreen";
+import IntroScreen from "../screens/IntroScreen";
+import RouletteStep1Screen from "../screens/RouletteStep1Screen";
 
 const Drawer = createDrawerNavigator();
 
-const DrawerConfig = ({accountDuck, authDuck, navigation}) => {
+const DrawerConfig = () => {
 
     return (
         <Drawer.Navigator
@@ -30,6 +28,7 @@ const DrawerConfig = ({accountDuck, authDuck, navigation}) => {
             screenOptions={({navigation, route}) => ({
                 drawerPosition: 'right',
                 headerLeft: () => {
+                    console.log(route.params)
                     if (route.name.includes('HomeScreen')) {
                         return (
                             <View/>
@@ -37,12 +36,18 @@ const DrawerConfig = ({accountDuck, authDuck, navigation}) => {
                     } else {
                         return (
                             <TouchableOpacity onPress={async () => {
-
-                                if (route.name.includes('GroupsScreen')) {
-                                    navigation.navigate('HomeScreen')
-                                } else {
+                                try {
+                                    if (route.name.includes('GroupsScreen')) {
+                                        navigation.navigate('HomeScreen')
+                                    } else if (route.params.from === 'intro') {
+                                        navigation.navigate('HomeScreen')
+                                    } else {
+                                        navigation.goBack(0)
+                                    }
+                                } catch (ex) {
                                     navigation.goBack(0)
                                 }
+
 
                             }} style={{
                                 width: 50,
@@ -95,19 +100,13 @@ const DrawerConfig = ({accountDuck, authDuck, navigation}) => {
             <Drawer.Screen name={'EmotionsPageV2'} component={EmotionsPage} options={{title: ''}}/>
             <Drawer.Screen name={'EmotionModal'} component={EmotionModal} options={{title: ''}}/>
             <Drawer.Screen name={'ProfileScreen'} component={ProfileScreen} options={{title: 'Perfil'}}/>
-            <Drawer.Screen name={'RotateCustomScreen'} component={RotateCustomScreen} options={{title: ''}}/>
+
+            <Drawer.Screen name="IntroScreen" component={IntroScreen} options={{headerShown: false}}/>
+            <Drawer.Screen name={'RouletteStep1Screen'} component={RouletteStep1Screen} options={{title: ''}}/>
             <Drawer.Screen name={'EmotionsPage'} component={EmotionsPage} options={{title: ''}}/>
 
         </Drawer.Navigator>
     );
 }
 
-
-const mapState = (state) => {
-    return {
-        accountDuck: state.accountDuck,
-        authDuck: state.authDuck
-    }
-}
-
-export default connect(mapState)(DrawerConfig);
+export default DrawerConfig;
