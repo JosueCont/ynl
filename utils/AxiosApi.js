@@ -1,8 +1,11 @@
 import axios from "axios";
 import {getDataObject} from "../utils/functions"
 const isprod = true
+
+export const baseURL = isprod ? 'https://ynl-api.herokuapp.com' : 'http://localhost:1337';
+
 let config = {
-    baseURL: isprod ? 'https://ynl-api.herokuapp.com' : 'http://localhost:1337',
+    baseURL:baseURL,
     headers: {
         Accept: "application/json",
     },

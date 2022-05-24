@@ -1,4 +1,4 @@
-import APIKit from "./AxiosApi";
+import APIKit, {baseURL} from "./AxiosApi";
 import _ from "lodash";
 import moment from "moment";
 
@@ -178,10 +178,11 @@ class ApiApp {
      */
 
     static getHistoryFeelings = async (startDate, endDate, userId)=>{
-        return ApiApp.ApisType(`/api/feeling-records?populate=*&filters[createdAt][$gte]=${startDate}&filters[createdAt][$lt]=${endDate}&filters[user][id]=${userId}`, "get");
+        return ApiApp.ApisType(`/api/feeling-records?populate[feeling][populate][parent][populate][parent][populate][icon]=*&filters[createdAt][$gte]=${startDate}&filters[createdAt][$lt]=${endDate}&filters[user][id]=${userId}`, "get");
     }
+
+    static _baseURL = baseURL;
 
 
 }
-
 export default ApiApp;

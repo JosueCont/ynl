@@ -10,6 +10,7 @@ import {getShadowCircleStyle} from "../utils/functions";
 import bg1 from "../assets/bg1.png";
 import _ from "lodash";
 import moment from 'moment'
+import apiApp from "../utils/ApiApp";
 
 
 const HistoryFeelingScreen = ({authDuck, navigation}) => {
@@ -55,7 +56,7 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
     const goToDetailHistory=(feel)=>{
         let arrayDetail = _.filter(historyDataDetail, { 'shortDate': feel.shortDate});
         console.log('arrayDetail',arrayDetail.length, arrayDetail)
-        navigation.navigate('HistoryFeelingScreenDetail', {detail:arrayDetail, date:feel.shortDate})
+        navigation.navigate('HistoryFeelingScreenDetail', {detail:arrayDetail, date:moment(feel.date).format('L')})
     }
 
 
@@ -70,15 +71,17 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
                         mainHistory && historyData && historyData.map((ele,i)=>{
                             return  <View
                                 flexDir={'row'}
-                                mb={8}
-                                bgColor={Colors.gray}
+                                mb={2}
+                                bgColor={'#'+_.get(ele,'feeling.attributes.parent.data.attributes.parent.data.attributes.color','5F6367')}
                                 style={getShadowCircleStyle(10, 10)}
-                                borderRadius={10}
+                                borderRadius={40}
                                 p={3}>
                                 <View flex={1} height={70} alignItems={'center'} justifyContent={'center'}>
-                                    <Icon as={MaterialIcons} name={'mood'} size={'6xl'} color={Colors.red}></Icon>
+                                    <View style={{backgroundColor:'white'}} p={2} borderRadius={40}>
+                                        <Image alt="Alternate Text" size="sm" source={{uri:`${apiApp._baseURL}${_.get(ele,'feeling.attributes.parent.data.attributes.parent.data.attributes.icon.data.attributes.url','5F6367')}`}}/>
+                                    </View>
                                 </View>
-                                <View flex={1} height={70} mr={1}>
+                                <View flex={2} height={70} mr={1}>
                                     <TouchableOpacity
                                         style={{
                                             flex: 1,
@@ -91,8 +94,8 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
                                            }
                                         }
                                     >
-                                        <Text fontSize={26} >{ele.feeling.attributes.name}</Text>
-                                        <Text fontSize={12}>{moment(ele.date).format('L HH:mm')}</Text>
+                                        <Text fontSize={26} style={{color:'white'}} >{ele.feeling.attributes.name}</Text>
+                                        <Text style={{fontWeight:'bolder'}} fontSize={14}>{moment(ele.date).format('L')}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>

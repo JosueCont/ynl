@@ -14,8 +14,7 @@ const StatisticsScreen = ({authDuck,navigation, ...props}) => {
     const [historyData, setHistoryData] = useState(null)
 
     useEffect(()=>{
-        console.log('entra')
-            getHistoryData(authDuck.user.id)
+        getHistoryData(authDuck.user.id)
     },[isFocused])
 
 
