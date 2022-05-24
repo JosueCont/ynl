@@ -206,10 +206,10 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                     borderRadius: 10
                                 }, getShadowCircleStyle(10, 10)]}
                                 onPress={() => {
-                                    HistoryPage()
+                                    navigation.navigate('StatisticsScreen')
                                 }}>
                                 <Icon as={MaterialIcons} name={'donut-large'} size={7} color={'white'}></Icon>
-                                <Text color={'white'} size={'sm'}>Mi Avance</Text>
+                                <Text color={'white'} size={'sm'}>Mis Avances</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -254,20 +254,20 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                     </View>
                     <View flexDir={'row'} mb={4} height={70}>
                         <View flex={1} mr={2}>
-                            <TouchableOpacity
-                                style={[{
-                                    flex: 1,
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    backgroundColor: Colors.red,
-                                    borderRadius: 10
-                                }, getShadowCircleStyle(10, 10)]}
-                                onPress={() => {
-                                    navigation.navigate('StatisticsScreen')
-                                }}>
-                                <Icon as={MaterialIcons} name={'insert-chart-outlined'} size={7} color={'white'}></Icon>
-                                <Text color={'white'} size={'sm'}>Estadísticas</Text>
-                            </TouchableOpacity>
+                            {/*<TouchableOpacity*/}
+                            {/*    style={[{*/}
+                            {/*        flex: 1,*/}
+                            {/*        alignItems: 'center',*/}
+                            {/*        justifyContent: 'center',*/}
+                            {/*        backgroundColor: Colors.red,*/}
+                            {/*        borderRadius: 10*/}
+                            {/*    }, getShadowCircleStyle(10, 10)]}*/}
+                            {/*    onPress={() => {*/}
+                            {/*        navigation.navigate('StatisticsScreen')*/}
+                            {/*    }}>*/}
+                            {/*    <Icon as={MaterialIcons} name={'insert-chart-outlined'} size={7} color={'white'}></Icon>*/}
+                            {/*    <Text color={'white'} size={'sm'}>Estadísticas</Text>*/}
+                            {/*</TouchableOpacity>*/}
                         </View>
                         <View flex={1} height={70} ml={2}>
                             {/*<TouchableOpacity*/}

@@ -31,15 +31,18 @@ const ModalPasswordUpdate = ({visible, setVisible, action}) => {
                     </View>
                     <View p={5} width={'100%'}>
                         <FormControl isInvalid w="100%">
-                            <Input onChangeText={val => setOldPassword(val)} value={oldPassword} size={'md'} height={50}
+                            <Input type="password" onChangeText={val => setOldPassword(val)} value={oldPassword}
+                                   size={'md'} height={50}
                                    mb={4} placeholder={'Contraseña anterior'} borderRadius={25}
                                    placeholderTextColor={Colors.red} textAlign={'center'}
                             />
-                            <Input onChangeText={val => setPassword(val)} value={password} size={'md'} height={50}
+                            <Input type="password" onChangeText={val => setPassword(val)} value={password} size={'md'}
+                                   height={50}
                                    mb={4} placeholder={'Contraseña nueva'} borderRadius={25}
                                    placeholderTextColor={Colors.red} textAlign={'center'}
                             />
-                            <Input onChangeText={val => setPasswordConfirm(val)} value={passwordConfirm} size={'md'}
+                            <Input type="password" onChangeText={val => setPasswordConfirm(val)} value={passwordConfirm}
+                                   size={'md'}
                                    height={50} mb={4} placeholder={'Confirmar contraseña nueva'}
                                    borderRadius={25}
                                    placeholderTextColor={Colors.red} textAlign={'center'}

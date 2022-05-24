@@ -45,9 +45,10 @@ const CustomDrawerContent = ({navigation, navigationDuck, accountDuck, logOutAct
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {
                         navigation.closeDrawer();
-                        navigation.navigate('')
+                        navigation.navigate('StatisticsScreen')
+
                     }}>
-                        <Text color={'white'} fontSize={20} my={2}>Historial</Text>
+                        <Text color={'white'} fontSize={20} my={2}>Mis avances</Text>
                     </TouchableOpacity>
                 </View>
                 <View flex={0.5} alignItems={'center'}>

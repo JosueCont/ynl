@@ -3,7 +3,6 @@ import {Animated} from 'react-native';
 import circleParts from '../assets/ruleta.png';
 import {useSharedValue} from "react-native-reanimated";
 import {Gesture, GestureDetector} from "react-native-gesture-handler";
-import * as Haptics from 'expo-haptics';
 import {Button, Image, Text, View} from "native-base";
 import ScreenBaseV1 from "./Components/ScreenBaseV1";
 import {Colors} from "../utils/Colors";
@@ -32,7 +31,7 @@ const RouletteStep1Screen = ({navigation}) => {
 
     const rotationGesture = Gesture.Rotation()
         .onTouchesMove((e) => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+            //Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
             let spins = (deg / 360);
             let spingResolve = spins >= 1 ? spins - parseInt((spins + "").split(".")[0]) : spins;
             let emotionPositionVal = parseInt(((((spingResolve * 360) + 0) / (360 / 7)) + "").split(".")[0]);
