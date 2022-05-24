@@ -8,7 +8,7 @@ import {getEmotions, getEmotionsV3} from '../redux/ducks/feelingsDuck'
 import moment from 'moment'
 import ApiApp from "../utils/ApiApp";
 
-const EmotionsPage = ({feelingsDuck, navigation, getEmotions, getEmotionsV3, authDuck}) => {
+const RouletteStep2Screen = ({feelingsDuck, navigation, getEmotions, getEmotionsV3, authDuck, route}) => {
 
     const [mainfeelings, setMainFeelings] = useState([])
     const [mainFeelingSelected, setMainFeelingSelected] = useState(null)
@@ -23,35 +23,15 @@ const EmotionsPage = ({feelingsDuck, navigation, getEmotions, getEmotionsV3, aut
 
 
     useEffect(() => {
-        getParents();
-    }, [])
-
-    useEffect(() => {
-        //getMainEmotionsList();
-    }, [])
-
-    useEffect(() => {
-        // getEmotionsList();
+        getSubParents(route.params.parentItem.id)
     }, [])
 
 
-    const getParents = async () => {
-        try {
-            setLoading(true);
-            let response = await ApiApp.getFeelingsV2('filters[$and][0][parent][id][$null]=true')
-            setParents(response.data.data)
-        } catch (e) {
-            console.log(e.response)
-        } finally {
-            setLoading(false)
-        }
-    }
 
     const getSubParents = async (parentId) => {
         try {
             setLoading(true);
             let response = await ApiApp.getFeelingsV2(`filters[$and][0][parent][id][$eq]=${parentId}`)
-            console.log(response.data, 53)
             setSubParents(response.data.data)
         } catch (e) {
             console.log(e.response)
@@ -130,7 +110,7 @@ const EmotionsPage = ({feelingsDuck, navigation, getEmotions, getEmotionsV3, aut
 
 
     const onSelectEmotion = (emotion) => {
-        navigation.navigate('EmotionModal', {
+        navigation.navigate('RouletteStep3Screen', {
             emotion: emotion
         })
     }
@@ -159,31 +139,31 @@ const EmotionsPage = ({feelingsDuck, navigation, getEmotions, getEmotionsV3, aut
                     <VStack w={'100%'} alignItems={'center'}>
                         <Heading mb={5} color={'#FF2830'} fontSize="xl" p="4" pb="3">
                             <Text bold
-                                  fontSize={'20px'}>{currentFeelingSelected ? `¿Por qué te sientes ${currentFeelingSelected.attributes.name}?` : '¿Cómo te sientes hoy?'}</Text>
+                                  fontSize={'20px'}>{`¿Por qué te sientes ${route.params.parentItem.name}?`}</Text>
                         </Heading>
                     </VStack>
 
                 </HStack>
                 <HStack w={'100%'}>
                     <VStack w={'100%'} p={5}>
-                        {
-                            (!parentSelected && loading === false) &&
-                            parents.map((item, i) => {
-                                return (
-                                    <Button colorScheme={'orange'} block key={i} onPress={() => {
-                                        setParentSelected(item.id)
-                                        setCurrentFeelingSelected(item)
-                                        getSubParents(item.id)
-                                    }} mb={2}>
-                                        {item.attributes.name}
-                                    </Button>
-                                )
-                            })
-                        }
+                        {/*{*/}
+                        {/*    (!parentSelected && loading === false) &&*/}
+                        {/*    parents.map((item, i) => {*/}
+                        {/*        return (*/}
+                        {/*            <Button colorScheme={'orange'} block key={i} onPress={() => {*/}
+                        {/*                setParentSelected(item.id)*/}
+                        {/*                setCurrentFeelingSelected(item)*/}
+                        {/*                getSubParents(item.id)*/}
+                        {/*            }} mb={2}>*/}
+                        {/*                {item.attributes.name}*/}
+                        {/*            </Button>*/}
+                        {/*        )*/}
+                        {/*    })*/}
+                        {/*}*/}
 
 
                         {
-                            (subParents && parentSelected && !subParentSelected) &&
+                            (subParents && !subParentSelected) &&
                             subParents.map((item, i) => {
                                 console.log(item)
                                 return (
@@ -223,4 +203,4 @@ const mapState = (state) => {
     }
 }
 
-export default connect(mapState, {getEmotions, getEmotionsV3})(EmotionsPage);
+export default connect(mapState, {getEmotions, getEmotionsV3})(RouletteStep2Screen);
