@@ -48,7 +48,7 @@ const CustomDrawerContent = ({navigation, navigationDuck, accountDuck, logOutAct
                         navigation.navigate('StatisticsScreen')
 
                     }}>
-                        <Text color={'white'} fontSize={20} my={2}>Mis avances</Text>
+                        <Text color={'white'} fontSize={20} my={2}>Mis avance</Text>
                     </TouchableOpacity>
                 </View>
                 <View flex={0.5} alignItems={'center'}>

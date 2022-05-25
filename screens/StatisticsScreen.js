@@ -3,7 +3,7 @@ import {ScrollView, Text} from "native-base";
 import {Colors} from "../utils/Colors";
 import {connect} from "react-redux";
 import {useIsFocused} from "@react-navigation/native";
-import LineChartCustom from "./Charts/LineChartCustom";
+import PieChartCustom from "./Charts/PieChartCustom";
 import CalendarChartCustom from "./Charts/CalendarChartCustom";
 import ApiApp from "../utils/ApiApp";
 import _ from 'lodash'
@@ -44,8 +44,13 @@ const StatisticsScreen = ({authDuck,navigation, ...props}) => {
 
     return (
         <ScrollView flexGrow={1} bgColor={Colors.gray}>
-            {/*<LineChartCustom/>*/}
-            <CalendarChartCustom historyData={historyData}/>
+            <View mx={2} my={2} alignItems={'left'}>
+            <PieChartCustom/>
+            </View>
+            <View mx={2} my={2} alignItems={'left'}>
+                <CalendarChartCustom historyData={historyData}/>
+            </View>
+
             <View mx={2} my={2} alignItems={'left'}>
                 <TouchableOpacity onPress={()=>
                     navigation.navigate('HistoryFeelingScreen')

@@ -12,9 +12,7 @@ const CalendarChartCustom = ({historyData}) => {
     useEffect(()=>{
          if(historyData){
              let arr = {}
-             console.log(typeof  historyData, 'tipo de dato', historyData)
              historyData.forEach((obj, i)=>{
-                 console.log('entra ====>' , i)
                  arr[obj.date.split('T')[0]] = {textColor:'white',color: `#${obj.color}`, endingDay: true, startingDay: true}
              })
 

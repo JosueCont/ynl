@@ -1,4 +1,4 @@
-import {Avatar, Text, View} from "native-base";
+import {Avatar, Text, View, Badge} from "native-base";
 import imageLogo from '../../../assets/logo.png'
 import {Colors} from "../../../utils/Colors";
 import {TouchableOpacity} from "react-native";
@@ -12,6 +12,7 @@ const GroupsMemberItem = ({title, pending = true}) => {
                 </View>
                 <View flex={1} justifyContent={'center'}>
                     <Text fontSize={16} style={{opacity: pending ? 0.5 : 1}} color={Colors.red}>{title}</Text>
+                    <Badge width={'40%'} colorScheme={"info"}>{pending?'Pendiente':''}</Badge>
                 </View>
             </View>
         </TouchableOpacity>

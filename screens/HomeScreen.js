@@ -9,8 +9,11 @@ import {Colors} from "../utils/Colors";
 import {MaterialIcons} from "@expo/vector-icons";
 import ApiApp from "../utils/ApiApp";
 import bg1 from '../assets/bg1.png'
+import _ from 'lodash';
+import moment from 'moment';
 import {getShadowCircleStyle} from "../utils/functions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import 'moment/locale/es';
 
 const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
@@ -22,6 +25,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const [lastEmotion, setLastEmotion] = useState(null);
     const [lastEmotion1, setLastEmotion1] = useState(null);
     const [lastEmotion2, setLastEmotion2] = useState(null);
+    const [mainFeeling, setMainFeeling] = useState(null)
 
     const [days, setDays] = useState([]);
     const [fullName, setFullName] = useState(null);
@@ -74,6 +78,8 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             setLastEmotion(res.data.data.lastEmotion.name)
             setLastEmotion1(res.data.data.lastEmotion.child.name)
             setLastEmotion2(res.data.data.lastEmotion.child.child.name)
+            setMainFeeling(res.data.data.lastEmotion.child.child)
+
 
             setFullName(res.data.data.userInfo.fullName)
         } catch (e) {
@@ -127,7 +133,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                 <View flex={1} mx={4}>
 
                     <Text mb={4} fontSize={24} color={Colors.red} textAlign={'center'}>{fullName}</Text>
-                    <Text fontSize={14} color={Colors.red} textAlign={'center'}>17/Mayo/202</Text>
+                    <Text fontSize={14} color={Colors.red} textAlign={'center'}>{moment().locale('es').format('ll')}</Text>
 
                     {
                         loading === true ?
@@ -159,13 +165,17 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                         mb={8}
                         bgColor={Colors.gray}
                         style={getShadowCircleStyle(10, 10)}
-                        borderRadius={10}
+                        borderRadius={30}
                         p={3}>
                         <View flex={1} height={70} alignItems={'center'} justifyContent={'center'}>
-                            <Icon as={MaterialIcons} name={'mood'} size={'6xl'} color={Colors.red}></Icon>
+                            <Image />
+                            <Icon color={'#'+_.get(mainFeeling,'color','000000')} as={MaterialIcons} name={'mood'} size={'6xl'} ></Icon>
                         </View>
                         <View flex={1} height={70} mr={1}>
                             <TouchableOpacity
+                                onPress={()=>{
+                                    navigation.navigate('HistoryFeelingScreen')
+                                }}
                                 style={{
                                     flex: 1,
                                     alignItems: 'center',
@@ -173,10 +183,10 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                     borderRadius: 10
                                 }}>
                                 <Text fontSize={12}>Última emoción</Text>
-                                <Text fontSize={26} color={Colors.red} numberOfLines={1}
-                                      adjustsFontSizeToFit>{lastEmotion2}</Text>
+                                <Text fontSize={26} color={'#'+_.get(mainFeeling,'color','000000')} numberOfLines={1}
+                                      adjustsFontSizeToFit>{lastEmotion} </Text>
                                 <Text fontSize={12} adjustsFontSizeToFit
-                                      numberOfLines={1}>{lastEmotion1} - {lastEmotion}</Text>
+                                      numberOfLines={1}>{lastEmotion2} - {lastEmotion1} </Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -209,7 +219,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                     navigation.navigate('StatisticsScreen')
                                 }}>
                                 <Icon as={MaterialIcons} name={'donut-large'} size={6} color={'white'} mb={1}></Icon>
-                                <Text color={'white'} fontSize={11}>Mis Avances</Text>
+                                <Text color={'white'} fontSize={11}>Mis Avance</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
