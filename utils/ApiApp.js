@@ -181,6 +181,10 @@ class ApiApp {
         return ApiApp.ApisType(`/api/feeling-records?populate[feeling][populate][parent][populate][parent][populate][icon]=*&filters[createdAt][$gte]=${startDate}&filters[createdAt][$lt]=${endDate}&filters[user][id]=${userId}`, "get");
     }
 
+    static getUserProgress= async (userID='')=>{
+        return ApiApp.ApisType(`/api/progress/user_progress?userId=${userID}`,'get');
+    }
+
     static _baseURL = baseURL;
 
 

@@ -16,11 +16,13 @@ import apiApp from "../utils/ApiApp";
 const HistoryFeelingScreenDetail = ({authDuck, route,navigation}) => {
 
     const isFocused = useIsFocused();
+    const [detailData, setDetailData] = useState(null)
     const { detail, date } = route.params;
 
     useEffect(() => {
         if (isFocused) {
-            console.log('detail',detail)
+            setDetailData(_.orderBy(detail,['date'],['desc']))
+
         }
     }, [isFocused])
 
@@ -35,7 +37,7 @@ const HistoryFeelingScreenDetail = ({authDuck, route,navigation}) => {
                     <Text style={{fontSize:20, color:'#FF5E00', textAlign:'center',fontWeight:'bolder'}}>{date}</Text>
 
                     {
-                        detail && detail.map((ele,i)=>{
+                        detailData && detailData.map((ele,i)=>{
                             return  <View
                                 flexDir={'row'}
                                 mb={2}
