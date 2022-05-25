@@ -8,13 +8,13 @@ import profile from '../assets/profile.jpg';
 import {Colors} from "../utils/Colors";
 import {MaterialIcons} from "@expo/vector-icons";
 import ApiApp from "../utils/ApiApp";
+import apiApp from "../utils/ApiApp";
 import bg1 from '../assets/bg1.png'
 import _ from 'lodash';
 import moment from 'moment';
 import {getShadowCircleStyle} from "../utils/functions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import 'moment/locale/es';
-import apiApp from "../utils/ApiApp";
 
 const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
@@ -134,11 +134,12 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                 <View flex={1} mx={4}>
 
                     <Text mb={4} fontSize={24} color={Colors.red} textAlign={'center'}>{fullName}</Text>
-                    <Text fontSize={14} color={Colors.red} textAlign={'center'}>{moment().locale('es').format('ll')}</Text>
+                    <Text fontSize={14} color={Colors.red}
+                          textAlign={'center'}>{moment().locale('es').format('ll')}</Text>
 
                     {
                         loading === true ?
-                            <Skeleton height={60} my={2}/> :
+                            <Skeleton height={50} my={2}/> :
                             <View my={2} width={'70%'} alignSelf={'center'} height={60} flexDir={'row'}
                                   alignItems={'center'} justifyContent={'center'}>
 
@@ -161,41 +162,49 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                             </View>
                     }
 
-                    <View
-                        flexDir={'row'}
-                        mb={8}
-                        bgColor={Colors.gray}
-                        style={getShadowCircleStyle(10, 10)}
-                        borderRadius={30}
-                        p={3}>
-                        <View flex={1} height={70} alignItems={'center'} justifyContent={'center'}>
-                            {
-                                (mainFeeling && mainFeeling.icon)?
-                                    <Image alt=":)" size="sm"  source={{uri: apiApp._baseURL + mainFeeling.icon.url}} />
-                                :<Icon color={'#' + _.get(mainFeeling, 'color', '000000')} as={MaterialIcons} name={'mood'} size={'6xl'} />
-                            }
 
-                        </View>
-                        <View flex={1} height={70} mr={1}>
-                            <TouchableOpacity
-                                onPress={()=>{
-                                    navigation.navigate('HistoryFeelingScreen')
-                                }}
-                                style={{
-                                    flex: 1,
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    borderRadius: 10
-                                }}>
-                                <Text fontSize={12}>Última emoción</Text>
-                                <Text fontSize={26} color={'#'+_.get(mainFeeling,'color','000000')} numberOfLines={1}
-                                      adjustsFontSizeToFit>{lastEmotion} </Text>
-                                <Text fontSize={12} adjustsFontSizeToFit
-                                      numberOfLines={1}>{lastEmotion2} - {lastEmotion1} </Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
+                    {
+                        loading === true ?
+                            <Skeleton height={70} my={2}/> :
+                            <View
+                                flexDir={'row'}
+                                mb={8}
+                                bgColor={Colors.gray}
+                                style={getShadowCircleStyle(10, 10)}
+                                borderRadius={30}
+                                p={3}>
+                                <View flex={1} height={70} alignItems={'center'} justifyContent={'center'}>
+                                    {
+                                        (mainFeeling && mainFeeling.icon) ?
+                                            <Image alt=":)" size="sm"
+                                                   source={{uri: apiApp._baseURL + mainFeeling.icon.url}}/>
+                                            :
+                                            <Icon color={'#' + _.get(mainFeeling, 'color', '000000')} as={MaterialIcons}
+                                                  name={'mood'} size={'6xl'}/>
+                                    }
 
+                                </View>
+                                <View flex={1} height={70} mr={1}>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            navigation.navigate('HistoryFeelingScreen')
+                                        }}
+                                        style={{
+                                            flex: 1,
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            borderRadius: 10
+                                        }}>
+                                        <Text fontSize={12}>Última emoción</Text>
+                                        <Text fontSize={26} color={'#' + _.get(mainFeeling, 'color', '000000')}
+                                              numberOfLines={1}
+                                              adjustsFontSizeToFit>{lastEmotion} </Text>
+                                        <Text fontSize={12} adjustsFontSizeToFit
+                                              numberOfLines={1}>{lastEmotion2} - {lastEmotion1} </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                    }
                     <View flexDir={'row'} mb={4} height={70}>
                         <View flex={1} mr={2}>
                             <TouchableOpacity

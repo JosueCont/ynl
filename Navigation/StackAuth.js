@@ -35,7 +35,13 @@ const StackAuth = ({}) => {
                             borderRadius: 5,
                             marginLeft: 10
                         }}>
-                            <Icon as={MaterialIcons} name={'arrow-back-ios'} color={Colors.red}/>
+
+                            {
+                                (route.name.includes('PhoneScreen') || route.name.includes('VerificationCodeScreen')) ?
+                                    <Icon as={MaterialIcons} name={'arrow-back-ios'} color={'white'} size={'xl'}/> :
+                                    <Icon as={MaterialIcons} name={'arrow-back-ios'} color={Colors.red} size={'xl'}/>
+                            }
+
 
                         </TouchableOpacity>
                     )
@@ -74,8 +80,8 @@ const StackAuth = ({}) => {
             <Stack.Screen name="PasswordRecoverySuccessScreen" component={PasswordRecoverySuccessScreen}
                           options={{headerShown: false}}/>
 
-            <Stack.Screen name="PhoneScreen" component={PhoneScreen}/>
-            <Stack.Screen name="VerificationCodeScreen" component={VerificationCodeScreen}/>
+            <Stack.Screen name="PhoneScreen" component={PhoneScreen} options={{title: ''}}/>
+            <Stack.Screen name="VerificationCodeScreen" component={VerificationCodeScreen} options={{title: ''}}/>
             <Stack.Screen name="SuccessScreen" component={SuccessScreen} options={{headerShown: false}}/>
 
         </Stack.Navigator>

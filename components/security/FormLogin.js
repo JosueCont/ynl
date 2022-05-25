@@ -188,8 +188,8 @@ export default (props) => {
                                 sesión</Text>
 
                             <VStack space={3} mt="5">
-                                <FormControl isInvalid={errors.email}>
-                                    <View flex={1} mb={4} style={getShadowCircleStyle(5, 5)}>
+                                <FormControl isInvalid={errors.email} mb={2}>
+                                    <View flex={1} style={getShadowCircleStyle(5, 5)}>
                                         <Input
                                             height={50}
                                             autoCapitalize="none"
@@ -208,8 +208,8 @@ export default (props) => {
                                         {errors.email}
                                     </FormControl.ErrorMessage>
                                 </FormControl>
-                                <FormControl isInvalid={errors.password}>
-                                    <View flex={1} mb={4} style={getShadowCircleStyle(5, 5)}>
+                                <FormControl isInvalid={errors.password} mb={2}>
+                                    <View flex={1} style={getShadowCircleStyle(5, 5)}>
                                         <Input
                                             height={50}
                                             placeholder={'Contraseña'}

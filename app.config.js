@@ -18,7 +18,8 @@ const commonConfig = {
     },
     extra: {
         production: false,
-        URL: "https://ynl-api.herokuapp.com/"
+        URL: "https://ynl-api.herokuapp.com/",
+        URL_IMAGES: "https://ynl-api.herokuapp.com"
     }
 };
 

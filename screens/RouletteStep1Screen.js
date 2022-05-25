@@ -33,7 +33,7 @@ const RouletteStep1Screen = ({navigation}) => {
     const getParents = async () => {
         try {
             setLoading(true);
-            let response = await ApiApp.getFeelingsV2(`filters[parent][id][$null]=true`)
+            let response = await ApiApp.getFeelingsV2(`populate=*&filters[parent][id][$null]=true`)
             console.log(response.data.data)
             setParents(response.data.data)
         } catch (e) {

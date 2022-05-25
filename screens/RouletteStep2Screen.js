@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {CheckIcon, Select, Text, View} from "native-base";
+import {CheckIcon, Image, Select, Text, View} from "native-base";
 import {connect} from "react-redux";
 import {ScrollView} from "react-native";
 import ApiApp from "../utils/ApiApp";
 import {Colors} from "../utils/Colors";
 import Constants from 'expo-constants';
+import _ from "lodash";
 
 const RouletteStep2Screen = ({route, navigation}) => {
 
@@ -14,7 +15,7 @@ const RouletteStep2Screen = ({route, navigation}) => {
     const [subParentSelected, setSubParentSelected] = useState(null);
 
     useEffect(() => {
-        console.log(Constants.manifest.extra.URL + route.params.parentItem.attributes.icon.data.attributes.url)
+        console.log(Constants.manifest.extra.URL_IMAGES + route.params.parentItem.attributes.icon.data.attributes.url)
         getSubParents(route.params.parentItem.id)
         navigation.setOptions({
             headerStyle: {backgroundColor: '#' + route.params.parentItem.attributes.color}
@@ -24,7 +25,7 @@ const RouletteStep2Screen = ({route, navigation}) => {
     const getSubParents = async (parentId) => {
         try {
             setLoading(true);
-            let response = await ApiApp.getFeelingsV2(`filters[$and][0][parent][id][$eq]=${parentId}`)
+            let response = await ApiApp.getFeelingsV2(`filters[$and][0][parent][id][$eq]=${parentId}&populate[parent][populate][0]=icon`)
             setSubParents(response.data.data)
         } catch (e) {
             console.log(e.response)
@@ -40,12 +41,15 @@ const RouletteStep2Screen = ({route, navigation}) => {
             <View flex={1} alignItems={'center'}>
                 <Text
                     fontSize={28} textAlign={'center'} color={'white'}>Hoy te sientes...</Text>
-                <View w={200} h={200} bgColor={'green.200'} borderRadius={100} my={10}>
-                    {/*{*/}
-                    {/*    _.has(route.params.parentItem.attributes.icon.data.attributes.url) &&*/}
-                    {/*    <Image source={{uri: Constants.manifest.extra.URL + route.params.parentItem.attributes.icon.data.attributes.url}} style={{width:200, height:200, resizeMode:'contain'}}></Image>*/}
+                <View w={200} h={200} bgColor={'white'} borderRadius={100} my={10} alignItems={'center'}
+                      justifyContent={'center'}>
+                    {
+                        _.has(route.params, 'parentItem.attributes.icon.data.attributes.url') &&
+                        <Image
+                            source={{uri: Constants.manifest.extra.URL_IMAGES + route.params.parentItem.attributes.icon.data.attributes.url}}
+                            style={{width: 100, height: 200, resizeMode: 'contain'}}></Image>
 
-                    {/*}*/}
+                    }
                 </View>
                 <Text mb={2} color={'white'}>{`${route.params.parentItem.attributes.name}`}</Text>
                 <Select

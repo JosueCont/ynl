@@ -93,6 +93,8 @@ const DrawerConfig = () => {
                 swipeEnabled: false
             })}
             drawerContent={(props) => <CustomDrawerContent  {...props} />}>
+            <Drawer.Screen name="IntroScreen" component={IntroScreen} options={{headerShown: false}}/>
+
             <Drawer.Screen name={'HomeScreen'} component={HomeScreen} options={{title: ''}}/>
             <Drawer.Screen name={'YourFeelScreen'} component={YourFeelScreen}/>
             <Drawer.Screen name={'GroupsScreen'} component={GroupsScreen} options={{title: 'Mis grupos'}}/>
@@ -101,10 +103,10 @@ const DrawerConfig = () => {
             <Drawer.Screen name={'GroupsMembersScreen'} component={GroupsMembersScreen} options={{title: 'Miembros'}}/>
             <Drawer.Screen name={'StatisticsScreen'} component={StatisticsScreen} options={{title: 'Estadísticas'}}/>
             <Drawer.Screen name={'ProfileScreen'} component={ProfileScreen} options={{title: 'Perfil'}}/>
-            <Drawer.Screen name={'HistoryFeelingScreen'} component={HistoryFeelingScreen} options={{title: 'Historial'}}/>
+            <Drawer.Screen name={'HistoryFeelingScreen'} component={HistoryFeelingScreen}
+                           options={{title: 'Historial'}}/>
             <Drawer.Screen name={'HistoryFeelingScreenDetail'} component={HistoryFeelingScreenDetail} options={{title: 'Historial'}}/>
 
-            <Drawer.Screen name="IntroScreen" component={IntroScreen} options={{headerShown: false}}/>
             <Drawer.Screen name={'RouletteStep1Screen'} component={RouletteStep1Screen} options={{title: ''}}/>
             <Drawer.Screen name={'RouletteStep2Screen'} component={RouletteStep2Screen} options={{title: ''}}/>
             <Drawer.Screen name={'RouletteStep3Screen'} component={RouletteStep3Screen} options={{title: ''}}/>

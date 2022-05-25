@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Dimensions, SafeAreaView, TouchableOpacity, View} from 'react-native';
+import {Dimensions, TouchableOpacity, View} from 'react-native';
 import {Ionicons, MaterialIcons} from "@expo/vector-icons";
 import AppIntroSlider from 'react-native-app-intro-slider';
 import {Icon} from 'native-base';
@@ -94,7 +94,6 @@ const IntroScreen = ({navigation, authDuck}) => {
 
 
     return (
-        <SafeAreaView style={{flex: 1, backgroundColor: Colors.gray}}>
             <AppIntroSlider
                 data={slides}
                 renderItem={renderItem}
@@ -106,7 +105,6 @@ const IntroScreen = ({navigation, authDuck}) => {
                 showNextButton={false}
                 keyExtractor={(item, index) => index.toString()}
             />
-        </SafeAreaView>
     )
 }
 

@@ -74,7 +74,7 @@ class ApiApp {
     }
 
     static getFeelingsV2 = (query = '') => {
-        return ApiApp.ApisType('/api/feelings?populate=*&' + query, 'get')
+        return ApiApp.ApisType('/api/feelings?' + query, 'get')
     }
 
     static getFeelingsV3 = (query = '') => {

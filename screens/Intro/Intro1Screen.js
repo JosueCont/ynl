@@ -1,26 +1,23 @@
 import React from "react";
-import {ImageBackground, SafeAreaView} from "react-native";
+import {ImageBackground} from "react-native";
 import bgIntro from '../../assets/bgIntro.png';
 import {Image, Text, View} from "native-base";
 import logoSmall from '../../assets/logoSmall.png';
-import {Colors} from "../../utils/Colors";
 
 const Intro1Screen = () => {
     return (
-        <SafeAreaView style={{flex: 1, backgroundColor: Colors.gray}}>
-            <View flex={1} mx={2} my={6}>
-                <ImageBackground source={bgIntro} style={{flex: 1}} resizeMode={'contain'}>
-                    <View flex={1} alignItems={'center'} justifyContent={'center'}>
-                        <Image source={logoSmall}></Image>
-                    </View>
-                    <View flex={1}>
-                        <Text color={'white'} textAlign={'center'} px={4}>Bienvenido a tu espacio de crecimiento
-                            personal</Text>
-                    </View>
-                </ImageBackground>
+        <View flex={1}>
+            <ImageBackground source={bgIntro} style={{flex: 1}} resizeMode={'contain'}>
+                <View flex={1} alignItems={'center'} justifyContent={'flex-end'}>
+                    <Image source={logoSmall}></Image>
+                </View>
+                <View flex={1}>
+                    <Text color={'white'} textAlign={'center'} px={15} mt={4}>Bienvenido a tu espacio de crecimiento
+                        personal</Text>
+                </View>
+            </ImageBackground>
 
             </View>
-        </SafeAreaView>
 
     )
 

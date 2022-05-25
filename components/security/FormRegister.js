@@ -43,34 +43,37 @@ export default ({onRegister, loading}) => {
 
                     <VStack space={3} mt="5">
                         <VStack>
-                            <FormControl isInvalid={formik.errors.email} mb={2}>
+                            <FormControl isInvalid={formik.errors.email} mb={3}>
                                 <Input
+                                    borderRadius={20}
+                                    height={50}
                                     autoCapitalize="none"
                                     onChangeText={text => formik.setFieldValue('email', text)}
                                     placeholder={'Correo electrónico'}
+                                    autoCorrect={false}
                                 />
                                 <FormControl.ErrorMessage>
                                     {formik.errors.email}
                                 </FormControl.ErrorMessage>
                             </FormControl>
-                            <FormControl isInvalid={formik.errors.password} mb={2}>
-                                <Input type="password" placeholder={'Contraseña'}
+                            <FormControl isInvalid={formik.errors.password} mb={3}>
+                                <Input borderRadius={20} height={50} type="password" placeholder={'Contraseña'}
                                        onChangeText={text => formik.setFieldValue('password', text)}/>
                                 <FormControl.ErrorMessage>
                                     {formik.errors.password}
                                 </FormControl.ErrorMessage>
                             </FormControl>
-                            <FormControl isInvalid={formik.errors.repeatPassword}>
+                            <FormControl isInvalid={formik.errors.repeatPassword} mb={3}>
 
-                                <Input type="password"
+                                <Input borderRadius={20} height={50} type="password"
                                        placeholder={'Confirmar contraseña'}
                                        onChangeText={text => formik.setFieldValue('repeatPassword', text)}/>
                                 <FormControl.ErrorMessage>
                                     {formik.errors.repeatPassword}
                                 </FormControl.ErrorMessage>
                             </FormControl>
-                            <Button isLoading={loading} isLoadingText={'Registrando'} mt="2"
-                                    onPress={formik.handleSubmit} colorScheme="red">
+                            <Button isLoading={loading} mt="2"
+                                    onPress={formik.handleSubmit} colorScheme="orange">
                                 Continuar
                             </Button>
                         </VStack>

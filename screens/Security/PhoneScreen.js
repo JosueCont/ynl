@@ -1,11 +1,11 @@
-import React, {useRef, useState} from 'react';
-import {Button, Icon, Text, View} from "native-base";
+import React, {useEffect, useRef, useState} from 'react';
+import {Button, Image, Text, View} from "native-base";
 import {Keyboard, KeyboardAvoidingView, SafeAreaView, TouchableWithoutFeedback} from "react-native";
 import {Colors} from "../../utils/Colors";
 import PhoneInput from "react-native-phone-number-input";
 import ApiApp from "../../utils/ApiApp";
 import ModalError from "../Modals/ModalError";
-import {MaterialIcons} from "@expo/vector-icons";
+import phoneImage from '../../assets/phoneVerification.png'
 
 const PhoneScreen = ({navigation}) => {
     const [value, setValue] = useState(null);
@@ -13,6 +13,12 @@ const PhoneScreen = ({navigation}) => {
     const [formattedValue, setFormattedValue] = useState(null);
     const [modalErrorVisible, setModalErrorVisible] = useState(null);
     const [textException, setTextException] = useState(null);
+
+    useEffect(() => {
+        navigation.setOptions({
+            headerStyle: {backgroundColor: Colors.red}
+        })
+    }, [])
 
     const phoneAction = async (val) => {
         try {
@@ -30,17 +36,17 @@ const PhoneScreen = ({navigation}) => {
     }
 
     return (
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView style={{flex: 1, backgroundColor: Colors.white}}>
             <TouchableWithoutFeedback onPress={() => {
                 Keyboard.dismiss()
             }}>
 
                 <KeyboardAvoidingView flex={1} behavior={'padding'}>
                     <View flex={1} bgColor={Colors.red} alignItems={'center'} justifyContent={'center'}
-                          borderBottomRadius={40}>
-                        <Icon as={MaterialIcons} name={'phone'} size={'5xl'} color={'white'}/>
-                        <Text color={'white'}>Verifica tu número</Text>
-                        <Text color={'white'} size={'md'}>Por favor digita tu número telefónico</Text>
+                          borderBottomRadius={60}>
+                        <Image source={phoneImage} width={150} height={150}></Image>
+                        <Text color={'white'}>Verifica </Text>
+                        <Text color={'white'} size={'md'}>tu cuenta añadiendo tu teléfono</Text>
                     </View>
                     <View flex={1} mx={10}>
                         <View mt={10} justifyContent={'center'}>

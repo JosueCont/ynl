@@ -42,8 +42,10 @@ export default ({onRegister, loading}) => {
 
                     <VStack space={3} mt="5">
                         <VStack>
-                            <FormControl isInvalid={errors.email}>
+                            <FormControl isInvalid={errors.email} mb={3}>
                                 <Input
+                                    borderRadius={20}
+                                    height={50}
                                     placeholder={'Correo electrónico'}
                                     autoCapitalize="none"
                                     onChangeText={text => setFieldValue('email', text)}
@@ -56,7 +58,7 @@ export default ({onRegister, loading}) => {
                             </FormControl>
 
                             <Button isLoading={loading} isLoadingText={'Registrando'} mt="2"
-                                    onPress={handleSubmit} colorScheme="red">
+                                    onPress={handleSubmit} colorScheme="orange">
                                 Continuar
                             </Button>
                         </VStack>
