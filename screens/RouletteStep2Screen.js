@@ -46,7 +46,7 @@ const RouletteStep2Screen = ({route, navigation}) => {
                     {
                         _.has(route.params, 'parentItem.attributes.icon.data.attributes.url') &&
                         <Image
-                            source={{uri: Constants.manifest.extra.URL_IMAGES + route.params.parentItem.attributes.icon.data.attributes.url}}
+                            source={{uri: route.params.parentItem.attributes.icon.data.attributes.url}}
                             style={{width: 100, height: 200, resizeMode: 'contain'}}></Image>
 
                     }
@@ -54,7 +54,8 @@ const RouletteStep2Screen = ({route, navigation}) => {
                 <Text mb={2} color={'white'}>{`${route.params.parentItem.attributes.name}`}</Text>
                 <Select
 
-                    placeholderTextColor={Colors.red} selectedValue={service} minWidth="250"
+                    placeholderTextColor={'#' + route.params.parentItem.attributes.color} selectedValue={service}
+                    minWidth="250"
                     backgroundColor={Colors.white} placeholder="Selecciona" _selectedItem={{
                     backgroundColor: 'red.50',
                     endIcon: <CheckIcon size="5"/>,

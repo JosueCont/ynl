@@ -8,12 +8,14 @@ import {getDay, getMonth} from '../utils/functions'
 import {saveEmotion} from "../redux/ducks/feelingsDuck";
 import {Colors} from "../utils/Colors";
 import ScreenBaseV1 from "./Components/ScreenBaseV1";
+import _ from "lodash";
 
 const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck}) => {
 
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+
         navigation.setOptions({
             headerStyle: {backgroundColor: '#' + route.params.emotion.attributes.color}
         })
@@ -47,13 +49,20 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck}) => {
         <ScreenBaseV1 color={'#' + route.params.emotion.attributes.color}>
             <View flex={1} mx={4} w={'100%'}>
 
-                <View flex={0.5} alignItems={'center'} mt={4}>
-                    <Image size={'xs'} source={logo}/>
-                </View>
-
                 <View flex={1} alignItems={'center'}>
-                    <Text style={{fontSize: 20, color: 'black'}}>Hoy me siento</Text>
+                    <Image mb={2} size={'xs'} source={logo}/>
+                    <Text
+                        fontSize={28} textAlign={'center'} color={'white'}>Hoy te sientes...</Text>
+                    <View w={200} h={200} bgColor={'white'} borderRadius={100} my={10} alignItems={'center'}
+                          justifyContent={'center'}>
+                        {
+                            _.has(route.params, 'emotion.attributes.parent.data.attributes.parent.data.attributes.icon.data.attributes.url') &&
+                            <Image
+                                source={{uri: route.params.emotion.attributes.parent.data.attributes.parent.data.attributes.icon.data.attributes.url}}
+                                style={{width: 100, height: 200, resizeMode: 'contain'}}></Image>
 
+                        }
+                    </View>
                     <Text bold color={Colors.red}
                           fontSize={30}>{route.params.emotion && route.params.emotion.attributes.name.toUpperCase()}</Text>
 

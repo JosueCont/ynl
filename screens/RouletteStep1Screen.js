@@ -80,7 +80,6 @@ const RouletteStep1Screen = ({navigation}) => {
                 <View flex={0.1}>
 
                     <Text color={Colors.red} size={'lg'} textAlign={'center'}>¿Cómo te sientes hoy?</Text>
-                    <Text color={Colors.red} size={'md'} textAlign={'center'}>17/Mayo/2022</Text>
 
                 </View>
                 <View flex={0.4} alignItems={'center'} justifyContent={'flex-end'}>

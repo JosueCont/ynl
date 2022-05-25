@@ -1,7 +1,7 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Icon, Image, Skeleton, Text, View} from "native-base";
 import {connect} from "react-redux";
-import {RefreshControl, SafeAreaView, ScrollView, TouchableOpacity, Platform} from "react-native";
+import {Platform, RefreshControl, SafeAreaView, ScrollView, TouchableOpacity} from "react-native";
 import {getMyGroups} from "../redux/ducks/groupDuck";
 import {useIsFocused} from "@react-navigation/native";
 import profile from '../assets/profile.jpg';
@@ -110,13 +110,13 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                 finalStatus = status;
             }
             if (finalStatus !== 'granted') {
-                alert('Failed to get push token for push notification!');
+                console.log('Failed to get push token for push notification!');
                 return;
             }
             token = (await Notifications.getExpoPushTokenAsync()).data;
             console.log(token);
         } else {
-            alert('Must use physical device for Push Notifications');
+            console.log('Must use physical device for Push Notifications');
         }
 
         if (Platform.OS === 'android') {
@@ -181,10 +181,12 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
 
             setFullName(res.data.data.userInfo.fullName)
+            setLoading(false)
         } catch (e) {
+            setLoading(false)
             console.log(e)
         } finally {
-            setLoading(false)
+
         }
     }
 
@@ -193,10 +195,12 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             setLoading(true)
             const response = await ApiApp.getMyGroups(authDuck.user.id)
             setGroups(response.data.data)
+            setLoading(false)
         } catch (e) {
+            setLoading(false)
             console.log(e, 61)
         } finally {
-            setLoading(false)
+
         }
 
     }
@@ -238,6 +242,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                     {
                         loading === true ?
                             <Skeleton height={50} my={2}/> :
+                            loading === false &&
                             <View my={2} width={'70%'} alignSelf={'center'} height={60} flexDir={'row'}
                                   alignItems={'center'} justifyContent={'center'}>
 
@@ -264,6 +269,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                     {
                         loading === true ?
                             <Skeleton height={70} my={2}/> :
+                            loading === false &&
                             <View
                                 flexDir={'row'}
                                 mb={8}
@@ -275,7 +281,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                     {
                                         (mainFeeling && mainFeeling.icon) ?
                                             <Image alt=":)" size="sm"
-                                                   source={{uri: apiApp._baseURL + mainFeeling.icon.url}}/>
+                                                   source={{uri: mainFeeling.icon.url}}/>
                                             :
                                             <Icon color={'#' + _.get(mainFeeling, 'color', '000000')} as={MaterialIcons}
                                                   name={'mood'} size={'6xl'}/>

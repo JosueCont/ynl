@@ -5,7 +5,6 @@ import {ScrollView} from "react-native";
 import ApiApp from "../utils/ApiApp";
 import {Colors} from "../utils/Colors";
 import _ from "lodash";
-import Constants from "expo-constants";
 
 const RouletteStep3Screen = ({route, navigation}) => {
 
@@ -40,19 +39,20 @@ const RouletteStep3Screen = ({route, navigation}) => {
 
             <View flex={1} alignItems={'center'}>
                 <Text
-                    fontSize={28} textAlign={'center'}>Hoy te sientes...</Text>
+                    fontSize={28} textAlign={'center'} color={Colors.white}>Hoy te sientes...</Text>
                 <View w={200} h={200} bgColor={'white'} borderRadius={100} my={10} alignItems={'center'}
                       justifyContent={'center'}>
                     {
                         _.has(route.params, 'parentItem.attributes.parent.data.attributes.icon.data.attributes.url') &&
                         <Image
-                            source={{uri: Constants.manifest.extra.URL_IMAGES + route.params.parentItem.attributes.parent.data.attributes.icon.data.attributes.url}}
+                            source={{uri: route.params.parentItem.attributes.parent.data.attributes.icon.data.attributes.url}}
                             style={{width: 100, height: 200, resizeMode: 'contain'}}></Image>
 
                     }
                 </View>
-                <Text mb={2}>{`${route.params.parentItem.attributes.name}`}</Text>
-                <Select placeholderTextColor={Colors.red} backgroundColor={Colors.white} selectedValue={service}
+                <Text color={Colors.white} mb={2}>{`${route.params.parentItem.attributes.name}`}</Text>
+                <Select placeholderTextColor={'#' + route.params.parentItem.attributes.color}
+                        backgroundColor={Colors.white} selectedValue={service}
                         minWidth="250" placeholder="Selecciona" _selectedItem={{
                     bg: "red.100",
                     endIcon: <CheckIcon size="5"/>
