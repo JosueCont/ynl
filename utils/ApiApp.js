@@ -25,6 +25,10 @@ class ApiApp {
     };
 
 
+    static sendPushToken=(data)=>{
+        return ApiApp.ApisType(`/api/push-tokens`, 'post', data)
+    }
+
     static registerPhone = (data) => {
         return ApiApp.ApisType(`/api/phone-verifications`, 'post', data)
     }
