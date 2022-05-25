@@ -14,6 +14,7 @@ import moment from 'moment';
 import {getShadowCircleStyle} from "../utils/functions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import 'moment/locale/es';
+import apiApp from "../utils/ApiApp";
 
 const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
@@ -78,7 +79,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             setLastEmotion(res.data.data.lastEmotion.name)
             setLastEmotion1(res.data.data.lastEmotion.child.name)
             setLastEmotion2(res.data.data.lastEmotion.child.child.name)
-            setMainFeeling(res.data.data.lastEmotion.child.child)
+            setMainFeeling(res.data.data.lastEmotion)
 
 
             setFullName(res.data.data.userInfo.fullName)
@@ -168,8 +169,12 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                         borderRadius={30}
                         p={3}>
                         <View flex={1} height={70} alignItems={'center'} justifyContent={'center'}>
-                            <Image />
-                            <Icon color={'#'+_.get(mainFeeling,'color','000000')} as={MaterialIcons} name={'mood'} size={'6xl'} ></Icon>
+                            {
+                                (mainFeeling && mainFeeling.icon)?
+                                    <Image alt=":)" size="sm"  source={{uri: apiApp._baseURL + mainFeeling.icon.url}} />
+                                :<Icon color={'#' + _.get(mainFeeling, 'color', '000000')} as={MaterialIcons} name={'mood'} size={'6xl'} />
+                            }
+
                         </View>
                         <View flex={1} height={70} mr={1}>
                             <TouchableOpacity

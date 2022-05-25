@@ -78,7 +78,7 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
                                 p={3}>
                                 <View flex={1} height={70} alignItems={'center'} justifyContent={'center'}>
                                     <View style={{backgroundColor:'white'}} p={2} borderRadius={40}>
-                                        <Image alt="Alternate Text" size="sm" source={{uri:`${apiApp._baseURL}${_.get(ele,'feeling.attributes.parent.data.attributes.parent.data.attributes.icon.data.attributes.url','5F6367')}`}}/>
+                                        <Image alt=":)" size="sm" source={{uri:`${apiApp._baseURL}${_.get(ele,'feeling.attributes.parent.data.attributes.parent.data.attributes.icon.data.attributes.url','5F6367')}`}}/>
                                     </View>
                                 </View>
                                 <View flex={2} height={70} mr={1}>
