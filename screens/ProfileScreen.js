@@ -94,7 +94,8 @@ const ProfileScreen = ({authDuck, navigation}) => {
         setLastName(response.data.lastName)
         setEmail(response.data.email)
         setGender(response.data.gender)
-        setImage(response.data.avatar)
+        console.log(response.data)
+        setImage(response.data.avatar.url)
     }
 
     const updatePasswordFunction = async (currentPassword, newPassword, confirmNewPassword) => {
@@ -167,9 +168,10 @@ const ProfileScreen = ({authDuck, navigation}) => {
                 type: 'image/jpeg',
                 name: uri.split('/').pop(),
             };
-
             var formData = new FormData();
-            formData.append('files', uri, uri.split('/').pop());
+            formData.append('files', photo);
+            formData.append('ref', 'plugin::users-permissions.user')
+            formData.append('refId', authDuck.user.id)
             formData.append('field', 'avatar')
 
             const response = await ApiApp.updatePhoto(formData)
