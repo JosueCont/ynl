@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import {Icon, Image, Skeleton, Text, View} from "native-base";
 import {connect} from "react-redux";
-import {RefreshControl, SafeAreaView, ScrollView, TouchableOpacity} from "react-native";
+import {RefreshControl, SafeAreaView, ScrollView, TouchableOpacity, Platform} from "react-native";
 import {getMyGroups} from "../redux/ducks/groupDuck";
 import {useIsFocused} from "@react-navigation/native";
 import profile from '../assets/profile.jpg';
@@ -14,9 +14,28 @@ import moment from 'moment';
 import {getShadowCircleStyle} from "../utils/functions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import 'moment/locale/es';
-import apiApp from "../utils/ApiApp";
+import * as Notifications from 'expo-notifications';
+import * as Device from 'expo-device';
+
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+    }),
+});
 
 const HomeScreen = ({authDuck, navigation, groupDuck}) => {
+    /**
+     * Para push
+     */
+
+    const [expoPushToken, setExpoPushToken] = useState('');
+    const [notification, setNotification] = useState(false);
+    const notificationListener = useRef();
+    const responseListener = useRef();
+
+
 
     const [feelings, setFeelings] = useState(null);
     const isFocused = useIsFocused();
@@ -32,6 +51,85 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const [fullName, setFullName] = useState(null);
 
     const [introStatus, setIntroStatus] = useState(null);
+
+
+    useEffect(()=>{
+        registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+
+        // This listener is fired whenever a notification is received while the app is foregrounded
+        notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+            setNotification(notification);
+        });
+
+        // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+            console.log(response);
+        });
+
+        return () => {
+            Notifications.removeNotificationSubscription(notificationListener.current);
+            Notifications.removeNotificationSubscription(responseListener.current);
+        };
+    },[])
+
+
+    useEffect(()=>{
+        if(expoPushToken){
+            sendPushTokenToBack()
+        }
+    },[expoPushToken])
+
+
+    /**
+     * Enviamos el pushtoken al backend
+     */
+    const sendPushTokenToBack=async ()=>{
+        try{
+            let data = {
+                "pushToken":expoPushToken,
+                "platform":Platform.OS,
+                "provider":"expo",
+                "users_permissions_user":authDuck.user.id
+            }
+            console.log(data)
+            const res = await ApiApp.sendPushToken({data})
+            console.log('sucess=====>',res)
+        }catch (e){
+            console.log('error=====>',e)
+        }
+    }
+
+
+    async function registerForPushNotificationsAsync() {
+        let token;
+        if (Device.isDevice) {
+            const { status: existingStatus } = await Notifications.getPermissionsAsync();
+            let finalStatus = existingStatus;
+            if (existingStatus !== 'granted') {
+                const { status } = await Notifications.requestPermissionsAsync();
+                finalStatus = status;
+            }
+            if (finalStatus !== 'granted') {
+                alert('Failed to get push token for push notification!');
+                return;
+            }
+            token = (await Notifications.getExpoPushTokenAsync()).data;
+            console.log(token);
+        } else {
+            alert('Must use physical device for Push Notifications');
+        }
+
+        if (Platform.OS === 'android') {
+            Notifications.setNotificationChannelAsync('default', {
+                name: 'default',
+                importance: Notifications.AndroidImportance.MAX,
+                vibrationPattern: [0, 250, 250, 250],
+                lightColor: '#FF231F7C',
+            });
+        }
+
+        return token;
+    }
 
     useEffect(() => {
         getIntroStatus()
@@ -171,7 +269,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                         <View flex={1} height={70} alignItems={'center'} justifyContent={'center'}>
                             {
                                 (mainFeeling && mainFeeling.icon)?
-                                    <Image alt=":)" size="sm"  source={{uri: apiApp._baseURL + mainFeeling.icon.url}} />
+                                    <Image alt=":)" size="sm"  source={{uri: ApiApp._baseURL + mainFeeling.icon.url}} />
                                 :<Icon color={'#' + _.get(mainFeeling, 'color', '000000')} as={MaterialIcons} name={'mood'} size={'6xl'} />
                             }
 
