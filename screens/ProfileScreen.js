@@ -1,7 +1,20 @@
 import React, {useEffect, useState} from "react";
-import {ScrollView, TouchableOpacity} from "react-native";
+import {RefreshControl, ScrollView, TouchableOpacity} from "react-native";
 import {connect} from "react-redux";
-import {Box, Button, Checkbox, FormControl, Icon, Image, Input, Stack, Text, useToast, View} from "native-base";
+import {
+    Box,
+    Button,
+    Checkbox,
+    FormControl,
+    Icon,
+    Image,
+    Input,
+    Skeleton,
+    Stack,
+    Text,
+    useToast,
+    View
+} from "native-base";
 import {Entypo} from "@expo/vector-icons";
 import {Colors} from "../utils/Colors";
 import ApiApp from "../utils/ApiApp";
@@ -9,6 +22,7 @@ import {useIsFocused} from "@react-navigation/native";
 import ModalPasswordUpdate from "./Modals/ModalPasswordUpdate";
 import {getShadowCircleStyle} from "../utils/functions";
 import bg1 from "../assets/bg1.png";
+import * as ImagePicker from 'expo-image-picker';
 
 
 const ProfileScreen = ({authDuck, navigation}) => {
@@ -21,6 +35,10 @@ const ProfileScreen = ({authDuck, navigation}) => {
     const [loading, setLoading] = useState(null);
     const [modalPasswordUpdateVisible, setModalPasswordUpdateVisible] = useState(null);
     const toast = useToast();
+    const [loadingImage, setLoadingImage] = useState(null);
+
+    const [image, setImage] = useState(null);
+
 
     useEffect(() => {
         if (isFocused) {
@@ -31,6 +49,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
     const getProfileFunction = async () => {
         try {
             const response = await ApiApp.getProfile(authDuck.user.id)
+            console.log(response.data)
             setValues(response)
         } catch (ex) {
             console.log(ex)
@@ -75,6 +94,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
         setLastName(response.data.lastName)
         setEmail(response.data.email)
         setGender(response.data.gender)
+        setImage(response.data.avatar)
     }
 
     const updatePasswordFunction = async (currentPassword, newPassword, confirmNewPassword) => {
@@ -113,24 +133,101 @@ const ProfileScreen = ({authDuck, navigation}) => {
     }
 
 
+    const pickImage = async () => {
+        setLoadingImage(true)
+
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            quality: 1,
+        });
+        console.log(result);
+
+        if (result.cancelled) {
+            setLoadingImage(false)
+
+        } else {
+            updatePhotoFunction(result.uri).then((response) => {
+                setImage(result.uri);
+                setLoadingImage(false)
+            }).catch((error) => {
+                setLoadingImage(false)
+                console.log(error)
+            })
+        }
+
+
+    };
+
+    const updatePhotoFunction = async (uri) => {
+        try {
+
+            var photo = {
+                uri: uri,
+                type: 'image/jpeg',
+                name: uri.split('/').pop(),
+            };
+
+            var formData = new FormData();
+            formData.append('files', uri, uri.split('/').pop());
+            formData.append('field', 'avatar')
+
+            const response = await ApiApp.updatePhoto(formData)
+            console.log(response.data)
+        } catch (ex) {
+            console.log(ex.response.data)
+        }
+
+    }
+
     return (
-        <ScrollView style={{flex: 1}} contentContainerStyle={{backgroundColor: Colors.white}}>
+        <ScrollView
+            refreshControl={
+                <RefreshControl
+                    style={{backgroundColor: 'white'}}
+                    tintColor={Colors.red}
+                    refreshing={loading}
+                    onRefresh={() => getProfileFunction()}
+                />
+            }
+            style={{flex: 1}}
+            contentContainerStyle={{backgroundColor: Colors.white}}>
 
             <View justifyContent={'center'} alignItems={'center'}>
-                <View style={[{
-                    width: 220,
-                    height: 220,
-                    alignSelf: 'center',
-                    alignItems: 'center'
-                }, getShadowCircleStyle(10, 10)]} mt={5} mb={10}>
-                    <View width={'100%'} height={'100%'} bgColor={'white'} alignItems={'center'}
-                          justifyContent={'center'}
-                          borderRadius={110} borderWidth={0.5}
-                          borderColor={"red.200"}>
-                        <Icon as={Entypo} name="camera" size={20} color={'gray.200'}/>
-                        <Text fontSize={12} color={Colors.red}>Sube tu foto aquí</Text>
+                <TouchableOpacity onPress={() => pickImage()}>
 
-                    </View>
+                    {
+                        loadingImage === true ?
+                            <View style={getShadowCircleStyle(10, 10)}>
+                                <Skeleton endColor="warmGray.50" size="220" rounded="full" mt={5} mb={10}/>
+                            </View> :
+                            image ?
+                                <View style={getShadowCircleStyle(10, 10)}>
+                                    <Image mt={5} mb={10} w={220} h={220} source={{uri: image}}
+                                           style={[
+                                               {resizeMode: 'cover'}]}
+                                           borderRadius={110} borderWidth={2} borderColor={'white'}/>
+                                </View> :
+                                <View style={[{
+                                    width: 220,
+                                    height: 220,
+                                    alignSelf: 'center',
+                                    alignItems: 'center'
+                                }, getShadowCircleStyle(10, 10)]} mt={5} mb={10}>
+                                    <View width={'100%'} height={'100%'} bgColor={'white'} alignItems={'center'}
+                                          justifyContent={'center'}
+                                          borderRadius={110} borderWidth={0.5}
+                                          borderColor={"red.200"}>
+                                        <Icon as={Entypo} name="camera" size={20} color={'gray.200'}/>
+                                        <Text fontSize={12} color={Colors.red}>Sube tu foto aquí</Text>
+                                    </View>
+                                </View>
+
+                    }
+                </TouchableOpacity>
+
+                <View style={getShadowCircleStyle(10, 10)}>
+
                 </View>
                 <Image source={bg1} style={{
                     position: 'absolute',

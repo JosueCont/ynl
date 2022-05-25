@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 import {Platform, RefreshControl, SafeAreaView, ScrollView, TouchableOpacity} from "react-native";
 import {getMyGroups} from "../redux/ducks/groupDuck";
 import {useIsFocused} from "@react-navigation/native";
-import profile from '../assets/profile.jpg';
 import {Colors} from "../utils/Colors";
 import {MaterialIcons} from "@expo/vector-icons";
 import ApiApp from "../utils/ApiApp";
@@ -51,6 +50,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const [fullName, setFullName] = useState(null);
 
     const [introStatus, setIntroStatus] = useState(null);
+    const [image, setImage] = useState(null);
 
 
     useEffect(()=>{
@@ -160,11 +160,15 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
     useEffect(() => {
         if (isFocused) {
-            console.log('focused')
-            getGroups()
-            getHome()
+            boot()
         }
     }, [isFocused])
+
+    const boot = async () => {
+        console.log('focused')
+        getGroups()
+        getHome()
+    }
 
 
     const getHome = async () => {
@@ -178,8 +182,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             setLastEmotion1(res.data.data.lastEmotion.child.name)
             setLastEmotion2(res.data.data.lastEmotion.child.child.name)
             setMainFeeling(res.data.data.lastEmotion)
-
-
+            setImage(res.data.data.userInfo.avatar)
             setFullName(res.data.data.userInfo.fullName)
             setLoading(false)
         } catch (e) {
@@ -215,15 +218,37 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                         style={{backgroundColor: 'white'}}
                         tintColor={Colors.red}
                         refreshing={loading}
+                        onRefresh={() => boot()}
                     />
                 }>
                 <View flex={1} alignItems={'center'} justifyContent={'center'} mb={2}>
-                    <View style={getShadowCircleStyle(10, 10)}>
-                        <Image w={220} h={220} source={profile}
-                               style={[
-                                   {resizeMode: 'cover'}]}
-                               borderRadius={110} borderWidth={2} borderColor={'white'}/>
-                    </View>
+                    {
+                        loading === true ?
+                            <View style={getShadowCircleStyle(10, 10)}>
+                                <Skeleton endColor="warmGray.50" size="220" rounded="full" mt={5} mb={10}/>
+                            </View> :
+                            image ?
+                                <View style={getShadowCircleStyle(10, 10)}>
+                                    <Image w={220} h={220} source={image}
+                                           style={[
+                                               {resizeMode: 'cover'}]}
+                                           borderRadius={110} borderWidth={2} borderColor={'white'}/>
+                                </View> :
+                                <View style={[{
+                                    width: 220,
+                                    height: 220,
+                                    alignSelf: 'center',
+                                    alignItems: 'center'
+                                }, getShadowCircleStyle(10, 10)]} mt={5} mb={10}>
+                                    <View width={'100%'} height={'100%'} bgColor={'white'} alignItems={'center'}
+                                          justifyContent={'center'}
+                                          borderRadius={110} borderWidth={0.5}
+                                          borderColor={"red.200"}>
+                                        <Icon as={MaterialIcons} name="person-outline" size={20} color={'gray.200'}/>
+                                    </View>
+                                </View>
+                    }
+
 
                     <Image source={bg1} style={{
                         position: 'absolute',
@@ -235,9 +260,20 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                 </View>
                 <View flex={1} mx={4}>
 
-                    <Text mb={4} fontSize={24} color={Colors.red} textAlign={'center'}>{fullName}</Text>
-                    <Text fontSize={14} color={Colors.red}
-                          textAlign={'center'}>{moment().locale('es').format('ll')}</Text>
+                    {
+                        loading ?
+                            <Skeleton.Text px="10" lines={1} mb={2}/> :
+                            <Text mb={4} fontSize={24} color={Colors.red} textAlign={'center'}>{fullName}</Text>
+
+                    }
+                    {
+                        loading ?
+                            <Skeleton.Text px="10" lines={1}/> :
+                            <Text fontSize={14} color={Colors.red}
+                                  textAlign={'center'}>{moment().locale('es').format('ll')}</Text>
+
+                    }
+
 
                     {
                         loading === true ?

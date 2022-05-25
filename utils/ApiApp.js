@@ -136,9 +136,10 @@ class ApiApp {
     };
 
 
+    upload
     static updatePhoto = (data) => {
         return ApiApp.ApisType(
-            `/person/person/update_pthoto_person/`,
+            `/api/upload`,
             "post",
             data
         );
@@ -162,7 +163,7 @@ class ApiApp {
 
 
     static getProfile = (userId) => {
-        return ApiApp.ApisType(`/api/users/${userId}`, "get");
+        return ApiApp.ApisType(`/api/users/${userId}?populate=avatar`, "get");
     };
 
 
