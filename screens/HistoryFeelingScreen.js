@@ -78,15 +78,15 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
                                 p={3}>
                                 <View flex={1} height={70} alignItems={'center'} justifyContent={'center'}>
                                     <View style={{backgroundColor:'white'}} p={2} borderRadius={40}>
-                                        <Image alt=":)" size="sm" source={{uri:`${apiApp._baseURL}${_.get(ele,'feeling.attributes.parent.data.attributes.parent.data.attributes.icon.data.attributes.url','5F6367')}`}}/>
+                                        <Image alt=":)" size="sm" source={{uri:`${_.get(ele,'feeling.attributes.parent.data.attributes.parent.data.attributes.icon.data.attributes.url','https://app-ynl.s3.us-west-1.amazonaws.com/triste_4a4900f0cd.png')}`}}/>
                                     </View>
                                 </View>
                                 <View flex={2} height={70} mr={1}>
                                     <TouchableOpacity
                                         style={{
                                             flex: 1,
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
+                                            alignItems: 'left',
+                                            justifyContent: 'left',
                                             borderRadius: 10
                                         }}
                                         onPress={() => {

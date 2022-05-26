@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, Text, Stack, Button, Icon} from "native-base";
+import {ScrollView, Text, Stack, Button, Icon, Image} from "native-base";
 import {Colors} from "../utils/Colors";
 import {connect} from "react-redux";
 import {useIsFocused} from "@react-navigation/native";
@@ -14,7 +14,7 @@ import {getShadowCircleStyle} from "../utils/functions";
 const StatisticsScreen = ({authDuck,navigation, ...props}) => {
     const isFocused = useIsFocused();
     const [historyData, setHistoryData] = useState(null)
-    const [activeButton, setActiveButton] = useState(1)
+    const [activeButton, setActiveButton] = useState(2)
     const [countFeeling, setCountFeeling] = useState(null)
     const [dataPie, setDataPie] = useState(null);
 
@@ -25,11 +25,11 @@ const StatisticsScreen = ({authDuck,navigation, ...props}) => {
 
 
 
-    const getCountFeelings=async (userId)=>{
+    const getCountFeelings=async (userId, option=null)=>{
         try{
             let startDate = '2020-01-01',enDate = '2100-01-01';
-            const res = await ApiApp.getUserProgress(userId);
-            console.log('semanal',res.data.data.feelings)
+            const res = await ApiApp.getUserProgress(userId,option);
+            // console.log('semanal',res.data.data.feelings)
             setCountFeeling(res.data.data.feelings)
 
             setDataPie(_.map(res.data.data.feelings, (ele,i)=>{
@@ -54,10 +54,11 @@ const StatisticsScreen = ({authDuck,navigation, ...props}) => {
         try{
             let startDate = '2020-01-01',enDate = '2100-01-01';
             const res = await ApiApp.getHistoryFeelings(startDate,enDate,userId)
+            console.log('dato calendar ==== ',res.data.data)
             let arrayDates  = _.map(res.data.data, (obj)=>{
                 let dataItem = {
                     date: obj.attributes.createdAt,
-                    color: obj.attributes.feeling.data.attributes.color,
+                    color: _.get(obj,'attributes.feeling.data.attributes.parent.data.attributes.parent.data.attributes.color','red'),
                     feeling: obj.attributes.feeling.data,
                 }
 
@@ -71,8 +72,10 @@ const StatisticsScreen = ({authDuck,navigation, ...props}) => {
         }
     }
 
-    const filter=(index)=>{
-        //setActiveButton(index)
+    const filter=(option)=>{
+        // 1 - la semana anterior, 2 - la semana en curso, 3 el mes
+        getCountFeelings(authDuck.user.id, option)
+        setActiveButton(option)
     }
 
     return (
@@ -83,14 +86,14 @@ const StatisticsScreen = ({authDuck,navigation, ...props}) => {
                     md: 0
                 }} size="sm">
                     <Button onPress={()=>{
-                        filter(0)
-                    }} variant={activeButton===0?'solid':'outline'} >Semana anterior</Button>
-                    <Button onPress={()=>{
                         filter(1)
-                    }} variant={activeButton===1?'solid':'outline'}>Semana</Button>
+                    }} variant={activeButton===1?'solid':'outline'} >Semana anterior</Button>
                     <Button onPress={()=>{
                         filter(2)
-                    }} variant={activeButton===2?'solid':'outline'}>Mes</Button>
+                    }} variant={activeButton===2?'solid':'outline'}>Semana</Button>
+                    <Button onPress={()=>{
+                        filter(3)
+                    }} variant={activeButton===3?'solid':'outline'}>Mes</Button>
                 </Button.Group>
             </View>
             <View style={{...getShadowCircleStyle(0, 10), backgroundColor:'white',paddingTop:10, marginEnd:20, marginStart:20, marginTop:20}}
@@ -99,7 +102,9 @@ const StatisticsScreen = ({authDuck,navigation, ...props}) => {
                     {
                         countFeeling && countFeeling.map((ele,i)=>{
                             return  <View key={i}>
-                                <Icon  as={MaterialIcons} color={`#${ele.color}`} name={'mood'} size={'3xl'} />
+                                {/*<Icon  as={MaterialIcons} color={`#${ele.color}`} name={'mood'} size={'3xl'} />*/}
+                                <Image source={{uri:ele.icon}} width={30} height={30}/>
+
                                 <Text textAlign={'center'} color={`#${ele.color}`} fontSize={16} style={{display:'block'}}>{ele.count}</Text>
                             </View>
                         })
