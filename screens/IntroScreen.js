@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {Dimensions, TouchableOpacity, View} from 'react-native';
+import React, {useState} from 'react';
+import {TouchableOpacity, View} from 'react-native';
 import {Ionicons, MaterialIcons} from "@expo/vector-icons";
 import AppIntroSlider from 'react-native-app-intro-slider';
 import {Icon} from 'native-base';
@@ -8,45 +8,26 @@ import Intro1Screen from "./Intro/Intro1Screen";
 import Intro2Screen from "./Intro/Intro2Screen";
 import Intro3Screen from "./Intro/Intro3Screen";
 import Intro4Screen from "./Intro/Intro4Screen";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import {Colors} from "../utils/Colors";
 import {connect} from "react-redux";
 
 const IntroScreen = ({navigation, authDuck}) => {
 
-    const {width, height} = Dimensions.get('window');
-
     const [slides, setSlides] = useState([{screen: 0}, {screen: 1}, {screen: 2}, {screen: 3}])
 
-    useEffect(() => {
-        introStatus();
-    }, [])
 
     const nextScreen = async () => {
         try {
-            await AsyncStorage.setItem('@intro', '1');
             if (authDuck.emotionStatus === 0) {
                 navigation.navigate('RouletteStep1Screen', {from: 'intro'})
             } else {
                 navigation.navigate('HomeScreen')
             }
-
         } catch (e) {
             console.log(e)
         }
     }
 
-
-    const introStatus = async () => {
-        // try {
-        //     let intro = await AsyncStorage.getItem('@intro');
-        //     if (intro) {
-        //         navigation.navigate('PreLogin');
-        //     }
-        // } catch (e) {
-        //     console.log(e);
-        // }
-    }
 
     const renderItem = ({item, index}) => {
         if (item.screen === 0) {

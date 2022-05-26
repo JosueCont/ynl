@@ -57,6 +57,8 @@ export let emotionStatusAction = (userId) => async (dispatch) => {
     try {
         dispatch({type: START});
         let response = await ApiApp.getEmotionStatus(userId);
+
+        console.log(response.data.data)
         dispatch({type: SUCCESS, payload: {emotionStatus: response.data.data.length}});
     } catch (e) {
         console.log(e)

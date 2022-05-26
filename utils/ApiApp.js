@@ -3,8 +3,13 @@ import _ from "lodash";
 import moment from "moment";
 
 class ApiApp {
-    static ApisType = (url, method = "post", params = {}) => {
+    static ApisType = (url, method = "post", params = {}, formdata = false) => {
         console.log('url:', url, method, params)
+        if (formdata) {
+            APIKit.defaults.headers.common['Content-type'] = 'multipart/form-data';
+
+        }
+
         switch (method) {
             case "post":
                 return APIKit.post(url, params);
@@ -136,12 +141,12 @@ class ApiApp {
     };
 
 
-    upload
+
     static updatePhoto = (data) => {
         return ApiApp.ApisType(
             `/api/upload`,
             "post",
-            data
+            data, true
         );
     };
 

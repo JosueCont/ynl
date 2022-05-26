@@ -169,7 +169,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                 name: uri.split('/').pop(),
             };
             var formData = new FormData();
-            formData.append('files', photo);
+            formData.append('files', uri);
             formData.append('ref', 'plugin::users-permissions.user')
             formData.append('refId', authDuck.user.id)
             formData.append('field', 'avatar')

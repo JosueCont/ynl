@@ -9,8 +9,9 @@ import {saveEmotion} from "../redux/ducks/feelingsDuck";
 import {Colors} from "../utils/Colors";
 import ScreenBaseV1 from "./Components/ScreenBaseV1";
 import _ from "lodash";
+import {emotionStatusAction} from "../redux/ducks/authDuck";
 
-const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck}) => {
+const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionStatusAction}) => {
 
     const [loading, setLoading] = useState(false)
 
@@ -33,6 +34,7 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck}) => {
             let res = await saveEmotion({data})
             if (res) {
 
+                await emotionStatusAction(authDuck.user.id)
                 navigation.reset({
                     index: 0,
                     routes: [{name: 'HomeScreen'}],
@@ -124,4 +126,4 @@ const styles = {
 };
 
 
-export default connect(mapState, {saveEmotion})(RouletteStep4Screen);
+export default connect(mapState, {saveEmotion, emotionStatusAction})(RouletteStep4Screen);

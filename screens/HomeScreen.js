@@ -11,7 +11,6 @@ import bg1 from '../assets/bg1.png'
 import _ from 'lodash';
 import moment from 'moment';
 import {getShadowCircleStyle} from "../utils/functions";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import 'moment/locale/es';
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
@@ -49,11 +48,29 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const [days, setDays] = useState([]);
     const [fullName, setFullName] = useState(null);
 
-    const [introStatus, setIntroStatus] = useState(null);
+    const [intro, setIntro] = useState(null);
     const [image, setImage] = useState(null);
 
 
-    useEffect(()=>{
+    useEffect(() => {
+
+        console.log(authDuck.emotionStatus)
+        if (intro === false) {
+            navigation.navigate('IntroScreen')
+        } else if (authDuck.emotionStatus === 0) {
+            navigation.navigate('RouletteStep1Screen')
+        }
+
+    }, [authDuck.emotionStatus, intro])
+
+    useEffect(() => {
+        if (isFocused) {
+            boot()
+        }
+    }, [isFocused])
+
+
+    useEffect(() => {
         registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
 
         // This listener is fired whenever a notification is received while the app is foregrounded
@@ -70,24 +87,82 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             Notifications.removeNotificationSubscription(notificationListener.current);
             Notifications.removeNotificationSubscription(responseListener.current);
         };
-    },[])
+    }, [])
 
 
-    useEffect(()=>{
-        if(expoPushToken){
+    useEffect(() => {
+        if (expoPushToken) {
             sendPushTokenToBack()
         }
-    },[expoPushToken])
+    }, [expoPushToken])
+
+    const boot = async () => {
+        console.log('focused')
+        getGroups()
+        getHome()
+    }
+
+
+    // const getIntroStatus = async () => {
+    //     try {
+    //         let intro = await AsyncStorage.getItem('@intro');
+    //         if (!intro) {
+    //             intro = 0;
+    //         }
+    //
+    //         setIntroStatus(parseInt(intro))
+    //     } catch (e) {
+    //         console.log(e);
+    //     }
+    // }
+
+    const getHome = async () => {
+        try {
+            setLoading(true)
+
+            const res = await ApiApp.getHomeData(authDuck.user.id)
+
+            setDays(res.data.data.days)
+            setLastEmotion(res.data.data.lastEmotion.name)
+            setLastEmotion1(res.data.data.lastEmotion.child.name)
+            setLastEmotion2(res.data.data.lastEmotion.child.child.name)
+            setMainFeeling(res.data.data.lastEmotion)
+            setImage(res.data.data.userInfo.avatar)
+            setFullName(res.data.data.userInfo.fullName)
+            setIntro(res.data.data.userInfo.intro)
+            setLoading(false)
+        } catch (e) {
+            setLoading(false)
+            console.log(e)
+        } finally {
+
+        }
+    }
+
+    const getGroups = async () => {
+        try {
+            setLoading(true)
+            const response = await ApiApp.getMyGroups(authDuck.user.id)
+            setGroups(response.data.data)
+            setLoading(false)
+        } catch (e) {
+            setLoading(false)
+            console.log(e, 61)
+        } finally {
+
+        }
+
+    }
 
 
     /**
      * Enviamos el pushtoken al backend
      */
-    const sendPushTokenToBack=async ()=>{
-        try{
+    const sendPushTokenToBack = async () => {
+        try {
             let data = {
-                "pushToken":expoPushToken,
-                "platform":Platform.OS,
+                "pushToken": expoPushToken,
+                "platform": Platform.OS,
                 "provider":"expo",
                 "users_permissions_user":authDuck.user.id
             }
@@ -129,83 +204,6 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
         }
 
         return token;
-    }
-
-    useEffect(() => {
-        getIntroStatus()
-    }, [])
-
-    const getIntroStatus = async () => {
-        try {
-            let intro = await AsyncStorage.getItem('@intro');
-            if (!intro) {
-                intro = 0;
-            }
-
-            setIntroStatus(parseInt(intro))
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-
-    useEffect(() => {
-        if (introStatus === 0) {
-            navigation.navigate('IntroScreen')
-        } else if (authDuck.emotionStatus === 0) {
-            navigation.navigate('RouletteStep1Screen')
-        }
-
-    }, [authDuck.emotionStatus])
-
-    useEffect(() => {
-        if (isFocused) {
-            boot()
-        }
-    }, [isFocused])
-
-    const boot = async () => {
-        console.log('focused')
-        getGroups()
-        getHome()
-    }
-
-
-    const getHome = async () => {
-        try {
-            setLoading(true)
-
-            const res = await ApiApp.getHomeData(authDuck.user.id)
-
-            setDays(res.data.data.days)
-            setLastEmotion(res.data.data.lastEmotion.name)
-            setLastEmotion1(res.data.data.lastEmotion.child.name)
-            setLastEmotion2(res.data.data.lastEmotion.child.child.name)
-            setMainFeeling(res.data.data.lastEmotion)
-            setImage(res.data.data.userInfo.avatar)
-            setFullName(res.data.data.userInfo.fullName)
-            setLoading(false)
-        } catch (e) {
-            setLoading(false)
-            console.log(e)
-        } finally {
-
-        }
-    }
-
-    const getGroups = async () => {
-        try {
-            setLoading(true)
-            const response = await ApiApp.getMyGroups(authDuck.user.id)
-            setGroups(response.data.data)
-            setLoading(false)
-        } catch (e) {
-            setLoading(false)
-            console.log(e, 61)
-        } finally {
-
-        }
-
     }
 
 
