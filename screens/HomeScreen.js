@@ -34,7 +34,6 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const responseListener = useRef();
 
 
-
     const [feelings, setFeelings] = useState(null);
     const isFocused = useIsFocused();
     const [visible, setVisible] = useState(true);
@@ -97,9 +96,21 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     }, [expoPushToken])
 
     const boot = async () => {
-        console.log('focused')
-        getGroups()
-        getHome()
+        try {
+            setLoading(true)
+            console.log('focused')
+            await getGroups()
+            await getHome()
+
+
+        } catch (ex) {
+
+        } finally {
+            setTimeout(() => {
+                setLoading(false)
+            }, 100)
+        }
+
     }
 
 
@@ -118,7 +129,6 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
     const getHome = async () => {
         try {
-            setLoading(true)
 
             const res = await ApiApp.getHomeData(authDuck.user.id)
 
@@ -130,9 +140,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             setImage(res.data.data.userInfo.avatar)
             setFullName(res.data.data.userInfo.fullName)
             setIntro(res.data.data.userInfo.intro)
-            setLoading(false)
         } catch (e) {
-            setLoading(false)
             console.log(e)
         } finally {
 
@@ -141,12 +149,10 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
     const getGroups = async () => {
         try {
-            setLoading(true)
             const response = await ApiApp.getMyGroups(authDuck.user.id)
             setGroups(response.data.data)
             setLoading(false)
         } catch (e) {
-            setLoading(false)
             console.log(e, 61)
         } finally {
 
@@ -163,14 +169,14 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             let data = {
                 "pushToken": expoPushToken,
                 "platform": Platform.OS,
-                "provider":"expo",
-                "users_permissions_user":authDuck.user.id
+                "provider": "expo",
+                "users_permissions_user": authDuck.user.id
             }
             console.log(data)
             const res = await ApiApp.sendPushToken({data})
-            console.log('sucess=====>',res)
-        }catch (e){
-            console.log('error=====>',e)
+            console.log('sucess=====>', res)
+        } catch (e) {
+            console.log('error=====>', e)
         }
     }
 
@@ -178,10 +184,10 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     async function registerForPushNotificationsAsync() {
         let token;
         if (Device.isDevice) {
-            const { status: existingStatus } = await Notifications.getPermissionsAsync();
+            const {status: existingStatus} = await Notifications.getPermissionsAsync();
             let finalStatus = existingStatus;
             if (existingStatus !== 'granted') {
-                const { status } = await Notifications.requestPermissionsAsync();
+                const {status} = await Notifications.requestPermissionsAsync();
                 finalStatus = status;
             }
             if (finalStatus !== 'granted') {
@@ -312,14 +318,13 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                 borderRadius={30}
                                 p={3}>
                                 <View flex={1} height={70} alignItems={'center'} justifyContent={'center'}>
+
                                     {
-                                        (mainFeeling && mainFeeling.icon) ?
-                                            <Image alt=":)" size="sm"
-                                                   source={{uri: mainFeeling.icon.url}}/>
-                                            :
-                                            <Icon color={'#' + _.get(mainFeeling, 'color', '000000')} as={MaterialIcons}
-                                                  name={'mood'} size={'6xl'}/>
+                                        _.has(mainFeeling, 'icon.url') &&
+                                        <Image alt=":)" size="sm"
+                                               source={{uri: mainFeeling.icon.url}}/>
                                     }
+
 
                                 </View>
                                 <View flex={1} height={70} mr={1}>
