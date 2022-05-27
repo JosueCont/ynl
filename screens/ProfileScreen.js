@@ -48,11 +48,14 @@ const ProfileScreen = ({authDuck, navigation}) => {
 
     const getProfileFunction = async () => {
         try {
+            setLoading(true)
             const response = await ApiApp.getProfile(authDuck.user.id)
             console.log(response.data)
             setValues(response)
         } catch (ex) {
             console.log(ex)
+        } finally {
+            setLoading(false)
         }
     }
 

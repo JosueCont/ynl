@@ -32,19 +32,17 @@ const CustomDrawerContent = ({navigation, navigationDuck, accountDuck, logOutAct
                 </View>
                 <View flex={1} alignItems={'center'}>
                     <TouchableOpacity onPress={() => {
-                        navigation.closeDrawer();
                         navigation.navigate('ProfileScreen')
                     }}>
                         <Text color={'white'} fontSize={20} my={2}>Perfil</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {
-                        navigation.closeDrawer();
+
                         navigation.navigate('GroupsScreen')
                     }}>
                         <Text color={'white'} fontSize={20} my={2}>Mis grupos</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {
-                        navigation.closeDrawer();
                         navigation.navigate('StatisticsScreen')
 
                     }}>
