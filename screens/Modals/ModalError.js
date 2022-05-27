@@ -1,8 +1,8 @@
 import React from "react";
 import {Alert, Modal, TouchableOpacity} from "react-native";
 import {styles} from "./ModalStyleSheet";
-import {Icon, Text, View} from "native-base";
-import {MaterialIcons} from "@expo/vector-icons";
+import {Button, Icon, Text, View} from "native-base";
+import {AntDesign} from "@expo/vector-icons";
 
 const ModalError = ({visible, setVisible, text = 'Ocurrio un error, intentalo mÃ¡s tarde'}) => {
     return (
@@ -17,18 +17,18 @@ const ModalError = ({visible, setVisible, text = 'Ocurrio un error, intentalo mÃ
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-
-                    <View width={'100%'} borderTopRadius={20} h={100} bgColor={'red.600'} alignItems={'center'}
-                          justifyContent={'center'}>
-                        <Icon as={MaterialIcons} name={'error-outline'} color={'white'} size={'6xl'}/>
+                    <View px={30} pt={10} width={'100%'} alignItems={'center'} justifyContent={'center'}>
+                        <Icon as={AntDesign} name={'exclamationcircleo'} color={'red.500'} size={'6xl'}/>
                         <TouchableOpacity style={{position: 'absolute', right: 10, top: 15}}
                                           onPress={() => setVisible(false)}>
-                            <Icon as={MaterialIcons} name={'close'} color={'gray'} size={'xl'}></Icon>
+                            <Icon as={AntDesign} name={'close'} color={'gray'} size={'md'}></Icon>
                         </TouchableOpacity>
                     </View>
-                    <View p={30}>
-                        <Text textAlign={'center'} fontSize={22}>Aviso</Text>
+                    <View px={30} pt={10} mb={2}>
+                        <Text textAlign={'center'} fontSize={20} style={{fontWeight: 'bold'}}>Aviso</Text>
                         <Text fontSize={18} style={styles.modalText}>{text}</Text>
+                        <Button size={'xs'} colorScheme={'orange'} onPress={() => setVisible(false)}><Text size={'md'}
+                                                                                                           color={'white'}>Entendido</Text></Button>
                     </View>
                 </View>
             </View>

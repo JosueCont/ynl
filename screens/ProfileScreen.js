@@ -66,7 +66,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                 gender: gender
             }
             const response = await ApiApp.updateProfile(authDuck.user.id, data)
-            setValues(response)
+
             toast.show({
                 duration: 2000,
                 render: () => {
@@ -75,6 +75,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                     </Box>;
                 }
             });
+            setValues(response)
         } catch (ex) {
             toast.show({
                 duration: 2000,
@@ -89,7 +90,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
         }
     }
 
-    const setValues = (response) => {
+    const setValues = async (response) => {
         setName(response.data.firstName)
         setLastName(response.data.lastName)
         setEmail(response.data.email)
@@ -192,8 +193,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                     onRefresh={() => getProfileFunction()}
                 />
             }
-            style={{flex: 1}}
-            contentContainerStyle={{backgroundColor: Colors.white}}>
+            contentContainerStyle={{flexGrow: 1, backgroundColor: Colors.white}}>
 
             <View justifyContent={'center'} alignItems={'center'}>
                 <TouchableOpacity onPress={() => pickImage()}>

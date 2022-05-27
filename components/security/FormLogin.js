@@ -184,8 +184,6 @@ export default (props) => {
                             <Text textAlign={'center'} color={Colors.red} fontSize={42}>¡Hola!</Text>
                             <Text textAlign={'center'} color={Colors.red} fontSize={24}>¿Cómo te sientes?</Text>
 
-                            <Text textAlign={'center'} textDecorationLine={'underline'} fontSize={12}>Iniciar
-                                sesión</Text>
 
                             <VStack space={3} mt="5">
                                 <FormControl isInvalid={errors.email} mb={2}>
@@ -231,7 +229,7 @@ export default (props) => {
                                 <Button mt={2} mb={2} isLoading={props.loading} isLoadingText={'Iniciando'}
                                         onPress={handleSubmit}
                                         colorScheme='orange'>
-                                    Iniciar
+                                    Iniciar sesión
                                 </Button>
                                 <Link onPress={() => navigation.navigate('PasswordRecoveryScreen')} mb={4} _text={{
                                     fontSize: "xs",

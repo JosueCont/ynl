@@ -4,7 +4,7 @@ import {styles} from "./ModalStyleSheet";
 import {Button, Icon, Text, View} from "native-base";
 import {AntDesign} from "@expo/vector-icons";
 
-const ModalError = ({visible, setVisible}) => {
+const ModalInfo = ({visible, setVisible}) => {
     return (
         <Modal
             animationType={'slide'}
@@ -18,7 +18,7 @@ const ModalError = ({visible, setVisible}) => {
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
                     <View px={30} pt={10} width={'100%'} alignItems={'center'} justifyContent={'center'}>
-                        <Icon as={AntDesign} name={'checkcircleo'} color={'green.500'} size={'6xl'}/>
+                        <Icon as={AntDesign} name={'infocirlceo'} color={'blue.500'} size={'6xl'}/>
                         <TouchableOpacity style={{position: 'absolute', right: 10, top: 15}}
                                           onPress={() => setVisible(false)}>
                             <Icon as={AntDesign} name={'close'} color={'gray'} size={'md'}></Icon>
@@ -27,8 +27,8 @@ const ModalError = ({visible, setVisible}) => {
                     <View px={30} pt={10} mb={2}>
                         <Text textAlign={'center'} fontSize={20} style={{fontWeight: 'bold'}}>Aviso</Text>
                         <Text fontSize={18} style={styles.modalText}>Registro exitoso</Text>
-                        <Button size={'xs'} colorScheme={'orange'} onPress={() => setVisible(false)}><Text size={'md'}
-                                                                                                           color={'white'}>Entendido</Text></Button>
+                        <Button size={'xs'} colorScheme={'orange'}><Text size={'md'}
+                                                                         color={'white'}>Entendido</Text></Button>
                     </View>
                 </View>
             </View>
@@ -37,4 +37,4 @@ const ModalError = ({visible, setVisible}) => {
     );
 };
 
-export default ModalError;
+export default ModalInfo;
