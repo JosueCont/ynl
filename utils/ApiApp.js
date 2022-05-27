@@ -149,7 +149,8 @@ class ApiApp {
             "post",
             data, {
                 headers: {
-                    'Content-type': 'multipart/form-data'
+                    'Content-type': `multipart/form-data;`,
+
                 }
             }
         );

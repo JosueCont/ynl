@@ -23,6 +23,7 @@ import ModalPasswordUpdate from "./Modals/ModalPasswordUpdate";
 import {getShadowCircleStyle} from "../utils/functions";
 import bg1 from "../assets/bg1.png";
 import * as ImagePicker from 'expo-image-picker';
+import mime from 'react-native-mime-types'
 
 
 const ProfileScreen = ({authDuck, navigation}) => {
@@ -171,6 +172,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
             var photo = {
                 uri: imagePickerResult.uri,
                 name: imagePickerResult.uri.split('/').pop(),
+                type: mime.lookup(imagePickerResult.uri),
             };
 
 
@@ -184,7 +186,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
             const response = await ApiApp.updatePhoto(formData)
             console.log(response.data)
         } catch (ex) {
-            console.log(ex.response)
+            console.log(ex)
         }
 
     }

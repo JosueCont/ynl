@@ -122,6 +122,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
             const res = await ApiApp.getHomeData(authDuck.user.id)
 
+            console.log(res.data.data.userInfo)
             setDays(res.data.data.days)
             setLastEmotion(res.data.data.lastEmotion.name)
             setLastEmotion1(res.data.data.lastEmotion.child.name)
