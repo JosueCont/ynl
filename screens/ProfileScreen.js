@@ -23,7 +23,7 @@ import ModalPasswordUpdate from "./Modals/ModalPasswordUpdate";
 import {getShadowCircleStyle} from "../utils/functions";
 import bg1 from "../assets/bg1.png";
 import * as ImagePicker from 'expo-image-picker';
-import {imageToBlob} from "react-native-image-to-blob";
+
 
 const ProfileScreen = ({authDuck, navigation}) => {
 
@@ -153,7 +153,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
 
         } else {
 
-            updatePhotoFunction(result.uri).then((response) => {
+            updatePhotoFunction(result).then((response) => {
                 setImage(result.uri);
                 setLoadingImage(false)
             }).catch((error) => {
@@ -165,19 +165,18 @@ const ProfileScreen = ({authDuck, navigation}) => {
 
     };
 
-    const updatePhotoFunction = async (uri) => {
+    const updatePhotoFunction = async (imagePickerResult) => {
         try {
 
-            // var photo = {
-            //     uri: uri,
-            //     type: mime.lookup(uri),
-            //     name: uri.split('/').pop(),
-            // };
-            let formData = new FormData();
+            var photo = {
+                uri: imagePickerResult.uri,
+                name: imagePickerResult.uri.split('/').pop(),
+            };
 
-            const imageFile = await imageToBlob(uri);
 
-            formData.append('files', imageFile);
+            const formData = new FormData();
+
+            formData.append('files', photo);
             formData.append('ref', 'plugin::users-permissions.user')
             formData.append('refId', authDuck.user.id)
             formData.append('field', 'avatar')
@@ -185,7 +184,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
             const response = await ApiApp.updatePhoto(formData)
             console.log(response.data)
         } catch (ex) {
-            console.log(ex)
+            console.log(ex.response)
         }
 
     }
