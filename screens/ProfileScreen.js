@@ -100,7 +100,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
         setLastName(response.data.lastName)
         setEmail(response.data.email)
         setGender(response.data.gender)
-        setImage(response.data.avatar.url)
+        setImage(response.data.avatar.formats.small.url)
     }
 
     const updatePasswordFunction = async (currentPassword, newPassword, confirmNewPassword) => {
@@ -113,7 +113,6 @@ const ProfileScreen = ({authDuck, navigation}) => {
             }
 
             const response = await ApiApp.updatePassword(data)
-            console.log(response.data)
             setModalPasswordUpdateVisible(false)
             toast.show({
                 duration: 2000,
@@ -155,7 +154,6 @@ const ProfileScreen = ({authDuck, navigation}) => {
         } else {
 
             updatePhotoFunction(result).then((response) => {
-                setImage(result.uri);
                 setLoadingImage(false)
             }).catch((error) => {
                 setLoadingImage(false)
@@ -184,7 +182,15 @@ const ProfileScreen = ({authDuck, navigation}) => {
             formData.append('field', 'avatar')
 
             const response = await ApiApp.updatePhoto(formData)
-            console.log(response.data)
+
+            let data = {
+                image: response.data[0].id
+            }
+
+            const responseSub = await ApiApp.updateProfile(authDuck.user.id, data)
+
+            await getProfileFunction()
+
         } catch (ex) {
             console.log(ex)
         }

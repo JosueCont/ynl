@@ -128,7 +128,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             setLastEmotion1(res.data.data.lastEmotion.child.name)
             setLastEmotion2(res.data.data.lastEmotion.child.child.name)
             setMainFeeling(res.data.data.lastEmotion)
-            setImage(res.data.data.userInfo.avatar)
+            setImage(res.data.data.userInfo.avatar.formats.small.url)
             setFullName(res.data.data.userInfo.fullName)
             setIntro(res.data.data.userInfo.intro)
         } catch (e) {
@@ -224,7 +224,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                             </View> :
                             image ?
                                 <View style={getShadowCircleStyle(10, 10)}>
-                                    <Image w={220} h={220} source={image}
+                                    <Image w={220} h={220} source={{uri: image}}
                                            style={[
                                                {resizeMode: 'cover'}]}
                                            borderRadius={110} borderWidth={2} borderColor={'white'}/>
