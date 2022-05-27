@@ -23,7 +23,7 @@ import ModalPasswordUpdate from "./Modals/ModalPasswordUpdate";
 import {getShadowCircleStyle} from "../utils/functions";
 import bg1 from "../assets/bg1.png";
 import * as ImagePicker from 'expo-image-picker';
-
+import {imageToBlob} from "react-native-image-to-blob";
 
 const ProfileScreen = ({authDuck, navigation}) => {
 
@@ -52,10 +52,11 @@ const ProfileScreen = ({authDuck, navigation}) => {
             const response = await ApiApp.getProfile(authDuck.user.id)
             console.log(response.data)
             setValues(response)
+            setLoading(false)
         } catch (ex) {
             console.log(ex)
         } finally {
-            setLoading(false)
+
         }
     }
 
@@ -98,7 +99,6 @@ const ProfileScreen = ({authDuck, navigation}) => {
         setLastName(response.data.lastName)
         setEmail(response.data.email)
         setGender(response.data.gender)
-        console.log(response.data)
         setImage(response.data.avatar.url)
     }
 
@@ -152,6 +152,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
             setLoadingImage(false)
 
         } else {
+
             updatePhotoFunction(result.uri).then((response) => {
                 setImage(result.uri);
                 setLoadingImage(false)
@@ -167,13 +168,16 @@ const ProfileScreen = ({authDuck, navigation}) => {
     const updatePhotoFunction = async (uri) => {
         try {
 
-            var photo = {
-                uri: uri,
-                type: 'image/jpeg',
-                name: uri.split('/').pop(),
-            };
-            var formData = new FormData();
-            formData.append('files', uri);
+            // var photo = {
+            //     uri: uri,
+            //     type: mime.lookup(uri),
+            //     name: uri.split('/').pop(),
+            // };
+            let formData = new FormData();
+
+            const imageFile = await imageToBlob(uri);
+
+            formData.append('files', imageFile);
             formData.append('ref', 'plugin::users-permissions.user')
             formData.append('refId', authDuck.user.id)
             formData.append('field', 'avatar')
@@ -181,10 +185,11 @@ const ProfileScreen = ({authDuck, navigation}) => {
             const response = await ApiApp.updatePhoto(formData)
             console.log(response.data)
         } catch (ex) {
-            console.log(ex.response.data)
+            console.log(ex)
         }
 
     }
+
 
     return (
         <ScrollView

@@ -3,16 +3,18 @@ import _ from "lodash";
 import moment from "moment";
 
 class ApiApp {
-    static ApisType = (url, method = "post", params = {}, formdata = false) => {
+    static ApisType = (url, method = "post", params = {}, formdata = null) => {
         console.log('url:', url, method, params)
-        if (formdata) {
-            APIKit.defaults.headers.common['Content-type'] = 'multipart/form-data';
 
-        }
 
         switch (method) {
             case "post":
-                return APIKit.post(url, params);
+                if (formdata) {
+                    return APIKit.post(url, params, formdata);
+                } else {
+                    return APIKit.post(url, params);
+                }
+
                 break;
             case "put":
                 return APIKit.put(url, params);
@@ -30,7 +32,7 @@ class ApiApp {
     };
 
 
-    static sendPushToken=(data)=>{
+    static sendPushToken = (data) => {
         return ApiApp.ApisType(`/api/push-tokens`, 'post', data)
     }
 
@@ -63,10 +65,10 @@ class ApiApp {
     }
 
     static loginWithLinked = (access_token) => {
-        return ApiApp.ApisType(`/api/auth/linkedin/callback?access_token=${access_token}`, 'get')        
+        return ApiApp.ApisType(`/api/auth/linkedin/callback?access_token=${access_token}`, 'get')
     }
 
-    static loginWithLinkedData = (access_token)=>{
+    static loginWithLinkedData = (access_token) => {
         return APIKit.get(`https://api.linkedin.com/v2/me?oauth2_access_token=${access_token}`)
     }
 
@@ -141,12 +143,15 @@ class ApiApp {
     };
 
 
-
     static updatePhoto = (data) => {
         return ApiApp.ApisType(
-            `/api/upload`,
+            `/api/upload/`,
             "post",
-            data, true
+            data, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
         );
     };
 
@@ -187,17 +192,18 @@ class ApiApp {
      * Estadisticas
      */
 
-    static getHistoryFeelings = async (startDate, endDate, userId)=>{
+    static getHistoryFeelings = async (startDate, endDate, userId) => {
         return ApiApp.ApisType(`/api/feeling-records?populate[feeling][populate][parent][populate][parent][populate][icon]=*&filters[createdAt][$gte]=${startDate}&filters[createdAt][$lt]=${endDate}&filters[user][id]=${userId}`, "get");
     }
 
-    static getUserProgress= async (userID='', option='')=>{
+    static getUserProgress = async (userID = '', option = '') => {
         console.log(`/api/progress/user_progress?userId=${userID}&option=${option}`)
-        return ApiApp.ApisType(`/api/progress/user_progress?userId=${userID}&option=${option}`,'get');
+        return ApiApp.ApisType(`/api/progress/user_progress?userId=${userID}&option=${option}`, 'get');
     }
 
     static _baseURL = baseURL;
 
 
 }
+
 export default ApiApp;

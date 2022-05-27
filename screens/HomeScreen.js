@@ -102,30 +102,20 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             await getGroups()
             await getHome()
 
-
-        } catch (ex) {
-
-        } finally {
             setTimeout(() => {
                 setLoading(false)
-            }, 100)
+            }, 200)
+        } catch (ex) {
+            setTimeout(() => {
+                setLoading(false)
+            }, 200)
+        } finally {
+
         }
 
     }
 
 
-    // const getIntroStatus = async () => {
-    //     try {
-    //         let intro = await AsyncStorage.getItem('@intro');
-    //         if (!intro) {
-    //             intro = 0;
-    //         }
-    //
-    //         setIntroStatus(parseInt(intro))
-    //     } catch (e) {
-    //         console.log(e);
-    //     }
-    // }
 
     const getHome = async () => {
         try {
