@@ -177,17 +177,17 @@ const ProfileScreen = ({authDuck, navigation}) => {
             const formData = new FormData();
 
             formData.append('files', photo);
-            formData.append('ref', 'plugin::users-permissions.user')
+            formData.append('ref', 'api::users-permissions.user')
             formData.append('refId', authDuck.user.id)
             formData.append('field', 'avatar')
 
             const response = await ApiApp.updatePhoto(formData)
 
-            let data = {
-                image: response.data[0].id
-            }
+            // let data = {
+            //     avatar: response.data[0].id
+            // }
 
-            const responseSub = await ApiApp.updateProfile(authDuck.user.id, data)
+            // const responseSub = await ApiApp.updateProfile(authDuck.user.id, data)
 
             await getProfileFunction()
 

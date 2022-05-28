@@ -135,7 +135,7 @@ class ApiApp {
     };
 
     static updateProfile = (userId, data) => {
-        return ApiApp.ApisType(`/api/users/${userId}`, "put", data);
+        return ApiApp.ApisType(`/api/users/${userId}`, "post", data);
     };
 
     static updatePassword = (data) => {
