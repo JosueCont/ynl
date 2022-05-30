@@ -40,11 +40,11 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
 
 
     const getCountFeelings = async (userId, option = null) => {
+        setLoading(true)
         try {
 
-            let startDate = '2020-01-01', enDate = '2100-01-01';
             const res = await ApiApp.getUserProgress(userId, option);
-            // console.log('semanal',res.data.data.feelings)
+            console.log('semanal',res.data.data.feelings)
             setCountFeeling(res.data.data.feelings)
 
             setDataPie(_.map(res.data.data.feelings, (ele, i) => {
@@ -60,7 +60,10 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
 
         } catch (e) {
             setCountFeeling(null)
-            console.log('e', e)
+
+            console.log('error===>', e)
+        }finally {
+            setLoading(false)
         }
     }
 
@@ -69,7 +72,6 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
         try {
             let startDate = '2020-01-01', enDate = '2100-01-01';
             const res = await ApiApp.getHistoryFeelings(startDate, enDate, userId)
-            console.log('dato calendar ==== ', res.data.data)
             let arrayDates = _.map(res.data.data, (obj) => {
                 let dataItem = {
                     date: obj.attributes.createdAt,
@@ -134,7 +136,7 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
                             <Stack direction="row" mb="2.5" mt="1.5" space={4} p={2}>
 
                                 {
-                                    countFeeling.map((ele, i) => {
+                                    countFeeling && countFeeling.map((ele, i) => {
                                         return (
                                             <View key={i}>
                                                 <Image source={{uri: ele.icon}} width={30} height={30} mb={1}/>
