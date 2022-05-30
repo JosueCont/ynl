@@ -39,6 +39,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
     const [loadingImage, setLoadingImage] = useState(null);
 
     const [image, setImage] = useState(null);
+    const [shareMyInfo, setShareMyInfo] = useState(null);
 
 
     useEffect(() => {
@@ -68,7 +69,8 @@ const ProfileScreen = ({authDuck, navigation}) => {
                 firstName: name,
                 lastName: lastName,
                 email: email,
-                gender: gender
+                gender: gender,
+                shareMyData: shareMyInfo
             }
             const response = await ApiApp.updateProfile(authDuck.user.id, data)
 
@@ -101,6 +103,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
         setEmail(response.data.email)
         setGender(response.data.gender)
         setImage(response.data.avatar.formats.small.url)
+        setShareMyInfo(response.data.shareMyData === true ? 1 : 0)
     }
 
     const updatePasswordFunction = async (currentPassword, newPassword, confirmNewPassword) => {
@@ -297,7 +300,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                         {/*<Input size={'2xl'} height={50} mb={6} placeholder={'Confirmar contraseña'} borderRadius={20}*/}
                         {/*       placeholderTextColor={Colors.red} textAlign={'center'}/>*/}
                         <View mb={8}>
-                            <Text textAlign={'center'} fontSize={24} color={Colors.red} mb={4}>Género</Text>
+                            <Text textAlign={'center'} fontSize={20} color={Colors.red} mb={4}>Género</Text>
                             <View flexDir={'row'} justifyContent={'space-between'} px={20}>
                                 <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
                                           value="danger" colorScheme="orange" isChecked={gender === 0 ? true : false}
@@ -317,6 +320,34 @@ const ProfileScreen = ({authDuck, navigation}) => {
                                               }
                                           }}>
                                     <Text color={Colors.red} fontSize={12}>Masculino</Text>
+                                </Checkbox>
+                            </View>
+
+                        </View>
+
+                        <View mb={8}>
+                            <Text textAlign={'center'} fontSize={20} color={Colors.red} mb={4}>Compartir mi
+                                información</Text>
+                            <View flexDir={'row'} justifyContent={'space-between'} px={20} mx={10}>
+                                <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
+                                          value="danger" colorScheme="orange"
+                                          isChecked={shareMyInfo === 1 ? true : false}
+                                          onChange={(v) => {
+                                              if (v) {
+                                                  setShareMyInfo(1)
+                                              }
+
+                                          }}>
+                                    <Text color={Colors.red} fontSize={12}>Sí</Text>
+                                </Checkbox>
+                                <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
+                                          value="info" colorScheme="orange" isChecked={shareMyInfo === 0 ? true : false}
+                                          onChange={(v) => {
+                                              if (v) {
+                                                  setShareMyInfo(0)
+                                              }
+                                          }}>
+                                    <Text color={Colors.red} fontSize={12}>No</Text>
                                 </Checkbox>
                             </View>
 
