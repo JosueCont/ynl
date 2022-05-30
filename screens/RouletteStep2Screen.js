@@ -15,7 +15,6 @@ const RouletteStep2Screen = ({route, navigation}) => {
     const [subParentSelected, setSubParentSelected] = useState(null);
 
     useEffect(() => {
-        console.log(Constants.manifest.extra.URL_IMAGES + route.params.parentItem.attributes.icon.data.attributes.url)
         getSubParents(route.params.parentItem.id)
         navigation.setOptions({
             headerStyle: {backgroundColor: '#' + route.params.parentItem.attributes.color}
