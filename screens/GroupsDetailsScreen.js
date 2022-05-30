@@ -7,7 +7,7 @@ import GroupsMemberItem from "./Groups/Components/GroupsMemberItem";
 import {Colors} from "../utils/Colors";
 
 
-const GroupsMembersScreen = ({route}) => {
+const GroupsDetailsScreen = ({route}) => {
 
     const isFocused = useIsFocused();
     const [members, setMembers] = useState([]);
@@ -123,4 +123,4 @@ const GroupsMembersScreen = ({route}) => {
 }
 
 
-export default GroupsMembersScreen;
+export default GroupsDetailsScreen;
