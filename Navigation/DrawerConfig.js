@@ -11,7 +11,7 @@ import GroupsScreen from "../screens/GroupsScreen";
 import GroupsMembersAdd from "../screens/GroupsMembersAdd";
 import GroupsStartScreen from "../screens/GroupsStartScreen";
 import StatisticsScreen from "../screens/StatisticsScreen";
-import GroupsMembersScreen from "../screens/GroupsMembersScreen";
+import GroupsDetailsScreen from "../screens/GroupsDetailsScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import IntroScreen from "../screens/IntroScreen";
 import RouletteStep1Screen from "../screens/RouletteStep1Screen";
@@ -99,7 +99,7 @@ const DrawerConfig = () => {
             <Drawer.Screen name={'GroupsScreen'} component={GroupsScreen} options={{title: 'Mis grupos'}}/>
             <Drawer.Screen name={'GroupsStartScreen'} component={GroupsStartScreen}/>
             <Drawer.Screen name={'GroupsMembersAdd'} component={GroupsMembersAdd}/>
-            <Drawer.Screen name={'GroupsMembersScreen'} component={GroupsMembersScreen} options={{title: 'Miembros'}}/>
+            <Drawer.Screen name={'GroupsDetailsScreen'} component={GroupsDetailsScreen} options={{title: 'Miembros'}}/>
             <Drawer.Screen name={'StatisticsScreen'} component={StatisticsScreen} options={{title: 'Estadísticas'}}/>
             <Drawer.Screen name={'ProfileScreen'} component={ProfileScreen} options={{title: 'Perfil'}}/>
             <Drawer.Screen name={'HistoryFeelingScreen'} component={HistoryFeelingScreen}

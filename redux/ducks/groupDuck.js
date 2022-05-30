@@ -1,4 +1,5 @@
 import ApiApp from "../../utils/ApiApp";
+import {isEmailValid} from "../../utils/functions";
 
 const initialData = {
     users: null, // listado de usuarios que se buscan
@@ -50,13 +51,20 @@ export let getMyGroups=(userId='')=> async(dispatch)=>{
 
 export let getUsersByUserName=(username='')=> async(dispatch)=>{
     dispatch({type: GET_USERS});
-    try{
-        let response = await ApiApp.getUsersByUsername(username)
+    try {
+        let response = await ApiApp.getUsersByUsername(username);
 
-        console.log(response.data)
+
+        let valid = isEmailValid(username);
+        console.log(valid, 59)
+
         dispatch({
             type: GET_USERS_SUCCESS,
-            payload: response.data.length > 0 ? response.data : [{id: null, email: username, username: username}]
+            payload: response.data.length > 0 ? response.data : valid ? [{
+                id: username,
+                email: username,
+                username: username
+            }] : []
         });
     }catch (e){
         console.log('errorr====>', e)

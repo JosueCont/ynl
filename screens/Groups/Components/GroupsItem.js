@@ -6,7 +6,7 @@ import {MaterialIcons} from "@expo/vector-icons";
 const GroupsItem = ({groupId, title, navigation, acceptInvite = false, token = null, acceptAction}) => {
     return (
         <TouchableOpacity style={{flex: 1}}
-                          onPress={() => navigation.navigate('GroupsMembersScreen', {groupId: groupId})}>
+                          onPress={() => navigation.navigate('GroupsDetailsScreen', {groupId: groupId})}>
             <View flexDir={'row'} my={3} borderBottomWidth={0.5} borderBottomColor={Colors.red} mx={2} pb={4}>
                 <View flex={0.4} alignItems={'center'} justifyContent={'center'}>
 
