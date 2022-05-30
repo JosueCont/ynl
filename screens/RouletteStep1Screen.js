@@ -2,13 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {Animated} from 'react-native';
 import circleParts from '../assets/ruleta.png';
 import {useSharedValue} from "react-native-reanimated";
-import {Gesture, GestureDetector} from "react-native-gesture-handler";
 import {Button, Image, Text, View} from "native-base";
 import ScreenBaseV1 from "./Components/ScreenBaseV1";
 import {Colors} from "../utils/Colors";
 import pointerImage from '../assets/arrow2.png'
 import ApiApp from "../utils/ApiApp";
 import _ from "lodash";
+import * as GH from 'react-native-gesture-handler';
 
 const RouletteStep1Screen = ({navigation}) => {
 
@@ -50,7 +50,7 @@ const RouletteStep1Screen = ({navigation}) => {
     const rotation = useSharedValue(1);
     const savedRotation = useSharedValue(1);
 
-    const rotationGesture = Gesture.Rotation()
+    const rotationGesture = GH.Gesture.Rotation()
         .onTouchesMove((e) => {
             //Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
             let spins = (deg / 360);
@@ -74,41 +74,45 @@ const RouletteStep1Screen = ({navigation}) => {
 
     return (
         <ScreenBaseV1>
-            <View flex={1} width={'100%'}>
+            <GH.GestureHandlerRootView>
 
 
-                <View flex={0.1}>
+                <View flex={1} width={'100%'}>
 
-                    <Text color={Colors.red} size={'lg'} textAlign={'center'}>¿Cómo te sientes hoy?</Text>
 
+                    <View flex={0.1}>
+
+                        <Text color={Colors.red} size={'lg'} textAlign={'center'}>¿Cómo te sientes hoy?</Text>
+
+                    </View>
+                    <View flex={0.4} alignItems={'center'} justifyContent={'flex-end'}>
+                        <Image alt={'roulette'} source={pointerImage} style={{resizeMode: 'contain'}} width={10} height={10}></Image>
+                    </View>
+
+                    <View flex={1} alignItems={'center'}>
+                        <GH.GestureDetector gesture={GH.Gesture.Exclusive(rotationGesture)}>
+                            <Animated.Image source={circleParts} style={{
+                                width: 300,
+                                height: 300,
+                                transform: [{rotate: deg + `deg`}],
+                                borderRadius: 150
+                            }}/>
+                        </GH.GestureDetector>
+
+                    </View>
+
+                    {/*<View>*/}
+                    {/*    {*/}
+                    {/*        <Text fontSize={24}>{emotions[emotionPosition].name}</Text>*/}
+                    {/*    }*/}
+                    {/*</View>*/}
+
+                    <View flex={0.1} mx={4}>
+                        <Button colorScheme={'orange'}
+                                onPress={() => navigation.navigate('RouletteStep2Screen', {parentItem: _.find(parents, {id: emotions[emotionPosition].id})})}>Continuar</Button>
+                    </View>
                 </View>
-                <View flex={0.4} alignItems={'center'} justifyContent={'flex-end'}>
-                    <Image alt={'roulette'} source={pointerImage} style={{resizeMode: 'contain'}} width={10} height={10}></Image>
-                </View>
-
-                <View flex={1} alignItems={'center'}>
-                    <GestureDetector gesture={Gesture.Exclusive(rotationGesture)}>
-                        <Animated.Image source={circleParts} style={{
-                            width: 300,
-                            height: 300,
-                            transform: [{rotate: deg + `deg`}],
-                            borderRadius: 150
-                        }}/>
-                    </GestureDetector>
-
-                </View>
-
-                {/*<View>*/}
-                {/*    {*/}
-                {/*        <Text fontSize={24}>{emotions[emotionPosition].name}</Text>*/}
-                {/*    }*/}
-                {/*</View>*/}
-
-                <View flex={0.1} mx={4}>
-                    <Button colorScheme={'orange'}
-                            onPress={() => navigation.navigate('RouletteStep2Screen', {parentItem: _.find(parents, {id: emotions[emotionPosition].id})})}>Continuar</Button>
-                </View>
-            </View>
+            </GH.GestureHandlerRootView>
         </ScreenBaseV1>
     );
 };
