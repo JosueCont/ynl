@@ -207,6 +207,11 @@ class ApiApp {
 
     }
 
+    static groupsDelete = (groupId) => {
+        return ApiApp.ApisType(`/api/groups/${groupId}`, 'delete');
+
+    }
+
     static _baseURL = baseURL;
 
 

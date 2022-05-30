@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Button, ScrollView, Text, View} from "native-base";
-import {RefreshControl, SafeAreaView} from "react-native";
+import {Alert, RefreshControl, SafeAreaView} from "react-native";
 import GroupsItem from "./Groups/Components/GroupsItem";
 import {Colors} from "../utils/Colors";
 import ApiApp from "../utils/ApiApp";
@@ -65,6 +65,16 @@ const GroupsScreen = ({authDuck, navigation}) => {
         }
     }
 
+    const groupDeleteFunction = async (groupId) => {
+
+        try {
+            const response = await ApiApp.groupsDelete(groupId);
+            console.log(response.data)
+        } catch (ex) {
+            console.log(ex.response)
+        }
+    }
+
     return (
         <SafeAreaView flex={1}>
             <View flex={1} px={2} style={{backgroundColor: Colors.gray}}>
@@ -122,7 +132,22 @@ const GroupsScreen = ({authDuck, navigation}) => {
                                             groups.map((item) => {
                                                 return (
                                                     <GroupsItem groupId={item.id} title={item.attributes.name}
-                                                                navigation={navigation}/>
+                                                                navigation={navigation} deleteAction={() => {
+                                                        Alert.alert(
+                                                            "Your Next Level",
+                                                            "¿Deseas eliminar este grupo?",
+                                                            [
+                                                                {
+                                                                    text: "No",
+                                                                    onPress: () => console.log("Cancel Pressed"),
+                                                                    style: "cancel"
+                                                                },
+                                                                {
+                                                                    text: "Eliminar",
+                                                                    onPress: () => groupDeleteFunction(item.id)
+                                                                }
+                                                            ])
+                                                    }}/>
                                                 )
                                             })
                                         }

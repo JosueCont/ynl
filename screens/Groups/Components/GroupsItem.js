@@ -3,7 +3,7 @@ import {Colors} from "../../../utils/Colors";
 import {TouchableOpacity} from "react-native";
 import {MaterialIcons} from "@expo/vector-icons";
 
-const GroupsItem = ({groupId, title, navigation, acceptInvite = false, token = null, acceptAction}) => {
+const GroupsItem = ({groupId, title, navigation, acceptInvite = false, token = null, acceptAction, deleteAction}) => {
     return (
         <TouchableOpacity style={{flex: 1}}
                           onPress={() => navigation.navigate('GroupsDetailsScreen', {groupId: groupId})}>
@@ -49,7 +49,24 @@ const GroupsItem = ({groupId, title, navigation, acceptInvite = false, token = n
                             </View>
                         </View>
                         :
-                        <View flex={0.4} flexDir={'row'}/>
+                        <View flex={0.4} flexDir={'row'}>
+
+                            <View flex={1} alignItems={'center'} justifyContent={'center'}>
+
+                            </View>
+                            <View flex={1} alignItems={'center'} justifyContent={'center'}>
+                                <TouchableOpacity onPress={() => deleteAction(groupId)} style={{
+                                    height: 25,
+                                    width: 25,
+                                    backgroundColor: Colors.red,
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    borderRadius: 15
+                                }}>
+                                    <Icon as={MaterialIcons} name={'close'} color={'white'} fontSize={14}></Icon>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
                 }
 
 
