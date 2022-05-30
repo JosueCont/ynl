@@ -32,7 +32,7 @@ const commonConfig = {
 };
 
 const ios = {
-    buildNumber: "8",
+    buildNumber: "9",
     supportsTablet: false,
     bundleIdentifier: "com.hiumanlab.ynl"
 };
