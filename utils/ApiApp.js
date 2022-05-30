@@ -135,7 +135,7 @@ class ApiApp {
     };
 
     static updateProfile = (userId, data) => {
-        return ApiApp.ApisType(`/api/users/${userId}`, "post", data);
+        return ApiApp.ApisType(`/api/users/${userId}`, "put", data);
     };
 
     static updatePassword = (data) => {
@@ -200,6 +200,11 @@ class ApiApp {
     static getUserProgress = async (userID = '', option = '') => {
         console.log(`/api/progress/user_progress?userId=${userID}&option=${option}`)
         return ApiApp.ApisType(`/api/progress/user_progress?userId=${userID}&option=${option}`, 'get');
+    }
+
+    static forgotPassword = (data) => {
+        return ApiApp.ApisType(`/api/auth/forgot-password`, 'post', data);
+
     }
 
     static _baseURL = baseURL;

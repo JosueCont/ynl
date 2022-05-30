@@ -57,7 +57,7 @@ export default ({onRegister, loading}) => {
                                 </FormControl.ErrorMessage>
                             </FormControl>
 
-                            <Button isLoading={loading} isLoadingText={'Registrando'} mt="2"
+                            <Button isLoading={loading} mt="2"
                                     onPress={handleSubmit} colorScheme="orange">
                                 Continuar
                             </Button>
