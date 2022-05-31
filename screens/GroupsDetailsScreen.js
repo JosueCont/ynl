@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {RefreshControl, TouchableOpacity} from "react-native";
-import {ScrollView, Text, View, Progress, Stack, Button} from "native-base";
+import {ScrollView, Text, View, Progress, Stack, Button, Skeleton} from "native-base";
 import {useIsFocused} from "@react-navigation/native";
 import ApiApp from "../utils/ApiApp";
 import GroupsMemberItem from "./Groups/Components/GroupsMemberItem";
@@ -12,22 +12,46 @@ const GroupsDetailsScreen = ({route}) => {
     const isFocused = useIsFocused();
     const [members, setMembers] = useState([]);
     const [loading, setLoading] = useState(null);
+    const [loadingStats, setLoadingStats] = useState(null);
     const [tabPosition, setTabPosition] = useState(0);
     const [name, setName] = useState(null);
     const [activeButton, setActiveButton] = useState(2)
+    const [statsMembers, setStatsMembers] = useState(null)
 
 
     useEffect(() => {
         if (isFocused) {
             getGroupsMembersFunction();
+            filter(activeButton)
         }
     }, [isFocused])
 
     const filter = (option) => {
         // 1 - la semana anterior, 2 - la semana en curso, 3 el mes
         setActiveButton(option)
-        //getCountFeelings(authDuck.user.id, option)
+        getGroupStats(option)
+        console.log('data id', route.params.groupId)
+    }
 
+    const getGroupStats=async (option)=>{
+        setLoadingStats(true)
+        try{
+            const response = await ApiApp.groupStats(route.params.groupId,option)
+            console.log('respuesta',response);
+            setStatsMembers(response.data.data.membersArray)
+        }catch (e){
+            console.log('errror====>',e)
+        }finally {
+            setTimeout(()=>{
+                setLoadingStats(false)
+            },500)
+
+        }
+    }
+
+    const refreshView=()=>{
+        getGroupsMembersFunction();
+        filter(activeButton)
     }
 
     const getGroupsMembersFunction = async () => {
@@ -74,7 +98,7 @@ const GroupsDetailsScreen = ({route}) => {
             refreshControl={
                 <RefreshControl
                     refreshing={loading}
-                    onRefresh={() => getGroupsMembersFunction()}
+                    onRefresh={() => refreshView()}
                 />
             }>
 
@@ -120,12 +144,32 @@ const GroupsDetailsScreen = ({route}) => {
                             }} variant={activeButton === 3 ? 'solid' : 'outline'}>Mes</Button>
                         </Button.Group>
 
+                        {
+                            (!loadingStats && statsMembers) && statsMembers.map((ele) => {
+                                return <>
+                                    <Stack direction={"row"}>
+                                        <Text ml={3} width={'75%'} fontSize={'xs'}>{ele.fullName}</Text>
+                                        <Text ml={3} width={'30%'} fontSize={'xs'}>{Math.round(ele.value)}%</Text>
+                                    </Stack>
+                                    <Progress size={'xl'} colorScheme="warning" value={Math.round(ele.value)}/>
+                                </>
+                            })
+                        }
 
-                        <Stack direction={"row"}>
-                            <Text ml={5} width={'70%'} fontSize={'xs'}>Gaspar Dzul</Text>
-                            <Text ml={5} width={'30%'} fontSize={'xs'}>40%</Text>
-                        </Stack>
-                        <Progress size={'xl'} colorScheme="warning" value={45} mx="4" />
+                        {
+                            loadingStats && <>
+                                <Stack >
+                                    <Skeleton  endColor="warmGray.50" width={'100%'} height={'20px'} rounded={10} />
+                                    <Skeleton endColor="warmGray.50" width={'100%'} height={'20px'} rounded={10}  mt={5} />
+                                    <Skeleton  endColor="warmGray.50" width={'100%'} height={'20px'} rounded={10}  mt={5} />
+                                </Stack>
+                            </>
+                        }
+
+
+
+
+
                     </View>
 
                 }
