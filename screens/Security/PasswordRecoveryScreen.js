@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
-import {ScrollView} from 'react-native'
+import {Platform, ScrollView, KeyboardAvoidingView} from 'react-native'
 import {createSession, registerAction, setAttribute} from "../../redux/ducks/authDuck";
 import {Colors} from "../../utils/Colors";
 import FormPasswordRecovery from "./Components/FormPasswordRecovery";
@@ -24,7 +24,9 @@ const PasswordRecoveryScreen = ({productsDuck, navigation, registerAction, setAt
             navigation.navigate('PasswordRecoverySuccessScreen')
 
         } catch (ex) {
-            setModalErrorText(ex.response.data.error.message)
+
+            console.log('error password recover',ex)
+            setModalErrorText('Email no relacionado a un usuario, verifica nuevamente')
             setModalErrorVisible(true)
         } finally {
             setLoading(false);
@@ -33,11 +35,14 @@ const PasswordRecoveryScreen = ({productsDuck, navigation, registerAction, setAt
     }
 
     return (
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
+                              style={{flex: 1, backgroundColor: 'white'}}>
         <ScrollView style={{backgroundColor: Colors.white}}>
             <FormPasswordRecovery loading={loading} onRegister={register}/>
             <ModalError text={modalErrorText} visible={modalErrorVisible}
                         setVisible={setModalErrorVisible}></ModalError>
         </ScrollView>
+        </KeyboardAvoidingView>
     )
 }
 

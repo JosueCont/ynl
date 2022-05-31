@@ -11,6 +11,7 @@ const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle, authDuc
     const [loading, setLoading] = useState(false);
     const [hasLogged, setHasLogged] = useState(false);
     const [modalErrorVisible, setModalErrorVisible] = useState(null);
+    const [errorMessage, setModalErrorMessage] = useState('Algo ha salido mal, porfavor intenta nuevamente');
 
 
     useEffect(() => {
@@ -72,17 +73,19 @@ const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle, authDuc
         try {
             setLoading(true)
             const res = await loginEmail(values.email, values.password)
-            if (res) {
+            if (res.status===200) {
                 setHasLogged(true)
                 navigation.navigate('IntroScreen')
             } else {
+                setModalErrorMessage('Usuario o credenciales inválidas')
                 setModalErrorVisible(true)
             }
 
         } catch (e) {
-            console.log(e)
-            setModalErrorVisible(true)
-            setHasLogged(false)
+            console.log('error local',e)
+                setModalErrorMessage('Usuario o credenciales inválidas')
+                setModalErrorVisible(true)
+                setHasLogged(false)
         } finally {
             setLoading(false)
         }
@@ -100,7 +103,7 @@ const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle, authDuc
                     <FormLogin loading={loading} onLoginGoogle={loginWithGoogle} onLogin={login}
                                onGoRegister={goRegister} onLoginLinked={loginWithLinkedIn} />
                     <ModalError visible={modalErrorVisible} setVisible={setModalErrorVisible}
-                                text={'Algo ha salido mal, porfavor intenta nuevamente'}/>
+                                text={errorMessage}/>
                 </ScrollView>
             </KeyboardAvoidingView>
 
