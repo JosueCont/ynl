@@ -215,6 +215,10 @@ class ApiApp {
         return ApiApp.ApisType(`/api/getFeelingUsers?groupId=${groupId}&option=${option}`, 'get');
     }
 
+    static getUserByEmail=(email)=>{
+        return ApiApp.ApisType(`/api/users?filters[$and][0][email][$eq]=${email}`, 'get');
+    }
+
     static _baseURL = baseURL;
 
 
