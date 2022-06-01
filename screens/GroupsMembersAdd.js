@@ -30,7 +30,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
 
 
     useEffect(() => {
-        getUsersByUserName()
+        getUsersByUserName(undefined, authDuck.user)
     }, [])
 
     useEffect(() => {
@@ -80,7 +80,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
 
     const searchUsers = async (value) => {
         try {
-            const response = await getUsersByUserName(value.trim())
+            const response = await getUsersByUserName(value.trim(), authDuck.user)
         } catch (e) {
             console.log(e)
         }
