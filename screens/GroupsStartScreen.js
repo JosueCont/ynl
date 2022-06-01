@@ -12,6 +12,7 @@ const GroupsStartScreen = ({authDuck, navigation, groupDuck, getMyGroups}) => {
     const [user, setUser] = useState(null)
     const [groupName, setGroupName] = useState(null)
     const [hasGroups, setHasGroups] = useState(false)
+    const [disabledButton, setDisabledButton] = useState(true)
 
 
     const registerGroup = () => {
@@ -19,7 +20,14 @@ const GroupsStartScreen = ({authDuck, navigation, groupDuck, getMyGroups}) => {
     }
 
 
-    const handleChange = text => setGroupName(text);
+    const handleChange = text => {
+        if(text !== ''){
+            setDisabledButton(false)
+            setGroupName(text)
+        }else{
+            setDisabledButton(true)
+        }
+    };
 
 
     return (
@@ -48,7 +56,7 @@ const GroupsStartScreen = ({authDuck, navigation, groupDuck, getMyGroups}) => {
                         </ImageBackground>
                     </View>
                     <View flex={0.5}>
-                        <Button onPress={registerGroup} size="lg" colorScheme={'red'}>Siguiente</Button>
+                        <Button onPress={registerGroup} size="lg" colorScheme={disabledButton?'gray':'red'} disabled={disabledButton}>Siguiente</Button>
                     </View>
                 </View>
             </ScrollView>
