@@ -209,7 +209,10 @@ class ApiApp {
 
     static groupsDelete = (groupId) => {
         return ApiApp.ApisType(`/api/groups/${groupId}`, 'delete');
+    }
 
+    static groupStats=(groupId, option)=>{
+        return ApiApp.ApisType(`/api/getFeelingUsers?groupId=${groupId}&option=${option}`, 'get');
     }
 
     static _baseURL = baseURL;

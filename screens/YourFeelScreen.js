@@ -11,9 +11,11 @@ import ApiApp from "../utils/ApiApp";
 import {Colors} from "../utils/Colors";
 import ModalSuccess from "./Modals/ModalSuccess";
 import ModalError from "./Modals/ModalError";
+import {useIsFocused} from "@react-navigation/native";
 
 const YourFeelScreen = ({authDuck, navigation}) => {
-    const [loading, setLoading] = useState(false)
+    const isFocused = useIsFocused();
+    const [loading, setLoading] = useState(true)
     const [physicalNumber, setPhysicalNumber] = useState(1)
     const [mentalNumber, setMentalNumber] = useState(1)
     const [finantialNumber, setFinantialNumber] = useState(1)
@@ -30,8 +32,11 @@ const YourFeelScreen = ({authDuck, navigation}) => {
     }, [authDuck])
 
     useEffect(() => {
-        getYourFeel(authDuck.user.id);
-    }, [])
+        if(isFocused){
+            getYourFeel(authDuck.user.id);
+        }
+
+    }, [isFocused])
 
 
     const saveYourFeel = async () => {

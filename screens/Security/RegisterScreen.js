@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
-import {ScrollView} from 'react-native'
+import {Platform} from 'react-native'
 import {createSession, registerAction, setAttribute} from "../../redux/ducks/authDuck";
 import FormRegister from "../../components/security/FormRegister";
+import {KeyboardAvoidingView, ScrollView} from "native-base";
 import {Colors} from "../../utils/Colors";
 
 const RegisterScreen = ({productsDuck, navigation, registerAction, setAttribute}) => {
@@ -20,9 +21,12 @@ const RegisterScreen = ({productsDuck, navigation, registerAction, setAttribute}
     }
 
     return (
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
+                              style={{flex: 1, backgroundColor: 'white'}}>
         <ScrollView style={{backgroundColor: Colors.white}}>
             <FormRegister loading={loading} onRegister={register}/>
         </ScrollView>
+        </KeyboardAvoidingView>
     )
 }
 
