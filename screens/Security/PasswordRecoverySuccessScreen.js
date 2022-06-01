@@ -12,7 +12,7 @@ const SuccessScreen = ({navigation, authDuck, loginEmail}) => {
     return (
         <ImageBackground source={bgIntro} style={{flex: 1}} resizeMode={'cover'}>
             <View flex={1} alignItems={'center'} justifyContent={'center'}>
-                <Image source={logoSmall}></Image>
+                <Image source={logoSmall} alt="img"></Image>
             </View>
             <View flex={0.5}>
                 <Text color={'white'} textAlign={'center'} px={4} fontSize={20}>

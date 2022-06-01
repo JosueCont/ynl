@@ -226,7 +226,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                                     <Image mt={5} mb={10} w={220} h={220} source={{uri: image}}
                                            style={[
                                                {resizeMode: 'cover'}]}
-                                           borderRadius={110} borderWidth={2} borderColor={'white'}/>
+                                           borderRadius={110} borderWidth={2} borderColor={'white'} alt="img"/>
                                 </View> :
                                 <View style={[{
                                     width: 220,
@@ -255,7 +255,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                     zIndex: -1,
                     width: '150%',
                     height: 100
-                }}></Image>
+                }} alt="img"></Image>
             </View>
 
 

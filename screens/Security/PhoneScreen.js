@@ -44,7 +44,7 @@ const PhoneScreen = ({navigation}) => {
                 <KeyboardAvoidingView flex={1} behavior={'padding'}>
                     <View flex={1} bgColor={Colors.red} alignItems={'center'} justifyContent={'center'}
                           borderBottomRadius={60}>
-                        <Image source={phoneImage} width={150} height={150}></Image>
+                        <Image source={phoneImage} width={150} height={150} alt="img"></Image>
                         <Text color={'white'}>Verifica </Text>
                         <Text color={'white'} size={'md'}>tu cuenta añadiendo tu teléfono</Text>
                     </View>

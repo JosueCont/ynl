@@ -26,7 +26,7 @@ const GroupsStartScreen = ({authDuck, navigation, groupDuck, getMyGroups}) => {
         <Box flex={1} bg="#fff" alignItems="center">
             <ScrollView contentContainerStyle={{flex: 1}} w={'100%'}>
                 <HStack justifyContent={'center'} p={3}>
-                    <Image size={'xs'} source={logo}/>
+                    <Image size={'xs'} source={logo} alt="img"/>
                 </HStack>
 
                 <View flex={1} mx={4}>
@@ -35,7 +35,7 @@ const GroupsStartScreen = ({authDuck, navigation, groupDuck, getMyGroups}) => {
                             <HStack w={'100%'} justifyContent={'center'}>
                                 <VStack w={'100%'} justifyContent={'center'}>
                                     <Box alignItems={'center'} w={'100%'}>
-                                        <Image alt={'img'} size={'md'} source={groupicon}/>
+                                        <Image alt="img" size={'md'} source={groupicon}/>
                                         <Text textAlign={'center'} color={'white'} fontSize={30} w={'80%'}
                                               size={'md'}>Crea tu primer grupo</Text>
                                         <Input mx="3" onChangeText={handleChange} color={'gray.700'}
