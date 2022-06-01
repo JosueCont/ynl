@@ -123,14 +123,24 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             const res = await ApiApp.getHomeData(authDuck.user.id)
 
             console.log(res.data.data.userInfo)
-            setDays(res.data.data.days)
-            setLastEmotion(res.data.data.lastEmotion.name)
-            setLastEmotion1(res.data.data.lastEmotion.child.name)
-            setLastEmotion2(res.data.data.lastEmotion.child.child.name)
-            setMainFeeling(res.data.data.lastEmotion)
-            setImage(res.data.data.userInfo.avatar.formats.small.url)
-            setFullName(res.data.data.userInfo.fullName)
-            setIntro(res.data.data.userInfo.intro)
+            if (res && res.data && res.data.data){
+                setDays(res.data.data.days)
+                if (res.data.data.lastEmotion){
+                    setLastEmotion(res.data.data.lastEmotion.name)
+                    setMainFeeling(res.data.data.lastEmotion)
+                    if(res.data.data.lastEmotion.child){
+                        setLastEmotion1(res.data.data.lastEmotion.child.name)
+                        setLastEmotion2(res.data.data.lastEmotion.child.child.name)
+                    }
+                }
+                if(res.data.data.userInfo){
+                    if(res.data.data.userInfo.avatar){
+                        setImage(res.data.data.userInfo.avatar.formats.small.url)
+                    }
+                    setFullName(res.data.data.userInfo.fullName)
+                    setIntro(res.data.data.userInfo.intro)
+                }
+            }
         } catch (e) {
             console.log(e)
         } finally {
@@ -224,7 +234,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                             </View> :
                             image ?
                                 <View style={getShadowCircleStyle(10, 10)}>
-                                    <Image w={220} h={220} source={{uri: image}}
+                                    <Image w={220} h={220} source={{uri: image}} alt="img"
                                            style={[
                                                {resizeMode: 'cover'}]}
                                            borderRadius={110} borderWidth={2} borderColor={'white'}/>
@@ -251,7 +261,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                         zIndex: -1,
                         width: '150%',
                         height: 100
-                    }}></Image>
+                    }} alt="img"></Image>
                 </View>
                 <View flex={1} mx={4}>
 

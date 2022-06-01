@@ -1,5 +1,6 @@
 import ApiApp from "../../utils/ApiApp";
 import {isEmailValid} from "../../utils/functions";
+import _ from "lodash"
 
 const initialData = {
     users: null, // listado de usuarios que se buscan
@@ -49,22 +50,30 @@ export let getMyGroups=(userId='')=> async(dispatch)=>{
     }
 }
 
-export let getUsersByUserName=(username='')=> async(dispatch)=>{
+export let getUsersByUserName=(username='', userCurrent)=> async(dispatch)=>{
     dispatch({type: GET_USERS});
     try {
         let response = await ApiApp.getUsersByUsername(username);
 
-
-        let valid = isEmailValid(username);
-        console.log(valid, 59)
-
+        let dataSucces = []
+        if (response.data.length > 0){
+            response.data.splice(_.findIndex(response.data, { 'username': userCurrent.username }),1)
+            dataSucces = response.data
+        }else{
+            if (username !== userCurrent.username && username !== userCurrent.email){
+                let valid = isEmailValid(username);
+                if (valid){
+                    dataSucces = [{
+                        id: username,
+                        email: username,
+                        username: username
+                    }]
+                }
+            }
+        }
         dispatch({
             type: GET_USERS_SUCCESS,
-            payload: response.data.length > 0 ? response.data : valid ? [{
-                id: username,
-                email: username,
-                username: username
-            }] : []
+            payload: dataSucces
         });
     }catch (e){
         console.log('errorr====>', e)

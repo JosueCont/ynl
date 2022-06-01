@@ -28,7 +28,7 @@ const CustomDrawerContent = ({navigation, navigationDuck, accountDuck, logOutAct
         >
             <ImageBackground source={sidebarImage} style={{flex: 1}}>
                 <View flex={0.5} alignItems={'center'} justifyContent={'center'}>
-                    <Image source={logoSmall}></Image>
+                    <Image source={logoSmall} alt="img"></Image>
                 </View>
                 <View flex={1} alignItems={'center'}>
                     <TouchableOpacity onPress={() => {

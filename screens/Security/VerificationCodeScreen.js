@@ -70,7 +70,7 @@ const VerificationCodeScreen = ({navigation, route, authDuck, registerAction}) =
             <KeyboardAvoidingView flex={1} behavior={'padding'}>
                 <View flex={1} bgColor={Colors.red} alignItems={'center'} justifyContent={'center'}
                       borderBottomRadius={60}>
-                    <Image source={sendCodeImage} width={150} height={150}></Image>
+                    <Image source={sendCodeImage} width={150} height={150} alt="img"></Image>
                     <Text color={'white'}>Código de verificacion</Text>
                     <Text color={'white'} size={'md'}>Te hemos enviado un código por mensaje</Text>
                 </View>
