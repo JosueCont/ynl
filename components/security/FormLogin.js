@@ -199,7 +199,7 @@ export default (props) => {
                                             bgColor={'white'}
                                             borderRadius={20}
                                             color={Colors.red}
-                                            placeholderTextColor={Colors.red}
+                                            // placeholderTextColor={Colors.red}
                                         />
                                     </View>
                                     <FormControl.ErrorMessage>
@@ -218,7 +218,6 @@ export default (props) => {
                                             bgColor={'white'}
                                             borderRadius={20}
                                             color={Colors.red}
-                                            placeholderTextColor={Colors.red}
                                         />
                                     </View>
                                     <FormControl.ErrorMessage>
@@ -249,13 +248,13 @@ export default (props) => {
                                                       }, getShadowCircleStyle(10, 10)]}>
                                         <Image source={linkedInImage} w={10} h={10}></Image>
                                     </TouchableOpacity>
-                                    <TouchableOpacity alignItems={'center'} justifyContent={'center'}
-                                                      style={[{
-                                                          flex: 1,
-                                                          alignItems: 'center'
-                                                      }, getShadowCircleStyle(10, 10)]}>
-                                        <Image source={facebookImage} w={10} h={10}></Image>
-                                    </TouchableOpacity>
+                                    {/*<TouchableOpacity alignItems={'center'} justifyContent={'center'}*/}
+                                    {/*                  style={[{*/}
+                                    {/*                      flex: 1,*/}
+                                    {/*                      alignItems: 'center'*/}
+                                    {/*                  }, getShadowCircleStyle(10, 10)]}>*/}
+                                    {/*    <Image source={facebookImage} w={10} h={10}></Image>*/}
+                                    {/*</TouchableOpacity>*/}
 
                                     <TouchableOpacity onPress={handleLoginGoogle} flex={1} alignItems={'center'}
                                                       justifyContent={'center'}

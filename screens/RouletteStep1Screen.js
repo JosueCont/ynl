@@ -80,10 +80,8 @@ const RouletteStep1Screen = ({navigation}) => {
                 <View flex={1} width={'100%'}>
 
 
-                    <View flex={0.1}>
-
-                        <Text color={Colors.red} size={'lg'} textAlign={'center'}>¿Cómo te sientes hoy?</Text>
-
+                    <View flex={0.2}>
+                        <Text color={Colors.red} size={'lg'}  textAlign={'center'}>¿Cómo te sientes hoy?</Text>
                     </View>
                     <View flex={0.4} alignItems={'center'} justifyContent={'flex-end'}>
                         <Image alt={'roulette'} source={pointerImage} style={{resizeMode: 'contain'}} width={10} height={10}></Image>

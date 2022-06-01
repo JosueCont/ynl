@@ -2,7 +2,7 @@ import React from 'react';
 import {DrawerContentScrollView,} from "@react-navigation/drawer";
 import {connect} from "react-redux";
 import {ImageBackground, TouchableOpacity} from "react-native";
-import sidebarImage from "../assets/sidebar.png";
+import sidebarImage from "../assets/bgmenu.png";
 import {Image, Text, View} from "native-base";
 import logoSmall from "../assets/logoSmall.png";
 import {logOutAction} from "../redux/ducks/authDuck";
