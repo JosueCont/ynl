@@ -28,7 +28,8 @@ const GroupsScreen = ({authDuck, navigation}) => {
         try {
             setLoading(true)
             const response = await ApiApp.getMyGroups(authDuck.user.id)
-            setGroups(response.data.data)
+            // setGroups(response.data.data)
+            setGroups(response.data.data.entries)
         } catch (ex) {
             console.log(ex)
         } finally {
@@ -58,8 +59,11 @@ const GroupsScreen = ({authDuck, navigation}) => {
     const groupAcceptInvite = async (token, accept) => {
         try {
             const response = await ApiApp.groupAcceptInvite(token, accept);
-            console.log(response.data)
-            setReload(!reload)
+            if (reload){
+                setReload(!reload)
+            }else{
+                setReload(true)
+            }
         } catch (ex) {
             console.log(ex.response)
         }
@@ -123,15 +127,17 @@ const GroupsScreen = ({authDuck, navigation}) => {
                     {
                         loading === false &&
                         <View>
+                            <Text fontSize={24} color={Colors.red} textAlign={'center'} mb={4}>Mis
+                                            grupos</Text>
                             {
                                 groups.length > 0 ?
                                     <View>
-                                        <Text fontSize={24} color={Colors.red} textAlign={'center'} mb={4}>Mis
-                                            grupos</Text>
+                                        {/* <Text fontSize={24} color={Colors.red} textAlign={'center'} mb={4}>Mis
+                                            grupos</Text> */}
                                         {
                                             groups.map((item) => {
                                                 return (
-                                                    <GroupsItem groupId={item.id} title={item.attributes.name}
+                                                    <GroupsItem groupId={item.id} title={item.name}
                                                                 navigation={navigation} deleteAction={() => {
                                                         Alert.alert(
                                                             "Your Next Level",
@@ -155,7 +161,7 @@ const GroupsScreen = ({authDuck, navigation}) => {
                                     :
                                     groups.length === 0 &&
                                     <View flex={1} alignItems={'center'} justifyContent={'center'}>
-                                        <Text fontSize={20}>Sin grupos</Text>
+                                        <Text fontSize={20} color="gray.300">Sin grupos</Text>
                                     </View>
                             }
                         </View>

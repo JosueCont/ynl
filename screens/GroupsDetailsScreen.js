@@ -58,7 +58,6 @@ const GroupsDetailsScreen = ({route}) => {
         try {
             setLoading(true)
             const response = await ApiApp.getGroupMembers(route.params.groupId)
-            console.log(response.data.data);
             setName(response.data.data.group[0].name)
             let membersArray = [];
 
@@ -76,6 +75,14 @@ const GroupsDetailsScreen = ({route}) => {
                 membersArray.push({
                     id: item.id,
                     name: item.email,
+                    status: 1
+                })
+            }
+
+            if (response.data.data.group[0].owner) {
+                membersArray.push({
+                    id: response.data.data.group[0].owner.id,
+                    name: response.data.data.group[0].owner.email,
                     status: 1
                 })
             }

@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Box, Button, Center, FormControl, Heading, Image, Input, VStack} from "native-base";
+import {Box, Button, Center, FormControl, Heading, HStack, Image, Input, VStack} from "native-base";
 import logo from '../../assets/YNL.gif'
 import {useFormik} from 'formik';
 import * as Yup from 'yup'
@@ -28,13 +28,13 @@ export default ({onRegister, loading}) => {
         <Center flex={1} px="3">
             <Center w="100%">
                 <Box safeArea p="2" py="8" w="90%" maxW="290">
-                    <Heading size="lg" fontWeight="600" color="coolGray.800" _dark={{
+                    <HStack size="lg" fontWeight="600" color="coolGray.800" _dark={{
                         color: "warmGray.50"
                     }}>
                         <VStack alignItems={'center'}>
                             <Image source={logo} alt="img"/>
                         </VStack>
-                    </Heading>
+                    </HStack>
                     <Heading mt="1" _dark={{
                         color: "warmGray.200"
                     }} color="coolGray.600" fontWeight="medium" size="xs">
