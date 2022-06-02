@@ -78,8 +78,7 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
                     }}>
                         <Text color={'white'} fontSize={20} my={2}>Perfil</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => {redirectValidation()
-                    }}>
+                    <TouchableOpacity onPress={() => redirectValidation()}>
                         <Text color={'white'} fontSize={20} my={2}>Mis grupos</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {
