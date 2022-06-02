@@ -32,7 +32,7 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
             setLoading(true)
             let startDate = '2020-01-01', enDate = '2100-01-01';
             const res = await ApiApp.getHistoryFeelings(startDate, enDate, userId)
-            let arrayDates = _.map(res.data.data, (obj) => {
+            let arrayDates = _.map(res.data.data, (obj,index) => {
                 let dataItem = {
                     shortDate: obj.attributes.createdAt.split('T')[0],
                     date: obj.attributes.createdAt,
@@ -41,6 +41,8 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
                 }
                 return dataItem;
             })
+
+
 
             setHistoryDataDetail(arrayDates)
             arrayDates = _.orderBy(arrayDates, ['date'], ['desc']);
@@ -110,7 +112,7 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
 
                                             >
                                                 <View flex={0.5} alignItems={'center'} justifyContent={'center'}>
-                                                    <Image tintColor={'white'} style={{height: 40, width: 40}}
+                                                    <Image style={{height: 50, width: 50}}
                                                            source={{uri: `${_.get(ele, 'feeling.attributes.parent.data.attributes.parent.data.attributes.icon.data.attributes.url', 'https://app-ynl.s3.us-west-1.amazonaws.com/triste_4a4900f0cd.png')}`}}/>
                                                 </View>
                                                 <View flex={1} justifyContent={'center'}>
