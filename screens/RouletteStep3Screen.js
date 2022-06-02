@@ -46,7 +46,7 @@ const RouletteStep3Screen = ({route, navigation}) => {
                         _.has(route.params, 'parentItem.attributes.parent.data.attributes.icon.data.attributes.url') &&
                         <Image
                             source={{uri: route.params.parentItem.attributes.parent.data.attributes.icon.data.attributes.url}}
-                            style={{width: 100, height: 200, resizeMode: 'contain'}}></Image>
+                            style={{width: 100, height: 200, resizeMode: 'contain'}} alt="img"></Image>
 
                     }
                 </View>

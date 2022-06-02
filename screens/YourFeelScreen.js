@@ -86,7 +86,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
         <Box flex={1} bg="#fff" alignItems="center">
             <ScrollView w={'100%'}>
                 <HStack justifyContent={'center'} p={10}>
-                    <Image size={'sm'} source={logo}/>
+                    <Image size={'sm'} source={logo} alt="img"/>
                 </HStack>
                 <HStack p={1}>
 
@@ -113,7 +113,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                                     <View flexDirection={'row'}>
                                         <View justifyContent={'center'}>
                                             <Image source={bodyicon} tintColor={Colors.red} width={4}
-                                                   style={{resizeMode: 'contain'}}/>
+                                                   style={{resizeMode: 'contain'}} alt="img"/>
                                         </View>
                                         <View justifyContent={'center'}>
                                             <Text fontSize="md" style={styles}> Física ({physicalNumber})</Text>
@@ -139,7 +139,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                                     <View flexDirection={'row'}>
                                         <View justifyContent={'center'}>
                                             <Image tintColor={Colors.red} source={mentalicon} width={4}
-                                                   style={{resizeMode: 'contain'}}/>
+                                                   style={{resizeMode: 'contain'}} alt="img"/>
                                         </View>
                                         <View justifyContent={'center'}>
                                             <Text fontSize="md" style={styles}> Mental ({mentalNumber})</Text>
@@ -166,7 +166,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                                     <View flexDirection={'row'}>
                                         <View justifyContent={'center'}>
                                             <Image tintColor={Colors.red} source={finantialicon} width={4}
-                                                   style={{resizeMode: 'contain'}}/>
+                                                   style={{resizeMode: 'contain'}} alt="img"/>
                                         </View>
                                         <View justifyContent={'center'}>
                                             <Text fontSize="md" style={styles}> Financiera ({finantialNumber})</Text>
@@ -193,7 +193,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                                     <View flexDirection={'row'}>
                                         <View justifyContent={'center'}>
                                             <Image tintColor={Colors.red} source={relationicon} width={4}
-                                                   style={{resizeMode: 'contain'}}/>
+                                                   style={{resizeMode: 'contain'}} alt="img"/>
                                         </View>
                                         <View justifyContent={'center'}>
                                             <Text fontSize="md" style={styles}> Relaciones Humanas

@@ -52,7 +52,7 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
             <View flex={1} mx={4} w={'100%'}>
 
                 <View flex={1} alignItems={'center'}>
-                    <Image mb={2} size={'xs'} source={logo}/>
+                    <Image mb={2} size={'xs'} source={logo} alt="img"/>
                     <Text
                         fontSize={28} textAlign={'center'} color={'white'}>Hoy te sientes...</Text>
                     <View w={200} h={200} bgColor={'white'} borderRadius={100} my={10} alignItems={'center'}
@@ -61,7 +61,7 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                             _.has(route.params, 'emotion.attributes.parent.data.attributes.parent.data.attributes.icon.data.attributes.url') &&
                             <Image
                                 source={{uri: route.params.emotion.attributes.parent.data.attributes.parent.data.attributes.icon.data.attributes.url}}
-                                style={{width: 100, height: 200, resizeMode: 'contain'}}></Image>
+                                style={{width: 100, height: 200, resizeMode: 'contain'}} alt="img"></Image>
 
                         }
                     </View>

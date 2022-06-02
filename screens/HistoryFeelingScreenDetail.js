@@ -68,7 +68,7 @@ const HistoryFeelingScreenDetail = ({authDuck, route, navigation}) => {
 
                                     >
                                         <View flex={0.5} alignItems={'center'} justifyContent={'center'}>
-                                            <Image  style={{height: 60, width: 60}}
+                                            <Image  style={{height: 60, width: 60}} alt="img"
                                                    source={{uri: `${_.get(ele, 'feeling.attributes.parent.data.attributes.parent.data.attributes.icon.data.attributes.url', 'https://app-ynl.s3.us-west-1.amazonaws.com/triste_4a4900f0cd.png')}`}}/>
                                         </View>
                                         <View flex={1} justifyContent={'center'}>

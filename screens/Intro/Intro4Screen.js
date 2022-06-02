@@ -9,7 +9,7 @@ const Intro4Screen = () => {
         <View flex={1}>
             <ImageBackground source={bgIntro4} style={{flex: 1}} resizeMode={'contain'}>
                 <View flex={1} alignItems={'center'} justifyContent={'flex-end'}>
-                    <Image source={logoSmall}></Image>
+                    <Image source={logoSmall} alt="img"></Image>
                 </View>
                 <View flex={1}>
 
