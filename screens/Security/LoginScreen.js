@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import {Alert, Platform} from 'react-native'
-import {loginEmail, loginGoogle} from "../../redux/ducks/authDuck";
+import {loginEmail, loginGoogle, loginLinkedIn} from "../../redux/ducks/authDuck";
 import FormLogin from "../../components/security/FormLogin";
 import {KeyboardAvoidingView, ScrollView} from "native-base";
 import ModalError from "../Modals/ModalError";
 
-const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle, authDuck}) => {
+const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle,loginLinkedIn, authDuck}) => {
 
     const [loading, setLoading] = useState(false);
     const [hasLogged, setHasLogged] = useState(false);
@@ -117,4 +117,4 @@ const mapState = (state) => {
     }
 }
 
-export default connect(mapState, {loginEmail, loginGoogle})(LoginScreen);
+export default connect(mapState, {loginEmail, loginGoogle, loginLinkedIn})(LoginScreen);
