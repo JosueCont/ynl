@@ -98,7 +98,7 @@ class ApiApp {
     }
 
     static getMyGroups = (userId) => {
-        let url = `/api/groups?populate=*&filters[owner][id][$eq]=${userId}`
+        let url = `/api/listByUserId?userId=${userId}`
         return ApiApp.ApisType(url, 'get')
     }
 

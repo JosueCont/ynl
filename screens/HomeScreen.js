@@ -39,6 +39,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const [visible, setVisible] = useState(true);
     const [loading, setLoading] = useState(false);
     const [groups, setGroups] = useState(null);
+    const [groupsRequests, setGroupsRequests] = useState([])
     const [lastEmotion, setLastEmotion] = useState(null);
     const [lastEmotion1, setLastEmotion1] = useState(null);
     const [lastEmotion2, setLastEmotion2] = useState(null);
@@ -99,6 +100,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
         try {
             setLoading(true)
             console.log('focused')
+            await getGroupsRequests();
             await getGroups()
             await getHome()
 
@@ -113,6 +115,15 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
         }
 
+    }
+
+    const getGroupsRequests = async () => {
+        try {
+            const response = await ApiApp.getGroupsRequests(authDuck.user.id)
+            setGroupsRequests(response.data.data)
+        } catch (ex) {
+            console.log(ex)
+        }
     }
 
 
@@ -151,7 +162,9 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const getGroups = async () => {
         try {
             const response = await ApiApp.getMyGroups(authDuck.user.id)
-            setGroups(response.data.data)
+
+            // setGroups(response.data.data)
+            setGroups(response.data.data.entries)
             setLoading(false)
         } catch (e) {
             console.log(e, 61)
@@ -408,7 +421,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                     borderRadius: 10
                                 }, getShadowCircleStyle(10, 10)]}
                                 onPress={() => {
-                                    if (groups.length === 0) {
+                                    if (groups.length === 0 && groupsRequests.length === 0) {
                                         navigation.navigate('GroupsStartScreen')
                                     } else {
                                         navigation.navigate('GroupsScreen')
