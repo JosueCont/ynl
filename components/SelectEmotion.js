@@ -19,7 +19,7 @@ const SelectEmotion = ({item}) => {
                 accessibility={true}
                 style={styleSelect} mb={2}>
             {/*placeholder={item.attributes.name}*/}
-            >
+            
             <Select.Item label="UX Research" value="ux"/>
             <Select.Item label="Web Development" value="web"/>
             <Select.Item label="Cross Platform Development" value="cross"/>
