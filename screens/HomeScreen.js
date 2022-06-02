@@ -35,6 +35,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
 
     const [feelings, setFeelings] = useState(null);
+    const [colorMainFeeling, setColorMainFeeling] = useState('FFFF');
     const isFocused = useIsFocused();
     const [visible, setVisible] = useState(true);
     const [loading, setLoading] = useState(false);
@@ -139,9 +140,11 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                 if (res.data.data.lastEmotion){
                     setLastEmotion(res.data.data.lastEmotion.name)
                     setMainFeeling(res.data.data.lastEmotion)
+
                     if(res.data.data.lastEmotion.child){
                         setLastEmotion1(res.data.data.lastEmotion.child.name)
                         setLastEmotion2(res.data.data.lastEmotion.child.child.name)
+                        setColorMainFeeling(res.data.data.lastEmotion.child.child.color)
                     }
                 }
                 if(res.data.data.userInfo){
@@ -327,11 +330,11 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                             <View
                                 flexDir={'row'}
                                 mb={8}
-                                bgColor={Colors.gray}
+                                bgColor={'#' + colorMainFeeling}
                                 style={getShadowCircleStyle(10, 10)}
                                 borderRadius={30}
                                 p={3}>
-                                <View flex={1} height={70} alignItems={'center'} justifyContent={'center'}>
+                                <View flex={0.5} height={70} alignItems={'center'} justifyContent={'center'}>
 
                                     {
                                         _.has(mainFeeling, 'icon.url') &&
@@ -341,7 +344,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
 
                                 </View>
-                                <View flex={1} height={70} mr={1}>
+                                <View flex={1} height={70} mr={1} >
                                     <TouchableOpacity
                                         onPress={() => {
                                             navigation.navigate('HistoryFeelingScreen')
@@ -353,10 +356,10 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                             borderRadius: 10
                                         }}>
                                         <Text fontSize={12}>Última emoción</Text>
-                                        <Text fontSize={26} color={'#' + _.get(lastEmotion1, 'color', '000000')}
-                                              numberOfLines={1}
-                                              adjustsFontSizeToFit>{lastEmotion} </Text>
-                                        <Text fontSize={12} adjustsFontSizeToFit
+                                        <Text  color={'white'} style={{fontWeight: 'bold'}}
+                                              fontSize={20}
+                                              adjustsFontSizeToFit>{lastEmotion}</Text>
+                                        <Text color={'white'} fontSize={16} adjustsFontSizeToFit
                                               numberOfLines={1}>{lastEmotion1} - {lastEmotion2} </Text>
                                     </TouchableOpacity>
                                 </View>

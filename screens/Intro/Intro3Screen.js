@@ -13,7 +13,7 @@ const Intro3Screen = () => {
                     <Image source={logoSmall} alt="img"></Image>
                 </View>
                 <View flex={1}>
-                    <Text color={'white'} textAlign={'center'} px={4} mt={4}>Crea diferentes grupo y comparte con tus
+                    <Text color={'white'} textAlign={'center'} px={4} mt={4}>Crea diferentes grupos y comparte con tus
                         amigos tu avance</Text>
                 </View>
             </ImageBackground>
