@@ -51,7 +51,7 @@ const GroupsScreen = ({authDuck, navigation}) => {
 
     const createGroup = async (value) => {
         setModalGroupsCreate(false)
-        navigation.navigate('GroupsMembersAdd', {groupName: value})
+        navigation.navigate('GroupsMembersAdd', {groupName: value, option:'create'})
     }
 
     const groupAcceptInvite = async (token, accept) => {

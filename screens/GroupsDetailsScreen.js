@@ -232,7 +232,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
             </ScrollView>
             {tabPosition === 1 &&
             <View flex={0.1}>
-                <Button colorScheme={'orange'} onPress={() => navigation.navigate('GroupsMembersAdd', {groupName: name, groupId:route.params.groupId, members: members, thisOwner:route.params.thisOwner, isOwner:route.params.isOwner})}>Agregar miembros</Button>
+                <Button colorScheme={'orange'} onPress={() => navigation.navigate('GroupsMembersAdd', {groupName: name, groupId:route.params.groupId, members: members, thisOwner:route.params.thisOwner, isOwner:route.params.isOwner, option:'add'})}>Agregar miembros</Button>
             </View>}
         </View>
 

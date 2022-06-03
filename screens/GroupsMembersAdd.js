@@ -40,6 +40,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
     useEffect(() => {
         if (authDuck.isLogged) {
             setUser(authDuck.user)
+            setUsersSelected([])
         }
     }, [authDuck])
 
@@ -47,9 +48,12 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
     useEffect(() => {
         if (route.params) {
             setGroupName(route.params.groupName)
-            if (route.params.members){
+            if (route.params.option === 'add'){
                 setisAddMembers(true)
                 setMembersExist(route.params.members)
+            }else{
+                setisAddMembers(false)
+                setMembersExist([])
             }
             getUsersByUserName(undefined, authDuck.user, membersExist)
         }
@@ -78,6 +82,8 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
                  if (response.status === 200) {
                    console.log('success')
                  }
+                 setUsersSelected([])
+                 setMembersExist([])
                  navigation.navigate('GroupsDetailsScreen', {groupId: route.params.groupId, isOwner: route.params.isOwner, thisOwner:route.params.thisOwner})
             }else{
                 data = {
@@ -95,6 +101,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
                  if (response.status === 200) {
                    console.log('success')
                  }
+                 setUsersSelected([])
                  navigation.navigate('GroupsScreen')
             }
         } catch (ex) {

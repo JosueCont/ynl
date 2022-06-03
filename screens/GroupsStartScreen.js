@@ -16,7 +16,7 @@ const GroupsStartScreen = ({authDuck, navigation, groupDuck, getMyGroups}) => {
 
 
     const registerGroup = () => {
-        navigation.navigate('GroupsMembersAdd', {groupName})
+        navigation.navigate('GroupsMembersAdd', {groupName, option:'create'})
     }
 
 
