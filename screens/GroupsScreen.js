@@ -41,8 +41,6 @@ const GroupsScreen = ({authDuck, navigation}) => {
         try {
             setLoading(true)
             const response = await ApiApp.getGroupsRequests(authDuck.user.id)
-
-            console.log(response.data.data)
             setGroupsRequests(response.data.data)
         } catch (ex) {
             console.log(ex)
@@ -114,14 +112,16 @@ const GroupsScreen = ({authDuck, navigation}) => {
                                         grupos</Text>
                                     {
                                         groupsRequests.map((item) => {
-                                            return (
-                                                <GroupsItem groupId={item.id}
-                                                            title={item.attributes.group.data.attributes.name}
-                                                            navigation={navigation} acceptInvite={true}
-                                                            token={item.attributes.token}
-                                                            acceptAction={groupAcceptInvite}
-                                                />
-                                            )
+                                            if (item.attributes.group.data){
+                                                return (
+                                                    <GroupsItem groupId={item.id}
+                                                                title={item.attributes.group.data.attributes.name}
+                                                                navigation={navigation} acceptInvite={true}
+                                                                token={item.attributes.token}
+                                                                acceptAction={groupAcceptInvite}
+                                                    />
+                                                )
+                                            }
                                         })
                                     }
                                 </View>
@@ -141,8 +141,9 @@ const GroupsScreen = ({authDuck, navigation}) => {
                                             grupos</Text> */}
                                         {
                                             groups.map((item) => {
-                                                return (
-                                                    <GroupsItem groupId={item.id} title={item.name}
+                                                if(item.owner){
+                                                    return (
+                                                        <GroupsItem groupId={item.id} title={item.name}
                                                                 navigation={navigation} deleteAction={() => {
                                                         Alert.alert(
                                                             "Your Next Level",
@@ -159,7 +160,7 @@ const GroupsScreen = ({authDuck, navigation}) => {
                                                                 }
                                                             ])
                                                     }} isOwner = {item.owner.id === authDuck.user.id} thisOwner={authDuck.user.id}/>
-                                                )
+                                                )}
                                             })
                                         }
                                     </View>
