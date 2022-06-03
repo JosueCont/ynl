@@ -73,7 +73,12 @@ const GroupsScreen = ({authDuck, navigation}) => {
 
         try {
             const response = await ApiApp.groupsDelete(groupId);
-            console.log(response.data)
+            // console.log(response.data)
+            if (reload){
+                setReload(!reload)
+            }else{
+                setReload(true)
+            }
         } catch (ex) {
             console.log(ex.response)
         }
@@ -153,7 +158,7 @@ const GroupsScreen = ({authDuck, navigation}) => {
                                                                     onPress: () => groupDeleteFunction(item.id)
                                                                 }
                                                             ])
-                                                    }}/>
+                                                    }} isOwner = {item.owner.id === authDuck.user.id}/>
                                                 )
                                             })
                                         }
