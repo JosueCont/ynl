@@ -219,6 +219,10 @@ class ApiApp {
         return ApiApp.ApisType(`/api/users?filters[$and][0][email][$eq]=${email}`, 'get');
     }
 
+    static deleteMemberGroup = (data) => {
+        return ApiApp.ApisType(`/api/delete-member-group`, 'post', data);
+    }
+
     static _baseURL = baseURL;
 
 
