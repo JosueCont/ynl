@@ -61,7 +61,7 @@ export const styles = StyleSheet.create({
     buttonCircle: {
         width: 30,
         height: 30,
-        backgroundColor: 'red',
+        backgroundColor: '#FD5902',
         borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',

@@ -8,6 +8,7 @@ import {useIsFocused} from "@react-navigation/native";
 import {getShadowCircleStyle} from "../utils/functions";
 import _ from "lodash";
 import moment from 'moment'
+import NoDataIcon from "../components/Shared/NoDataIcon";
 
 
 const HistoryFeelingScreen = ({authDuck, navigation}) => {
@@ -128,6 +129,10 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
                                         </TouchableOpacity>
                                     )
                                 })
+                        }
+
+                        {
+                            (!loading && !historyData.length>0) && <NoDataIcon/>
                         }
 
 

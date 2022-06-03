@@ -344,25 +344,35 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
 
                                 </View>
-                                <View flex={1} height={70} mr={1} >
-                                    <TouchableOpacity
+                                {
+                                    !lastEmotion ? <TouchableOpacity
                                         onPress={() => {
-                                            navigation.navigate('HistoryFeelingScreen')
-                                        }}
-                                        style={{
-                                            flex: 1,
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            borderRadius: 10
-                                        }}>
-                                        <Text fontSize={12}>Última emoción</Text>
-                                        <Text  color={'white'} style={{fontWeight: 'bold'}}
-                                              fontSize={20}
-                                              adjustsFontSizeToFit>{lastEmotion}</Text>
-                                        <Text color={'white'} fontSize={16} adjustsFontSizeToFit
-                                              numberOfLines={1}>{lastEmotion1} - {lastEmotion2} </Text>
-                                    </TouchableOpacity>
-                                </View>
+                                            navigation.navigate('RouletteStep1Screen')
+                                        }}><Text style={{fontSize:20,color:'#FF5E00',fontWeight:'bold',marginTop:10}}>Registra tu primera emoción</Text></TouchableOpacity> : null
+                                }
+
+                                {
+                                    lastEmotion && <View flex={1} height={70} mr={1} >
+                                        <TouchableOpacity
+                                            onPress={() => {
+                                                navigation.navigate('HistoryFeelingScreen')
+                                            }}
+                                            style={{
+                                                flex: 1,
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                borderRadius: 10
+                                            }}>
+                                            <Text fontSize={12}>Última emoción</Text>
+                                            <Text  color={'white'} style={{fontWeight: 'bold'}}
+                                                   fontSize={20}
+                                                   adjustsFontSizeToFit>{lastEmotion}</Text>
+                                            <Text color={'white'} fontSize={16} adjustsFontSizeToFit
+                                                  numberOfLines={1}>{lastEmotion1} - {lastEmotion2} </Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                }
+
                             </View>
                     }
                     <View flexDir={'row'} mb={4} height={70}>
