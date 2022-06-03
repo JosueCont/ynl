@@ -37,7 +37,7 @@ const GroupsDetailsScreen = ({route}) => {
         setLoadingStats(true)
         try{
             const response = await ApiApp.groupStats(route.params.groupId,option)
-            console.log('respuesta',response);
+            console.log('respuesta',response.data.data);
             setStatsMembers(response.data.data.membersArray)
         }catch (e){
             console.log('errror====>',e)
@@ -171,8 +171,8 @@ const GroupsDetailsScreen = ({route}) => {
                         {
                             (!loadingStats && statsMembers) && statsMembers.map((ele) => {
                                 return <>
-                                    <Stack direction={"row"}>
-                                        <Text ml={3} width={'75%'} fontSize={'xs'}>{ele.fullName}</Text>
+                                    <Stack direction={"row"} mt={3}>
+                                        <Text ml={3} width={'75%'} fontSize={'xs'}>{(ele.fullName && ele.fullName.includes('null'))?ele.username:ele.fullName}</Text>
                                         <Text ml={3} width={'30%'} fontSize={'xs'}>{Math.round(ele.value)}%</Text>
                                     </Stack>
                                     <Progress size={'xl'} colorScheme="warning" value={Math.round(ele.value)}/>
