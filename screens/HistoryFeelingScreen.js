@@ -130,6 +130,10 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
                                 })
                         }
 
+                        {
+                            (!loading && !historyData) && <Text>No data</Text>
+                        }
+
 
                     </Stack>
                 </View>

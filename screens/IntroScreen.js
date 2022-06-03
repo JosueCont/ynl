@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {Ionicons, MaterialIcons} from "@expo/vector-icons";
 import AppIntroSlider from 'react-native-app-intro-slider';
-import {Icon} from 'native-base';
+import {Icon, Text} from 'native-base';
 import {styles} from './Intro/IntroStyleSheet';
 import Intro1Screen from "./Intro/Intro1Screen";
 import Intro2Screen from "./Intro/Intro2Screen";
