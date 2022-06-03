@@ -50,7 +50,7 @@ export let getMyGroups=(userId='')=> async(dispatch)=>{
     }
 }
 
-export let getUsersByUserName=(username='', userCurrent)=> async(dispatch)=>{
+export let getUsersByUserName=(username='', userCurrent, membersExist)=> async(dispatch)=>{
     dispatch({type: GET_USERS});
     try {
         let response = await ApiApp.getUsersByUsername(username);
@@ -58,16 +58,32 @@ export let getUsersByUserName=(username='', userCurrent)=> async(dispatch)=>{
         let dataSucces = []
         if (response.data.length > 0){
             response.data.splice(_.findIndex(response.data, { 'username': userCurrent.username }),1)
+            if (membersExist.length > 0){
+                for (let i=0;i<membersExist.length;i++){
+                    response.data.splice(_.findIndex(response.data, { 'email': membersExist[i].name }),1)
+                }
+            }
             dataSucces = response.data
         }else{
             if (username !== userCurrent.username && username !== userCurrent.email){
                 let valid = isEmailValid(username);
                 if (valid){
-                    dataSucces = [{
-                        id: username,
-                        email: username,
-                        username: username
-                    }]
+                    let valid2=true
+                    if (membersExist.length > 0){
+                        for (let i=0;i<membersExist.length;i++){
+                            if (membersExist[i].name === username){
+                                valid2=false
+                                break;
+                            }
+                        }
+                    }
+                    if (valid2){
+                        dataSucces = [{
+                            id: username,
+                            email: username,
+                            username: username
+                        }]
+                    }
                 }
             }
         }

@@ -158,7 +158,7 @@ const GroupsScreen = ({authDuck, navigation}) => {
                                                                     onPress: () => groupDeleteFunction(item.id)
                                                                 }
                                                             ])
-                                                    }} isOwner = {item.owner.id === authDuck.user.id}/>
+                                                    }} isOwner = {item.owner.id === authDuck.user.id} thisOwner={authDuck.user.id}/>
                                                 )
                                             })
                                         }

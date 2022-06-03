@@ -223,6 +223,10 @@ class ApiApp {
         return ApiApp.ApisType(`/api/delete-member-group`, 'post', data);
     }
 
+    static addMemberGroup = (data) => {
+        return ApiApp.ApisType(`/api/add-member-group`, 'post', data);
+    }
+
     static _baseURL = baseURL;
 
 
