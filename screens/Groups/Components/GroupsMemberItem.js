@@ -13,16 +13,16 @@ const GroupsMemberItem = ({title, pending = true, isOwner, deleteAction, thisOwn
                         {title[0]}
                     </Avatar>
                 </View>
-                <View flex={1} justifyContent={'center'} alignItems={'flex-start'}>
-                    <Text fontSize={16} style={{opacity: pending ? 0.5 : 1}} color={Colors.red}>{title}</Text>
+                <View flex={0.8} justifyContent={'center'} alignItems={'flex-start'}>
+                    <Text fontSize={12} style={{opacity: pending ? 0.5 : 1}} color={Colors.red}>{title}</Text>
                     {
-                        pending && isOwner && <Badge width={'40%'} colorScheme={"info"}>{pending?'Pendiente':''}</Badge>
+                        pending && isOwner && <Badge width={'60%'} colorScheme={"info"}>{pending?'Pendiente':''}</Badge>
                     }
                     
 
                 </View>
                 {isOwner && !thisOwner &&
-                        <View flex={0.3} alignItems={'flex-end'} justifyContent={'center'}>
+                        <View flex={0.2} alignItems={'flex-end'} justifyContent={'center'}>
                             <TouchableOpacity onPress={() => deleteAction()} style={{
                                 height: 25,
                                 width: 25,
