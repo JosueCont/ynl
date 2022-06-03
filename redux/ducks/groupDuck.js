@@ -57,10 +57,14 @@ export let getUsersByUserName=(username='', userCurrent, membersExist)=> async(d
 
         let dataSucces = []
         if (response.data.length > 0){
-            response.data.splice(_.findIndex(response.data, { 'username': userCurrent.username }),1)
+            if(_.findIndex(response.data, { 'username': userCurrent.username }) !== -1){
+                response.data.splice(_.findIndex(response.data, { 'username': userCurrent.username }),1)
+            }
             if (membersExist.length > 0){
                 for (let i=0;i<membersExist.length;i++){
-                    response.data.splice(_.findIndex(response.data, { 'email': membersExist[i].name }),1)
+                    if(_.findIndex(response.data, { 'email': membersExist[i].name }) !== -1){
+                        response.data.splice(_.findIndex(response.data, { 'email': membersExist[i].name }),1)
+                    }
                 }
             }
             dataSucces = response.data
