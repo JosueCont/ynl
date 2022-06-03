@@ -58,7 +58,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
         console.log(authDuck.emotionStatus)
         if (intro === false) {
             navigation.navigate('IntroScreen')
-        } else if (authDuck.emotionStatus === 0) {
+        } else if (authDuck.emotionStatus === 0 || authDuck.emotionStatus === undefined) {
             navigation.navigate('RouletteStep1Screen')
         }
 
@@ -166,7 +166,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
         try {
             const response = await ApiApp.getMyGroups(authDuck.user.id)
 
-            // setGroups(response.data.data)
+            console.log("groups", response.data.data.entries)
             setGroups(response.data.data.entries)
             setLoading(false)
         } catch (e) {
