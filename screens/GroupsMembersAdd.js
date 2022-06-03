@@ -16,22 +16,26 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
     const [groupName, setGroupName] = useState(null)
     const [usersSelected, setUsersSelected] = useState([])
     const [text, setText] = useState(null);
+    const [isAddMembers, setisAddMembers] = useState(false)
+    const [membersExist, setMembersExist] = useState([])
     const searchBox = useRef();
 
 
     useFocusEffect(
         React.useCallback(() => {
             return () => {
-                setUsersSelected([])
+                if(usersSelected.length>0){
+                    setUsersSelected([])
+                }
                 searchBox.current.clear()
             };
         }, [])
     );
 
 
-    useEffect(() => {
-        getUsersByUserName(undefined, authDuck.user)
-    }, [])
+    // useEffect(() => {
+    //     getUsersByUserName(undefined, authDuck.user, membersExist)
+    // }, [])
 
     useEffect(() => {
         if (authDuck.isLogged) {
@@ -43,13 +47,16 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
     useEffect(() => {
         if (route.params) {
             setGroupName(route.params.groupName)
+            if (route.params.members){
+                setisAddMembers(true)
+                setMembersExist(route.params.members)
+            }
+            getUsersByUserName(undefined, authDuck.user, membersExist)
         }
     }, [route.params])
 
     const registerGroup = async () => {
         try {
-
-
             let members = _.filter(usersSelected, function (o) {
                 return o.id !== null;
             });
@@ -57,22 +64,39 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
             let publicEmails = _.filter(usersSelected, function (o) {
                 return o.id === null;
             });
-            let data = {
-                data: {
-                    name: groupName,
-                    owner: authDuck.user.id,
-                    description: "",
-                    members: members.map((item) => item.id),
-                    publicEmails: publicEmails.map((item) => item.email)
-
+            let data={}
+            if (isAddMembers){
+                data = {
+                    data: {
+                        groupId: route.params.groupId,
+                        members: members.map((item) => item.id),
+                        publicEmails: publicEmails.map((item) => item.email)
+                    }
                 }
+                console.log(data)
+                 let response = await ApiApp.addMemberGroup(data)
+                 if (response.status === 200) {
+                   console.log('success')
+                 }
+                 navigation.navigate('GroupsDetailsScreen', {groupId: route.params.groupId, isOwner: route.params.isOwner, thisOwner:route.params.thisOwner})
+            }else{
+                data = {
+                    data: {
+                        name: groupName,
+                        owner: authDuck.user.id,
+                        description: "",
+                        members: members.map((item) => item.id),
+                        publicEmails: publicEmails.map((item) => item.email)
+    
+                    }
+                }
+                console.log(data)
+                 let response = await ApiApp.createGroup(data)
+                 if (response.status === 200) {
+                   console.log('success')
+                 }
+                 navigation.navigate('GroupsScreen')
             }
-            console.log(data)
-             let response = await ApiApp.createGroup(data)
-             if (response.status === 200) {
-               console.log('success')
-             }
-             navigation.navigate('GroupsScreen')
         } catch (ex) {
             console.log(ex)
         }
@@ -80,7 +104,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
 
     const searchUsers = async (value) => {
         try {
-            const response = await getUsersByUserName(value.trim(), authDuck.user)
+            const response = await getUsersByUserName(value.trim(), authDuck.user, membersExist)
         } catch (e) {
             console.log(e)
         }
@@ -154,7 +178,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
                     groupDuck.fetchingUsers ?
                         <Spinner size="sm" color={'red.400'}/> :
                         <GroupsListUsers usersSelected={usersSelected} registerGroup={registerGroup}
-                                         isUserSelected={isUserSelected} addUserToList={addUserToList}/>
+                                         isUserSelected={isUserSelected} addUserToList={addUserToList} isAddMembers={isAddMembers}/>
                 }
             </View>
 

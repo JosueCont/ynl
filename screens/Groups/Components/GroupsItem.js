@@ -3,10 +3,10 @@ import {Colors} from "../../../utils/Colors";
 import {TouchableOpacity} from "react-native";
 import {MaterialIcons} from "@expo/vector-icons";
 
-const GroupsItem = ({groupId, title, navigation, acceptInvite = false, token = null, acceptAction, deleteAction, isOwner}) => {
+const GroupsItem = ({groupId, title, navigation, acceptInvite = false, token = null, acceptAction, deleteAction, isOwner, thisOwner}) => {
     return (
         <TouchableOpacity style={{flex: 1}} disabled={acceptInvite}
-                          onPress={() => navigation.navigate('GroupsDetailsScreen', {groupId: groupId, isOwner: isOwner})}>
+                          onPress={() => navigation.navigate('GroupsDetailsScreen', {groupId: groupId, isOwner: isOwner, thisOwner:thisOwner})}>
             <View flexDir={'row'} my={3} borderBottomWidth={0.5} borderBottomColor={Colors.red} mx={2} pb={4}>
                 <View flex={0.4} alignItems={'center'} justifyContent={'center'}>
 
