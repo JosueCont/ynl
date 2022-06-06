@@ -60,14 +60,21 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
     }, [route.params])
 
     const registerGroup = async () => {
+        setLoading(true)
         try {
+
             let members = _.filter(usersSelected, function (o) {
-                return o.id !== null;
+                if(typeof o.id !== 'string'){
+                    return o.id;
+                }
             });
-            console.log(members)
             let publicEmails = _.filter(usersSelected, function (o) {
-                return o.id === null;
+                if(typeof o.id === 'string'){
+                    return o.id;
+                }
+
             });
+
             let data={}
             if (isAddMembers){
                 data = {
@@ -106,6 +113,8 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
             }
         } catch (ex) {
             console.log(ex)
+        }finally {
+            setLoading(false)
         }
     }
 

@@ -64,11 +64,21 @@ const GroupsDetailsScreen = ({navigation, route}) => {
             for (let item of response.data.data.requests) {
                 console.log(item)
 
-                membersArray.push({
-                    id: item.user.id,
-                    name: item.user.email,
-                    status: item.status
-                })
+                if(item.user){
+                    membersArray.push({
+                        id: item.user.id,
+                        name: item.user.email,
+                        status: item.status
+                    })
+                }else{
+                    membersArray.push({
+                        id: null,
+                        name: item.public_email,
+                        status: item.status
+                    })
+                }
+
+
             }
 
             for (let item of response.data.data.group[0].members) {
