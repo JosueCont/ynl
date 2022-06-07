@@ -264,7 +264,6 @@ const ProfileScreen = ({authDuck, navigation}) => {
                     <FormControl isInvalid w="100%">
                         <View flex={1} mb={4} style={getShadowCircleStyle(10, 10)}>
                             <Input size={'2xl'} h={50} placeholder={'Nombre(s)'} borderRadius={25}
-                                   placeholderTextColor={Colors.red}
                                    value={name}
                                    onChangeText={val => setName(val)}
                                    backgroundColor={Colors.white}

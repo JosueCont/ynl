@@ -64,7 +64,7 @@ const GroupsItem = ({groupId, title, navigation, acceptInvite = false, token = n
                                     justifyContent: 'center',
                                     borderRadius: 15
                                 }}>
-                                    <Icon as={MaterialIcons} name={'close'} color={'white'} fontSize={14}></Icon>
+                                    <Icon as={MaterialIcons} name={'delete'} color={'white'} fontSize={14}></Icon>
                                 </TouchableOpacity>
                             </View>}
                         </View>
