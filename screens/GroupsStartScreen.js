@@ -46,7 +46,7 @@ const GroupsStartScreen = ({authDuck, navigation, groupDuck, getMyGroups}) => {
                                         <Image alt="img" size={'md'} source={groupicon}/>
                                         <Text textAlign={'center'} color={'white'} fontSize={30} w={'80%'}
                                               size={'md'}>Crea tu primer grupo</Text>
-                                        <Input mx="3" onChangeText={handleChange} color={'gray.700'}
+                                        <Input mx="3" maxLength={50} onChangeText={handleChange} color={'gray.700'}
                                                backgroundColor={'white'} size={'lg'}
                                                placeholder="Nombre del grupo" w="80%"/>
                                     </Box>

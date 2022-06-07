@@ -174,7 +174,8 @@ class ApiApp {
 
 
     static getProfile = (userId) => {
-        return ApiApp.ApisType(`/api/users/${userId}?populate=avatar`, "get");
+        let url = `/api/users/${userId}?populate[avatar][sort]=id:desc`;
+        return ApiApp.ApisType(url, "get");
     };
 
 

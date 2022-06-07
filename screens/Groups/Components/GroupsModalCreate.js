@@ -21,7 +21,7 @@ const GroupsModalCreate = ({visible, setVisible, action}) => {
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
                     <Text style={styles.modalText}>Crear grupo</Text>
-                    <Input fontSize={12} onChangeText={(v) => {
+                    <Input fontSize={12} maxLength={50} onChangeText={(v) => {
                         if (v !== ''){
                             setDisabledButton(false)
                         }else{
