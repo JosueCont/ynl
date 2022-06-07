@@ -39,6 +39,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const isFocused = useIsFocused();
     const [visible, setVisible] = useState(true);
     const [loading, setLoading] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
     const [groups, setGroups] = useState(null);
     const [groupsRequests, setGroupsRequests] = useState([])
     const [lastEmotion, setLastEmotion] = useState(null);
@@ -113,7 +114,8 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                 setLoading(false)
             }, 200)
         } finally {
-
+            setRefreshing(false)
+            setLoading(false)
         }
 
     }
@@ -238,15 +240,18 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                     <RefreshControl
                         style={{backgroundColor: 'white'}}
                         tintColor={Colors.red}
-                        refreshing={loading}
-                        onRefresh={() => boot()}
+                        refreshing={loading && refreshing}
+                        onRefresh={() => {
+                            setRefreshing(true)
+                            boot()
+                        }}
                     />
                 }>
                 <View flex={1} alignItems={'center'} justifyContent={'center'} mb={2}>
                     {
                         loading === true ?
                             <View style={getShadowCircleStyle(10, 10)}>
-                                <Skeleton endColor="warmGray.50" size="220" rounded="full" mt={5} mb={10}/>
+                                <Skeleton endColor="warmGray.50" size="220" rounded="full"/>
                             </View> :
                             image ?
                                 <View style={getShadowCircleStyle(10, 10)}>

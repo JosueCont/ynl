@@ -16,6 +16,7 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
     const [activeButton, setActiveButton] = useState(2)
     const [countFeeling, setCountFeeling] = useState([])
     const [loading, setLoading] = useState(null);
+    const [refreshing, setRefreshing] = useState(null);
     const [dataPie, setDataPie] = useState(null);
 
     useEffect(() => {
@@ -23,6 +24,11 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
             boot()
         }
     }, [isFocused])
+
+    const refreshScreen=()=>{
+        setRefreshing(true)
+        boot();
+    }
 
     const boot = async () => {
         setLoading(true)
@@ -34,6 +40,7 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
 
         } finally {
             setLoading(false)
+            setRefreshing(false)
         }
 
     }
@@ -102,8 +109,8 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
                             <RefreshControl
                                 style={{backgroundColor: 'white'}}
                                 tintColor={Colors.red}
-                                refreshing={loading}
-                                onRefresh={boot}
+                                refreshing={loading && refreshing}
+                                onRefresh={refreshScreen}
                             />
                         }>
                 <View mx={2} my={2} alignItems={'center'} mb={4}>
