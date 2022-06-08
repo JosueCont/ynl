@@ -192,6 +192,13 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                             }
 
                             {
+                                (!loadingStats && statsMembers) && statsMembers.length === 0 &&
+                                    <View flex={1} alignItems={'center'} justifyContent={'center'}>
+                                        <Text fontSize={20} color="gray.300">Sin datos</Text>
+                                    </View>
+                            }
+
+                            {
                                 loadingStats && <>
                                     <Stack >
                                         <Skeleton  endColor="warmGray.50" width={'100%'} height={'20px'} rounded={10} />
