@@ -51,9 +51,11 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
             if (route.params.option === 'add'){
                 setisAddMembers(true)
                 setMembersExist(route.params.members)
+                setUsersSelected([])
             }else{
                 setisAddMembers(false)
                 setMembersExist([])
+                setUsersSelected([])
             }
             getUsersByUserName(undefined, authDuck.user, membersExist)
         }

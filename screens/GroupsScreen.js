@@ -98,7 +98,10 @@ const GroupsScreen = ({authDuck, navigation}) => {
                         <RefreshControl
                             tintColor={Colors.red}
                             refreshing={loading}
-                            onRefresh={() => getGroups()}
+                            onRefresh={() => {
+                                getGroups()
+                                getGroupsRequests()
+                            }}
                         />
                     }>
 
