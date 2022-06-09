@@ -136,8 +136,8 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
             const res = await ApiApp.getHomeData(authDuck.user.id)
 
-            console.log(res.data.data.userInfo)
-            if (res && res.data && res.data.data){
+            //console.log(res.data.data.userInfo)
+            if (_.get(res,'data.data', null)){
                 setDays(res.data.data.days)
                 if (res.data.data.lastEmotion){
                     setLastEmotion(res.data.data.lastEmotion.name)
@@ -168,9 +168,13 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
         try {
             const response = await ApiApp.getMyGroups(authDuck.user.id)
 
-            console.log("groups", response.data.data.entries)
-            setGroups(response.data.data.entries)
-            setLoading(false)
+
+            if(_.get(response,'data.data',null)){
+                console.log("groups", response.data.data.entries)
+                setGroups(response.data.data.entries)
+                setLoading(false)
+            }
+
         } catch (e) {
             console.log(e, 61)
         } finally {

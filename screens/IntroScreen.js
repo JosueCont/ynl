@@ -18,7 +18,7 @@ const IntroScreen = ({navigation, authDuck}) => {
 
     const nextScreen = async () => {
         try {
-            if (authDuck.emotionStatus === 0) {
+            if (authDuck.emotionStatus === 0 || authDuck.emotionStatus === undefined) {
                 navigation.navigate('RouletteStep1Screen', {from: 'intro'})
             } else {
                 navigation.navigate('HomeScreen')
