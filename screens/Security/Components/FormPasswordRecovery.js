@@ -31,7 +31,7 @@ export default ({onRegister, loading}) => {
                         color: "warmGray.50"
                     }}>
                         <VStack alignItems={'center'}>
-                            <Image source={logo}/>
+                            <Image source={logo} alt="img"/>
                         </VStack>
                     </Heading>
                     <Heading mt="1" _dark={{

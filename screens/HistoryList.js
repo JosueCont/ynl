@@ -56,7 +56,7 @@ const HistoryListScreen = ({productsDuck, navigation}) => {
         <Box>
             <HStack justifyContent={'center'} pt={5} pb={3}>
                 <VStack>
-                    <Image size={'xs'} source={logo}/>
+                    <Image size={'xs'} source={logo} alt="img"/>
                 </VStack>
             </HStack>
             <HStack justifyContent={'center'}>
@@ -74,14 +74,14 @@ const HistoryListScreen = ({productsDuck, navigation}) => {
                         borderColor: "gray.200"
                     }} borderColor="gray.400" pl="4" pr="5" py="2">
                         <HStack space={3} w={'100%'} justifyContent="space-between">
-                            <Image size="20px" source={historyIcon}/>
+                            <Image size="20px" source={historyIcon} alt="img"/>
                             <VStack w={'80%'} h={'50px'}>
                                 <Text size={'md'} color="coolGray.800" bold>
                                     {formatDate(item.createdAt)}
                                 </Text>
                             </VStack>
                             <TouchableOpacity>
-                                <Image size="20px" mt={5} source={arrowIcon}/>
+                                <Image size="20px" mt={5} source={arrowIcon} alt="img"/>
                             </TouchableOpacity>
                             <Spacer/>
 

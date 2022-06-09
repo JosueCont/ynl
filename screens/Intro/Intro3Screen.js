@@ -10,10 +10,10 @@ const Intro3Screen = () => {
         <View flex={1}>
             <ImageBackground source={bgIntro3} style={{flex: 1}} resizeMode={'contain'}>
                 <View flex={1} alignItems={'center'} justifyContent={'flex-end'}>
-                    <Image source={logoSmall}></Image>
+                    <Image source={logoSmall} alt="img"></Image>
                 </View>
                 <View flex={1}>
-                    <Text color={'white'} textAlign={'center'} px={4} mt={4}>Crea diferentes grupo y comparte con tus
+                    <Text color={'white'} textAlign={'center'} px={4} mt={4}>Crea diferentes grupos y comparte con tus
                         amigos tu avance</Text>
                 </View>
             </ImageBackground>

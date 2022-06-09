@@ -16,26 +16,31 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
     const [groupName, setGroupName] = useState(null)
     const [usersSelected, setUsersSelected] = useState([])
     const [text, setText] = useState(null);
+    const [isAddMembers, setisAddMembers] = useState(false)
+    const [membersExist, setMembersExist] = useState([])
     const searchBox = useRef();
 
 
     useFocusEffect(
         React.useCallback(() => {
             return () => {
-                setUsersSelected([])
+                if(usersSelected.length>0){
+                    setUsersSelected([])
+                }
                 searchBox.current.clear()
             };
         }, [])
     );
 
 
-    useEffect(() => {
-        getUsersByUserName()
-    }, [])
+    // useEffect(() => {
+    //     getUsersByUserName(undefined, authDuck.user, membersExist)
+    // }, [])
 
     useEffect(() => {
         if (authDuck.isLogged) {
             setUser(authDuck.user)
+            setUsersSelected([])
         }
     }, [authDuck])
 
@@ -43,44 +48,81 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
     useEffect(() => {
         if (route.params) {
             setGroupName(route.params.groupName)
+            if (route.params.option === 'add'){
+                setisAddMembers(true)
+                setMembersExist(route.params.members)
+                setUsersSelected([])
+            }else{
+                setisAddMembers(false)
+                setMembersExist([])
+                setUsersSelected([])
+            }
+            getUsersByUserName(undefined, authDuck.user, membersExist)
         }
     }, [route.params])
 
     const registerGroup = async () => {
+        setLoading(true)
         try {
 
-
             let members = _.filter(usersSelected, function (o) {
-                return o.id !== null;
-            });
-            console.log(members)
-            let publicEmails = _.filter(usersSelected, function (o) {
-                return o.id === null;
-            });
-            let data = {
-                data: {
-                    name: groupName,
-                    owner: authDuck.user.id,
-                    description: "",
-                    members: members.map((item) => item.id),
-                    publicEmails: publicEmails.map((item) => item.email)
-
+                if(typeof o.id !== 'string'){
+                    return o.id;
                 }
+            });
+            let publicEmails = _.filter(usersSelected, function (o) {
+                if(typeof o.id === 'string'){
+                    return o.id;
+                }
+
+            });
+
+            let data={}
+            if (isAddMembers){
+                data = {
+                    data: {
+                        groupId: route.params.groupId,
+                        members: members.map((item) => item.id),
+                        publicEmails: publicEmails.map((item) => item.email)
+                    }
+                }
+                console.log(data)
+                 let response = await ApiApp.addMemberGroup(data)
+                 if (response.status === 200) {
+                   console.log('success')
+                 }
+                 setUsersSelected([])
+                 setMembersExist([])
+                 navigation.navigate('GroupsDetailsScreen', {groupId: route.params.groupId, isOwner: route.params.isOwner, thisOwner:route.params.thisOwner})
+            }else{
+                data = {
+                    data: {
+                        name: groupName,
+                        owner: authDuck.user.id,
+                        description: "",
+                        members: members.map((item) => item.id),
+                        publicEmails: publicEmails.map((item) => item.email)
+    
+                    }
+                }
+                console.log(data)
+                 let response = await ApiApp.createGroup(data)
+                 if (response.status === 200) {
+                   console.log('success')
+                 }
+                 setUsersSelected([])
+                 navigation.navigate('GroupsScreen')
             }
-            console.log(data)
-             let response = await ApiApp.createGroup(data)
-             if (response.status === 200) {
-               console.log('success')
-             }
-             navigation.navigate('GroupsScreen')
         } catch (ex) {
             console.log(ex)
+        }finally {
+            setLoading(false)
         }
     }
 
     const searchUsers = async (value) => {
         try {
-            const response = await getUsersByUserName(value.trim())
+            const response = await getUsersByUserName(value.trim(), authDuck.user, membersExist)
         } catch (e) {
             console.log(e)
         }
@@ -127,7 +169,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
 
         <ScrollView _contentContainerStyle={{alignItems: 'center', backgroundColor: 'white'}}>
 
-            <Image size={'xs'} source={logo}/>
+            <Image size={'xs'} source={logo} alt="img"/>
             <View flex={1}>
                 <VStack my="4" space={5} w="100%" maxW="350px">
                     <VStack w="100%" space={5} alignSelf="center">
@@ -141,7 +183,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
                                clearButtonMode="never"
                                onChangeText={_.debounce(searchUsers, 1000)}
                                borderColor={'red.500'}
-                               InputLeftElement={<Icon ml="2" size="4" color="gray.400"
+                               InputLeftElement={<Icon ml="2" size={4} color="gray.400"
                                                        as={<Ionicons name="ios-search"/>}/>}
                                autoCorrect={false}
                         />
@@ -154,7 +196,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
                     groupDuck.fetchingUsers ?
                         <Spinner size="sm" color={'red.400'}/> :
                         <GroupsListUsers usersSelected={usersSelected} registerGroup={registerGroup}
-                                         isUserSelected={isUserSelected} addUserToList={addUserToList}/>
+                                         isUserSelected={isUserSelected} addUserToList={addUserToList} isAddMembers={isAddMembers}/>
                 }
             </View>
 

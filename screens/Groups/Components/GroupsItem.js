@@ -3,10 +3,10 @@ import {Colors} from "../../../utils/Colors";
 import {TouchableOpacity} from "react-native";
 import {MaterialIcons} from "@expo/vector-icons";
 
-const GroupsItem = ({groupId, title, navigation, acceptInvite = false, token = null, acceptAction, deleteAction}) => {
+const GroupsItem = ({groupId, title, navigation, acceptInvite = false, token = null, acceptAction, deleteAction, isOwner, thisOwner}) => {
     return (
-        <TouchableOpacity style={{flex: 1}}
-                          onPress={() => navigation.navigate('GroupsDetailsScreen', {groupId: groupId})}>
+        <TouchableOpacity style={{flex: 1}} disabled={acceptInvite}
+                          onPress={() => navigation.navigate('GroupsDetailsScreen', {groupId: groupId, isOwner: isOwner, thisOwner:thisOwner})}>
             <View flexDir={'row'} my={3} borderBottomWidth={0.5} borderBottomColor={Colors.red} mx={2} pb={4}>
                 <View flex={0.4} alignItems={'center'} justifyContent={'center'}>
 
@@ -54,6 +54,7 @@ const GroupsItem = ({groupId, title, navigation, acceptInvite = false, token = n
                             <View flex={1} alignItems={'center'} justifyContent={'center'}>
 
                             </View>
+                            {isOwner &&
                             <View flex={1} alignItems={'center'} justifyContent={'center'}>
                                 <TouchableOpacity onPress={() => deleteAction(groupId)} style={{
                                     height: 25,
@@ -63,9 +64,9 @@ const GroupsItem = ({groupId, title, navigation, acceptInvite = false, token = n
                                     justifyContent: 'center',
                                     borderRadius: 15
                                 }}>
-                                    <Icon as={MaterialIcons} name={'close'} color={'white'} fontSize={14}></Icon>
+                                    <Icon as={MaterialIcons} name={'delete'} color={'white'} fontSize={14}></Icon>
                                 </TouchableOpacity>
-                            </View>
+                            </View>}
                         </View>
                 }
 

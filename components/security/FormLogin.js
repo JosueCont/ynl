@@ -176,7 +176,7 @@ export default (props) => {
                         {/*</Heading>*/}
                         <View flex={0.3} alignItems={'center'} justifyContent={'center'}>
                             <Image source={loginImage} style={{resizeMode: 'contain'}} w={resolvePlatform(250, 200)}
-                                   h={resolvePlatform(250, 200)}/>
+                                   h={resolvePlatform(250, 200)} alt="img"/>
                         </View>
                         <View flex={1}>
 
@@ -199,7 +199,7 @@ export default (props) => {
                                             bgColor={'white'}
                                             borderRadius={20}
                                             color={Colors.red}
-                                            placeholderTextColor={Colors.red}
+                                            // placeholderTextColor={Colors.red}
                                         />
                                     </View>
                                     <FormControl.ErrorMessage>
@@ -218,7 +218,6 @@ export default (props) => {
                                             bgColor={'white'}
                                             borderRadius={20}
                                             color={Colors.red}
-                                            placeholderTextColor={Colors.red}
                                         />
                                     </View>
                                     <FormControl.ErrorMessage>
@@ -247,15 +246,15 @@ export default (props) => {
                                                           flex: 1,
                                                           alignItems: 'center'
                                                       }, getShadowCircleStyle(10, 10)]}>
-                                        <Image source={linkedInImage} w={10} h={10}></Image>
+                                        <Image source={linkedInImage} w={10} h={10} alt="img"></Image>
                                     </TouchableOpacity>
-                                    <TouchableOpacity alignItems={'center'} justifyContent={'center'}
-                                                      style={[{
-                                                          flex: 1,
-                                                          alignItems: 'center'
-                                                      }, getShadowCircleStyle(10, 10)]}>
-                                        <Image source={facebookImage} w={10} h={10}></Image>
-                                    </TouchableOpacity>
+                                    {/*<TouchableOpacity alignItems={'center'} justifyContent={'center'}*/}
+                                    {/*                  style={[{*/}
+                                    {/*                      flex: 1,*/}
+                                    {/*                      alignItems: 'center'*/}
+                                    {/*                  }, getShadowCircleStyle(10, 10)]}>*/}
+                                    {/*    <Image source={facebookImage} w={10} h={10}></Image>*/}
+                                    {/*</TouchableOpacity>*/}
 
                                     <TouchableOpacity onPress={handleLoginGoogle} flex={1} alignItems={'center'}
                                                       justifyContent={'center'}
@@ -263,7 +262,7 @@ export default (props) => {
                                                           flex: 1,
                                                           alignItems: 'center'
                                                       }, getShadowCircleStyle(10, 10)]}>
-                                        <Image source={googleImage} w={10} h={10}></Image>
+                                        <Image source={googleImage} w={10} h={10} alt="img"></Image>
                                     </TouchableOpacity>
                                 </View>
 

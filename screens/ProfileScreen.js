@@ -226,7 +226,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                                     <Image mt={5} mb={10} w={220} h={220} source={{uri: image}}
                                            style={[
                                                {resizeMode: 'cover'}]}
-                                           borderRadius={110} borderWidth={2} borderColor={'white'}/>
+                                           borderRadius={110} borderWidth={2} borderColor={'white'} alt="img"/>
                                 </View> :
                                 <View style={[{
                                     width: 220,
@@ -255,7 +255,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                     zIndex: -1,
                     width: '150%',
                     height: 100
-                }}></Image>
+                }} alt="img"></Image>
             </View>
 
 
@@ -264,7 +264,6 @@ const ProfileScreen = ({authDuck, navigation}) => {
                     <FormControl isInvalid w="100%">
                         <View flex={1} mb={4} style={getShadowCircleStyle(10, 10)}>
                             <Input size={'2xl'} h={50} placeholder={'Nombre(s)'} borderRadius={25}
-                                   placeholderTextColor={Colors.red} textAlign={'center'}
                                    value={name}
                                    onChangeText={val => setName(val)}
                                    backgroundColor={Colors.white}
@@ -275,8 +274,6 @@ const ProfileScreen = ({authDuck, navigation}) => {
                         <View flex={1} mb={4} style={getShadowCircleStyle(10, 10)}>
                             <Input size={'2xl'} height={50} placeholder={'Apellidos'}
                                    borderRadius={20}
-                                   placeholderTextColor={Colors.red}
-                                   textAlign={'center'}
                                    value={lastName}
                                    onChangeText={val => setLastName(val)}
                                    backgroundColor={Colors.white}
@@ -287,7 +284,6 @@ const ProfileScreen = ({authDuck, navigation}) => {
                         <View flex={1} mb={4} style={getShadowCircleStyle(10, 10)}>
                             <Input size={'2xl'} height={50} placeholder={'Correo electrónico'}
                                    borderRadius={20}
-                                   placeholderTextColor={Colors.red} textAlign={'center'}
                                    value={email}
                                    onChangeText={val => setEmail(val)}
                                    backgroundColor={Colors.white}
@@ -300,7 +296,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                         {/*<Input size={'2xl'} height={50} mb={6} placeholder={'Confirmar contraseña'} borderRadius={20}*/}
                         {/*       placeholderTextColor={Colors.red} textAlign={'center'}/>*/}
                         <View mb={8}>
-                            <Text textAlign={'center'} fontSize={20} color={Colors.red} mb={4}>Género</Text>
+                            <Text textAlign={'center'} fontSize={20} color={'gray.600'} mb={4}>Género</Text>
                             <View flexDir={'row'} justifyContent={'space-between'} px={20}>
                                 <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
                                           value="danger" colorScheme="orange" isChecked={gender === 0 ? true : false}
@@ -326,7 +322,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                         </View>
 
                         <View mb={8}>
-                            <Text textAlign={'center'} fontSize={20} color={Colors.red} mb={4}>Compartir mi
+                            <Text textAlign={'center'} fontSize={20} color={'gray.600'} mb={4}>Compartir mi
                                 información</Text>
                             <View flexDir={'row'} justifyContent={'space-between'} px={20} mx={10}>
                                 <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}

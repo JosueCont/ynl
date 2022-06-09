@@ -35,10 +35,13 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
 
     const [feelings, setFeelings] = useState(null);
+    const [colorMainFeeling, setColorMainFeeling] = useState('FFFF');
     const isFocused = useIsFocused();
     const [visible, setVisible] = useState(true);
     const [loading, setLoading] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
     const [groups, setGroups] = useState(null);
+    const [groupsRequests, setGroupsRequests] = useState([])
     const [lastEmotion, setLastEmotion] = useState(null);
     const [lastEmotion1, setLastEmotion1] = useState(null);
     const [lastEmotion2, setLastEmotion2] = useState(null);
@@ -56,7 +59,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
         console.log(authDuck.emotionStatus)
         if (intro === false) {
             navigation.navigate('IntroScreen')
-        } else if (authDuck.emotionStatus === 0) {
+        } else if (authDuck.emotionStatus === 0 || authDuck.emotionStatus === undefined) {
             navigation.navigate('RouletteStep1Screen')
         }
 
@@ -99,6 +102,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
         try {
             setLoading(true)
             console.log('focused')
+            await getGroupsRequests();
             await getGroups()
             await getHome()
 
@@ -110,9 +114,19 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                 setLoading(false)
             }, 200)
         } finally {
-
+            setRefreshing(false)
+            setLoading(false)
         }
 
+    }
+
+    const getGroupsRequests = async () => {
+        try {
+            const response = await ApiApp.getGroupsRequests(authDuck.user.id)
+            setGroupsRequests(response.data.data)
+        } catch (ex) {
+            console.log(ex)
+        }
     }
 
 
@@ -123,14 +137,26 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             const res = await ApiApp.getHomeData(authDuck.user.id)
 
             console.log(res.data.data.userInfo)
-            setDays(res.data.data.days)
-            setLastEmotion(res.data.data.lastEmotion.name)
-            setLastEmotion1(res.data.data.lastEmotion.child.name)
-            setLastEmotion2(res.data.data.lastEmotion.child.child.name)
-            setMainFeeling(res.data.data.lastEmotion)
-            setImage(res.data.data.userInfo.avatar.formats.small.url)
-            setFullName(res.data.data.userInfo.fullName)
-            setIntro(res.data.data.userInfo.intro)
+            if (res && res.data && res.data.data){
+                setDays(res.data.data.days)
+                if (res.data.data.lastEmotion){
+                    setLastEmotion(res.data.data.lastEmotion.name)
+                    setMainFeeling(res.data.data.lastEmotion)
+
+                    if(res.data.data.lastEmotion.child){
+                        setLastEmotion1(res.data.data.lastEmotion.child.name)
+                        setLastEmotion2(res.data.data.lastEmotion.child.child.name)
+                        setColorMainFeeling(res.data.data.lastEmotion.child.child.color)
+                    }
+                }
+                if(res.data.data.userInfo){
+                    if(res.data.data.userInfo.avatar){
+                        setImage(res.data.data.userInfo.avatar.formats.small.url)
+                    }
+                    setFullName(res.data.data.userInfo.fullName)
+                    setIntro(res.data.data.userInfo.intro)
+                }
+            }
         } catch (e) {
             console.log(e)
         } finally {
@@ -141,7 +167,9 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const getGroups = async () => {
         try {
             const response = await ApiApp.getMyGroups(authDuck.user.id)
-            setGroups(response.data.data)
+
+            console.log("groups", response.data.data.entries)
+            setGroups(response.data.data.entries)
             setLoading(false)
         } catch (e) {
             console.log(e, 61)
@@ -212,19 +240,22 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                     <RefreshControl
                         style={{backgroundColor: 'white'}}
                         tintColor={Colors.red}
-                        refreshing={loading}
-                        onRefresh={() => boot()}
+                        refreshing={loading && refreshing}
+                        onRefresh={() => {
+                            setRefreshing(true)
+                            boot()
+                        }}
                     />
                 }>
                 <View flex={1} alignItems={'center'} justifyContent={'center'} mb={2}>
                     {
                         loading === true ?
                             <View style={getShadowCircleStyle(10, 10)}>
-                                <Skeleton endColor="warmGray.50" size="220" rounded="full" mt={5} mb={10}/>
+                                <Skeleton endColor="warmGray.50" size="220" rounded="full"/>
                             </View> :
                             image ?
                                 <View style={getShadowCircleStyle(10, 10)}>
-                                    <Image w={220} h={220} source={{uri: image}}
+                                    <Image w={220} h={220} source={{uri: image}} alt="img"
                                            style={[
                                                {resizeMode: 'cover'}]}
                                            borderRadius={110} borderWidth={2} borderColor={'white'}/>
@@ -251,7 +282,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                         zIndex: -1,
                         width: '150%',
                         height: 100
-                    }}></Image>
+                    }} alt="img"></Image>
                 </View>
                 <View flex={1} mx={4}>
 
@@ -304,11 +335,11 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                             <View
                                 flexDir={'row'}
                                 mb={8}
-                                bgColor={Colors.gray}
+                                bgColor={'#' + colorMainFeeling}
                                 style={getShadowCircleStyle(10, 10)}
                                 borderRadius={30}
                                 p={3}>
-                                <View flex={1} height={70} alignItems={'center'} justifyContent={'center'}>
+                                <View flex={0.5} height={70} alignItems={'center'} justifyContent={'center'}>
 
                                     {
                                         _.has(mainFeeling, 'icon.url') &&
@@ -318,25 +349,35 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
 
                                 </View>
-                                <View flex={1} height={70} mr={1}>
-                                    <TouchableOpacity
+                                {
+                                    !lastEmotion ? <TouchableOpacity
                                         onPress={() => {
-                                            navigation.navigate('HistoryFeelingScreen')
-                                        }}
-                                        style={{
-                                            flex: 1,
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            borderRadius: 10
-                                        }}>
-                                        <Text fontSize={12}>Última emoción</Text>
-                                        <Text fontSize={26} color={'#' + _.get(mainFeeling, 'color', '000000')}
-                                              numberOfLines={1}
-                                              adjustsFontSizeToFit>{lastEmotion} </Text>
-                                        <Text fontSize={12} adjustsFontSizeToFit
-                                              numberOfLines={1}>{lastEmotion2} - {lastEmotion1} </Text>
-                                    </TouchableOpacity>
-                                </View>
+                                            navigation.navigate('RouletteStep1Screen')
+                                        }}><Text style={{fontSize:20,color:'#FF5E00',fontWeight:'bold',marginTop:10}}>Registra tu primera emoción</Text></TouchableOpacity> : null
+                                }
+
+                                {
+                                    lastEmotion && <View flex={1} height={70} mr={1} >
+                                        <TouchableOpacity
+                                            onPress={() => {
+                                                navigation.navigate('HistoryFeelingScreen')
+                                            }}
+                                            style={{
+                                                flex: 1,
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                borderRadius: 10
+                                            }}>
+                                            <Text fontSize={12}>Última emoción</Text>
+                                            <Text  color={'white'} style={{fontWeight: 'bold'}}
+                                                   fontSize={20}
+                                                   adjustsFontSizeToFit>{lastEmotion}</Text>
+                                            <Text color={'white'} fontSize={16} adjustsFontSizeToFit
+                                                  numberOfLines={1}>{lastEmotion1} - {lastEmotion2} </Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                }
+
                             </View>
                     }
                     <View flexDir={'row'} mb={4} height={70}>
@@ -398,7 +439,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                     borderRadius: 10
                                 }, getShadowCircleStyle(10, 10)]}
                                 onPress={() => {
-                                    if (groups.length === 0) {
+                                    if (groups.length === 0 && groupsRequests.length === 0) {
                                         navigation.navigate('GroupsStartScreen')
                                     } else {
                                         navigation.navigate('GroupsScreen')

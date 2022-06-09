@@ -1,14 +1,56 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from "react";
 import {DrawerContentScrollView,} from "@react-navigation/drawer";
 import {connect} from "react-redux";
 import {ImageBackground, TouchableOpacity} from "react-native";
-import sidebarImage from "../assets/sidebar.png";
+import sidebarImage from "../assets/bgmenu.png";
 import {Image, Text, View} from "native-base";
 import logoSmall from "../assets/logoSmall.png";
 import {logOutAction} from "../redux/ducks/authDuck";
+import ApiApp from "../utils/ApiApp";
 
 
-const CustomDrawerContent = ({navigation, navigationDuck, accountDuck, logOutAction, ...props}) => {
+const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck, logOutAction, ...props}) => {
+
+    const [groups, setGroups] = useState([]);
+    const [groupsRequests, setGroupsRequests] = useState([])
+
+    useEffect(() => {
+        getGroupsRequests();
+        getGroups();
+    }, [])
+
+    const redirectValidation = async () => {
+        try {
+            if (groups.length === 0 && groupsRequests.length === 0) {
+                navigation.navigate('GroupsStartScreen')
+            } else {
+                navigation.navigate('GroupsScreen')
+            }
+        } catch (ex) {
+            console.log(ex,' CustomDraveContent Error')
+        }
+
+    }
+
+    const getGroupsRequests = async () => {
+        try {
+            const response = await ApiApp.getGroupsRequests(authDuck.user.id)
+            setGroupsRequests(response.data.data)
+        } catch (ex) {
+            console.log(ex)
+        }
+    }
+
+    const getGroups = async () => {
+        try {
+            const response = await ApiApp.getMyGroups(authDuck.user.id)
+
+            setGroups(response.data.data)
+        } catch (e) {
+            console.log(e, 61)
+        }
+
+    }
 
 
     const logoutFunction = async () => {
@@ -28,7 +70,7 @@ const CustomDrawerContent = ({navigation, navigationDuck, accountDuck, logOutAct
         >
             <ImageBackground source={sidebarImage} style={{flex: 1}}>
                 <View flex={0.5} alignItems={'center'} justifyContent={'center'}>
-                    <Image source={logoSmall}></Image>
+                    <Image source={logoSmall} alt="img"></Image>
                 </View>
                 <View flex={1} alignItems={'center'}>
                     <TouchableOpacity onPress={() => {
@@ -36,10 +78,7 @@ const CustomDrawerContent = ({navigation, navigationDuck, accountDuck, logOutAct
                     }}>
                         <Text color={'white'} fontSize={20} my={2}>Perfil</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => {
-
-                        navigation.navigate('GroupsScreen')
-                    }}>
+                    <TouchableOpacity onPress={() => redirectValidation()}>
                         <Text color={'white'} fontSize={20} my={2}>Mis grupos</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {
@@ -64,6 +103,7 @@ const CustomDrawerContent = ({navigation, navigationDuck, accountDuck, logOutAct
 
 const mapState = (state) => {
     return {
+        authDuck: state.authDuck,
         navigationDuck: state.navigationDuck,
         accountDuck: state.accountDuck
     }

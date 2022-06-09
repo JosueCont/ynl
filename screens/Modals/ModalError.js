@@ -11,7 +11,6 @@ const ModalError = ({visible, setVisible, text = 'Ocurrio un error, intentalo mÃ
             transparent={true}
             visible={visible}
             onRequestClose={() => {
-                Alert.alert("Modal has been closed.");
                 setVisible(!visible);
             }}
         >

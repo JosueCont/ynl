@@ -81,11 +81,11 @@ export let loginEmail = (username, password) => async (dispatch) => {
         await saveUserData(response.data.user, response.data.jwt)
         dispatch({type: LOGIN_EMAIL_SUCCESS, payload: {user: response.data.user, jwt: response.data.jwt}});
         console.log('login exitoso con email', response.data)
-        return true
+        return {status:200, message:'ok'}
     } catch (e) {
-        console.log('errorr====>', e, 66)
         dispatch({type: LOGIN_EMAIL_ERROR});
-        return false
+        console.log('status code', e.response.status)
+        return {status:e.response.status, message:e.response.data.error.message}
     }
 }
 

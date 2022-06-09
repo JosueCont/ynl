@@ -98,7 +98,7 @@ class ApiApp {
     }
 
     static getMyGroups = (userId) => {
-        let url = `/api/groups?populate=*&filters[owner][id][$eq]=${userId}`
+        let url = `/api/listByUserId?userId=${userId}`
         return ApiApp.ApisType(url, 'get')
     }
 
@@ -174,7 +174,8 @@ class ApiApp {
 
 
     static getProfile = (userId) => {
-        return ApiApp.ApisType(`/api/users/${userId}?populate=avatar`, "get");
+        let url = `/api/users/${userId}?populate[avatar][sort]=id:desc`;
+        return ApiApp.ApisType(url, "get");
     };
 
 
@@ -209,7 +210,22 @@ class ApiApp {
 
     static groupsDelete = (groupId) => {
         return ApiApp.ApisType(`/api/groups/${groupId}`, 'delete');
+    }
 
+    static groupStats=(groupId, option)=>{
+        return ApiApp.ApisType(`/api/getFeelingUsers?groupId=${groupId}&option=${option}`, 'get');
+    }
+
+    static getUserByEmail=(email)=>{
+        return ApiApp.ApisType(`/api/users?filters[$and][0][email][$eq]=${email}`, 'get');
+    }
+
+    static deleteMemberGroup = (data) => {
+        return ApiApp.ApisType(`/api/delete-member-group`, 'post', data);
+    }
+
+    static addMemberGroup = (data) => {
+        return ApiApp.ApisType(`/api/add-member-group`, 'post', data);
     }
 
     static _baseURL = baseURL;

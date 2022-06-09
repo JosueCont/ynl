@@ -16,6 +16,7 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
     const [activeButton, setActiveButton] = useState(2)
     const [countFeeling, setCountFeeling] = useState([])
     const [loading, setLoading] = useState(null);
+    const [refreshing, setRefreshing] = useState(null);
     const [dataPie, setDataPie] = useState(null);
 
     useEffect(() => {
@@ -23,6 +24,11 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
             boot()
         }
     }, [isFocused])
+
+    const refreshScreen=()=>{
+        setRefreshing(true)
+        boot();
+    }
 
     const boot = async () => {
         setLoading(true)
@@ -34,6 +40,7 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
 
         } finally {
             setLoading(false)
+            setRefreshing(false)
         }
 
     }
@@ -102,8 +109,8 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
                             <RefreshControl
                                 style={{backgroundColor: 'white'}}
                                 tintColor={Colors.red}
-                                refreshing={loading}
-                                onRefresh={boot}
+                                refreshing={loading && refreshing}
+                                onRefresh={refreshScreen}
                             />
                         }>
                 <View mx={2} my={2} alignItems={'center'} mb={4}>
@@ -132,14 +139,14 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
                             getShadowCircleStyle(10, 10), {
                                 backgroundColor: 'white'
                             }]}
-                              borderRadius={30} mx={2} my={2} alignItems={'center'}>
+                              borderRadius={30} alignItems={'center'}>
                             <Stack direction="row" mb="2.5" mt="1.5" space={4} p={2}>
 
                                 {
                                     countFeeling && countFeeling.map((ele, i) => {
                                         return (
                                             <View key={i}>
-                                                <Image source={{uri: ele.icon}} width={30} height={30} mb={1}/>
+                                                <Image source={{uri: ele.icon}} width={30} height={30} mb={1} alt="img"/>
                                                 <Text textAlign={'center'} color={`#${ele.color}`} fontSize={14}
                                                       style={{display: 'block'}}>{ele.count}</Text>
                                             </View>
