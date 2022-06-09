@@ -1,5 +1,5 @@
 import React from "react";
-import {Avatar, Box, Button, FlatList, HStack, Spacer, Text, VStack} from "native-base";
+import {Avatar, Box, Button, FlatList, HStack, Spacer, Text, VStack, ScrollView} from "native-base";
 import {Ionicons} from "@expo/vector-icons";
 import {connect} from "react-redux";
 import {getUsersByUserName} from "../../../redux/ducks/groupDuck";
@@ -9,17 +9,19 @@ const GroupsListUsers = ({usersSelected, groupDuck, registerGroup, isUserSelecte
     return (
         <VStack w={'100%'} flex={1}>
             <HStack mb={5} w={'100%'}>
-                {
-                    usersSelected && usersSelected.map((ele, i) => {
-                        return (
-                            <Text borderRadius={20}
-                                    style={{backgroundColor: '#FD5535', padding: 5, color: 'white'}} fontSize={10}
-                                    ml={1}>
-                                {ele.username}
-                            </Text>
-                        )
-                    })
-                }
+                <ScrollView _contentContainerStyle={{alignItems: 'center', backgroundColor: 'white'}} horizontal={true}>
+                    {
+                        usersSelected && usersSelected.map((ele, i) => {
+                            return (
+                                <Text borderRadius={20}
+                                        style={{backgroundColor: '#FD5535', padding: 5, color: 'white'}} fontSize={10}
+                                        ml={1}>
+                                    {ele.username}
+                                </Text>
+                            )
+                        })
+                    }
+                </ScrollView>
             </HStack>
 
             <Text size={'sm'} mb={4}>Sugerencias</Text>
