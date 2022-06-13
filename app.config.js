@@ -32,13 +32,13 @@ const commonConfig = {
 };
 
 const ios = {
-    buildNumber: "14",
+    buildNumber: "15",
     supportsTablet: false,
     bundleIdentifier: "com.hiumanlab.ynl"
 };
 
 const android = {
-    versionCode: 7,
+    versionCode: 8,
     adaptiveIcon: {
         foregroundImage: "./assets/adaptive-icon.png",
         backgroundImage: "./assets/adaptive-icon-bg.png"
