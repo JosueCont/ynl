@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {
     Button,
     Center,
@@ -16,7 +16,8 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {useFormik} from 'formik';
 import * as Yup from 'yup'
-import * as Google from 'expo-google-app-auth';
+//import * as Google from 'expo-google-app-auth';
+import * as Google from 'expo-auth-session/providers/google';
 import {getShadowCircleStyle, resolvePlatform} from "../../utils/functions";
 //import LinkedInModal from 'react-native-linkedin'
 import {Colors} from "../../utils/Colors";
@@ -35,6 +36,16 @@ export default (props) => {
     const [googleSubmitting, setGoogleSubmitting] = useState(false)
     const [token, setToken] = useState('')
     const [openLinkedIn, setOpenLinkedIn] = useState(false)
+
+    const [request, responseGoogle, promptAsync] = Google.useAuthRequest(
+        {
+            iosClientId:  "139145047906-9r09uc555jsi528qnrbjs440g84h1okt.apps.googleusercontent.com",
+            androidClientId: "139145047906-u7lpmp4vuhk0cd3hc88f3k8tv9afe01b.apps.googleusercontent.com",
+            expoClientId: "139145047906-8teh3chgt6as7mnhg7c5mrco0fka7bea.apps.googleusercontent.com" 
+        }
+        
+      );
+    const [accessToken, setAccessTockenGoogle] = useState();
 
 
     const REDIRECT_URI = "https://ynl-api.herokuapp.com/api/connect/linkedin/"; // this needs to be the same as your linkedin app panel
@@ -117,6 +128,31 @@ export default (props) => {
           }
         }
       }
+
+      useEffect(()=>{
+        if (responseGoogle?.type === 'success') {
+            setAccessTockenGoogle(responseGoogle.authentication.accessToken);
+            console.log(responseGoogle);
+            getUserData();            
+        }        
+    }, [responseGoogle]);
+
+    const getUserData = async() => {
+        setGoogleSubmitting(true);
+        console.log(responseGoogle.authentication.state);
+        let userInfo = await fetch(`https://www.googleapis.com/userinfo/v2/me/`,{ //${response.authentication.state}?personFields=birthdays,genders&access_token=${response.authentication.accessToken}
+            headers: {Authorization: `Bearer ${responseGoogle.authentication.accessToken}`}
+        })
+        let UserDataGoogle;
+        props.onLoginGoogle(responseGoogle.authentication.accessToken)
+        userInfo.json().then(data=>{
+            UserDataGoogle = data;
+            console.log(data);
+            logInGoogle(UserDataGoogle);
+            setGoogleSubmitting(false);
+        })
+        
+    }
 
 
     const handleLoginGoogle = async () => {
@@ -256,7 +292,7 @@ export default (props) => {
                                     {/*    <Image source={facebookImage} w={10} h={10}></Image>*/}
                                     {/*</TouchableOpacity>*/}
 
-                                    <TouchableOpacity onPress={handleLoginGoogle} flex={1} alignItems={'center'}
+                                    <TouchableOpacity onPress={()=>{ promptAsync({showInRecents: true})}} flex={1} alignItems={'center'}
                                                       justifyContent={'center'}
                                                       style={[{
                                                           flex: 1,
