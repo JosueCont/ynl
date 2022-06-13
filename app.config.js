@@ -41,7 +41,7 @@ const android = {
     versionCode: 7,
     adaptiveIcon: {
         foregroundImage: "./assets/adaptive-icon.png",
-        backgroundColor: "#FFFFFF"
+        backgroundImage: "./assets/adaptive-icon-bg.png"
     },
     package: "com.hiumanlab.ynl",
     permissions: []
