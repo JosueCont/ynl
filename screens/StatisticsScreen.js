@@ -147,8 +147,7 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
                                         return (
                                             <View key={i}>
                                                 <Image source={{uri: ele.icon}} width={30} height={30} mb={1} alt="img"/>
-                                                <Text textAlign={'center'} color={`#${ele.color}`} fontSize={14}
-                                                      style={{display: 'block'}}>{ele.count}</Text>
+                                                <Text textAlign={'center'} color={`#${ele.color}`} fontSize={14}>{ele.count}</Text>
                                             </View>
                                         )
                                     })
