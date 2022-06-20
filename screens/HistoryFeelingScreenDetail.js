@@ -61,7 +61,7 @@ const HistoryFeelingScreenDetail = ({authDuck, route, navigation}) => {
                                     <View
                                         flexDir={'row'}
                                         mb={2}
-                                        bgColor={'#' + _.get(ele, 'feeling.attributes.parent.data.attributes.parent.data.attributes.color', '5F6367')}
+                                        bgColor={'#' + _.get(ele, 'feeling.attributes.parent.data.attributes.color', '5F6367')}
                                         style={getShadowCircleStyle(10, 10)}
                                         borderRadius={10}
                                         py={3}
@@ -69,14 +69,22 @@ const HistoryFeelingScreenDetail = ({authDuck, route, navigation}) => {
                                     >
                                         <View flex={0.5} alignItems={'center'} justifyContent={'center'}>
                                             <Image  style={{height: 60, width: 60}} alt="img"
-                                                   source={{uri: `${_.get(ele, 'feeling.attributes.parent.data.attributes.parent.data.attributes.icon.data.attributes.url', 'https://app-ynl.s3.us-west-1.amazonaws.com/triste_4a4900f0cd.png')}`}}/>
+                                                   source={{uri: `${_.get(ele, 'feeling.attributes.parent.data.attributes.icon.data.attributes.url', 'https://app-ynl.s3.us-west-1.amazonaws.com/triste_4a4900f0cd.png')}`}}/>
                                         </View>
                                         <View flex={1} justifyContent={'center'}>
                                             <Text color={'white'} style={{fontWeight: 'bold'}}
                                                   fontSize={20}>{ele.feeling.attributes.name} </Text>
 
                                             <Text color={'white'} fontSize={16}
-                                                  mb={1}>{ele.feeling.attributes.parent.data.attributes.name} - {ele.feeling.attributes.parent.data.attributes.parent.data.attributes.name}</Text>
+                                                  mb={1}>{ele.feeling.attributes.parent.data.attributes.name}</Text>
+
+
+                                            {
+                                                ele.comments && <Text color={'white'} fontSize={10}
+                                                                      mb={1}>{ele.comments}</Text>
+                                            }
+
+
                                             <Text color={'white'}
                                                   fontSize={9}>{moment(ele.date).format('hh:mm A')}</Text>
                                         </View>

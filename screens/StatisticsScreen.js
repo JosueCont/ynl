@@ -75,19 +75,19 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
     }
 
     const getHistoryData = async (userId) => {
-        console.log('entra getHistory')
         try {
             let startDate = '2020-01-01', enDate = '2100-01-01';
             const res = await ApiApp.getHistoryFeelings(startDate, enDate, userId)
             let arrayDates = _.map(res.data.data, (obj) => {
                 let dataItem = {
                     date: obj.attributes.createdAt,
-                    color: _.get(obj, 'attributes.feeling.data.attributes.parent.data.attributes.parent.data.attributes.color', 'red'),
+                    color: _.get(obj, 'attributes.feeling.data.attributes.parent.data.attributes.color', 'red'),
                     feeling: obj.attributes.feeling.data,
                 }
 
                 return dataItem;
             })
+
 
             setHistoryData(arrayDates)
 

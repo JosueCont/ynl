@@ -34,8 +34,11 @@ const CalendarChartCustom = ({historyData}) => {
 
     useEffect(()=>{
          if(historyData){
+             console.log(historyData)
              let arr = {}
+             historyData = _.sortBy(historyData, ['date'])
              historyData.forEach((obj, i)=>{
+                 console.log(obj.date)
                  arr[obj.date.split('T')[0]] = {textColor:'white',color: `#${obj.color}`, endingDay: true, startingDay: true}
              })
 

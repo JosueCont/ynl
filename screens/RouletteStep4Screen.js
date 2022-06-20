@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Button, Image, Text, View} from "native-base";
+import {Button, Image, Text, View, TextArea} from "native-base";
 import {connect} from "react-redux";
 import {ImageBackground} from "react-native";
 import calendar from '../assets/calendaricon.png'
@@ -14,11 +14,11 @@ import {emotionStatusAction} from "../redux/ducks/authDuck";
 const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionStatusAction}) => {
 
     const [loading, setLoading] = useState(false)
+    const [comment, setComment] = useState(null)
 
     useEffect(() => {
-
         navigation.setOptions({
-            headerStyle: {backgroundColor: '#' + route.params.emotion.attributes.color}
+            headerStyle: {backgroundColor: '#' + route.params.color}
         })
     }, [route.params.emotion.id])
 
@@ -29,7 +29,8 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
             let data = {
                 label: route.params.emotion.attributes.name,
                 feeling: route.params.emotion.id,
-                user: authDuck.user.id
+                user: authDuck.user.id,
+                comments:comment
             }
             let res = await saveEmotion({data})
             if (res) {
@@ -48,33 +49,45 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
     }
 
     return (
-        <ScreenBaseV1 color={'#' + route.params.emotion.attributes.color}>
+        <ScreenBaseV1 color={'#' + route.params.color}>
             <View flex={1} mx={4} w={'100%'}>
 
                 <View flex={1} alignItems={'center'}>
-                    <Image mb={2} size={'xs'} source={logo} alt="img"/>
+                    {/*<Image mb={2} size={'xs'} source={logo} alt="img"/>*/}
                     <Text
-                        fontSize={28} textAlign={'center'} color={'white'}>Hoy te sientes...</Text>
+                        style={styles.shadow}
+                        fontSize={28} textAlign={'center'} color={'white'}>Hoy te sientes {route.params.emotion && route.params.emotion.attributes.name.toUpperCase()}</Text>
                     <View w={200} h={200} bgColor={'white'} borderRadius={100} my={10} alignItems={'center'}
                           justifyContent={'center'}>
                         {
-                            _.has(route.params, 'emotion.attributes.parent.data.attributes.parent.data.attributes.icon.data.attributes.url') &&
+                            _.has(route.params, 'parent.attributes.animation.data.attributes.url') &&
                             <Image
-                                source={{uri: route.params.emotion.attributes.parent.data.attributes.parent.data.attributes.icon.data.attributes.url}}
-                                style={{width: 100, height: 200, resizeMode: 'contain'}} alt="img"></Image>
-
+                                source={{uri: route.params.parent.attributes.animation.data.attributes.url}}
+                                style={{width: '80%', height: 250, resizeMode: 'contain'}} alt="img"></Image>
                         }
                     </View>
-                    <Text bold color={Colors.red}
-                          fontSize={30}>{route.params.emotion && route.params.emotion.attributes.name.toUpperCase()}</Text>
-
                     <ImageBackground source={calendar} style={{width: 80}} resizeMode={'contain'}>
                         <Text style={styles.textMonth}>{getMonth()}</Text>
                         <Text style={styles.textDay}>{getDay()}</Text>
                     </ImageBackground>
+
+
+
+
+
+
+
                 </View>
 
-                <View flex={0.1} mx={4}>
+                <View mb={6} alignItems={'center'}>
+                    <Text bold color={'#FFF'}
+                          style={styles.shadow}
+                          fontSize={20}>Cuéntanos porqué</Text>
+                    <TextArea h={20} onChangeText={(text)=>setComment(text)} value={comment} backgroundColor={'#FFF'} borderRadius={10} w="90%" maxW="400" />
+                </View>
+
+
+                <View mb={6} mx={4}>
                     <Button isLoading={loading} size="md" colorScheme={'orange'}
                             onPress={() => saveFeelings()}>
                         Terminar
@@ -94,7 +107,16 @@ const mapState = (state) => {
     }
 }
 
+
+
+
+
 const styles = {
+    shadow:{
+        textShadowColor: 'rgba(0, 0, 0, 0.50)',
+        textShadowOffset: {width: -1, height: 1},
+        textShadowRadius: 10
+    },
     container: {
         flex: 1,
         flexDirection: 'column',

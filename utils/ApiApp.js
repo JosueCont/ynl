@@ -195,7 +195,7 @@ class ApiApp {
      */
 
     static getHistoryFeelings = async (startDate, endDate, userId) => {
-        return ApiApp.ApisType(`/api/feeling-records?populate[feeling][populate][parent][populate][parent][populate][icon]=*&filters[createdAt][$gte]=${startDate}&filters[createdAt][$lt]=${endDate}&filters[user][id]=${userId}`, "get");
+        return ApiApp.ApisType(`/api/feeling-records?populate[feeling][populate][parent][populate][icon]=*&filters[createdAt][$gte]=${startDate}&filters[createdAt][$lt]=${endDate}&filters[user][id]=${userId}`, "get");
     }
 
     static getUserProgress = async (userID = '', option = '') => {

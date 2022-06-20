@@ -44,7 +44,6 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const [groupsRequests, setGroupsRequests] = useState([])
     const [lastEmotion, setLastEmotion] = useState(null);
     const [lastEmotion1, setLastEmotion1] = useState(null);
-    const [lastEmotion2, setLastEmotion2] = useState(null);
     const [mainFeeling, setMainFeeling] = useState(null)
 
     const [days, setDays] = useState([]);
@@ -136,17 +135,17 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
             const res = await ApiApp.getHomeData(authDuck.user.id)
 
-            //console.log(res.data.data.userInfo)
+            console.log('consolelog?===',res.data.data)
             if (_.get(res,'data.data', null)){
                 setDays(res.data.data.days)
                 if (res.data.data.lastEmotion){
+                    console.log('lastEmotion===>', res.data.data.lastEmotion)
                     setLastEmotion(res.data.data.lastEmotion.name)
                     setMainFeeling(res.data.data.lastEmotion)
 
                     if(res.data.data.lastEmotion.child){
                         setLastEmotion1(res.data.data.lastEmotion.child.name)
-                        setLastEmotion2(res.data.data.lastEmotion.child.child.name)
-                        setColorMainFeeling(res.data.data.lastEmotion.child.child.color)
+                        setColorMainFeeling(res.data.data.lastEmotion.child.color)
                     }
                 }
                 if(res.data.data.userInfo){
@@ -354,7 +353,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
                                 </View>
                                 {
-                                    !lastEmotion ? <TouchableOpacity
+                                    (!loading && !lastEmotion ) ? <TouchableOpacity
                                         onPress={() => {
                                             navigation.navigate('RouletteStep1Screen')
                                         }}><Text style={{fontSize:20,color:'#FF5E00',fontWeight:'bold',marginTop:10}}>Registra tu primera emoción</Text></TouchableOpacity> : null
@@ -377,7 +376,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                                    fontSize={20}
                                                    adjustsFontSizeToFit>{lastEmotion}</Text>
                                             <Text color={'white'} fontSize={16} adjustsFontSizeToFit
-                                                  numberOfLines={1}>{lastEmotion1} - {lastEmotion2} </Text>
+                                                  numberOfLines={1}>{lastEmotion1}  </Text>
                                         </TouchableOpacity>
                                     </View>
                                 }

@@ -5,7 +5,7 @@ import {useSharedValue} from "react-native-reanimated";
 import {Button, Image, Text, View} from "native-base";
 import ScreenBaseV1 from "./Components/ScreenBaseV1";
 import {Colors} from "../utils/Colors";
-import pointerImage from '../assets/arrow2.png'
+import pointerImage from '../assets/arrow2.png';
 import ApiApp from "../utils/ApiApp";
 import _ from "lodash";
 import * as GH from 'react-native-gesture-handler';
@@ -16,13 +16,13 @@ const RouletteStep1Screen = ({navigation}) => {
     const [parents, setParents] = useState([]);
 
     const emotions = [
-        {id: 4, name: 'Contento', range: [0, 60], color: '#F9CF67'},
-        {id: 3, name: 'En paz', range: [60, 120], color: '#F0A4BB'},
-        {id: 3, name: 'En paz', range: [120, 180], color: '#F6AA80'},
-        {id: 2, name: 'Inspirado', range: [180, 240], color: '#CFBBEF'},
-        {id: 1, name: 'Abierto', range: [240, 300], color: '#EF7C7C'},
-        {id: 5, name: 'Confundido', range: [300, 360], color: '#BDEE9D'},
-        {id: 6, name: 'Molesto', range: [300, 360], color: '#B9CFEE'}
+        {slug:'contento', name: 'Contento', range: [0, 60], color: '#F9CF67'},
+        {slug:'en-paz', name: 'En paz', range: [60, 120], color: '#BBEBFF'},
+        {slug:'inspirado', name: 'Inspirado', range: [120, 180], color: '#F0A4BB'},
+        {slug:'abierto', name: 'Abierto', range: [180, 240], color: '#70DDEC'},
+        {slug:'confundido', name: 'Confundido', range: [240, 300], color: '#F6AA80'},
+        {slug:'molesto', name: 'Molesto', range: [300, 360], color: '#EF7C7C'},
+        {slug:'deprimido', name: 'Deprimido', range: [300, 360], color: '#B9CFEE'}
     ]
 
     useEffect(() => {
@@ -80,7 +80,7 @@ const RouletteStep1Screen = ({navigation}) => {
                 <View flex={1} width={'100%'}>
 
                     <View flex={0.2} >
-                        <Text color={Colors.red} style={{fontWeight:'bold',fontSize:26, marginTop:30}}  textAlign={'center'}>¿Cómo te sientes hoy?</Text>
+                        <Text color={emotions[emotionPosition].color} style={{fontWeight:'bold',fontSize:30, marginTop:30}}  textAlign={'center'}>¿Cómo te sientes hoy?</Text>
                     </View>
                     <View flex={0.4} alignItems={'center'} justifyContent={'flex-end'}>
                         <Image alt={'roulette'} source={pointerImage} style={{resizeMode: 'contain'}} width={10} height={10}/>
@@ -100,13 +100,15 @@ const RouletteStep1Screen = ({navigation}) => {
 
                     {/*<View>*/}
                     {/*    {*/}
-                    {/*        <Text fontSize={24}>{emotions[emotionPosition].name}</Text>*/}
+                    {/*        <Text fontSize={24}>{emotions[emotionPosition].slug}</Text>*/}
                     {/*    }*/}
                     {/*</View>*/}
 
                     <View flex={0.1} mx={4}>
                         <Button colorScheme={'orange'}
-                                onPress={() => navigation.navigate('RouletteStep2Screen', {parentItem: _.find(parents, {id: emotions[emotionPosition].id})})}>Continuar</Button>
+                                onPress={() => navigation.navigate('RouletteStep2Screen', {parentItem: _.find(parents, (o)=> {
+                                        return o.attributes.slug_name === emotions[emotionPosition].slug
+                                    } )})}>Continuar</Button>
                     </View>
                 </View>
             </GH.GestureHandlerRootView>

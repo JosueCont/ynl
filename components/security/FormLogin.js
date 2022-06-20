@@ -185,7 +185,7 @@ export default (props) => {
 
     return (
         <NativeBaseProvider>
-            <Center flex={1} px="3">
+            <Center flex={1} px="1">
 
                 {openLinkedIn &&
                     <SafeAreaView style={{flex: 1}}>
@@ -202,7 +202,7 @@ export default (props) => {
                 }
                 {
                     !openLinkedIn &&
-                    <ScrollView p={10} bounces={false} flexGrow={1}>
+                    <ScrollView p={10} px={5} bounces={false} flexGrow={1}>
                         {/*<Heading flex={1} size="lg" fontWeight="600" color="coolGray.800" _dark={{*/}
                         {/*    color: "warmGray.50"*/}
                         {/*}}>*/}

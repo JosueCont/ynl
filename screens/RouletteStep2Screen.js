@@ -13,11 +13,15 @@ const RouletteStep2Screen = ({route, navigation}) => {
     const [subParents, setSubParents] = useState(null);
     const [loading, setLoading] = useState(null);
     const [subParentSelected, setSubParentSelected] = useState(null);
+    const [colorBack, setColorBack] = useState('FFF');
+
 
     useEffect(() => {
         getSubParents(route.params.parentItem.id)
+        console.log('param',route.params.parentItem.color)
+        console.log('color',route.params.parentItem.attributes.color)
         navigation.setOptions({
-            headerStyle: {backgroundColor: '#' + route.params.parentItem.attributes.color}
+            headerStyle: {backgroundColor:'#'+ route.params.parentItem.attributes.color}
         })
     }, [route.params.parentItem.id])
 
@@ -34,23 +38,24 @@ const RouletteStep2Screen = ({route, navigation}) => {
     }
 
     return (
-        <ScrollView style={{flex: 1, backgroundColor: '#' + route.params.parentItem.attributes.color}}
+        <ScrollView style={{flex: 1, backgroundColor:'#'+route.params.parentItem.attributes.color}}
                     contentContainerStyle={{flex: 1}}>
 
             <View flex={1} alignItems={'center'}>
                 <Text
+                    style={styles.shadow}
                     fontSize={28} textAlign={'center'} color={'white'}>Hoy te sientes...</Text>
                 <View w={200} h={200} bgColor={'white'} borderRadius={100} my={10} alignItems={'center'}
                       justifyContent={'center'}>
                     {
                         _.has(route.params, 'parentItem.attributes.icon.data.attributes.url') &&
                         <Image
-                            source={{uri: route.params.parentItem.attributes.icon.data.attributes.url}}
-                            style={{width: 100, height: 200, resizeMode: 'contain'}} alt="img"></Image>
+                            source={{uri: route.params.parentItem.attributes.animation.data.attributes.url}}
+                            style={{width: 150, height: 250, resizeMode: 'contain'}} alt="img"></Image>
 
                     }
                 </View>
-                <Text mb={2} color={'white'}>{`${route.params.parentItem.attributes.name}`}</Text>
+                <Text mb={2} color={'white'} style={styles.shadow}>{`${route.params.parentItem.attributes.name}`}</Text>
                 <Select
 
                     placeholderTextColor={'#' + route.params.parentItem.attributes.color} selectedValue={service}
@@ -61,7 +66,7 @@ const RouletteStep2Screen = ({route, navigation}) => {
                     bgColor: 'red.50'
                 }} mt={1} onValueChange={itemValue => {
                     setService(itemValue)
-                    navigation.navigate('RouletteStep3Screen', {parentItem: itemValue})
+                    navigation.navigate('RouletteStep4Screen', {parent: route.params.parentItem, emotion: itemValue, color:route.params.parentItem.attributes.color})
                 }}>
 
                     {
@@ -78,6 +83,13 @@ const RouletteStep2Screen = ({route, navigation}) => {
     )
 }
 
+const styles={
+    shadow:{
+        textShadowColor: 'rgba(0, 0, 0, 0.50)',
+        textShadowOffset: {width: -1, height: 1},
+        textShadowRadius: 10
+    }
+}
 
 const mapState = (state) => {
     return {

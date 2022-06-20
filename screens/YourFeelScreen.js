@@ -86,22 +86,22 @@ const YourFeelScreen = ({authDuck, navigation}) => {
         <Box flex={1} bg="#fff" alignItems="center">
             <ScrollView w={'100%'}>
                 <HStack justifyContent={'center'} p={10}>
-                    <Image size={'sm'} source={logo} alt="img"/>
+                    <Image size={'md'} source={logo} alt="img"/>
                 </HStack>
                 <HStack p={1}>
 
                     <VStack mt={5} w={'100%'}>
                         <VStack mb={4} alignItems={'center'}>
-                            <Text bold size={'md'} color={Colors.red} textAlign={'center'}>Del 1 al 10{'\n'}¿Cómo te
-                                calificas en?</Text>
+                            <Text bold style={{fontSize:20}} color={Colors.red} textAlign={'center'}>Del 1 al 10 ¿Cómo te calificas en?</Text>
+
                         </VStack>
                         {
                             loading ?
-                                <VStack p={9} pb={0}>
+                                <VStack p={9}>
                                     <Skeleton h={10}></Skeleton>
                                 </VStack>
                                 :
-                                <VStack p={9} pb={5}>
+                                <VStack px={9} pb={3}>
                                     <Slider step={1} minValue={1} maxValue={10} value={physicalNumber}
                                             colorScheme="orange"
                                             onChange={(v) => setPhysicalNumber(v)} size="lg">
@@ -124,10 +124,10 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                         }
                         {
                             loading ?
-                                <VStack p={9} pb={0}>
+                                <VStack px={9}>
                                     <Skeleton h={10}></Skeleton>
                                 </VStack>
-                                : <VStack p={9} pb={5}>
+                                : <VStack px={9} pb={3}>
                                     <Slider step={1} minValue={1} maxValue={10} value={mentalNumber} colorScheme="orange"
                                             onChange={(v) => setMentalNumber(v)} size="lg">
                                         <Slider.Track bg={'red.100'}>
@@ -151,10 +151,10 @@ const YourFeelScreen = ({authDuck, navigation}) => {
 
                         {
                             loading ?
-                                <VStack p={9} pb={0}>
+                                <VStack px={9}>
                                     <Skeleton h={10}></Skeleton>
                                 </VStack> :
-                                <VStack p={9} pb={5}>
+                                <VStack px={9} pb={3}>
                                     <Slider step={1} minValue={1} maxValue={10} value={finantialNumber}
                                             colorScheme="orange"
                                             onChange={(v) => setFinantialNumber(v)} size="lg">
@@ -178,10 +178,10 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                         }
                         {
                             loading ?
-                                <VStack p={9} pb={0}>
+                                <VStack px={9}>
                                     <Skeleton h={10}></Skeleton>
                                 </VStack> :
-                                <VStack p={9} pb={5}>
+                                <VStack px={9} pb={3}>
                                     <Slider step={1} minValue={1} maxValue={10} value={relationNumber}
                                             colorScheme="orange"
                                             onChange={(v) => setRelationNumber(v)} size="lg">
@@ -206,7 +206,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                         }
                         {
                             loading ?
-                                <VStack p={9} pb={0}>
+                                <VStack px={9}>
                                     <Skeleton h={10}></Skeleton>
                                 </VStack> :
                                 <Button m={4} size="lg" isLoading={loading} isLoadingText={'Guardando'}
