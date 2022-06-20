@@ -16,13 +16,13 @@ const RouletteStep1Screen = ({navigation}) => {
     const [parents, setParents] = useState([]);
 
     const emotions = [
-        {id: 1, name: 'Feliz', range: [0, 60], color: '#F9CF67'},
-        {id: 7, name: 'Sorprendido', range: [60, 120], color: '#F0A4BB'},
-        {id: 6, name: 'Mal', range: [120, 180], color: '#F6AA80'},
-        {id: 5, name: 'Temerozo', range: [180, 240], color: '#CFBBEF'},
-        {id: 4, name: 'Enojado', range: [240, 300], color: '#EF7C7C'},
-        {id: 3, name: 'Disgustado', range: [300, 360], color: '#BDEE9D'},
-        {id: 2, name: 'Triste', range: [300, 360], color: '#B9CFEE'}
+        {id: 4, name: 'Contento', range: [0, 60], color: '#F9CF67'},
+        {id: 3, name: 'En paz', range: [60, 120], color: '#F0A4BB'},
+        {id: 3, name: 'En paz', range: [120, 180], color: '#F6AA80'},
+        {id: 2, name: 'Inspirado', range: [180, 240], color: '#CFBBEF'},
+        {id: 1, name: 'Abierto', range: [240, 300], color: '#EF7C7C'},
+        {id: 5, name: 'Confundido', range: [300, 360], color: '#BDEE9D'},
+        {id: 6, name: 'Molesto', range: [300, 360], color: '#B9CFEE'}
     ]
 
     useEffect(() => {
