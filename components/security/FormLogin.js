@@ -147,8 +147,8 @@ export default (props) => {
         props.onLoginGoogle(responseGoogle.authentication.accessToken)
         userInfo.json().then(data=>{
             UserDataGoogle = data;
-            console.log(data);
-            logInGoogle(UserDataGoogle);
+            // console.log(data);
+            // logInGoogle(UserDataGoogle);
             setGoogleSubmitting(false);
         })
         
