@@ -83,10 +83,6 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
                 }
                 // console.log(data)
                  let response = await ApiApp.addMemberGroup(data)
-                 /*
-                 if (response.status === 200) {
-                   console.log('success')
-                 }*/
                  setUsersSelected([])
                  setMembersExist([])
                  navigation.navigate('GroupsDetailsScreen', {groupId: route.params.groupId, isOwner: route.params.isOwner, thisOwner:route.params.thisOwner})
@@ -103,10 +99,6 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
                 }
                 // console.log(data)
                  let response = await ApiApp.createGroup(data)
-                 /*
-                 if (response.status === 200) {
-                   console.log('success')
-                 }*/
                  setUsersSelected([])
                  navigation.navigate('GroupsScreen')
             }

@@ -47,9 +47,14 @@ const HistoryListScreen = ({productsDuck, navigation}) => {
 
 
     const logOut = async () => {
-        const auth = getAuth()
-        await signOut(auth)
-        navigation.navigate('Login')
+        try{
+            const auth = getAuth()
+            await signOut(auth)
+            navigation.navigate('Login')
+        } catch(e) {
+            console.log("logOut error =>", e.toString())
+        }
+       
     }
 
     return (

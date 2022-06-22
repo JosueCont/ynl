@@ -57,7 +57,7 @@ export let saveEmotion = (data) => async (dispatch) => {
         dispatch({type: FEELINGS_SAVE});
         let response = await ApiApp.saveFeeling(data)
         return true
-    }catch (e){
+    }catch (e) {
         console.log('saveEmotion error =>', e.toString())
         return false
     }

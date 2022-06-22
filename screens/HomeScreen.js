@@ -72,7 +72,9 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
 
     useEffect(() => {
-        registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+        registerForPushNotificationsAsync().then(token => setExpoPushToken(token)).catch(e =>{
+            console.log('HomeScreen registerForPushNotificationsAsync error => ',e.toString())
+        });
 
         // This listener is fired whenever a notification is received while the app is foregrounded
         notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
@@ -81,7 +83,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
         // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
         responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-            console.log(response);
+            console.log(" responseListener.current: ",response);
         });
 
         return () => {

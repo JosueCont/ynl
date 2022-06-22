@@ -102,15 +102,16 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-            <ScrollView _contentContainerStyle={{flexGrow: 1}} bgColor={Colors.gray}
-                        refreshControl={
-                            <RefreshControl
-                                style={{backgroundColor: 'white'}}
-                                tintColor={Colors.red}
-                                refreshing={loading && refreshing}
-                                onRefresh={refreshScreen}
-                            />
-                        }>
+            <ScrollView _contentContainerStyle={{flexGrow: 1}} 
+                bgColor={Colors.gray}
+                refreshControl={
+                    <RefreshControl
+                        style={{backgroundColor: 'white'}}
+                        tintColor={Colors.red}
+                        refreshing={loading && refreshing}
+                        onRefresh={refreshScreen}
+                    />
+                }>
                 <View mx={2} my={2} alignItems={'center'} mb={4}>
                     <Button.Group isAttached colorScheme="red" mx={{
                         base: "auto",
@@ -139,7 +140,6 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
                             }]}
                               borderRadius={30} alignItems={'center'}>
                             <Stack direction="row" mb="2.5" mt="1.5" space={4} p={2}>
-
                                 {
                                     countFeeling && countFeeling.map((ele, i) => {
                                         return (
@@ -167,7 +167,6 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
                             <Skeleton height={250} p={2}></Skeleton> :
                             <CalendarChartCustom historyData={historyData}/>
                     }
-
                 </View>
 
                 <View flex={0.1} mx={4}>
@@ -175,7 +174,6 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
                             onPress={() => navigation.navigate('HistoryFeelingScreen')}>
                         Ver detalle
                     </Button>
-
                 </View>
             </ScrollView>
         </SafeAreaView>

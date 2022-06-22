@@ -161,12 +161,12 @@ const ProfileScreen = ({authDuck, navigation}) => {
 
             updatePhotoFunction(result).then((response) => {
                 setLoadingImage(false)
-            }).catch((error) => {
+            }).catch( e => {
                 setLoadingImage(false)
-                console.log('pickImage: ',error.toString())
+                console.log('pickImage updatePhotoFunction error => ',e.toString())
             })
         }
-        } catch (e){
+        } catch (e) {
             console.log('pickImage error =>',e.toString());
         }
     

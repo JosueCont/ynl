@@ -40,7 +40,6 @@ const YourFeelScreen = ({authDuck, navigation}) => {
 
 
     const saveYourFeel = async () => {
-
         try {
             setLoading(true)
 

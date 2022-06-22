@@ -39,7 +39,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
             const response = await ApiApp.groupStats(route.params.groupId,option)
             // console.log('respuesta',response.data.data);
             setStatsMembers(response.data.data.membersArray)
-        } catch (e){
+        } catch (e) {
             console.log('GroupsDetailsScreen getGroupStats error => ',e.toString())
         }finally {
             setTimeout(()=>{

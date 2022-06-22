@@ -5,30 +5,29 @@ import moment from "moment";
 class ApiApp {
     static ApisType = (url, method = "post", params = {}, formdata = null) => {
         // console.log('url:', url, method, params)
-
-
+        let task ="";
         switch (method) {
             case "post":
                 if (formdata) {
-                    return APIKit.post(url, params, formdata);
+                    task = APIKit.post(url, params, formdata);
                 } else {
-                    return APIKit.post(url, params);
+                    task = APIKit.post(url, params);
                 }
-
                 break;
             case "put":
-                return APIKit.put(url, params);
+                task = APIKit.put(url, params);
                 break;
             case "get":
-                return APIKit.get(url);
+                task = APIKit.get(url);
                 break;
             case "delete":
-                return APIKit.delete(url);
+                task = APIKit.delete(url);
                 break;
             case "patch":
-                return APIKit.patch(url);
+                task = APIKit.patch(url);
                 break;
         }
+        return task;
     };
 
 

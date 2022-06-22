@@ -28,12 +28,14 @@ const RegisterScreen = ({productsDuck, navigation, registerAction, setAttribute}
            }else{
                setAttribute('registerData', values).then(() => {
                    navigation.navigate('PhoneScreen')
+               }).catch(e =>{
+                console.log('register setAttribute error => ',e.toString())
                })
            }
 
-       }catch (e){
+       } catch (e) { 
         console.log('RegisterScreen register error =>',e.toString())
-       }finally {
+       } finally {
            setLoading(false)
        }
 

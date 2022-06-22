@@ -44,7 +44,7 @@ export let getMyGroups=(userId='')=> async(dispatch)=>{
         let response = await ApiApp.getMyGroups(userId)
         // console.log(response.data, 43)
         dispatch({type: GET_MY_GROUPS_SUCCESS, payload: response.data.data});
-    } catch (e){
+    } catch (e) {
         console.log('groupDuck getMyGroups error => ',e.toString())
         dispatch({type: ERROR_FETCH});
         return false
@@ -95,7 +95,7 @@ export let getUsersByUserName=(username='', userCurrent, membersExist)=> async(d
             type: GET_USERS_SUCCESS,
             payload: dataSucces
         });
-    } catch (e){
+    } catch (e) {
         console.log('groupDuck getUsersByUserName error => ',e.toString())
         dispatch({type: ERROR_FETCH});
         return false

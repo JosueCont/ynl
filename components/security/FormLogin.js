@@ -138,8 +138,10 @@ export default (props) => {
             userInfo.json().then(data=>{
                 UserDataGoogle = data;
                 setGoogleSubmitting(false);
+            }).catch(e => {
+                console.log('FormLogin userInfo error => ',e.toString())
             })
-        } catch (e){
+        } catch (e) {
             console.log('FormLogin getUserData error => ',e.toString())
         }
     }
