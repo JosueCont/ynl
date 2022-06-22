@@ -3,6 +3,7 @@ import {Calendar, LocaleConfig} from "react-native-calendars";
 import {View, Text} from "native-base";
 import {Dimensions} from "react-native";
 import _ from 'lodash'
+import moment from 'moment'
 const screenWidth = Dimensions.get("window").width;
 
 const CalendarChartCustom = ({historyData}) => {
@@ -39,7 +40,7 @@ const CalendarChartCustom = ({historyData}) => {
              historyData = _.sortBy(historyData, ['date'])
              historyData.forEach((obj, i)=>{
                  console.log(obj.date)
-                 arr[obj.date.split('T')[0]] = {textColor:'white',color: `#${obj.color}`, endingDay: true, startingDay: true}
+                 arr[moment(obj.date).format().split('T')[0]] = {textColor:'white',color: `#${obj.color}`, endingDay: true, startingDay: true}
              })
 
              setArrayDates(arr)

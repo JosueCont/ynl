@@ -34,11 +34,11 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
             const res = await ApiApp.getHistoryFeelings(startDate, enDate, userId)
             let arrayDates = _.map(res.data.data, (obj,index) => {
                 let dataItem = {
-                    shortDate: obj.attributes.createdAt.split('T')[0],
+                    shortDate: moment(obj.attributes.createdAt).format().split('T')[0],
                     date: obj.attributes.createdAt,
                     color: obj.attributes.feeling.data.attributes.color,
                     comments: obj.attributes.comments,
-                    feeling: obj.attributes.feeling.data
+                    feeling: obj.attributes.feeling.data,
                 }
                 return dataItem;
             })
@@ -129,7 +129,7 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
 
 
                                                     <Text color={'white'}
-                                                          fontSize={9}>{moment(ele.date).format('L')}</Text>
+                                                          fontSize={9}>{ele.shortDate}</Text>
                                                 </View>
                                             </View>
                                         </TouchableOpacity>

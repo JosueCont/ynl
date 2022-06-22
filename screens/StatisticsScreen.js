@@ -7,6 +7,7 @@ import PieChartCustom from "./Charts/PieChartCustom";
 import CalendarChartCustom from "./Charts/CalendarChartCustom";
 import ApiApp from "../utils/ApiApp";
 import _ from 'lodash'
+import moment from 'moment'
 import {RefreshControl, SafeAreaView} from "react-native";
 import {getShadowCircleStyle} from "../utils/functions";
 
@@ -78,7 +79,7 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
             const res = await ApiApp.getHistoryFeelings(startDate, enDate, userId)
             let arrayDates = _.map(res.data.data, (obj) => {
                 let dataItem = {
-                    date: obj.attributes.createdAt,
+                    date: moment(obj.attributes.createdAt).format(),
                     color: _.get(obj, 'attributes.feeling.data.attributes.parent.data.attributes.color', 'red'),
                     feeling: obj.attributes.feeling.data,
                 }
