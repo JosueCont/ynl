@@ -65,6 +65,7 @@ const HistoryFeelingScreenDetail = ({authDuck, route, navigation}) => {
                                         style={getShadowCircleStyle(10, 10)}
                                         borderRadius={10}
                                         py={3}
+                                        key={i}
 
                                     >
                                         <View flex={0.5} alignItems={'center'} justifyContent={'center'}>

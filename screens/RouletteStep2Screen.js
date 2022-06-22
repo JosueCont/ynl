@@ -73,7 +73,7 @@ const RouletteStep2Screen = ({route, navigation}) => {
                         (subParents && !subParentSelected) &&
                         subParents.map((item, i) => {
                             return (
-                                <Select.Item label={item.attributes.name} value={item}/>
+                                <Select.Item label={item.attributes.name} key={i} value={item}/>
                             )
                         })
                     }
