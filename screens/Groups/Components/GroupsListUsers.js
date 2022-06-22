@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {getUsersByUserName} from "../../../redux/ducks/groupDuck";
 import {TouchableOpacity} from "react-native";
 
-const GroupsListUsers = ({usersSelected, groupDuck, registerGroup, isUserSelected, addUserToList, isAddMembers}) => {
+const GroupsListUsers = ({usersSelected, groupDuck, registerGroup, isUserSelected, addUserToList,adding, isAddMembers}) => {
     return (
         <VStack w={'100%'} flex={1}>
             <HStack mb={5} w={'100%'}>
@@ -51,11 +51,11 @@ const GroupsListUsers = ({usersSelected, groupDuck, registerGroup, isUserSelecte
 
                 </Box>} keyExtractor={item => item.id}/>
                 
-            {isAddMembers && <Button onPress={registerGroup} isDisabled={usersSelected.length <= 0} size="lg" colorScheme={'red'}
+            {isAddMembers && <Button isLoading={adding} onPress={registerGroup} isDisabled={usersSelected.length <= 0} size="lg" colorScheme={'red'}
                     m={3}>
                         Agregar
             </Button>}
-            {!isAddMembers && <Button onPress={registerGroup} isDisabled={usersSelected.length <= 0} size="lg" colorScheme={'red'}
+            {!isAddMembers && <Button isLoading={adding} onPress={registerGroup} isDisabled={usersSelected.length <= 0} size="lg" colorScheme={'red'}
                     m={3}>
                         Crear
             </Button>}

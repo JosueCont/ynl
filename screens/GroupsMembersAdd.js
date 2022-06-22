@@ -11,6 +11,7 @@ import {useFocusEffect} from "@react-navigation/native";
 
 const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUserName}) => {
     const [loading, setLoading] = useState(false)
+    const [adding, setAdding] = useState(false)
     const [user, setUser] = useState(null)
     const [groupName, setGroupName] = useState(null)
     const [usersSelected, setUsersSelected] = useState([])
@@ -59,6 +60,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
     const registerGroup = async () => {
         try {
             setLoading(true)
+            setAdding(true)
 
             let members = _.filter(usersSelected, function (o) {
                 if(typeof o.id !== 'string'){
@@ -106,6 +108,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
             console.log("registerGroup error =>",e.toString())
         }finally {
             setLoading(false)
+            setAdding(false)
         }
     }
 
@@ -184,7 +187,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
                 {
                     groupDuck.fetchingUsers ?
                         <Spinner size="sm" color={'red.400'}/> :
-                        <GroupsListUsers usersSelected={usersSelected} registerGroup={registerGroup}
+                        <GroupsListUsers usersSelected={usersSelected} adding={adding} registerGroup={registerGroup}
                                          isUserSelected={isUserSelected} addUserToList={addUserToList} isAddMembers={isAddMembers}/>
                 }
             </View>
