@@ -26,7 +26,7 @@ const HistoryListScreen = ({productsDuck, navigation}) => {
 
     const getFeels = async () => {
         try {
-            console.log("uid====", auth)
+            // console.log("uid====", auth)
             const q = query(
                 collection(db, 'yourFeels'),
                 where("createdBy", "==", auth.currentUser.uid)
@@ -34,12 +34,12 @@ const HistoryListScreen = ({productsDuck, navigation}) => {
             const feel = [];
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
-                console.log(doc.id, " => ", doc.data());
+                // console.log(doc.id, " => ", doc.data());
                 feel.push(doc.data())
             })
             setFeelings(feel)
         } catch (e) {
-            console.log('error', e)
+            console.log('getFeels error =>', e.toString())
         }
 
 

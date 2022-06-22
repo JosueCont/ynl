@@ -30,17 +30,17 @@ const GroupsDetailsScreen = ({navigation, route}) => {
         // 1 - la semana anterior, 2 - la semana en curso, 3 el mes
         setActiveButton(option)
         getGroupStats(option)
-        console.log('data id', route.params.groupId)
+        // console.log('groupId: ', route.params.groupId)
     }
 
     const getGroupStats=async (option)=>{
-        setLoadingStats(true)
         try{
+            setLoadingStats(true)
             const response = await ApiApp.groupStats(route.params.groupId,option)
-            console.log('respuesta',response.data.data);
+            // console.log('respuesta',response.data.data);
             setStatsMembers(response.data.data.membersArray)
-        }catch (e){
-            console.log('errror====>',e)
+        } catch (e){
+            console.log('GroupsDetailsScreen getGroupStats error => ',e.toString())
         }finally {
             setTimeout(()=>{
                 setLoadingStats(false)
@@ -62,22 +62,21 @@ const GroupsDetailsScreen = ({navigation, route}) => {
             let membersArray = [];
 
             for (let item of response.data.data.requests) {
-                console.log(item)
+                // console.log(item)
 
-                if(item.user){
+                if (item.user){
                     membersArray.push({
                         id: item.user.id,
                         name: item.user.email,
                         status: item.status
                     })
-                }else{
+                } else {
                     membersArray.push({
                         id: null,
                         name: item.public_email,
                         status: item.status
                     })
                 }
-
 
             }
 
@@ -97,27 +96,20 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                 })
             }
             setMembers(membersArray)
-        } catch (ex) {
-            console.log(ex)
+        } catch (e) {
+            console.log("getGroupsMembersFunction error =>",e.toString())
         } finally {
             setLoading(false)
         }
     }
 
     const groupDeleteFunction = async (userId, groupId) => {
-
         try {
             const dataPost = {data: {groupId: groupId, member: userId}}
             const response = await ApiApp.deleteMemberGroup(dataPost);
             refreshView()
-            // console.log(response.data)
-            // if (reload){
-            //     setReload(!reload)
-            // }else{
-            //     setReload(true)
-            // }
-        } catch (ex) {
-            console.log(ex.response)
+        } catch (e) {
+            console.log("groupDeleteFunction error => ",e.toString())
         }
     }
 
@@ -208,10 +200,6 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                                 </>
                             }
 
-
-
-
-
                         </View>
 
                     }
@@ -220,25 +208,29 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                         <View>
                             {
                                 loading == false &&
-                                members.map((item) => {
+                                members.map((item,i) => {
                                     return (
-                                        <GroupsMemberItem thisOwner ={item.id === route.params.thisOwner} isOwner={route.params.isOwner} title={item.name}
-                                                        pending={(item.status === 0 || item.status === 2) ? true : false} deleteAction={() => {
-                                                            Alert.alert(
-                                                                "Your Next Level",
-                                                                "¿Deseas desvincular al usuario del grupo?",
-                                                                [
-                                                                    {
-                                                                        text: "No",
-                                                                        onPress: () => console.log("Cancel Pressed"),
-                                                                        style: "cancel"
-                                                                    },
-                                                                    {
-                                                                        text: "Eliminar",
-                                                                        onPress: () => groupDeleteFunction(item.id, route.params.groupId)
-                                                                    }
-                                                                ])
-                                                        }}/>
+                                        <GroupsMemberItem 
+                                        key={i}
+                                        thisOwner ={item.id === route.params.thisOwner} 
+                                        isOwner={route.params.isOwner} title={item.name}
+                                        pending={(item.status === 0 || item.status === 2) ? true : false} 
+                                        deleteAction={() => {
+                                            Alert.alert(
+                                                "Your Next Level",
+                                                "¿Deseas desvincular al usuario del grupo?",
+                                                [
+                                                    {
+                                                        text: "No",
+                                                        onPress: () => console.log("Cancel Pressed"),
+                                                        style: "cancel"
+                                                    },
+                                                    {
+                                                        text: "Eliminar",
+                                                        onPress: () => groupDeleteFunction(item.id, route.params.groupId)
+                                                    }
+                                                ])
+                                        }}/>
                                     )
                                 })
                             }

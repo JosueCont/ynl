@@ -18,8 +18,8 @@ const RouletteStep2Screen = ({route, navigation}) => {
 
     useEffect(() => {
         getSubParents(route.params.parentItem.id)
-        console.log('param',route.params.parentItem.color)
-        console.log('color',route.params.parentItem.attributes.color)
+        //console.log('param',route.params.parentItem.color)
+        //console.log('color',route.params.parentItem.attributes.color)
         navigation.setOptions({
             headerStyle: {backgroundColor:'#'+ route.params.parentItem.attributes.color}
         })
@@ -31,7 +31,7 @@ const RouletteStep2Screen = ({route, navigation}) => {
             let response = await ApiApp.getFeelingsV2(`filters[$and][0][parent][id][$eq]=${parentId}&populate[parent][populate][0]=icon`)
             setSubParents(response.data.data)
         } catch (e) {
-            console.log(e.response)
+            console.log('getSubParents error =>',e.toString());
         } finally {
             setLoading(false)
         }

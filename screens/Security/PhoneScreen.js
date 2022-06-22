@@ -26,11 +26,12 @@ const PhoneScreen = ({navigation}) => {
                 phone: val
             }
             const response = await ApiApp.registerPhone(data)
-            console.log(response.data)
+            // console.log(response.data)
             navigation.navigate('VerificationCodeScreen', {phone: val})
-        } catch (ex) {
-            setTextException(ex.response.data.error.message)
+        } catch (e) {
+            setTextException(e.response.data.error.message)
             setModalErrorVisible(true)
+            console.log('phoneAction error =>',e.toString())
         }
 
     }

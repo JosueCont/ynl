@@ -27,40 +27,38 @@ const feelingsDuck = (state = initialData, action) => {
 
 
 export let getEmotions = (query = '') => async (dispatch) => {
-    dispatch({type: GET_FEELINGS});
-
     try {
+        dispatch({type: GET_FEELINGS});
         let response = await ApiApp.getFeelingsV2(query)
         dispatch({type: GET_FEELINGS_SUCCESS, payload: response.data.data});
         return response.data
     } catch (e) {
-        console.log('errorr====>', e.response)
+        console.log('getEmotions error=>', e.toString())
         return false
     }
 }
 
 export let getEmotionsV3 = (query = '') => async (dispatch) => {
-    dispatch({type: GET_FEELINGS});
-
     try {
+        dispatch({type: GET_FEELINGS});
         let response = await ApiApp.getFeelingsV3()
-        console.log(response.data.data, 47)
+        // console.log(response.data.data, 47)
         dispatch({type: GET_FEELINGS_SUCCESS, payload: response.data.data});
         return response.data
     } catch (e) {
-        console.log('errorr====>', e.response)
+        console.log('getEmotionsV3 error=>', e.toString())
         return false
     }
 }
 
 
 export let saveEmotion = (data) => async (dispatch) => {
-    dispatch({type: FEELINGS_SAVE})
     try {
+        dispatch({type: FEELINGS_SAVE});
         let response = await ApiApp.saveFeeling(data)
         return true
     }catch (e){
-        console.log('errorr====>', e)
+        console.log('saveEmotion error =>', e.toString())
         return false
     }
 }

@@ -31,13 +31,12 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
     }
 
     const boot = async () => {
-        setLoading(true)
         try {
-
+            setLoading(true)
             await getHistoryData(authDuck.user.id)
             await getCountFeelings(authDuck.user.id)
-        } catch (ex) {
-
+        } catch (e) {
+            console.log('StatisticsScreen boot error =>',e.toString());
         } finally {
             setLoading(false)
             setRefreshing(false)
@@ -47,11 +46,10 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
 
 
     const getCountFeelings = async (userId, option = null) => {
-        setLoading(true)
         try {
-
+            setLoading(true)
             const res = await ApiApp.getUserProgress(userId, option);
-            console.log('semanal',res.data.data.feelings)
+            // console.log('semanal',res.data.data.feelings)
             setCountFeeling(res.data.data.feelings)
 
             setDataPie(_.map(res.data.data.feelings, (ele, i) => {
@@ -68,7 +66,7 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
         } catch (e) {
             setCountFeeling(null)
 
-            console.log('error===>', e)
+            console.log('StatisticsScreen getCountFeelings error =>',e.toString());
         }finally {
             setLoading(false)
         }
@@ -92,7 +90,7 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
             setHistoryData(arrayDates)
 
         } catch (e) {
-            console.log(e)
+            console.log('StatisticsScreen getHistoryData error =>',e.toString());
         }
     }
 

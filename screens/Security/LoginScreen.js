@@ -31,7 +31,7 @@ const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle,loginLin
             setLoading(true)
             const res = await loginGoogle(accessToken)
             if (res) {
-                console.log('login success=====', res)
+                //console.log('login success=====', res)
                 setHasLogged(true)
                 navigation.navigate('HomeScreen')
             }
@@ -41,6 +41,7 @@ const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle,loginLin
                 "Ups!",
                 "Algo ha salido mal, porfavor intenta nuevamente"
             );
+            console.log('loginWithGoogle error =>',e.toString());
             setHasLogged(false)
         } finally {
             setLoading(false)
@@ -52,7 +53,7 @@ const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle,loginLin
             setLoading(true)
             const res = await loginLinkedIn(accessToken)
             if (res) {
-                console.log('login success=====', res)
+                // console.log('login success=====', res)
                 setHasLogged(true)
                 navigation.navigate('HomeScreen')
             }
@@ -62,6 +63,7 @@ const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle,loginLin
                 "Ups!",
                 "Algo ha salido mal, porfavor intenta nuevamente"
             );
+            console.log('loginWithLinkedIn error =>',e.toString());
             setHasLogged(false)
         } finally {
             setLoading(false)
@@ -82,10 +84,10 @@ const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle,loginLin
             }
 
         } catch (e) {
-            console.log('error local',e)
-                setModalErrorMessage('Usuario o credenciales inválidas')
-                setModalErrorVisible(true)
-                setHasLogged(false)
+            console.log('loginerror =>',e.toString());
+            setModalErrorMessage('Usuario o credenciales inválidas')
+            setModalErrorVisible(true)
+            setHasLogged(false)
         } finally {
             setLoading(false)
         }

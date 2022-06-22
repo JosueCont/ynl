@@ -9,9 +9,9 @@ import groupDuck from "./ducks/groupDuck";
 
 const rootReducer = combineReducers({
     productsDuck: productsDuck,
-    authDuck:authDuck,
+    authDuck: authDuck,
     feelingsDuck:  feelingsDuck,
-    groupDuck:groupDuck
+    groupDuck: groupDuck
 })
 
 export const store = createStore(
@@ -27,10 +27,9 @@ export default () => {
             if (user) {
                 createSession({user, jwt})(store.dispatch)
                 emotionStatusAction(user.id)(store.dispatch)
-
             }
-        } catch (ex) {
-            console.log(ex)
+        } catch (e) {
+            console.log('store error => ',e.toString())
         }
     })()
     return store

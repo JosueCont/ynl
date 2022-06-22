@@ -17,13 +17,10 @@ const RegisterScreen = ({productsDuck, navigation, registerAction, setAttribute}
     }, [])
 
     const register = async (values) => {
-
-
-        setLoading(true)
-
        try{
+        setLoading(true)
            const res = await ApiApp.getUserByEmail(values.email)
-           console.log(res.data)
+           // console.log(res.data)
            if(res.data.length){
                setModalErrorVisible(true)
                // existe un usuario con ese email
@@ -35,12 +32,10 @@ const RegisterScreen = ({productsDuck, navigation, registerAction, setAttribute}
            }
 
        }catch (e){
-           console.log(e)
+        console.log('RegisterScreen register error =>',e.toString())
        }finally {
            setLoading(false)
        }
-
-
 
     }
 

@@ -38,7 +38,7 @@ const VerificationCodeScreen = ({navigation, route, authDuck, registerAction}) =
                 code: value
             }
             const response = await ApiApp.registerPhoneVerify(data)
-            console.log(response.data, 35)
+            // console.log(response.data, 35)
             const {verified} = response.data.data.attributes;
             if (verified === true) {
 
@@ -53,13 +53,13 @@ const VerificationCodeScreen = ({navigation, route, authDuck, registerAction}) =
 
 
             }
-        } catch (ex) {
-            console.log(typeof ex)
-            console.log(ex.response)
-            if (typeof ex === 'object') {
-                setTextException(ex.response.data.error.message)
+        } catch (e) {
+            //console.log(typeof ex)
+            console.log('verify error =>',e.toString())
+            if (typeof e === 'object') {
+                setTextException(e.response.data.error.message)
             } else {
-                setTextException(ex)
+                setTextException(e.toString())
             }
             setModalErrorVisible(true)
         }

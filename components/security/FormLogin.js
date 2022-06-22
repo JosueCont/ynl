@@ -19,13 +19,11 @@ import * as Yup from 'yup'
 //import * as Google from 'expo-google-app-auth';
 import * as Google from 'expo-auth-session/providers/google';
 import {getShadowCircleStyle, resolvePlatform} from "../../utils/functions";
-//import LinkedInModal from 'react-native-linkedin'
 import {Colors} from "../../utils/Colors";
 import loginImage from '../../assets/login.png';
 import facebookImage from '../../assets/facebook.png'
 import linkedInImage from '../../assets/linkedin.png'
 import googleImage from '../../assets/google.png'
-
 import {Dimensions, SafeAreaView, StyleSheet, TouchableOpacity} from 'react-native';
 import WebView from "react-native-webview";
 import querystring from 'querystring';
@@ -36,7 +34,6 @@ export default (props) => {
     const [googleSubmitting, setGoogleSubmitting] = useState(false)
     const [token, setToken] = useState('')
     const [openLinkedIn, setOpenLinkedIn] = useState(false)
-
     const [request, responseGoogle, promptAsync] = Google.useAuthRequest(
         {
             iosClientId:  "139145047906-9r09uc555jsi528qnrbjs440g84h1okt.apps.googleusercontent.com",
@@ -46,15 +43,11 @@ export default (props) => {
         
       );
     const [accessToken, setAccessTockenGoogle] = useState();
-
-
     const REDIRECT_URI = "https://ynl-api.herokuapp.com/api/connect/linkedin/"; // this needs to be the same as your linkedin app panel
     const CLIENT_ID = "86mom3hfgl2rvj"; // you can get it from the linked in apps panel
     const CLIENT_SECRET = "z7YYg1E3i39fI9Kf"; // you can get it from the linked in apps panel
     const AUTH_BASE = "https://www.linkedin.com/oauth/v2/authorization";
     //https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=86mom3hfgl2rvj&redirect_uri=https://ynl-api.herokuapp.com/api/connect/linkedin/&state=foobar&scope=r_liteprofile
-
-
     const {touched, handleSubmit, errors, setFieldValue} = useFormik({
         initialValues: {
             email: '',
@@ -78,12 +71,8 @@ export default (props) => {
         `scope=r_liteprofile`,
     ];
     const AUTH_ENDPOINT = `${AUTH_BASE}?${qs.join('&')}`
-
-
     const linkedInLogin = ({ url }) => {
-        if (!url) {
-          return;
-        }
+        if (!url) return;
         console.log(url);
         //The browser has redirected to our url of choice, the url would look like:
         //http://your.redirect.url?code=<access_token>&state=<anyauthstate-this-is-optional>
@@ -100,7 +89,7 @@ export default (props) => {
         console.log("MATCHES LOGIN:::"+ matchesLogin);
         console.log("TOKEN:::"+token);
 
-        if((matchesCancel || matchesAuthCancel) && matchesLogin==null){
+        if ((matchesCancel || matchesAuthCancel) && matchesLogin==null){
             console.log(matchesLogin == null);
             setOpenLinkedIn(false);
             return;
@@ -123,11 +112,11 @@ export default (props) => {
               setOpenLinkedIn(false);
           }
 
-          if(obj.error){
+          if (obj.error){
             setOpenLinkedIn(false);
           }
         }
-      }
+    }
 
       useEffect(()=>{
         if (responseGoogle?.type === 'success') {
@@ -138,32 +127,31 @@ export default (props) => {
     }, [responseGoogle]);
 
     const getUserData = async() => {
-        setGoogleSubmitting(true);
-        console.log(responseGoogle.authentication.state);
-        let userInfo = await fetch(`https://www.googleapis.com/userinfo/v2/me/`,{ //${response.authentication.state}?personFields=birthdays,genders&access_token=${response.authentication.accessToken}
-            headers: {Authorization: `Bearer ${responseGoogle.authentication.accessToken}`}
-        })
-        let UserDataGoogle;
-        props.onLoginGoogle(responseGoogle.authentication.accessToken)
-        userInfo.json().then(data=>{
-            UserDataGoogle = data;
-            // console.log(data);
-            // logInGoogle(UserDataGoogle);
-            setGoogleSubmitting(false);
-        })
-        
+        try {
+            setGoogleSubmitting(true);
+            console.log(responseGoogle.authentication.state);
+            let userInfo = await fetch(`https://www.googleapis.com/userinfo/v2/me/`,{ //${response.authentication.state}?personFields=birthdays,genders&access_token=${response.authentication.accessToken}
+                headers: {Authorization: `Bearer ${responseGoogle.authentication.accessToken}`}
+            })
+            let UserDataGoogle;
+            props.onLoginGoogle(responseGoogle.authentication.accessToken)
+            userInfo.json().then(data=>{
+                UserDataGoogle = data;
+                setGoogleSubmitting(false);
+            })
+        } catch (e){
+            console.log('FormLogin getUserData error => ',e.toString())
+        }
     }
 
-
     const handleLoginGoogle = async () => {
-        setGoogleSubmitting(true)
-        const config = {
-            iosClientId: `139145047906-9r09uc555jsi528qnrbjs440g84h1okt.apps.googleusercontent.com`,
-            androidClientId: `139145047906-u7lpmp4vuhk0cd3hc88f3k8tv9afe01b.apps.googleusercontent.com`,
-            scopes: ['profile', 'email']
-        }
-
         try {
+            setGoogleSubmitting(true)
+            const config = {
+                iosClientId: `139145047906-9r09uc555jsi528qnrbjs440g84h1okt.apps.googleusercontent.com`,
+                androidClientId: `139145047906-u7lpmp4vuhk0cd3hc88f3k8tv9afe01b.apps.googleusercontent.com`,
+                scopes: ['profile', 'email']
+            }
             const {type, accessToken, user} = await Google.logInAsync(config);
             if (type === 'success') {
                 const {email, name, photoUrl} = user;
@@ -174,19 +162,16 @@ export default (props) => {
                 alert('Login cancelado')
             }
         } catch (e) {
-            console.log('error login google', e)
+            console.log('handleLoginGoogle error =>', e.toString())
         } finally {
             setGoogleSubmitting(false)
         }
 
-
     }
-
 
     return (
         <NativeBaseProvider>
             <Center flex={1} px="1">
-
                 {openLinkedIn &&
                     <SafeAreaView style={{flex: 1}}>
                         <View style={stylesLI.container2}>
@@ -203,24 +188,13 @@ export default (props) => {
                 {
                     !openLinkedIn &&
                     <ScrollView p={10} px={5} bounces={false} flexGrow={1}>
-                        {/*<Heading flex={1} size="lg" fontWeight="600" color="coolGray.800" _dark={{*/}
-                        {/*    color: "warmGray.50"*/}
-                        {/*}}>*/}
-                        {/*    <VStack flex={1} alignItems={'center'}>*/}
-                        {/*       */}
-                        {/*    </VStack>*/}
-                        {/*</Heading>*/}
                         <View flex={0.3} alignItems={'center'} justifyContent={'center'}>
                             <Image source={loginImage} style={{resizeMode: 'contain'}} w={resolvePlatform(250, 200)}
                                    h={resolvePlatform(250, 200)} alt="img"/>
                         </View>
                         <View flex={1}>
-
-
                             <Text textAlign={'center'} color={Colors.red} fontSize={42}>¡Hola!</Text>
                             <Text textAlign={'center'} color={Colors.red} fontSize={24}>¿Cómo te sientes?</Text>
-
-
                             <VStack space={3} mt="5">
                                 <FormControl isInvalid={errors.email} mb={2}>
                                     <View flex={1} style={getShadowCircleStyle(5, 5)}>
@@ -235,7 +209,6 @@ export default (props) => {
                                             bgColor={'white'}
                                             borderRadius={20}
                                             color={Colors.red}
-                                            // placeholderTextColor={Colors.red}
                                         />
                                     </View>
                                     <FormControl.ErrorMessage>
@@ -284,13 +257,6 @@ export default (props) => {
                                                       }, getShadowCircleStyle(10, 10)]}>
                                         <Image source={linkedInImage} w={10} h={10} alt="img"></Image>
                                     </TouchableOpacity>
-                                    {/*<TouchableOpacity alignItems={'center'} justifyContent={'center'}*/}
-                                    {/*                  style={[{*/}
-                                    {/*                      flex: 1,*/}
-                                    {/*                      alignItems: 'center'*/}
-                                    {/*                  }, getShadowCircleStyle(10, 10)]}>*/}
-                                    {/*    <Image source={facebookImage} w={10} h={10}></Image>*/}
-                                    {/*</TouchableOpacity>*/}
 
                                     <TouchableOpacity onPress={()=>{ promptAsync({showInRecents: true})}} flex={1} alignItems={'center'}
                                                       justifyContent={'center'}
@@ -348,7 +314,6 @@ const stylesLI = StyleSheet.create({
       flex: 1,
       width: Dimensions.get("window").width,
       height: Dimensions.get("window").height,
-      //marginVertical: 20,
       borderWidth: 1,
       borderColor: '#333'
     },
@@ -391,9 +356,7 @@ const stylesLI = StyleSheet.create({
     modalTitle: {
         marginBottom: 15,
         textAlign: "center",
-        //fontFamily: 'LinotteBold',
         fontSize: 20,
-        //color: Colors.purple
 
     }
   });

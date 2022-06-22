@@ -39,30 +39,30 @@ const groupDuck = (state = initialData, action) => {
 
 
 export let getMyGroups=(userId='')=> async(dispatch)=>{
-    dispatch({type: GET_MY_GROUPS});
     try{
+        dispatch({type: GET_MY_GROUPS});
         let response = await ApiApp.getMyGroups(userId)
-        console.log(response.data, 43)
+        // console.log(response.data, 43)
         dispatch({type: GET_MY_GROUPS_SUCCESS, payload: response.data.data});
-    }catch (e){
+    } catch (e){
+        console.log('groupDuck getMyGroups error => ',e.toString())
         dispatch({type: ERROR_FETCH});
         return false
     }
 }
 
 export let getUsersByUserName=(username='', userCurrent, membersExist)=> async(dispatch)=>{
-    dispatch({type: GET_USERS});
     try {
+        dispatch({type: GET_USERS});
         let response = await ApiApp.getUsersByUsername(username);
-
         let dataSucces = []
         if (response.data.length > 0){
-            if(_.findIndex(response.data, { 'username': userCurrent.username }) !== -1){
+            if (_.findIndex(response.data, { 'username': userCurrent.username }) !== -1){
                 response.data.splice(_.findIndex(response.data, { 'username': userCurrent.username }),1)
             }
             if (membersExist.length > 0){
                 for (let i=0;i<membersExist.length;i++){
-                    if(_.findIndex(response.data, { 'email': membersExist[i].name }) !== -1){
+                    if (_.findIndex(response.data, { 'email': membersExist[i].name }) !== -1){
                         response.data.splice(_.findIndex(response.data, { 'email': membersExist[i].name }),1)
                     }
                 }
@@ -95,8 +95,8 @@ export let getUsersByUserName=(username='', userCurrent, membersExist)=> async(d
             type: GET_USERS_SUCCESS,
             payload: dataSucces
         });
-    }catch (e){
-        console.log('errorr====>', e)
+    } catch (e){
+        console.log('groupDuck getUsersByUserName error => ',e.toString())
         dispatch({type: ERROR_FETCH});
         return false
     }

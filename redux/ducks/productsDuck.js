@@ -24,13 +24,14 @@ const productsDuck = (state = initialData, action) => {
 
 export let getProducts = () => {
     return async (dispatch, getState) => {
-        dispatch({type: INSURANCE});
         try {
+            dispatch({type: INSURANCE});
             const response = await getInsuranceCompanies();
             dispatch({type: INSURANCE_SUCCESS, payload: response.data.data.aseguradoras})
             return true
-        } catch (err) {
-            dispatch({type: INSURANCE_ERROR_SERVER, payload: err.response})
+        } catch (e) {
+            console.log('productsDuck getProducts error => ',e.toString())
+            dispatch({type: INSURANCE_ERROR_SERVER, payload: e.response})
             return false
         }
     };

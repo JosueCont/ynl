@@ -20,12 +20,12 @@ const PasswordRecoveryScreen = ({productsDuck, navigation, registerAction, setAt
         try {
             setLoading(true);
             const response = await ApiApp.forgotPassword(values)
-            console.log(response.data)
+            // console.log(response.data)
             navigation.navigate('PasswordRecoverySuccessScreen')
 
-        } catch (ex) {
+        } catch (e) {
 
-            console.log('error password recover',ex)
+            console.log('register error =>',e.toString())
             setModalErrorText('Email no relacionado a un usuario, verifica nuevamente')
             setModalErrorVisible(true)
         } finally {

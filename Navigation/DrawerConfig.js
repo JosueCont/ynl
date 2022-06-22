@@ -32,7 +32,7 @@ const DrawerConfig = () => {
             screenOptions={({navigation, route}) => ({
                 drawerPosition: 'right',
                 headerLeft: () => {
-                    console.log(route.params)
+                    // console.log(route.params)
                     if (route.name.includes('HomeScreen')) {
                         return (
                             <View/>
@@ -48,7 +48,8 @@ const DrawerConfig = () => {
                                     } else {
                                         navigation.goBack(0)
                                     }
-                                } catch (ex) {
+                                } catch (e) {
+                                    console.log('DrawerConfig error => ',e.toString())
                                     navigation.goBack(0)
                                 }
 
@@ -86,8 +87,6 @@ const DrawerConfig = () => {
                         justifyContent: 'center',
                         marginRight: 5
                     }}>
-                        {/*<Image source={menuImage} resizeMode={'contain'} width={30} height={30}*/}
-                        {/*       style={{tintColor: Colors.gray}}/>*/}
                         <Icon as={MaterialIcons} color={Colors.red} name={'menu'} size={'xl'}></Icon>
                     </TouchableOpacity>
                 ),

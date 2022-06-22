@@ -23,9 +23,9 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
     }, [route.params.emotion.id])
 
     const saveFeelings = async () => {
-        setLoading(true)
-
         try {
+            setLoading(true)
+
             let data = {
                 label: route.params.emotion.attributes.name,
                 feeling: route.params.emotion.id,
@@ -42,7 +42,7 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                 });
             }
         } catch (e) {
-
+            console.log('saveFeelings error =>',e.toString());
         } finally {
             setLoading(false)
         }
@@ -53,7 +53,6 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
             <View flex={1} mx={4} w={'100%'}>
 
                 <View flex={1} alignItems={'center'}>
-                    {/*<Image mb={2} size={'xs'} source={logo} alt="img"/>*/}
                     <Text
                         style={styles.shadow}
                         fontSize={28} textAlign={'center'} color={'white'}>Hoy te sientes {route.params.emotion && route.params.emotion.attributes.name.toUpperCase()}</Text>

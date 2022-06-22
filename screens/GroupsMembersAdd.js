@@ -6,7 +6,6 @@ import logo from '../assets/logo.png'
 import {Ionicons} from "@expo/vector-icons";
 import {getUsersByUserName} from '../redux/ducks/groupDuck'
 import _ from 'lodash'
-
 import GroupsListUsers from "./Groups/Components/GroupsListUsers";
 import {useFocusEffect} from "@react-navigation/native";
 
@@ -33,10 +32,6 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
     );
 
 
-    // useEffect(() => {
-    //     getUsersByUserName(undefined, authDuck.user, membersExist)
-    // }, [])
-
     useEffect(() => {
         if (authDuck.isLogged) {
             setUser(authDuck.user)
@@ -62,8 +57,8 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
     }, [route.params])
 
     const registerGroup = async () => {
-        setLoading(true)
         try {
+            setLoading(true)
 
             let members = _.filter(usersSelected, function (o) {
                 if(typeof o.id !== 'string'){
@@ -86,11 +81,12 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
                         publicEmails: publicEmails.map((item) => item.email)
                     }
                 }
-                console.log(data)
+                // console.log(data)
                  let response = await ApiApp.addMemberGroup(data)
+                 /*
                  if (response.status === 200) {
                    console.log('success')
-                 }
+                 }*/
                  setUsersSelected([])
                  setMembersExist([])
                  navigation.navigate('GroupsDetailsScreen', {groupId: route.params.groupId, isOwner: route.params.isOwner, thisOwner:route.params.thisOwner})
@@ -105,16 +101,17 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
     
                     }
                 }
-                console.log(data)
+                // console.log(data)
                  let response = await ApiApp.createGroup(data)
+                 /*
                  if (response.status === 200) {
                    console.log('success')
-                 }
+                 }*/
                  setUsersSelected([])
                  navigation.navigate('GroupsScreen')
             }
-        } catch (ex) {
-            console.log(ex)
+        } catch (e) {
+            console.log("registerGroup error =>",e.toString())
         }finally {
             setLoading(false)
         }
@@ -124,7 +121,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
         try {
             const response = await getUsersByUserName(value.trim(), authDuck.user, membersExist)
         } catch (e) {
-            console.log(e)
+            console.log("searchUsers error =>",e.toString())
         }
     }
 
@@ -156,10 +153,10 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
     const getNameUsr = (usrID) => {
         try {
             const data = _.find(groupDuck.users, {'id': usrID});
-            console.log('dato usuario', data)
+            // console.log('dato usuario', data)
             return data.username
         } catch (e) {
-
+            console.log("getNameUsr error =>",e.toString())
         }
 
     }

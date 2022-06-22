@@ -7,6 +7,7 @@ export const storeDataObject = async (key='@data', value) => {
         await AsyncStorage.setItem(key, jsonValue)
     } catch (e) {
         // saving error
+        console.log('storeDataObject error =>',e.toString())
     }
 }
 
@@ -15,7 +16,7 @@ export const getDataObject = async (key='') => {
         const jsonValue = await AsyncStorage.getItem(key)
         return jsonValue != null ? JSON.parse(jsonValue) : null;
     } catch(e) {
-        // error reading value
+        console.log('getDataObject error =>',e.toString())
     }
 }
 
@@ -26,6 +27,7 @@ export const storeData = async (key='@data',value) => {
         await AsyncStorage.setItem(key, value)
     } catch (e) {
         // saving error
+        console.log('storeData error =>',e.toString())
     }
 }
 
@@ -33,11 +35,13 @@ export const storeData = async (key='@data',value) => {
 export const getData = async (key='') => {
     try {
         const value = await AsyncStorage.getItem(key)
-        if(value !== null) {
+        /*
+        if (value !== null) {
             // value previously stored
-        }
+        }*/
     } catch(e) {
         // error reading value
+        console.log('getData error => ',e.toString())
     }
 }
 

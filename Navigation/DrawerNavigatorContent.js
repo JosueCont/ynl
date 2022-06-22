@@ -26,8 +26,8 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
             } else {
                 navigation.navigate('GroupsScreen')
             }
-        } catch (ex) {
-            console.log(ex,' CustomDraveContent Error')
+        } catch (e) {
+            console.log('DrawerConfig redirectValidation error => ',e.toString())
         }
 
     }
@@ -36,18 +36,17 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
         try {
             const response = await ApiApp.getGroupsRequests(authDuck.user.id)
             setGroupsRequests(response.data.data)
-        } catch (ex) {
-            console.log(ex)
+        } catch (e) {
+            console.log('DrawerConfig getGroupsRequests error => ',e.toString())
         }
     }
 
     const getGroups = async () => {
         try {
             const response = await ApiApp.getMyGroups(authDuck.user.id)
-
             setGroups(response.data.data)
         } catch (e) {
-            console.log(e, 61)
+            console.log('DrawerConfig getGroups error =>', e.toString())
         }
 
     }
@@ -56,8 +55,8 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
     const logoutFunction = async () => {
         try {
             await logOutAction()
-        } catch (ex) {
-            console.log('e', ex)
+        } catch (e) {
+            console.log('DrawerConfig logoutFunction error => ',e.toString())
         }
     }
 
@@ -99,7 +98,6 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
         </DrawerContentScrollView>
     );
 }
-
 
 const mapState = (state) => {
     return {

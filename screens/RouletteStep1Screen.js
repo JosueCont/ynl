@@ -34,10 +34,10 @@ const RouletteStep1Screen = ({navigation}) => {
         try {
             setLoading(true);
             let response = await ApiApp.getFeelingsV2(`populate=*&filters[parent][id][$null]=true`)
-            console.log(response.data.data)
+            //console.log(response.data.data)
             setParents(response.data.data)
         } catch (e) {
-            console.log(e)
+            console.log('getParents error =>',e.toString());
         } finally {
             setLoading(false)
         }
@@ -67,7 +67,7 @@ const RouletteStep1Screen = ({navigation}) => {
         })
         .onEnd(() => {
             savedRotation.value = rotation.value;
-            console.log('end')
+            // console.log('end')
 
         })
 

@@ -52,11 +52,11 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                 user: user ? user.id : null
             }
             const res = await ApiApp.saveFeelAspects({data})
-            console.log('res', res)
+            // console.log('res', res)
 
             setModalSuccessVisible(true)
         } catch (e) {
-            console.log('errror', e)
+            console.log('saveYourFeel error =>',e.toString());
             setModalErrorVisible(true)
         } finally {
             setLoading(false)
@@ -74,8 +74,8 @@ const YourFeelScreen = ({authDuck, navigation}) => {
             setFinantialNumber(finantial);
             setMentalNumber(mental);
             setRelationNumber(relations);
-        } catch (ex) {
-            console.log(ex)
+        } catch (e) {
+            console.log('getYourFeel error =>',e.toString());
         } finally {
             setLoading(false)
         }

@@ -55,7 +55,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
     useEffect(() => {
 
-        console.log(authDuck.emotionStatus)
+        // console.log(authDuck.emotionStatus)
         if (intro === false) {
             navigation.navigate('IntroScreen')
         } else if (authDuck.emotionStatus === 0 || authDuck.emotionStatus === undefined) {
@@ -100,7 +100,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const boot = async () => {
         try {
             setLoading(true)
-            console.log('focused')
+            // console.log('focused')
             await getGroupsRequests();
             await getGroups()
             await getHome()
@@ -108,7 +108,8 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             setTimeout(() => {
                 setLoading(false)
             }, 200)
-        } catch (ex) {
+        } catch (e) {
+            console.log("boot error =>",e.toString())
             setTimeout(() => {
                 setLoading(false)
             }, 200)
@@ -123,8 +124,8 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
         try {
             const response = await ApiApp.getGroupsRequests(authDuck.user.id)
             setGroupsRequests(response.data.data)
-        } catch (ex) {
-            console.log(ex)
+        } catch (e) {
+            console.log("HomeScreen getGroupsRequests error =>",e.toString())
         }
     }
 
@@ -135,11 +136,11 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
             const res = await ApiApp.getHomeData(authDuck.user.id)
 
-            console.log('consolelog?===',res.data.data)
+            // console.log('consolelog?===',res.data.data)
             if (_.get(res,'data.data', null)){
                 setDays(res.data.data.days)
                 if (res.data.data.lastEmotion){
-                    console.log('lastEmotion===>', res.data.data.lastEmotion)
+                    // console.log('lastEmotion =>', res.data.data.lastEmotion)
                     setLastEmotion(res.data.data.lastEmotion.name)
                     setMainFeeling(res.data.data.lastEmotion)
 
@@ -157,9 +158,9 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                 }
             }
         } catch (e) {
-            console.log(e)
+            console.log("HomeScreen getHome error =>",e.toString())
         } finally {
-
+            //
         }
     }
 
@@ -169,13 +170,13 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
 
             if(_.get(response,'data.data',null)){
-                console.log("groups", response.data.data.entries)
+                // console.log("groups", response.data.data.entries)
                 setGroups(response.data.data.entries)
                 setLoading(false)
             }
 
         } catch (e) {
-            console.log(e, 61)
+            console.log("HomeScreen getGroups error =>",e.toString())
         } finally {
 
         }
@@ -196,42 +197,47 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             }
             console.log(data)
             const res = await ApiApp.sendPushToken({data})
-            console.log('sucess=====>', res)
+            console.log('sucess=>', res)
         } catch (e) {
-            console.log('error=====>', e)
+            console.log("HomeScreen sendPushTokenToBack error =>",e.toString())
         }
     }
 
 
     async function registerForPushNotificationsAsync() {
-        let token;
-        if (Device.isDevice) {
-            const {status: existingStatus} = await Notifications.getPermissionsAsync();
-            let finalStatus = existingStatus;
-            if (existingStatus !== 'granted') {
-                const {status} = await Notifications.requestPermissionsAsync();
-                finalStatus = status;
+        try {
+            let token;
+            if (Device.isDevice) {
+                const {status: existingStatus} = await Notifications.getPermissionsAsync();
+                let finalStatus = existingStatus;
+                if (existingStatus !== 'granted') {
+                    const {status} = await Notifications.requestPermissionsAsync();
+                    finalStatus = status;
+                }
+                if (finalStatus !== 'granted') {
+                    console.log('Failed to get push token for push notification!');
+                    return;
+                }
+                token = (await Notifications.getExpoPushTokenAsync()).data;
+                console.log(token);
+            } else {
+                console.log('Must use physical device for Push Notifications');
             }
-            if (finalStatus !== 'granted') {
-                console.log('Failed to get push token for push notification!');
-                return;
+    
+            if (Platform.OS === 'android') {
+                Notifications.setNotificationChannelAsync('default', {
+                    name: 'default',
+                    importance: Notifications.AndroidImportance.MAX,
+                    vibrationPattern: [0, 250, 250, 250],
+                    lightColor: '#FF231F7C',
+                });
             }
-            token = (await Notifications.getExpoPushTokenAsync()).data;
-            console.log(token);
-        } else {
-            console.log('Must use physical device for Push Notifications');
+    
+            return token;
+        } catch(e){
+            console.log("registerForPushNotificationsAsync error =>",e.toString())
         }
-
-        if (Platform.OS === 'android') {
-            Notifications.setNotificationChannelAsync('default', {
-                name: 'default',
-                importance: Notifications.AndroidImportance.MAX,
-                vibrationPattern: [0, 250, 250, 250],
-                lightColor: '#FF231F7C',
-            });
-        }
-
-        return token;
+        
     }
 
 
@@ -312,9 +318,9 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                   alignItems={'center'} justifyContent={'center'}>
 
                                 {
-                                    days.map((item) => {
+                                    days.map((item,i) => {
                                         return (
-                                            <View flex={1} height={20} style={getShadowCircleStyle(5, 5)}
+                                            <View key={i} flex={1} height={20} style={getShadowCircleStyle(5, 5)}
                                                   alignItems={'center'} justifyContent={'center'}>
                                                 <Text fontSize={7} textAlign={'center'} mb={1}
                                                       color={Colors.red}>{item.alias}</Text>
@@ -346,7 +352,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
                                     {
                                         _.has(mainFeeling, 'icon.url') &&
-                                        <Image alt=":)" size="sm"
+                                        <Image alt=":)" size="sm" 
                                                source={{uri: mainFeeling.icon.url}}/>
                                     }
 

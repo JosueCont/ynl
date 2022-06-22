@@ -24,7 +24,8 @@ const IntroScreen = ({navigation, authDuck}) => {
                 navigation.navigate('HomeScreen')
             }
         } catch (e) {
-            console.log(e)
+            console.log(e.toString())
+            console.log("IntroScreen nextScreen error =>",e.toString())
         }
     }
 

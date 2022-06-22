@@ -13,7 +13,7 @@ const GroupsListUsers = ({usersSelected, groupDuck, registerGroup, isUserSelecte
                     {
                         usersSelected && usersSelected.map((ele, i) => {
                             return (
-                                <Text borderRadius={20}
+                                <Text key={i} borderRadius={20}
                                         style={{backgroundColor: '#FD5535', padding: 5, color: 'white'}} fontSize={10}
                                         ml={1}>
                                     {ele.username}

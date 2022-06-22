@@ -38,7 +38,7 @@ const HistoryFeelingScreenDetail = ({authDuck, route, navigation}) => {
                         fontSize: 20,
                         color: '#FF5E00',
                         textAlign: 'center',
-                        fontWeight: 'bolder'
+                        fontWeight: 'bold'
                     }}>{moment(date, 'DD/MM/YYYY').format('LL')}</Text>
 
                     {

@@ -9,12 +9,14 @@ import {loginEmail} from "../../redux/ducks/authDuck";
 const SuccessScreen = ({navigation, authDuck, loginEmail}) => {
 
     const loginAutomatic = async () => {
-        console.log(authDuck);
+        //console.log(authDuck);
         try {
             const res = await loginEmail(authDuck.registerData.email, authDuck.registerData.password)
-            console.log(res)
-        } catch (ex) {
+            // console.log(res)
+        } catch (e) {
+            console.log('loginAutomatic error =>',e.toString())
             navigation.navigate('LoginScreen')
+
         }
     }
 

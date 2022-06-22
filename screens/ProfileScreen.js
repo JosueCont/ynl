@@ -52,13 +52,13 @@ const ProfileScreen = ({authDuck, navigation}) => {
         try {
             setLoading(true)
             const response = await ApiApp.getProfile(authDuck.user.id)
-            console.log(response.data)
+            // console.log(response.data)
             setValues(response)
             setLoading(false)
-        } catch (ex) {
-            console.log(ex)
+        } catch (e) {
+            console.log('getProfileFunction error =>',e.toString())
         } finally {
-
+            //
         }
     }
 
@@ -83,12 +83,13 @@ const ProfileScreen = ({authDuck, navigation}) => {
                 }
             });
             setValues(response)
-        } catch (ex) {
+        } catch (e) {
+            console.log('updateProfileFunction error =>',e.toString())
             toast.show({
                 duration: 2000,
                 render: () => {
                     return <Box bg="red.500" rounded="sm">
-                        <Text color={"white"} fontSize={16} p={3}>{ex.response.data.error.message}</Text>
+                        <Text color={"white"} fontSize={16} p={3}>{e.response.data.error.message}</Text>
                     </Box>;
                 }
             });
@@ -125,13 +126,14 @@ const ProfileScreen = ({authDuck, navigation}) => {
                     </Box>;
                 }
             });
-        } catch (ex) {
+        } catch (e) {
+            console.log('updatePasswordFunction error =>',e.toString());
             setModalPasswordUpdateVisible(false)
             toast.show({
                 duration: 2000,
                 render: () => {
                     return <Box bg="red.500" rounded="sm">
-                        <Text color={"white"} fontSize={16} p={3}>{ex.response.data.error.message}</Text>
+                        <Text color={"white"} fontSize={16} p={3}>{e.response.data.error.message}</Text>
                     </Box>;
                 }
             });
@@ -142,14 +144,15 @@ const ProfileScreen = ({authDuck, navigation}) => {
 
 
     const pickImage = async () => {
-        setLoadingImage(true)
+        try {
+            setLoadingImage(true)
 
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             quality: 1,
         });
-        console.log(result);
+        // console.log(result);
 
         if (result.cancelled) {
             setLoadingImage(false)
@@ -160,11 +163,13 @@ const ProfileScreen = ({authDuck, navigation}) => {
                 setLoadingImage(false)
             }).catch((error) => {
                 setLoadingImage(false)
-                console.log(error)
+                console.log('pickImage: ',error.toString())
             })
         }
-
-
+        } catch (e){
+            console.log('pickImage error =>',e.toString());
+        }
+    
     };
 
     const updatePhotoFunction = async (imagePickerResult) => {
@@ -194,8 +199,8 @@ const ProfileScreen = ({authDuck, navigation}) => {
 
             await getProfileFunction()
 
-        } catch (ex) {
-            console.log(ex)
+        } catch (e) {
+            console.log('updatePhotoFunction error => ',e.toString())
         }
 
     }

@@ -43,16 +43,14 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
                 return dataItem;
             })
 
-
-
             setHistoryDataDetail(arrayDates)
             arrayDates = _.orderBy(arrayDates, ['date'], ['desc']);
             arrayDates = _.uniqBy(arrayDates, 'shortDate');
-            console.log('arraydates', arrayDates)
+            // console.log('arraydates', arrayDates)
 
             setHistoryData(arrayDates)
         } catch (e) {
-            console.log(e)
+            console.log('getHistoryData error =>', e.toString())
         } finally {
             setLoading(false)
         }
@@ -80,8 +78,7 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
 
                 <View flex={1} alignItems={'center'}>
                     <Stack space={4} w="90%">
-                        <Text style={{fontSize: 20, color: '#FF5E00', textAlign: 'center', fontWeight: 'bolder'}}>Mi
-                            Historial</Text>
+                        <Text style={{fontSize: 20, color: '#FF5E00', textAlign: 'center', fontWeight: 'bold'}}>Mi Historial</Text>
 
                         {
                             loading ?
@@ -98,9 +95,10 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
 
                                 :
                                 historyData.map((ele, i) => {
-                                    console.log(ele)
+                                    //console.log(ele)
                                     return (
                                         <TouchableOpacity
+                                            key={i}
                                             onPress={() => {
                                                 goToDetailHistory(ele)
                                             }}>

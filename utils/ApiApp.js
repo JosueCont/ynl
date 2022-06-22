@@ -4,7 +4,7 @@ import moment from "moment";
 
 class ApiApp {
     static ApisType = (url, method = "post", params = {}, formdata = null) => {
-        console.log('url:', url, method, params)
+        // console.log('url:', url, method, params)
 
 
         switch (method) {
@@ -199,7 +199,7 @@ class ApiApp {
     }
 
     static getUserProgress = async (userID = '', option = '') => {
-        console.log(`/api/progress/user_progress?userId=${userID}&option=${option}`)
+        // console.log(`/api/progress/user_progress?userId=${userID}&option=${option}`)
         return ApiApp.ApisType(`/api/progress/user_progress?userId=${userID}&option=${option}`, 'get');
     }
 

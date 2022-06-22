@@ -16,12 +16,11 @@ let APIKit = axios.create(config);
 
 APIKit.interceptors.request.use(async function (config) {
     try {
-
-        console.log(config.baseURL)
+        // console.log(config.baseURL)
          let token = await getDataObject('@jwt');
          if (token) config.headers.Authorization =`Bearer ${token.jwt}`;
     } catch (e) {
-        console.log(e)
+        console.log('APIKit.interceptors.request error =>',e.toString())
     }
 
     return config;

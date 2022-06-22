@@ -28,7 +28,7 @@ const RouletteStep3Screen = ({route, navigation}) => {
             let response = await ApiApp.getFeelingsV2(`populate[parent][populate][parent][populate][0]=icon&filters[$and][0][parent][id][$eq]=${parentId}`)
             setChildren(response.data.data)
         } catch (e) {
-            console.log(e.response)
+            console.log('getChildren error =>',e.toString());
         } finally {
             setLoading(false)
         }
@@ -66,7 +66,7 @@ const RouletteStep3Screen = ({route, navigation}) => {
                         (children) &&
                         children.map((item, i) => {
                             return (
-                                <Select.Item label={item.attributes.name} value={item}/>
+                                <Select.Item key={i} label={item.attributes.name} value={item}/>
                             )
                         })
                     }

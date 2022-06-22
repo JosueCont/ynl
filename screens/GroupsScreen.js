@@ -30,8 +30,8 @@ const GroupsScreen = ({authDuck, navigation}) => {
             const response = await ApiApp.getMyGroups(authDuck.user.id)
             // setGroups(response.data.data)
             setGroups(response.data.data.entries)
-        } catch (ex) {
-            console.log(ex)
+        } catch (e) {
+            console.log("getGroups error =>",e.toString())
         } finally {
             setLoading(false)
         }
@@ -42,8 +42,8 @@ const GroupsScreen = ({authDuck, navigation}) => {
             setLoading(true)
             const response = await ApiApp.getGroupsRequests(authDuck.user.id)
             setGroupsRequests(response.data.data)
-        } catch (ex) {
-            console.log(ex)
+        } catch (e) {
+            console.log("getGroupsRequests error =>",e.toString())
         } finally {
             setLoading(false)
         }
@@ -62,13 +62,12 @@ const GroupsScreen = ({authDuck, navigation}) => {
             }else{
                 setReload(true)
             }
-        } catch (ex) {
-            console.log(ex.response)
+        } catch (e) {
+            console.log("groupAcceptInvite error =>",e.toString())
         }
     }
 
     const groupDeleteFunction = async (groupId) => {
-
         try {
             const response = await ApiApp.groupsDelete(groupId);
             // console.log(response.data)
@@ -77,18 +76,16 @@ const GroupsScreen = ({authDuck, navigation}) => {
             }else{
                 setReload(true)
             }
-        } catch (ex) {
-            console.log(ex.response)
+        } catch (e) {
+            console.log("groupDeleteFunction error =>",e.toString())
         }
     }
 
     return (
         <SafeAreaView flex={1}>
             <View flex={1} px={2} style={{backgroundColor: Colors.gray}}>
-                {/*<Text textAlign={'center'} fontSize={24}>Mis grupos/Clubs</Text>*/}
                 <ScrollView
                     flex={1}
-
                     nestedScrollEnabled={true}
                     my={4}
                     backgroundColor={'white'}
@@ -114,14 +111,15 @@ const GroupsScreen = ({authDuck, navigation}) => {
                                     <Text fontSize={24} color={Colors.red} textAlign={'center'} mb={4}>Invitación a
                                         grupos</Text>
                                     {
-                                        groupsRequests.map((item) => {
+                                        groupsRequests.map((item,i) => {
                                             if (item.attributes.group.data){
                                                 return (
                                                     <GroupsItem groupId={item.id}
-                                                                title={item.attributes.group.data.attributes.name}
-                                                                navigation={navigation} acceptInvite={true}
-                                                                token={item.attributes.token}
-                                                                acceptAction={groupAcceptInvite}
+                                                        key={i}
+                                                        title={item.attributes.group.data.attributes.name}
+                                                        navigation={navigation} acceptInvite={true}
+                                                        token={item.attributes.token}
+                                                        acceptAction={groupAcceptInvite}
                                                     />
                                                 )
                                             }
@@ -140,13 +138,14 @@ const GroupsScreen = ({authDuck, navigation}) => {
                             {
                                 groups.length > 0 ?
                                     <View>
-                                        {/* <Text fontSize={24} color={Colors.red} textAlign={'center'} mb={4}>Mis
-                                            grupos</Text> */}
                                         {
-                                            groups.map((item) => {
+                                            groups.map((item,i) => {
                                                 if(item.owner){
                                                     return (
-                                                        <GroupsItem groupId={item.id} title={item.name}
+                                                        <GroupsItem 
+                                                        key={i}
+                                                        groupId={item.id} 
+                                                        title={item.name}
                                                                 navigation={navigation} deleteAction={() => {
                                                         Alert.alert(
                                                             "Your Next Level",
@@ -162,7 +161,7 @@ const GroupsScreen = ({authDuck, navigation}) => {
                                                                     onPress: () => groupDeleteFunction(item.id)
                                                                 }
                                                             ])
-                                                    }} isOwner = {item.owner.id === authDuck.user.id} thisOwner={authDuck.user.id}/>
+                                                    }} isOwner = {item.owner.id === authDuck.user.id} thisOwner={authDuck.user.id} />
                                                 )}
                                             })
                                         }
