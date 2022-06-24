@@ -199,9 +199,8 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             }
             console.log(data)
             const res = await ApiApp.sendPushToken({data})
-            console.log('sucess=>', res)
         } catch (e) {
-            console.log("HomeScreen sendPushTokenToBack error =>",e.toString())
+            console.log("HomeScreen sendPushTokenToBack error =>",e)
         }
     }
 
@@ -266,10 +265,13 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                             </View> :
                             image ?
                                 <View style={getShadowCircleStyle(10, 10)}>
-                                    <Image w={220} h={220} source={{uri: image}} alt="img"
-                                           style={[
-                                               {resizeMode: 'cover'}]}
-                                           borderRadius={110} borderWidth={2} borderColor={'white'}/>
+                                    <TouchableOpacity onPress={()=> navigation.navigate('ProfileScreen')}>
+                                        <Image w={220} h={220} source={{uri: image}} alt="img"
+                                               style={[
+                                                   {resizeMode: 'cover'}]}
+                                               borderRadius={110} borderWidth={2} borderColor={'white'}/>
+                                    </TouchableOpacity>
+
                                 </View> :
                                 <View style={[{
                                     width: 220,

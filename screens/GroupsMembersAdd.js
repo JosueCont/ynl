@@ -1,15 +1,15 @@
 import React, {useEffect, useRef, useState} from "react";
-import {Divider, Icon, Image, Input, ScrollView, Spinner, View, VStack} from "native-base";
+import {Divider, Icon, Image, Input, ScrollView, Spinner, View, VStack, Text} from "native-base";
 import {connect} from "react-redux";
 import ApiApp from "../utils/ApiApp";
 import logo from '../assets/logo.png'
 import {Ionicons} from "@expo/vector-icons";
-import {getUsersByUserName} from '../redux/ducks/groupDuck'
+import {getUsersByUserName, resetUsersSearch} from '../redux/ducks/groupDuck'
 import _ from 'lodash'
 import GroupsListUsers from "./Groups/Components/GroupsListUsers";
 import {useFocusEffect} from "@react-navigation/native";
 
-const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUserName}) => {
+const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUserName, resetUsersSearch}) => {
     const [loading, setLoading] = useState(false)
     const [adding, setAdding] = useState(false)
     const [user, setUser] = useState(null)
@@ -27,6 +27,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
                 if(usersSelected.length>0){
                     setUsersSelected([])
                 }
+                resetUsersSearch()
                 searchBox.current.clear()
             };
         }, [])
@@ -53,7 +54,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
                 setMembersExist([])
                 setUsersSelected([])
             }
-            getUsersByUserName(undefined, authDuck.user, membersExist)
+            //getUsersByUserName(undefined, authDuck.user, membersExist)
         }
     }, [route.params])
 
@@ -161,10 +162,10 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
 
         <ScrollView _contentContainerStyle={{alignItems: 'center', backgroundColor: 'white'}}>
 
-            <Image size={'xs'} source={logo} alt="img"/>
+            <Image size={'xs'} mt={5} source={logo} alt="img"/>
             <View flex={1}>
                 <VStack my="4" space={5} w="100%" maxW="350px">
-                    <VStack w="100%" space={5} alignSelf="center">
+                    <VStack w="100%" space={0} alignSelf="center">
                         <Input ref={searchBox} placeholder={`Buscar amigos para añadir a ${groupName}`}
                                width="100%"
                                height={10}
@@ -174,7 +175,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
                                borderWidth="2"
                                clearButtonMode="never"
                                onChangeText={_.debounce(searchUsers, 1000)}
-                               borderColor={'red.500'}
+                               borderColor={'#FD5535'}
                                InputLeftElement={<Icon ml="2" size={4} color="gray.400"
                                                        as={<Ionicons name="ios-search"/>}/>}
                                autoCorrect={false}
@@ -190,6 +191,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
                         <GroupsListUsers usersSelected={usersSelected} adding={adding} registerGroup={registerGroup}
                                          isUserSelected={isUserSelected} addUserToList={addUserToList} isAddMembers={isAddMembers}/>
                 }
+
             </View>
 
 
@@ -205,4 +207,4 @@ const mapState = (state) => {
 }
 
 
-export default connect(mapState, {getUsersByUserName})(GroupsMembersAdd);
+export default connect(mapState, {getUsersByUserName, resetUsersSearch})(GroupsMembersAdd);

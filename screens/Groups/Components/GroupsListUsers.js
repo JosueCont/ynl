@@ -4,6 +4,7 @@ import {Ionicons} from "@expo/vector-icons";
 import {connect} from "react-redux";
 import {getUsersByUserName} from "../../../redux/ducks/groupDuck";
 import {TouchableOpacity} from "react-native";
+import NoDataIcon from "../../../components/Shared/NoDataIcon";
 
 const GroupsListUsers = ({usersSelected, groupDuck, registerGroup, isUserSelected, addUserToList,adding, isAddMembers}) => {
     return (
@@ -24,8 +25,10 @@ const GroupsListUsers = ({usersSelected, groupDuck, registerGroup, isUserSelecte
                 </ScrollView>
             </HStack>
 
-            <Text size={'sm'} mb={4}>Sugerencias</Text>
-            <FlatList data={groupDuck.users} renderItem={({item}) =>
+
+
+
+            <FlatList style={{height:400}} ListEmptyComponent={<NoDataIcon text={'Si no encuentras a tu amigo en el listado puedes añadir su correo completo para invitarlo a ser parte de YNL'}/>} data={groupDuck.users} renderItem={({item}) =>
                 <Box borderBottomWidth="1" _dark={{
                     borderColor: "gray.600"
                 }} borderColor="coolGray.200" pl="4" pr="5" py="2">
@@ -51,11 +54,11 @@ const GroupsListUsers = ({usersSelected, groupDuck, registerGroup, isUserSelecte
 
                 </Box>} keyExtractor={item => item.id}/>
                 
-            {isAddMembers && <Button isLoading={adding} onPress={registerGroup} isDisabled={usersSelected.length <= 0} size="lg" colorScheme={'red'}
+            {isAddMembers && <Button isLoading={adding} onPress={registerGroup} isDisabled={usersSelected.length <= 0} size="lg" colorScheme={'orange'}
                     m={3}>
                         Agregar
             </Button>}
-            {!isAddMembers && <Button isLoading={adding} onPress={registerGroup} isDisabled={usersSelected.length <= 0} size="lg" colorScheme={'red'}
+            {!isAddMembers && <Button isLoading={adding} onPress={registerGroup} isDisabled={usersSelected.length <= 0} size="lg" colorScheme={'orange'}
                     m={3}>
                         Crear
             </Button>}

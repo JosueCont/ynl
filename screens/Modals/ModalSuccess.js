@@ -3,8 +3,13 @@ import {Alert, Modal, TouchableOpacity} from "react-native";
 import {styles} from "./ModalStyleSheet";
 import {Button, Icon, Text, View} from "native-base";
 import {AntDesign} from "@expo/vector-icons";
+import { useNavigation } from '@react-navigation/native';
 
-const ModalError = ({visible, setVisible}) => {
+const ModalError = ({visible, setVisible, withGoback=false}) => {
+
+    const navigation = useNavigation();
+
+
     return (
         <Modal
             animationType={'slide'}
@@ -27,7 +32,12 @@ const ModalError = ({visible, setVisible}) => {
                     <View px={30} pt={10} mb={2}>
                         <Text textAlign={'center'} fontSize={20} style={{fontWeight: 'bold'}}>Aviso</Text>
                         <Text fontSize={18} style={styles.modalText}>Registro exitoso</Text>
-                        <Button size={'xs'} colorScheme={'orange'} onPress={() => setVisible(false)}><Text size={'md'}
+                        <Button size={'xs'} colorScheme={'orange'} onPress={() => {
+                            if(withGoback){
+                                navigation.goBack(0)
+                            }
+                            setVisible(false)
+                        }}><Text size={'md'}
                                                                                                            color={'white'}>Entendido</Text></Button>
                     </View>
                 </View>

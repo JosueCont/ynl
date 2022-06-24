@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {Button, Image, Text, View, TextArea} from "native-base";
+import {Button, Image, Text, View, TextArea, KeyboardAvoidingView} from "native-base";
 import {connect} from "react-redux";
-import {ImageBackground} from "react-native";
+import {ImageBackground, Platform, Keyboard, TouchableWithoutFeedback} from "react-native";
 import calendar from '../assets/calendaricon.png'
 import logo from '../assets/logo.png'
 import {getDay, getMonth} from '../utils/functions'
@@ -50,6 +50,8 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
 
     return (
         <ScreenBaseV1 color={'#' + route.params.color}>
+            <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS === "ios" ? "padding" : "height"} >
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <View flex={1} mx={4} w={'100%'}>
 
                 <View flex={1} alignItems={'center'}>
@@ -78,12 +80,14 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
 
                 </View>
 
+
                 <View mb={6} alignItems={'center'}>
                     <Text bold color={'#FFF'}
                           style={styles.shadow}
-                          fontSize={20}>Cuéntanos porqué</Text>
+                          fontSize={20}>Cuéntanos por qué</Text>
                     <TextArea h={20} onChangeText={(text)=>setComment(text)} value={comment} backgroundColor={'#FFF'} borderRadius={10} w="90%" maxW="400" />
                 </View>
+
 
 
                 <View mb={6} mx={4}>
@@ -94,7 +98,8 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
 
                 </View>
             </View>
-
+            </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
         </ScreenBaseV1>
     )
 }

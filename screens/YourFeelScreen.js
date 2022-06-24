@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Box, Button, HStack, Image, Skeleton, Slider, Text, View, VStack} from "native-base";
+import {Box, Button, HStack, Image, Skeleton, Slider, Text, View, VStack, useToast} from "native-base";
 import {ScrollView} from "react-native";
 import {connect} from "react-redux";
 import logo from '../assets/logo.png'
@@ -21,6 +21,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
     const [finantialNumber, setFinantialNumber] = useState(1)
     const [relationNumber, setRelationNumber] = useState(1)
     const [user, setUser] = useState(false)
+    const toast = useToast();
     const [modalSuccessVisible, setModalSuccessVisible] = useState(null)
     const [modalErrorVisible, setModalErrorVisible] = useState(null)
 
@@ -54,6 +55,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
             // console.log('res', res)
 
             setModalSuccessVisible(true)
+
         } catch (e) {
             console.log('saveYourFeel error =>',e.toString());
             setModalErrorVisible(true)
@@ -217,7 +219,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
 
                     </VStack>
                 </HStack>
-                <ModalSuccess visible={modalSuccessVisible} setVisible={setModalSuccessVisible}></ModalSuccess>
+                <ModalSuccess visible={modalSuccessVisible} withGoback={true} setVisible={setModalSuccessVisible}></ModalSuccess>
                 <ModalError visible={modalErrorVisible} setVisible={setModalErrorVisible}></ModalError>
 
             </ScrollView>

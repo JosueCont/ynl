@@ -16,6 +16,7 @@ const GET_USERS = 'GET_USERS';
 const GET_USERS_SUCCESS = 'GET_USERS_SUCCESS';
 const GET_MY_GROUPS = 'GET_MY_GROUPS';
 const GET_MY_GROUPS_SUCCESS = 'GET_MY_GROUPS_SUCCESS';
+const RESET_USERS = 'RESET_USERS';
 
 
 const groupDuck = (state = initialData, action) => {
@@ -32,6 +33,8 @@ const groupDuck = (state = initialData, action) => {
             return {...state, loading: false, groups: action.payload}
         case ERROR_FETCH:
             return {...state, fetchingUsers: false, loading:false}
+        case RESET_USERS:
+            return {...state, fetchingUsers: false, users:null}
         default:
             return state
     }
@@ -50,6 +53,19 @@ export let getMyGroups=(userId='')=> async(dispatch)=>{
         return false
     }
 }
+
+
+export let resetUsersSearch=()=> async(dispatch)=>{
+    try{
+        // console.log(response.data, 43)
+        dispatch({type: RESET_USERS});
+    } catch (e) {
+        console.log('groupDuck getMyGroups error => ',e.toString())
+        dispatch({type: ERROR_FETCH});
+        return false
+    }
+}
+
 
 export let getUsersByUserName=(username='', userCurrent, membersExist)=> async(dispatch)=>{
     try {
