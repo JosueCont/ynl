@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Image, ScrollView, Skeleton, Stack, Text, View} from "native-base";
+import {Button, Image, ScrollView, Skeleton, Stack, Text, View, Divider} from "native-base";
 import {Colors} from "../utils/Colors";
 import {connect} from "react-redux";
 import {useIsFocused} from "@react-navigation/native";
@@ -10,6 +10,8 @@ import _ from 'lodash'
 import moment from 'moment'
 import {RefreshControl, SafeAreaView} from "react-native";
 import {getShadowCircleStyle} from "../utils/functions";
+import LineChartCustom from "./Charts/LineChartCustom";
+import ProgressChartCustom from "./Charts/ProgressChart";
 
 const StatisticsScreen = ({authDuck, navigation, ...props}) => {
     const isFocused = useIsFocused();
@@ -154,6 +156,8 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
                             </Stack>
                         </View>
                 }
+
+
                 <View mx={2} my={2} alignItems={'center'}>
                     {
                         loading ?
@@ -170,12 +174,23 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
                     }
                 </View>
 
-                <View flex={0.1} mx={4}>
-                    <Button isLoading={loading} size="md" colorScheme={'orange'}
-                            onPress={() => navigation.navigate('HistoryFeelingScreen')}>
-                        Ver detalle
-                    </Button>
-                </View>
+                {/*<View flex={0.1} mx={4} mb={5}>*/}
+                {/*    /!*<Button isLoading={loading} size="md" colorScheme={'orange'}*!/*/}
+                {/*    /!*        onPress={() => navigation.navigate('HistoryFeelingScreen')}>*!/*/}
+                {/*    /!*    Ver detalle*!/*/}
+                {/*    /!*</Button>*!/*/}
+                {/*    <Divider></Divider>*/}
+                {/*</View>*/}
+
+
+                {/*<View>*/}
+                {/*    <Text size={'sm'} textAlign={'center'}>Cómo te estás calificando en tus diferentes aspectos</Text>*/}
+                {/*    <ProgressChartCustom data={[]}/>*/}
+                {/*</View>*/}
+
+
+
+
             </ScrollView>
         </SafeAreaView>
     )

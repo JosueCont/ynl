@@ -1,6 +1,6 @@
 import React from "react";
 import {ImageBackground} from "react-native";
-import bgIntro from '../../assets/bgIntro.jpg';
+import bgIntro from '../../assets/bgIntro.png';
 import {Image, Text, View} from "native-base";
 import logoSmall from '../../assets/logoSmall.png';
 
