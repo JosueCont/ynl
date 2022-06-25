@@ -42,7 +42,7 @@
     "react-native-gesture-handler": "~2.1.0",
     "react-native-linkedin": "^2.1.1",
     "react-native-mime-types": "^2.3.0",
-    "react-native-pager-view": "^5.4.24",
+    "react-native-pager-view": "5.4.9",
     "react-native-phone-number-input": "^2.1.0",
     "react-native-reanimated": "~2.3.1",
     "react-native-roulette": "^0.0.9",
