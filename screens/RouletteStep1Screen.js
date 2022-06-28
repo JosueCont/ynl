@@ -59,10 +59,13 @@ const RouletteStep1Screen = ({navigation}) => {
             //Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
             let spins = (deg / 360);
             let spingResolve = spins >= 1 ? spins - parseInt((spins + "").split(".")[0]) : spins;
-            let emotionPositionVal = parseInt(((((spingResolve * 360) + 0) / (360 / 7)) + "").split(".")[0]);
+            let emotionPositionVal = Math.abs(parseInt(((((spingResolve * 360) + 0) / (360 / 7)) + "").split(".")[0]));
             if (emotionPositionVal < 7) {
                 setEmotionPosition(emotionPositionVal)
             }
+            let varAng = 5; // Variación angular
+            let limMax = 50; // Limite máximo angular
+            let limMin = 10; // Limite máximo angularcc
             let x2= e.allTouches[0].x
             let y2= e.allTouches[0].y
             if (x1 !== null){
@@ -70,18 +73,18 @@ const RouletteStep1Screen = ({navigation}) => {
                 let mCurrent = (-centerY+y2)/(centerX-x2)
                 let degLast = Math.atan(mLast)*180/Math.PI
                 let degCurrent = Math.atan(mCurrent)*180/Math.PI
-                if (Math.abs(degLast-degCurrent)>35 ){
-                    if (Math.abs(degLast-degCurrent)>50){
+                if (Math.abs(degLast-degCurrent)>limMin ){
+                    if (Math.abs(degLast-degCurrent)>limMax){
                         if(degLast > degCurrent){
-                            setDeg(deg - 5)
+                            setDeg(deg - varAng)
                         }else{
-                            setDeg(deg + 5)
+                            setDeg(deg + varAng)
                         }
                     }else{
                         if(degLast > degCurrent){
-                            setDeg(deg + 5)
+                            setDeg(deg + varAng)
                         }else{
-                            setDeg(deg - 5)
+                            setDeg(deg - varAng)
                         }
                     }
                     setX1(x2)
@@ -110,7 +113,7 @@ const RouletteStep1Screen = ({navigation}) => {
                 <View flex={1} width={'100%'}>
 
                     <View flex={0.2} >
-                        <Text color={emotions[emotionPosition].color} style={{fontWeight:'bold',fontSize:30, marginTop:30}}  textAlign={'center'}>¿Cómo te sientes hoy?</Text>
+                        <Text color={'#FD5902'} style={{fontWeight:'bold',fontSize:30, marginTop:30}}  textAlign={'center'}>¿Cómo te sientes hoy?</Text>
                     </View>
                     <View flex={0.4} alignItems={'center'} justifyContent={'flex-end'}>
                         <Image alt={'roulette'} source={pointerImage} style={{resizeMode: 'contain'}} width={10} height={10}/>
@@ -137,7 +140,8 @@ const RouletteStep1Screen = ({navigation}) => {
                     <View flex={0.1} mx={4}>
                         <Button colorScheme={'orange'}
                                 onPress={() => navigation.navigate('RouletteStep2Screen', {parentItem: _.find(parents, (o)=> {
-                                        return o.attributes.slug_name === emotions[emotionPosition].slug
+                                    console.log(emotionPosition)
+                                        return o.attributes.slug_name === (emotions[emotionPosition]?.slug ? emotions[emotionPosition]?.slug : 'contento')
                                     } )})}>Continuar</Button>
                     </View>
                 </View>

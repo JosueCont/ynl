@@ -5,6 +5,7 @@ import {loginEmail, loginGoogle, loginLinkedIn} from "../../redux/ducks/authDuck
 import FormLogin from "../../components/security/FormLogin";
 import {KeyboardAvoidingView, ScrollView} from "native-base";
 import ModalError from "../Modals/ModalError";
+import * as AppleAuthentication from "expo-apple-authentication";
 
 const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle,loginLinkedIn, authDuck}) => {
 
@@ -94,6 +95,22 @@ const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle,loginLin
 
     }
 
+    const onLoginApple=async ()=>{
+        try{
+            let credential = await AppleAuthentication.signInAsync({
+                requestedScopes: [
+                    AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+                    AppleAuthentication.AppleAuthenticationScope.EMAIL,
+                ],
+            });
+
+            console.log(credential)
+        }catch (e){
+            console.log('onLoginApple===>', e)
+        }
+
+    }
+
     const goRegister = () => {
         navigation.navigate('Register')
     }
@@ -102,7 +119,7 @@ const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle,loginLin
             <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
                                   style={{flex: 1, backgroundColor: 'white'}}>
                 <ScrollView>
-                    <FormLogin loading={loading} onLoginGoogle={loginWithGoogle} onLogin={login}
+                    <FormLogin loading={loading}  onLoginApple={onLoginApple} onLoginGoogle={loginWithGoogle} onLogin={login}
                                onGoRegister={goRegister} onLoginLinked={loginWithLinkedIn} />
                     <ModalError visible={modalErrorVisible} setVisible={setModalErrorVisible}
                                 text={errorMessage}/>

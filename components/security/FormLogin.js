@@ -268,6 +268,17 @@ export default (props) => {
                                                       }, getShadowCircleStyle(10, 10)]}>
                                         <Image source={googleImage} w={10} h={10} alt="img"></Image>
                                     </TouchableOpacity>
+
+                                    {/*<TouchableOpacity onPress={props.onLoginApple}*/}
+                                    {/* flex={1} alignItems={'center'}*/}
+                                    {/*                  justifyContent={'center'}*/}
+                                    {/*                  style={[{*/}
+                                    {/*                      flex: 1,*/}
+                                    {/*                      alignItems: 'center'*/}
+                                    {/*                  }, getShadowCircleStyle(10, 10)]}>*/}
+                                    {/*    <Image source={googleImage} w={10} h={10} alt="img"></Image>*/}
+                                    {/*</TouchableOpacity>*/}
+
                                 </View>
 
                                 <HStack justifyContent="center">
