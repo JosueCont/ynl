@@ -49,6 +49,10 @@ const RouletteStep1Screen = ({navigation}) => {
 
     const rotation = useSharedValue(1);
     const savedRotation = useSharedValue(1);
+    const [centerX, setCenterX] = useState(150)
+    const [centerY, setCenterY] = useState(150)
+    const [x1, setX1] = useState(null)
+    const [y1, setY1] = useState(null)
 
     const rotationGesture = GH.Gesture.Rotation()
         .onTouchesMove((e) => {
@@ -59,8 +63,34 @@ const RouletteStep1Screen = ({navigation}) => {
             if (emotionPositionVal < 7) {
                 setEmotionPosition(emotionPositionVal)
             }
-
-            setDeg(deg + 3)
+            let x2= e.allTouches[0].x
+            let y2= e.allTouches[0].y
+            if (x1 !== null){
+                let mLast = (-centerY+y1)/(centerX-x1)
+                let mCurrent = (-centerY+y2)/(centerX-x2)
+                let degLast = Math.atan(mLast)*180/Math.PI
+                let degCurrent = Math.atan(mCurrent)*180/Math.PI
+                if (Math.abs(degLast-degCurrent)>35 ){
+                    if (Math.abs(degLast-degCurrent)>50){
+                        if(degLast > degCurrent){
+                            setDeg(deg - 5)
+                        }else{
+                            setDeg(deg + 5)
+                        }
+                    }else{
+                        if(degLast > degCurrent){
+                            setDeg(deg + 5)
+                        }else{
+                            setDeg(deg - 5)
+                        }
+                    }
+                    setX1(x2)
+                    setY1(y2)
+                }
+            }else{
+                setX1(x2)
+                setY1(y2)
+            }
         })
         .onUpdate((e) => {
             rotation.value = savedRotation.value + e.rotation;
