@@ -269,16 +269,29 @@ export default (props) => {
                                         <Image source={googleImage} w={10} h={10} alt="img"></Image>
                                     </TouchableOpacity>
 
-                                    {/*<TouchableOpacity onPress={props.onLoginApple}*/}
-                                    {/* flex={1} alignItems={'center'}*/}
-                                    {/*                  justifyContent={'center'}*/}
-                                    {/*                  style={[{*/}
-                                    {/*                      flex: 1,*/}
-                                    {/*                      alignItems: 'center'*/}
-                                    {/*                  }, getShadowCircleStyle(10, 10)]}>*/}
-                                    {/*    <Image source={googleImage} w={10} h={10} alt="img"></Image>*/}
-                                    {/*</TouchableOpacity>*/}
-
+                                    {
+                                        <TouchableOpacity onPress={props.onLoginApple}
+                                            flex={1} alignItems={'center'}
+                                            justifyContent={'center'}
+                                            style={[{
+                                                flex: 1,
+                                                alignItems: 'center'
+                                            }, getShadowCircleStyle(10, 10)]}>
+                                        <Image source={googleImage} w={10} h={10} alt="img"></Image>
+                                    </TouchableOpacity> 
+                                    }
+                                    {
+                                        /*
+                                         <AppleAuthentication.AppleAuthenticationButton
+                                            buttonType={AppleAuthentication.AppleAuthenticationButtonType.CONTINUE}
+                                            buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
+                                            cornerRadius={3}
+                                            style={styles.appleButton}
+                                            onPress={() => this.loginWithApple()}
+                                        />
+                                        */
+                                    }
+                                   
                                 </View>
 
                                 <HStack justifyContent="center">

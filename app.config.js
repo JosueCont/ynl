@@ -34,7 +34,8 @@ const commonConfig = {
 const ios = {
     buildNumber: "20",
     supportsTablet: false,
-    bundleIdentifier: "com.hiumanlab.ynl"
+    bundleIdentifier: "com.hiumanlab.ynl",
+    usesAppleSignIn: true,
 };
 
 const android = {

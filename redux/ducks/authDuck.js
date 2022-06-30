@@ -106,6 +106,22 @@ export let loginGoogle = (accessToken) => async (dispatch) => {
     }
 }
 
+export let loginApple = (accessToken) => async (dispatch) => {
+    try {
+        dispatch({type: LOGIN_EMAIL});
+    // console.log('accessToken=========', accessToken)
+        let response = await ApiApp.loginWithApple(accessToken)
+        await saveUserData(response.data.user, response.data.jwt)
+        dispatch({type: LOGIN_EMAIL_SUCCESS, payload: {user: response.data.user, jwt: response.data.jwt}});
+        console.log('login exitoso con apple', response.data.user)        
+        return true;
+    } catch (e) {
+        console.log('authDuck loginApple error =>',e.toString())
+        dispatch({type: LOGIN_EMAIL_ERROR});
+        return false
+    }
+}
+
 export let loginLinkedIn = (accessToken) => async (dispatch) => {
     try {
         dispatch({type: LOGIN_EMAIL});
