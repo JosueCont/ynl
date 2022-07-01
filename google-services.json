@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "713066786150",
+    "project_id": "ynl-hl",
+    "storage_bucket": "ynl-hl.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:713066786150:android:b4a5b250611f1509e82ca7",
+        "android_client_info": {
+          "package_name": "com.hiumanlab.ynl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "713066786150-40unrv8pm4adukggg21qlp6qkqs6o900.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnynXcEgblfg5eARN0yvkgLzk4pwnXVmI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "713066786150-40unrv8pm4adukggg21qlp6qkqs6o900.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
