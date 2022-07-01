@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import {Alert, Platform} from 'react-native'
-import {loginEmail, loginGoogle, loginLinkedIn} from "../../redux/ducks/authDuck";
+import {loginEmail, loginGoogle, loginLinkedIn,loginApple} from "../../redux/ducks/authDuck";
 import FormLogin from "../../components/security/FormLogin";
 import {KeyboardAvoidingView, ScrollView} from "native-base";
 import ModalError from "../Modals/ModalError";
 import * as AppleAuthentication from "expo-apple-authentication";
 
-const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle,loginLinkedIn, authDuck}) => {
+const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle,loginApple,loginLinkedIn, authDuck}) => {
 
     const [loading, setLoading] = useState(false);
     const [hasLogged, setHasLogged] = useState(false);
@@ -43,6 +43,28 @@ const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle,loginLin
                 "Algo ha salido mal, porfavor intenta nuevamente"
             );
             console.log('loginWithGoogle error =>',e.toString());
+            setHasLogged(false)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const loginWithApple = async (accessToken) => {
+        try {
+            setLoading(true)
+            const res = await loginApple(accessToken)
+            if (res) {
+                //console.log('login success=====', res)
+                setHasLogged(true)
+                navigation.navigate('HomeScreen')
+            }
+
+        } catch (e) {
+            Alert.alert(
+                "Ups!",
+                "Algo ha salido mal, porfavor intenta nuevamente"
+            );
+            console.log('loginWithApple error =>',e.toString());
             setHasLogged(false)
         } finally {
             setLoading(false)
@@ -95,7 +117,7 @@ const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle,loginLin
 
     }
 
-    const onLoginApple=async ()=>{
+    const onLoginApple = async ()=>{
         try{
             let credential = await AppleAuthentication.signInAsync({
                 requestedScopes: [
@@ -105,6 +127,7 @@ const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle,loginLin
             });
 
             console.log(credential)
+            await loginWithApple(credential.authorizationCode);
         }catch (e){
             console.log('onLoginApple===>', e)
         }
@@ -136,4 +159,4 @@ const mapState = (state) => {
     }
 }
 
-export default connect(mapState, {loginEmail, loginGoogle, loginLinkedIn})(LoginScreen);
+export default connect(mapState, {loginEmail, loginGoogle,loginApple, loginLinkedIn})(LoginScreen);

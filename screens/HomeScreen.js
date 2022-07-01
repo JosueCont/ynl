@@ -209,7 +209,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
         try {
             let token;
             if (Device.isDevice) {
-                const {status: existingStatus} = await Notifications.getPermissionsAsync();
+                const {existingStatus} = await Notifications.getPermissionsAsync();
                 let finalStatus = existingStatus;
                 if (existingStatus !== 'granted') {
                     const {status} = await Notifications.requestPermissionsAsync();

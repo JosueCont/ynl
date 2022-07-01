@@ -1,20 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {RefreshControl, ScrollView, TouchableOpacity} from "react-native";
 import {connect} from "react-redux";
-import {
-    Box,
-    Button,
-    Checkbox,
-    FormControl,
-    Icon,
-    Image,
-    Input,
-    Skeleton,
-    Stack,
-    Text,
-    useToast,
-    View
-} from "native-base";
+import {Box, Button, Checkbox, FormControl, Icon, Image, Input, Skeleton, Stack, Text, useToast, View} from "native-base";
 import {Entypo} from "@expo/vector-icons";
 import {Colors} from "../utils/Colors";
 import ApiApp from "../utils/ApiApp";
@@ -56,7 +43,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
             setValues(response)
             setLoading(false)
         } catch (e) {
-            console.log('getProfileFunction error =>',e.toString())
+            console.log('getProfileFunction error =>', e.toString())
         } finally {
             //
         }
@@ -84,7 +71,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
             });
             setValues(response)
         } catch (e) {
-            console.log('updateProfileFunction error =>',e.toString())
+            console.log('updateProfileFunction error =>', e.toString())
             toast.show({
                 duration: 2000,
                 render: () => {
@@ -116,6 +103,8 @@ const ProfileScreen = ({authDuck, navigation}) => {
                 confirmNewPassword: confirmNewPassword
             }
 
+            console.log(data)
+
             const response = await ApiApp.updatePassword(data)
             setModalPasswordUpdateVisible(false)
             toast.show({
@@ -127,7 +116,8 @@ const ProfileScreen = ({authDuck, navigation}) => {
                 }
             });
         } catch (e) {
-            console.log('updatePasswordFunction error =>',e.toString());
+            console.log(e.response.data)
+            console.log('updatePasswordFunction error =>', e.toString());
             setModalPasswordUpdateVisible(false)
             toast.show({
                 duration: 2000,
@@ -147,29 +137,29 @@ const ProfileScreen = ({authDuck, navigation}) => {
         try {
             setLoadingImage(true)
 
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            quality: 1,
-        });
-        // console.log(result);
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+                quality: 1,
+            });
+            // console.log(result);
 
-        if (result.cancelled) {
-            setLoadingImage(false)
-
-        } else {
-
-            updatePhotoFunction(result).then((response) => {
+            if (result.cancelled) {
                 setLoadingImage(false)
-            }).catch( e => {
-                setLoadingImage(false)
-                console.log('pickImage updatePhotoFunction error => ',e.toString())
-            })
-        }
+
+            } else {
+
+                updatePhotoFunction(result).then((response) => {
+                    setLoadingImage(false)
+                }).catch(e => {
+                    setLoadingImage(false)
+                    console.log('pickImage updatePhotoFunction error => ', e.toString())
+                })
+            }
         } catch (e) {
-            console.log('pickImage error =>',e.toString());
+            console.log('pickImage error =>', e.toString());
         }
-    
+
     };
 
     const updatePhotoFunction = async (imagePickerResult) => {
@@ -200,7 +190,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
             await getProfileFunction()
 
         } catch (e) {
-            console.log('updatePhotoFunction error => ',e.toString())
+            console.log('updatePhotoFunction error => ', e.toString())
         }
 
     }
@@ -268,32 +258,42 @@ const ProfileScreen = ({authDuck, navigation}) => {
                 <Stack space={4} w="90%">
                     <FormControl isInvalid w="100%">
                         <View flex={1} mb={4} style={getShadowCircleStyle(10, 10)}>
-                            <Input size={'2xl'} h={50} placeholder={'Nombre(s)'} borderRadius={25}
-                                   value={name}
-                                   onChangeText={val => setName(val)}
-                                   backgroundColor={Colors.white}
-                                   color={Colors.red}
-                                   fontSize={18}
+                            <Input
+                                size={'2xl'}
+                                h={50}
+                                placeholder={'Nombre(s)'}
+                                borderRadius={25}
+                                value={name}
+                                onChangeText={val => setName(val)}
+                                backgroundColor={Colors.white}
+                                color={Colors.red}
+                                fontSize={18}
                             />
                         </View>
                         <View flex={1} mb={4} style={getShadowCircleStyle(10, 10)}>
-                            <Input size={'2xl'} height={50} placeholder={'Apellidos'}
-                                   borderRadius={20}
-                                   value={lastName}
-                                   onChangeText={val => setLastName(val)}
-                                   backgroundColor={Colors.white}
-                                   color={Colors.red}
-                                   fontSize={18}
+                            <Input
+                                size={'2xl'}
+                                height={50}
+                                placeholder={'Apellidos'}
+                                borderRadius={20}
+                                value={lastName}
+                                onChangeText={val => setLastName(val)}
+                                backgroundColor={Colors.white}
+                                color={Colors.red}
+                                fontSize={18}
                             />
                         </View>
                         <View flex={1} mb={4} style={getShadowCircleStyle(10, 10)}>
-                            <Input size={'2xl'} height={50} placeholder={'Correo electrónico'}
-                                   borderRadius={20}
-                                   value={email}
-                                   onChangeText={val => setEmail(val)}
-                                   backgroundColor={Colors.white}
-                                   color={Colors.red}
-                                   fontSize={18}
+                            <Input
+                                size={'2xl'}
+                                height={50}
+                                placeholder={'Correo electrónico'}
+                                borderRadius={20}
+                                value={email}
+                                onChangeText={val => setEmail(val)}
+                                backgroundColor={Colors.white}
+                                color={Colors.red}
+                                fontSize={18}
                             />
                         </View>
                         {/*<Input size={'2xl'} height={50} mb={4} placeholder={'Contraseña'} borderRadius={20}*/}

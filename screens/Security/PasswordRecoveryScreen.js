@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
-import {Platform, ScrollView, KeyboardAvoidingView} from 'react-native'
+import {KeyboardAvoidingView, Platform, ScrollView} from 'react-native'
 import {createSession, registerAction, setAttribute} from "../../redux/ducks/authDuck";
 import {Colors} from "../../utils/Colors";
 import FormPasswordRecovery from "./Components/FormPasswordRecovery";
@@ -12,6 +12,7 @@ const PasswordRecoveryScreen = ({productsDuck, navigation, registerAction, setAt
     const [loading, setLoading] = useState(false)
     const [modalErrorVisible, setModalErrorVisible] = useState(null);
     const [modalErrorText, setModalErrorText] = useState(null);
+
 
     useEffect(() => {
     }, [])
@@ -31,7 +32,6 @@ const PasswordRecoveryScreen = ({productsDuck, navigation, registerAction, setAt
         } finally {
             setLoading(false);
         }
-
     }
 
     return (
