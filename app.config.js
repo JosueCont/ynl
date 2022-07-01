@@ -1,4 +1,5 @@
 const commonConfig = {
+    name: "Your Next Level",
     orientation: "portrait",
     icon: "./assets/icon.png",
     splash: {
@@ -32,14 +33,14 @@ const commonConfig = {
 };
 
 const ios = {
-    buildNumber: "21",
+    buildNumber: "22",
     supportsTablet: false,
     bundleIdentifier: "com.hiumanlab.ynl",
     usesAppleSignIn: true,
 };
 
 const android = {
-    versionCode: 15,
+    versionCode: 16,
     adaptiveIcon: {
         foregroundImage: "./assets/adaptive-icon.png",
         backgroundImage: "./assets/adaptive-icon-bg.png"
@@ -58,7 +59,6 @@ module.exports = () => {
     if (process.env.APP_ENV === "ios") {
         return {
             ...commonConfig,
-            name: "Your Next Level",
             slug: "ynl",
             version: "1.0.0",
             ios: ios,
@@ -66,7 +66,6 @@ module.exports = () => {
     } else if (process.env.APP_ENV === "android") {
         return {
             ...commonConfig,
-            name: "Your Next Level",
             slug: "ynl",
             version: "1.0.0",
             android: android,
@@ -74,7 +73,6 @@ module.exports = () => {
     } else if (process.env.APP_ENV === "expo") {
         return {
             ...commonConfig,
-            name: "Your Next Level",
             slug: "ynl-dev",
             version: "1.0.0",
             ios: ios,

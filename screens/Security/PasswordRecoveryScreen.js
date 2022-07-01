@@ -26,7 +26,7 @@ const PasswordRecoveryScreen = ({productsDuck, navigation, registerAction, setAt
 
         } catch (e) {
 
-            console.log('register error =>',e.toString())
+            console.log('register error =>', e.toString())
             setModalErrorText('Email no relacionado a un usuario, verifica nuevamente')
             setModalErrorVisible(true)
         } finally {
@@ -37,11 +37,11 @@ const PasswordRecoveryScreen = ({productsDuck, navigation, registerAction, setAt
     return (
         <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
                               style={{flex: 1, backgroundColor: 'white'}}>
-        <ScrollView style={{backgroundColor: Colors.white}}>
-            <FormPasswordRecovery loading={loading} onRegister={register}/>
-            <ModalError text={modalErrorText} visible={modalErrorVisible}
-                        setVisible={setModalErrorVisible}></ModalError>
-        </ScrollView>
+            <ScrollView style={{backgroundColor: Colors.white}}>
+                <FormPasswordRecovery loading={loading} onRegister={register}/>
+                <ModalError text={modalErrorText} visible={modalErrorVisible}
+                            setVisible={setModalErrorVisible}></ModalError>
+            </ScrollView>
         </KeyboardAvoidingView>
     )
 }
