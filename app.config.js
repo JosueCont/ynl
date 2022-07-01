@@ -45,7 +45,13 @@ const android = {
         backgroundImage: "./assets/adaptive-icon-bg.png"
     },
     package: "com.hiumanlab.ynl",
-    permissions: []
+    googleServicesFile: "./google-services.json",
+    permissions: [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "INTERNET",
+        "ACCESS_MEDIA_LOCATION"
+    ]
 };
 
 module.exports = () => {
