@@ -84,7 +84,7 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                 <View mb={6} alignItems={'center'}>
                     <Text bold color={'#FFF'}
                           style={styles.shadow}
-                          fontSize={20}>Cuéntanos por qué</Text>
+                          fontSize={20}>Compártenos por qué</Text>
                     <TextArea h={20} onChangeText={(text)=>setComment(text)} value={comment} backgroundColor={'#FFF'} borderRadius={10} w="90%" maxW="400" />
                 </View>
 
