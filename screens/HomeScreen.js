@@ -72,8 +72,8 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
 
     useEffect(() => {
-        registerForPushNotificationsAsync().then(token => setExpoPushToken(token)).catch(e =>{
-            console.log('HomeScreen registerForPushNotificationsAsync error => ',e.toString())
+        registerForPushNotificationsAsync().then(token => setExpoPushToken(token)).catch(e => {
+            console.log('HomeScreen registerForPushNotificationsAsync error => ', e.toString())
         });
 
         // This listener is fired whenever a notification is received while the app is foregrounded
@@ -83,7 +83,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
         // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
         responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-            console.log(" responseListener.current: ",response);
+            console.log(" responseListener.current: ", response);
         });
 
         return () => {
@@ -102,7 +102,6 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const boot = async () => {
         try {
             setLoading(true)
-            // console.log('focused')
             await getGroupsRequests();
             await getGroups()
             await getHome()
@@ -111,13 +110,16 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                 setLoading(false)
             }, 200)
         } catch (e) {
-            console.log("boot error =>",e.toString())
+            console.log("boot error =>", e.toString())
             setTimeout(() => {
                 setLoading(false)
             }, 200)
         } finally {
-            setRefreshing(false)
-            setLoading(false)
+            setTimeout(() => {
+                setRefreshing(false)
+                setLoading(false)
+            }, 200)
+
         }
 
     }
@@ -127,10 +129,9 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             const response = await ApiApp.getGroupsRequests(authDuck.user.id)
             setGroupsRequests(response.data.data)
         } catch (e) {
-            console.log("HomeScreen getGroupsRequests error =>",e.toString())
+            console.log("HomeScreen getGroupsRequests error =>", e.toString())
         }
     }
-
 
 
     const getHome = async () => {
@@ -139,20 +140,20 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             const res = await ApiApp.getHomeData(authDuck.user.id)
 
             // console.log('consolelog?===',res.data.data)
-            if (_.get(res,'data.data', null)){
+            if (_.get(res, 'data.data', null)) {
                 setDays(res.data.data.days)
-                if (res.data.data.lastEmotion){
+                if (res.data.data.lastEmotion) {
                     // console.log('lastEmotion =>', res.data.data.lastEmotion)
                     setLastEmotion(res.data.data.lastEmotion.name)
                     setMainFeeling(res.data.data.lastEmotion)
 
-                    if(res.data.data.lastEmotion.child){
+                    if (res.data.data.lastEmotion.child) {
                         setLastEmotion1(res.data.data.lastEmotion.child.name)
                         setColorMainFeeling(res.data.data.lastEmotion.child.color)
                     }
                 }
-                if(res.data.data.userInfo){
-                    if(res.data.data.userInfo.avatar){
+                if (res.data.data.userInfo) {
+                    if (res.data.data.userInfo.avatar) {
                         setImage(res.data.data.userInfo.avatar.formats.small.url)
                     }
                     setFullName(res.data.data.userInfo.fullName)
@@ -160,7 +161,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                 }
             }
         } catch (e) {
-            console.log("HomeScreen getHome error =>",e.toString())
+            console.log("HomeScreen getHome error =>", e.toString())
         } finally {
             //
         }
@@ -171,14 +172,13 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             const response = await ApiApp.getMyGroups(authDuck.user.id)
 
 
-            if(_.get(response,'data.data',null)){
+            if (_.get(response, 'data.data', null)) {
                 // console.log("groups", response.data.data.entries)
                 setGroups(response.data.data.entries)
-                setLoading(false)
             }
 
         } catch (e) {
-            console.log("HomeScreen getGroups error =>",e.toString())
+            console.log("HomeScreen getGroups error =>", e.toString())
         } finally {
 
         }
@@ -200,7 +200,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             console.log(data)
             const res = await ApiApp.sendPushToken({data})
         } catch (e) {
-            console.log("HomeScreen sendPushTokenToBack error =>",e)
+            console.log("HomeScreen sendPushTokenToBack error =>", e)
         }
     }
 
@@ -224,7 +224,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             } else {
                 console.log('Must use physical device for Push Notifications');
             }
-    
+
             if (Platform.OS === 'android') {
                 Notifications.setNotificationChannelAsync('default', {
                     name: 'default',
@@ -233,12 +233,12 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                     lightColor: '#FF231F7C',
                 });
             }
-    
+
             return token;
-        } catch(e){
-            console.log("registerForPushNotificationsAsync error =>",e.toString())
+        } catch (e) {
+            console.log("registerForPushNotificationsAsync error =>", e.toString())
         }
-        
+
     }
 
 
@@ -265,7 +265,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                             </View> :
                             image ?
                                 <View style={getShadowCircleStyle(10, 10)}>
-                                    <TouchableOpacity onPress={()=> navigation.navigate('ProfileScreen')}>
+                                    <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen')}>
                                         <Image w={220} h={220} source={{uri: image}} alt="img"
                                                style={[
                                                    {resizeMode: 'cover'}]}
@@ -322,7 +322,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                   alignItems={'center'} justifyContent={'center'}>
 
                                 {
-                                    days.map((item,i) => {
+                                    days.map((item, i) => {
                                         return (
                                             <View key={i} flex={1} height={20} style={getShadowCircleStyle(5, 5)}
                                                   alignItems={'center'} justifyContent={'center'}>
@@ -356,21 +356,23 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
                                     {
                                         _.has(mainFeeling, 'icon.url') &&
-                                        <Image alt=":)" size="sm" 
+                                        <Image alt=":)" size="sm"
                                                source={{uri: mainFeeling.icon.url}}/>
                                     }
 
 
                                 </View>
                                 {
-                                    (!loading && !lastEmotion ) ? <TouchableOpacity
+                                    (!loading && !lastEmotion) &&
+                                    <TouchableOpacity
                                         onPress={() => {
                                             navigation.navigate('RouletteStep1Screen')
-                                        }}><Text style={{fontSize:20,color:'#FF5E00',fontWeight:'bold',marginTop:10}}>Registra tu primera emoción</Text></TouchableOpacity> : null
+                                        }}><Text style={{fontSize: 20, color: '#FF5E00', fontWeight: 'bold', marginTop: 10}}>Registra tu primera emoción</Text>
+                                    </TouchableOpacity>
                                 }
 
                                 {
-                                    lastEmotion && <View flex={1} height={70} mr={1} >
+                                    lastEmotion && <View flex={1} height={70} mr={1}>
                                         <TouchableOpacity
                                             onPress={() => {
                                                 navigation.navigate('HistoryFeelingScreen')
@@ -382,9 +384,9 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                                 borderRadius: 10
                                             }}>
                                             <Text fontSize={12}>Última emoción</Text>
-                                            <Text  color={'white'} style={{fontWeight: 'bold'}}
-                                                   fontSize={20}
-                                                   adjustsFontSizeToFit>{lastEmotion}</Text>
+                                            <Text color={'white'} style={{fontWeight: 'bold'}}
+                                                  fontSize={20}
+                                                  adjustsFontSizeToFit>{lastEmotion}</Text>
                                             <Text color={'white'} fontSize={16} adjustsFontSizeToFit
                                                   numberOfLines={1}>{lastEmotion1}  </Text>
                                         </TouchableOpacity>
