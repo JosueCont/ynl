@@ -118,12 +118,21 @@ const ProfileScreen = ({authDuck, navigation}) => {
         } catch (e) {
             console.log(e.response.data)
             console.log('updatePasswordFunction error =>', e.toString());
+
+            let messageText = "";
+
+            if (e.response.data.error.message === "Old password does not match.") {
+                messageText = "La contraseña anterior no coincide."
+            } else {
+                messageText = e.response.data.error.message;
+            }
+
             setModalPasswordUpdateVisible(false)
             toast.show({
                 duration: 2000,
                 render: () => {
                     return <Box bg="red.500" rounded="sm">
-                        <Text color={"white"} fontSize={16} p={3}>{e.response.data.error.message}</Text>
+                        <Text color={"white"} fontSize={16} p={3}>{messageText}</Text>
                     </Box>;
                 }
             });
