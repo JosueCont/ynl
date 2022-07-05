@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Box, Button, Center, FormControl, Heading, HStack, Image, Input, VStack} from "native-base";
+import {Button, FormControl, Image, Input, Text, View} from "native-base";
 import logo from '../../assets/YNL.gif'
 import {useFormik} from 'formik';
 import * as Yup from 'yup'
@@ -25,62 +25,51 @@ export default ({onRegister, loading}) => {
     });
 
     return (
-        <Center flex={1} px="3">
-            <Center w="100%">
-                <Box safeArea p="2" py="8" w="90%" maxW="290">
-                    <HStack size="lg" fontWeight="600" color="coolGray.800" _dark={{
-                        color: "warmGray.50"
-                    }}>
-                        <VStack alignItems={'center'}>
-                            <Image source={logo} alt="img"/>
-                        </VStack>
-                    </HStack>
-                    <Heading mt="1" _dark={{
-                        color: "warmGray.200"
-                    }} color="coolGray.600" fontWeight="medium" size="xs">
-                        Registrarme
-                    </Heading>
+        <View flex={1}>
+            <View flex={0.5}>
+                <Image source={logo} alt="img"/>
+            </View>
+            <View flex={1} mx={6}>
+                <Text fontSize={16} textAlign={'center'} mb={4}>
+                    Registrarme
+                </Text>
+                <View>
+                    <FormControl isInvalid={formik.errors.email} mb={3}>
+                        <Input
+                            borderRadius={20}
+                            height={50}
+                            autoCapitalize="none"
+                            onChangeText={text => formik.setFieldValue('email', text)}
+                            placeholder={'Correo electrónico'}
+                            autoCorrect={false}
+                        />
+                        <FormControl.ErrorMessage>
+                            {formik.errors.email}
+                        </FormControl.ErrorMessage>
+                    </FormControl>
+                    <FormControl isInvalid={formik.errors.password} mb={3}>
+                        <Input borderRadius={20} height={50} type="password" placeholder={'Contraseña'}
+                               onChangeText={text => formik.setFieldValue('password', text)}/>
+                        <FormControl.ErrorMessage>
+                            {formik.errors.password}
+                        </FormControl.ErrorMessage>
+                    </FormControl>
+                    <FormControl isInvalid={formik.errors.repeatPassword} mb={3}>
 
-                    <VStack space={3} mt="5">
-                        <VStack>
-                            <FormControl isInvalid={formik.errors.email} mb={3}>
-                                <Input
-                                    borderRadius={20}
-                                    height={50}
-                                    autoCapitalize="none"
-                                    onChangeText={text => formik.setFieldValue('email', text)}
-                                    placeholder={'Correo electrónico'}
-                                    autoCorrect={false}
-                                />
-                                <FormControl.ErrorMessage>
-                                    {formik.errors.email}
-                                </FormControl.ErrorMessage>
-                            </FormControl>
-                            <FormControl isInvalid={formik.errors.password} mb={3}>
-                                <Input borderRadius={20} height={50} type="password" placeholder={'Contraseña'}
-                                       onChangeText={text => formik.setFieldValue('password', text)}/>
-                                <FormControl.ErrorMessage>
-                                    {formik.errors.password}
-                                </FormControl.ErrorMessage>
-                            </FormControl>
-                            <FormControl isInvalid={formik.errors.repeatPassword} mb={3}>
+                        <Input borderRadius={20} height={50} type="password"
+                               placeholder={'Confirmar contraseña'}
+                               onChangeText={text => formik.setFieldValue('repeatPassword', text)}/>
+                        <FormControl.ErrorMessage>
+                            {formik.errors.repeatPassword}
+                        </FormControl.ErrorMessage>
+                    </FormControl>
+                    <Button isLoading={loading} mt="2"
+                            onPress={formik.handleSubmit} colorScheme="orange">
+                        Continuar
+                    </Button>
 
-                                <Input borderRadius={20} height={50} type="password"
-                                       placeholder={'Confirmar contraseña'}
-                                       onChangeText={text => formik.setFieldValue('repeatPassword', text)}/>
-                                <FormControl.ErrorMessage>
-                                    {formik.errors.repeatPassword}
-                                </FormControl.ErrorMessage>
-                            </FormControl>
-                            <Button isLoading={loading} mt="2"
-                                    onPress={formik.handleSubmit} colorScheme="orange">
-                                Continuar
-                            </Button>
-                        </VStack>
-
-                    </VStack>
-                </Box>
-            </Center>
-        </Center>
+                </View>
+            </View>
+        </View>
     );
 };

@@ -23,9 +23,9 @@ const ModalPasswordUpdate = ({visible, setVisible, action}) => {
         },
         validateOnChange: false,
         validationSchema: Yup.object({
-            oldPassword: Yup.string().required("La contraseña es obligatoria"),
+            oldPassword: Yup.string().required("La contraseña es obligatoria").min(8, "La contraseña debe ser de al menos 8 caracteres."),
             password: Yup.string().required("La contraseña es obligatoria").min(8, "La contraseña debe ser de al menos 8 caracteres."),
-            repeatPassword: Yup.string().required("La contraseña es obligatoria").oneOf([Yup.ref('password')], "Las contraseñas tienen que ser iguales."),
+            repeatPassword: Yup.string().required("La contraseña es obligatoria").min(8, "La contraseña debe ser de al menos 8 caracteres.").oneOf([Yup.ref('password')], "Las contraseñas tienen que ser iguales."),
         })
     });
 
