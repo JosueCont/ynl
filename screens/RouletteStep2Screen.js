@@ -44,18 +44,19 @@ const RouletteStep2Screen = ({route, navigation}) => {
             <View flex={1} alignItems={'center'}>
                 <Text
                     style={styles.shadow}
-                    fontSize={28} textAlign={'center'} color={'white'}>Hoy te sientes...</Text>
+                    fontSize={18} textAlign={'center'} color={'white'}>Hoy te sientes...</Text>
+                <Text mb={2} fontSize={40} color={'white'} style={styles.shadow}>{`${route.params.parentItem.attributes.name}`}</Text>
+
                 <View w={200} h={200} bgColor={'white'} borderRadius={100} my={10} alignItems={'center'}
                       justifyContent={'center'}>
                     {
                         _.has(route.params, 'parentItem.attributes.icon.data.attributes.url') &&
                         <Image
                             source={{uri: route.params.parentItem.attributes.animation.data.attributes.url}}
-                            style={{width: 150, height: 250, resizeMode: 'contain'}} alt="img"></Image>
+                            style={{width: 150, height: 250, resizeMode: 'contain'}} alt="img"/>
 
                     }
                 </View>
-                <Text mb={2} color={'white'} style={styles.shadow}>{`${route.params.parentItem.attributes.name}`}</Text>
                 <Select
 
                     placeholderTextColor={'#' + route.params.parentItem.attributes.color} selectedValue={service}

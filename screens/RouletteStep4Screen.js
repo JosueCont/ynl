@@ -57,7 +57,9 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                 <View flex={1} alignItems={'center'}>
                     <Text
                         style={styles.shadow}
-                        fontSize={28} textAlign={'center'} color={'white'}>Hoy te sientes {route.params.emotion && route.params.emotion.attributes.name.toUpperCase()}</Text>
+                        fontSize={18} textAlign={'center'} color={'white'}>Hoy te sientes...</Text>
+                    <Text mb={2} fontSize={40} color={'white'} style={styles.shadow}>{`${route.params.emotion && route.params.emotion.attributes.name.toUpperCase()}`}</Text>
+
                     <View w={200} h={200} bgColor={'white'} borderRadius={100} my={10} alignItems={'center'}
                           justifyContent={'center'}>
                         {
