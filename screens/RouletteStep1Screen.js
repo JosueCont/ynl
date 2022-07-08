@@ -9,6 +9,7 @@ import pointerImage from '../assets/arrow2.png';
 import ApiApp from "../utils/ApiApp";
 import _ from "lodash";
 import * as GH from 'react-native-gesture-handler';
+import moment from 'moment'
 
 const RouletteStep1Screen = ({navigation}) => {
 
@@ -114,6 +115,7 @@ const RouletteStep1Screen = ({navigation}) => {
 
                     <View flex={0.2} >
                         <Text color={'#FD5902'} style={{fontWeight:'bold',fontSize:30, marginTop:30}}  textAlign={'center'}>¿Cómo te sientes hoy?</Text>
+                        <Text color={'#FD5902'} style={{fontSize:20, marginTop:10}}  textAlign={'center'}>{moment().format('LL')}</Text>
                     </View>
                     <View flex={0.4} alignItems={'center'} justifyContent={'flex-end'}>
                         <Image alt={'roulette'} source={pointerImage} style={{resizeMode: 'contain'}} width={10} height={10}/>
