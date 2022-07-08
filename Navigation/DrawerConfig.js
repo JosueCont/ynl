@@ -3,7 +3,7 @@ import {createDrawerNavigator} from "@react-navigation/drawer";
 import CustomDrawerContent from "./DrawerNavigatorContent";
 import HomeScreen from "../screens/HomeScreen";
 import YourFeelScreen from "../screens/YourFeelScreen";
-import {Icon, View} from "native-base";
+import {Icon, Image, View} from "native-base";
 import {Colors} from "../utils/Colors";
 import {TouchableOpacity} from "react-native";
 import {MaterialIcons} from "@expo/vector-icons";
@@ -20,6 +20,7 @@ import RouletteStep3Screen from "../screens/RouletteStep3Screen";
 import RouletteStep4Screen from "../screens/RouletteStep4Screen";
 import HistoryFeelingScreen from "../screens/HistoryFeelingScreen";
 import HistoryFeelingScreenDetail from "../screens/HistoryFeelingScreenDetail";
+import imageLogo from '../assets/logo.png'
 
 const Drawer = createDrawerNavigator();
 
@@ -74,7 +75,7 @@ const DrawerConfig = () => {
                 headerTitle: () => {
                     return (
                         <View flex={1}>
-
+                            <Image tintColor={'gray'} style={{marginTop:10,height:30, width:30}} size={'xs'} source={imageLogo} />
                         </View>
                     )
 
