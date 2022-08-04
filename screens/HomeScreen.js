@@ -2,7 +2,6 @@ import React, {useEffect, useRef, useState} from "react";
 import {Icon, Image, Skeleton, Text, View} from "native-base";
 import {connect} from "react-redux";
 import {Platform, RefreshControl, SafeAreaView, ScrollView, TouchableOpacity} from "react-native";
-import {getMyGroups} from "../redux/ducks/groupDuck";
 import {useIsFocused} from "@react-navigation/native";
 import {Colors} from "../utils/Colors";
 import {MaterialIcons} from "@expo/vector-icons";
@@ -27,7 +26,6 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     /**
      * Para push
      */
-
     const [expoPushToken, setExpoPushToken] = useState('');
     const [notification, setNotification] = useState(false);
     const notificationListener = useRef();
@@ -52,7 +50,6 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const [intro, setIntro] = useState(null);
     const [image, setImage] = useState(null);
 
-
     useEffect(() => {
 
         // console.log(authDuck.emotionStatus)
@@ -68,8 +65,8 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
         if (isFocused) {
             boot()
         }
+        console.log(authDuck)
     }, [isFocused])
-
 
     useEffect(() => {
         registerForPushNotificationsAsync().then(token => setExpoPushToken(token)).catch(e => {
@@ -91,7 +88,6 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             Notifications.removeNotificationSubscription(responseListener.current);
         };
     }, [])
-
 
     useEffect(() => {
         if (expoPushToken) {
@@ -132,7 +128,6 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             console.log("HomeScreen getGroupsRequests error =>", e.toString())
         }
     }
-
 
     const getHome = async () => {
         try {
@@ -184,8 +179,6 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
         }
 
     }
-
-
     /**
      * Enviamos el pushtoken al backend
      */
@@ -203,7 +196,6 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             console.log("HomeScreen sendPushTokenToBack error =>", e)
         }
     }
-
 
     async function registerForPushNotificationsAsync() {
         try {
@@ -473,6 +465,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     )
 }
 
+
 const mapState = (state) => {
     return {
         authDuck: state.authDuck,
@@ -480,4 +473,7 @@ const mapState = (state) => {
     }
 }
 
-export default connect(mapState, {getMyGroups})(HomeScreen);
+export default connect(mapState)(HomeScreen);
+
+
+//connect(mapState, {getMyGroups})(HomeScreen);

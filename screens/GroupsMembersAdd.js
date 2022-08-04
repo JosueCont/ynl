@@ -1,8 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
-import {Divider, Icon, Image, Input, ScrollView, Spinner, View, VStack, Text} from "native-base";
+import {Divider, Icon, Input, ScrollView, Spinner, View, VStack} from "native-base";
 import {connect} from "react-redux";
 import ApiApp from "../utils/ApiApp";
-import logo from '../assets/logo.png'
 import {Ionicons} from "@expo/vector-icons";
 import {getUsersByUserName, resetUsersSearch} from '../redux/ducks/groupDuck'
 import _ from 'lodash'
@@ -161,8 +160,6 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
     return (
 
         <ScrollView _contentContainerStyle={{alignItems: 'center', backgroundColor: 'white'}}>
-
-            <Image size={'xs'} mt={5} source={logo} alt="img"/>
             <View flex={1}>
                 <VStack my="4" space={5} w="100%" maxW="350px">
                     <VStack w="100%" space={0} alignSelf="center">

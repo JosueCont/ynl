@@ -13,6 +13,7 @@ LogBox.ignoreAllLogs();
 const store = generateStore();
 
 
+
 if (Text.defaultProps == null) Text.defaultProps = {};
 Text.defaultProps.allowFontScaling = false;
 
@@ -32,7 +33,7 @@ export default function App() {
                 </NativeBaseProvider>
             </Provider>
         </SSRProvider>
-        );
+    );
 
 }
 

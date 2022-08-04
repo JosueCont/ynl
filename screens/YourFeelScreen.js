@@ -85,7 +85,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
     return (
         <Box flex={1} bg="#fff" alignItems="center">
             <ScrollView w={'100%'}>
-                {/* <HStack justifyContent={'center'} p={10}>
+               {/* <HStack justifyContent={'center'} p={10}>
                     <Image size={'md'} source={logo} alt="img"/>
                 </HStack>*/}
                 <HStack p={1} mt={10}>
@@ -97,7 +97,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                         </VStack>
                         {
                             loading ?
-                                <VStack p={9}>
+                                <VStack px={9} pb={3}>
                                     <Skeleton h={10}></Skeleton>
                                 </VStack>
                                 :
@@ -124,7 +124,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                         }
                         {
                             loading ?
-                                <VStack px={9}>
+                                <VStack px={9} pb={3}>
                                     <Skeleton h={10}></Skeleton>
                                 </VStack>
                                 : <VStack px={9} pb={3}>
@@ -151,7 +151,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
 
                         {
                             loading ?
-                                <VStack px={9}>
+                                <VStack px={9} pb={3}>
                                     <Skeleton h={10}></Skeleton>
                                 </VStack> :
                                 <VStack px={9} pb={3}>
@@ -178,7 +178,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                         }
                         {
                             loading ?
-                                <VStack px={9}>
+                                <VStack px={9} pb={3}>
                                     <Skeleton h={10}></Skeleton>
                                 </VStack> :
                                 <VStack px={9} pb={3}>
@@ -206,7 +206,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                         }
                         {
                             loading ?
-                                <VStack px={9}>
+                                <VStack px={9} pb={3}>
                                     <Skeleton h={10}></Skeleton>
                                 </VStack> :
                                 <Button m={4} size="lg" isLoading={loading} isLoadingText={'Guardando'}
