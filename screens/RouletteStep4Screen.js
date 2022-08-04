@@ -1,12 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {Button, Image, Text, View, TextArea, KeyboardAvoidingView} from "native-base";
+import {Button, Image, KeyboardAvoidingView, Text, TextArea, View} from "native-base";
 import {connect} from "react-redux";
-import {ImageBackground, Platform, Keyboard, TouchableWithoutFeedback} from "react-native";
-import calendar from '../assets/calendaricon.png'
-import logo from '../assets/logo.png'
+import {Keyboard, Platform, TouchableWithoutFeedback} from "react-native";
 import {getDay, getMonth} from '../utils/functions'
 import {saveEmotion} from "../redux/ducks/feelingsDuck";
-import {Colors} from "../utils/Colors";
 import ScreenBaseV1 from "./Components/ScreenBaseV1";
 import _ from "lodash";
 import {emotionStatusAction} from "../redux/ducks/authDuck";
@@ -20,6 +17,7 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
         navigation.setOptions({
             headerStyle: {backgroundColor: '#' + route.params.color}
         })
+
     }, [route.params.emotion.id])
 
     const saveFeelings = async () => {
@@ -30,7 +28,7 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                 label: route.params.emotion.attributes.name,
                 feeling: route.params.emotion.id,
                 user: authDuck.user.id,
-                comments:comment
+                comments: comment
             }
             let res = await saveEmotion({data})
             if (res) {
@@ -42,7 +40,7 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                 });
             }
         } catch (e) {
-            console.log('saveFeelings error =>',e.toString());
+            console.log('saveFeelings error =>', e.toString());
         } finally {
             setLoading(false)
         }
@@ -50,57 +48,68 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
 
     return (
         <ScreenBaseV1 color={'#' + route.params.color}>
-            <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS === "ios" ? "padding" : "height"} >
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-            <View flex={1} mx={4} w={'100%'}>
+            <KeyboardAvoidingView style={{flex: 1, width: '100%'}} behavior={Platform.OS === "ios" ? "padding" : "height"}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
 
-                <View flex={1} alignItems={'center'}>
-                    <Text
-                        style={styles.shadow}
-                        fontSize={18} textAlign={'center'} color={'white'}>Hoy te sientes...</Text>
-                    <Text mb={2} fontSize={40} color={'white'} style={styles.shadow}>{`${route.params.emotion && route.params.emotion.attributes.name.toUpperCase()}`}</Text>
+                    <View flex={1} mx={4}>
 
-                    <View w={200} h={200} bgColor={'white'} borderRadius={100} my={10} alignItems={'center'}
-                          justifyContent={'center'}>
-                        {
-                            _.has(route.params, 'parent.attributes.animation.data.attributes.url') &&
-                            <Image
-                                source={{uri: route.params.parent.attributes.animation.data.attributes.url}}
-                                style={{width: '80%', height: 250, resizeMode: 'contain'}} alt="img"></Image>
-                        }
+                        <View flex={1} alignItems={'center'} mt={10}>
+                            <Text
+                                style={styles.shadow}
+                                fontSize={18} textAlign={'center'} color={'white'} mb={4}>Hoy te sientes...</Text>
+
+                            <View w={200} h={200} bgColor={'white'} borderRadius={100} mb={4} alignItems={'center'}
+                                  justifyContent={'center'}>
+                                {
+                                    _.has(route.params, 'parent.attributes.animation.data.attributes.url') &&
+                                    <Image
+                                        source={{uri: route.params.parent.attributes.animation.data.attributes.url}}
+                                        style={{width: '80%', height: 250, resizeMode: 'contain'}} alt="img"></Image>
+                                }
+                            </View>
+                            <Text mb={4} fontSize={40} color={'white'} style={styles.shadow}>{`${route.params.emotion && route.params.emotion.attributes.name.toUpperCase()}`}</Text>
+
+                            <View mb={6} style={{height: 100, width: 100}} bgColor={'#fff'} borderRadius={10} overflow={'hidden'}>
+                                <View flex={1} bgColor={'#ff0000'} p={1}>
+                                    <Text textAlign={'center'} color={'white'} fontSize={12} style={{fontWeight: 'bold'}}>{getMonth()}</Text>
+                                </View>
+                                <View flex={3} p={1} justifyContent={'center'} alignItems={'center'}>
+                                    <Text color={'black'} style={{fontWeight: 'bold'}} fontSize={42}>{getDay()}</Text>
+                                </View>
+                            </View>
+
+
+                        </View>
+
+
+                        <View mb={6} alignItems={'center'}>
+                            <Text bold color={'#FFF'}
+                                  style={styles.shadow}
+                                  fontSize={20} mb={2}>Compártenos por qué</Text>
+                            <TextArea
+                                h={20}
+                                number
+                                onChangeText={(text) => setComment(text)}
+                                value={comment}
+                                backgroundColor={'#FFF'}
+                                borderRadius={10}
+                                w="90%"
+                                maxW="400"
+                                returnKeyType={'done'}
+                                multiline={true}
+                            />
+                        </View>
+
+
+                        <View mb={6} mx={4}>
+                            <Button isLoading={loading} size="md" colorScheme={'orange'}
+                                    onPress={() => saveFeelings()}>
+                                Terminar
+                            </Button>
+
+                        </View>
                     </View>
-                    <ImageBackground source={calendar} style={{width: 80}} resizeMode={'contain'}>
-                        <Text style={styles.textMonth}>{getMonth()}</Text>
-                        <Text style={styles.textDay}>{getDay()}</Text>
-                    </ImageBackground>
-
-
-
-
-
-
-
-                </View>
-
-
-                <View mb={6} alignItems={'center'}>
-                    <Text bold color={'#FFF'}
-                          style={styles.shadow}
-                          fontSize={20}>Compártenos por qué</Text>
-                    <TextArea h={20} onChangeText={(text)=>setComment(text)} value={comment} backgroundColor={'#FFF'} borderRadius={10} w="90%" maxW="400" />
-                </View>
-
-
-
-                <View mb={6} mx={4}>
-                    <Button isLoading={loading} size="md" colorScheme={'orange'}
-                            onPress={() => saveFeelings()}>
-                        Terminar
-                    </Button>
-
-                </View>
-            </View>
-            </TouchableWithoutFeedback>
+                </TouchableWithoutFeedback>
             </KeyboardAvoidingView>
         </ScreenBaseV1>
     )
@@ -114,11 +123,8 @@ const mapState = (state) => {
 }
 
 
-
-
-
 const styles = {
-    shadow:{
+    shadow: {
         textShadowColor: 'rgba(0, 0, 0, 0.50)',
         textShadowOffset: {width: -1, height: 1},
         textShadowRadius: 10
