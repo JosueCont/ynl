@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import {Box, Button, HStack, Image, Input, Text, View, VStack} from "native-base";
 import {ImageBackground, ScrollView} from "react-native";
 import {connect} from "react-redux";
-import logo from '../assets/logo.png'
 import groupicon from '../assets/groupicon.png'
 import backgroundGroup from '../assets/backGroups.png'
 import {getMyGroups} from '../redux/ducks/groupDuck'
@@ -33,11 +32,8 @@ const GroupsStartScreen = ({authDuck, navigation, groupDuck, getMyGroups}) => {
     return (
         <Box flex={1} bg="#fff" alignItems="center">
             <ScrollView contentContainerStyle={{flex: 1}} w={'100%'}>
-                <HStack justifyContent={'center'} p={3}>
-                    <Image size={'xs'} source={logo} alt="img"/>
-                </HStack>
 
-                <View flex={1} mx={4}>
+                <View flex={1} mx={4} mt={10}>
                     <View flex={1} mb={2}>
                         <ImageBackground borderRadius={10} style={styles.image} source={backgroundGroup}>
                             <HStack w={'100%'} justifyContent={'center'}>

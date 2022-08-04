@@ -1,6 +1,6 @@
 import React from 'react';
-import {LogBox, StyleSheet} from 'react-native';
-import {NativeBaseProvider} from 'native-base';
+import {LogBox, StyleSheet, Text as TextRN, TextInput} from 'react-native';
+import {NativeBaseProvider, Text} from 'native-base';
 import {theme} from "./theme";
 import {SSRProvider} from '@react-aria/ssr';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -12,15 +12,26 @@ const Stack = createStackNavigator();
 LogBox.ignoreAllLogs();
 const store = generateStore();
 
+
+if (Text.defaultProps == null) Text.defaultProps = {};
+Text.defaultProps.allowFontScaling = false;
+
+
+if (TextRN.defaultProps == null) TextRN.defaultProps = {};
+TextRN.defaultProps.allowFontScaling = false;
+
+TextInput.defaultProps = TextInput.defaultProps || {};
+TextInput.defaultProps.allowFontScaling = false;
+
 export default function App() {
-        return (
-            <SSRProvider>
-                <Provider store={store}>
-                    <NativeBaseProvider theme={theme}>
-                        <NavigationContainerConfig/>
-                    </NativeBaseProvider>
-                </Provider>
-            </SSRProvider>
+    return (
+        <SSRProvider>
+            <Provider store={store}>
+                <NativeBaseProvider theme={theme}>
+                    <NavigationContainerConfig/>
+                </NativeBaseProvider>
+            </Provider>
+        </SSRProvider>
         );
 
 }

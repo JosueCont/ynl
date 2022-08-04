@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {Box, Button, HStack, Image, Skeleton, Slider, Text, View, VStack, useToast} from "native-base";
+import {Box, Button, HStack, Image, Skeleton, Slider, Text, useToast, View, VStack} from "native-base";
 import {ScrollView} from "react-native";
 import {connect} from "react-redux";
-import logo from '../assets/logo.png'
 import bodyicon from '../assets/yourfeel/bodyicon.png'
 import mentalicon from '../assets/yourfeel/mentalicon.png'
 import relationicon from '../assets/yourfeel/relationicon.png'
@@ -86,14 +85,14 @@ const YourFeelScreen = ({authDuck, navigation}) => {
     return (
         <Box flex={1} bg="#fff" alignItems="center">
             <ScrollView w={'100%'}>
-                <HStack justifyContent={'center'} p={10}>
+                {/* <HStack justifyContent={'center'} p={10}>
                     <Image size={'md'} source={logo} alt="img"/>
-                </HStack>
-                <HStack p={1}>
+                </HStack>*/}
+                <HStack p={1} mt={10}>
 
                     <VStack mt={5} w={'100%'}>
                         <VStack mb={4} alignItems={'center'}>
-                            <Text bold style={{fontSize:20}} color={Colors.red} textAlign={'center'}>Del 1 al 10 ¿Cómo te calificas en?</Text>
+                            <Text bold style={{fontSize: 25}} color={Colors.red} textAlign={'center'} mb={6}>Del 1 al 10 {'\n'}¿Cómo te calificas en?</Text>
 
                         </VStack>
                         {
