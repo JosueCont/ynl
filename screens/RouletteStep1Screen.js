@@ -45,7 +45,23 @@ const RouletteStep1Screen = ({navigation}) => {
     }
 
     const [deg, setDeg] = useState(0);
-    const [emotionPosition, setEmotionPosition] = useState(0);
+    // const [emotionPosition, setEmotionPosition] = useState(0);
+
+    const definitionOfFeeling = ()=>{
+        let indexSelected = 0
+        if (deg !== 0){
+            let positive = deg >= 0 ?true:false
+            let valueDeg = Math.abs(parseInt(deg%360))
+            let valueRangeEmoticon = 360/emotions.length
+            let chosenIndex = Math.floor(valueDeg/valueRangeEmoticon)
+            if (!positive){
+                indexSelected = emotions.length - ( 1 + chosenIndex)
+            }else{
+                indexSelected =chosenIndex
+            }
+        }
+        return emotions[indexSelected]
+    }
 
 
     const rotation = useSharedValue(1);
@@ -58,12 +74,12 @@ const RouletteStep1Screen = ({navigation}) => {
     const rotationGesture = GH.Gesture.Rotation()
         .onTouchesMove((e) => {
             //Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-            let spins = (deg / 360);
-            let spingResolve = spins >= 1 ? spins - parseInt((spins + "").split(".")[0]) : spins;
-            let emotionPositionVal = Math.abs(parseInt(((((spingResolve * 360) + 0) / (360 / 7)) + "").split(".")[0]));
-            if (emotionPositionVal < 7) {
-                setEmotionPosition(emotionPositionVal)
-            }
+            // let spins = (deg / 360);
+            // let spingResolve = spins >= 1 ? spins - parseInt((spins + "").split(".")[0]) : spins;
+            // let emotionPositionVal = Math.abs(parseInt(((((spingResolve * 360) + 0) / (360 / 7)) + "").split(".")[0]));
+            // if (emotionPositionVal < 7) {
+            //     setEmotionPosition(emotionPositionVal)
+            // }
             let varAng = 5; // Variación angular
             let limMax = 50; // Limite máximo angular
             let limMin = 10; // Limite máximo angularcc
@@ -142,8 +158,7 @@ const RouletteStep1Screen = ({navigation}) => {
                     <View flex={0.1} mx={4}>
                         <Button colorScheme={'orange'}
                                 onPress={() => navigation.navigate('RouletteStep2Screen', {parentItem: _.find(parents, (o)=> {
-                                    console.log(emotionPosition)
-                                        return o.attributes.slug_name === (emotions[emotionPosition]?.slug ? emotions[emotionPosition]?.slug : 'contento')
+                                        return o.attributes.slug_name === (definitionOfFeeling().slug)
                                     } )})}>Continuar</Button>
                     </View>
                 </View>
