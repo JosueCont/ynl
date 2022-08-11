@@ -46,7 +46,7 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
             setHistoryDataDetail(arrayDates)
             arrayDates = _.orderBy(arrayDates, ['date'], ['desc']);
             arrayDates = _.uniqBy(arrayDates, 'shortDate');
-            // console.log('arraydates', arrayDates)
+            console.log('arraydates', arrayDates.length)
 
             setHistoryData(arrayDates)
         } catch (e) {
@@ -95,7 +95,7 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
 
                                 :
                                 historyData.map((ele, i) => {
-                                    //console.log(ele)
+                                    console.log(_.get(ele, 'feeling.attributes.name', '5F6367'))
                                     return (
                                         <TouchableOpacity
                                             key={i}
@@ -117,19 +117,18 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
                                                 </View>
                                                 <View flex={1} justifyContent={'center'}>
                                                     <Text color={'white'} style={{fontWeight: 'bold'}}
-                                                          fontSize={20}>{ele.feeling.attributes.name} </Text>
+                                                          fontSize={20}>{_.get(ele, 'feeling.attributes.name', '5F6367')} </Text>
 
                                                     <Text color={'white'} fontSize={16}
-                                                          mb={1}>{ele.feeling.attributes.parent.data.attributes.name}</Text>
+                                                          mb={1}>{_.get(ele, 'feeling.attributes.parent.data.attributes.name','--')}</Text>
 
                                                     {
-                                                        ele.comments && <Text color={'white'} fontSize={10}
-                                                                              mb={1}>{ele.comments}</Text>
+                                                        ele?.comments ? <Text color={'white'} fontSize={10} mb={1}>{ele?.comments}</Text>:null
                                                     }
 
 
                                                     <Text color={'white'}
-                                                          fontSize={9}>{ele.shortDate}</Text>
+                                                          fontSize={9}>{ele?.shortDate}</Text>
                                                 </View>
                                             </View>
                                         </TouchableOpacity>

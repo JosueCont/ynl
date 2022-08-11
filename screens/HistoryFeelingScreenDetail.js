@@ -81,8 +81,8 @@ const HistoryFeelingScreenDetail = ({authDuck, route, navigation}) => {
 
 
                                             {
-                                                ele.comments && <Text color={'white'} fontSize={10}
-                                                                      mb={1}>{ele.comments}</Text>
+                                                ele?.comments ? <Text color={'white'} fontSize={10}
+                                                                      mb={1}>{ele.comments}</Text> : null
                                             }
 
 

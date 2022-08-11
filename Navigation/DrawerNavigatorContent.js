@@ -3,8 +3,9 @@ import {DrawerContentScrollView,} from "@react-navigation/drawer";
 import {connect} from "react-redux";
 import {ImageBackground, TouchableOpacity} from "react-native";
 import sidebarImage from "../assets/bgmenu.png";
-import {Image, Text, View} from "native-base";
+import { Text, View, Image} from "native-base";
 import logoSmall from "../assets/logoSmall.png";
+import logoKhor from "../assets/poweredby.png";
 import {logOutAction} from "../redux/ducks/authDuck";
 import ApiApp from "../utils/ApiApp";
 
@@ -69,7 +70,7 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
         >
             <ImageBackground source={sidebarImage} style={{flex: 1}}>
                 <View flex={0.5} alignItems={'center'} justifyContent={'center'}>
-                    <Image source={logoSmall} alt="img"></Image>
+                    <Image source={logoSmall} alt="img"/>
                 </View>
                 <View flex={1} alignItems={'center'}>
                     <TouchableOpacity onPress={() => {
@@ -92,6 +93,9 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
                         <Text color={'white'} fontSize={14} style={{textDecorationLine: 'underline'}} my={2}>Cerrar
                             sesión</Text>
                     </TouchableOpacity>
+                    <View flex={1} alignItems={'center'} justifyContent={'center'}>
+                        <Image source={logoKhor} style={{width:100}} size={'xs'} alt="img"/>
+                    </View>
                 </View>
             </ImageBackground>
 
