@@ -25,6 +25,8 @@ TextInput.defaultProps = TextInput.defaultProps || {};
 TextInput.defaultProps.allowFontScaling = false;
 
 export default function App() {
+
+
     return (
         <SSRProvider>
             <Provider store={store}>

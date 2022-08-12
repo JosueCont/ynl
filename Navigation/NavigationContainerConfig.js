@@ -6,6 +6,7 @@ import {useSelector} from "react-redux";
 import DrawerConfig from "./DrawerConfig";
 import {Spinner, View} from "native-base";
 import {Colors} from "../utils/Colors";
+import * as Notifications from "expo-notifications";
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,9 @@ const NavigationContainerConfig = ({introStatus}) => {
 
     console.log(typeof loggedIn, 19)
     useEffect(() => {
+
+        Notifications.setBadgeCountAsync(0);
+
         if (status) {
             setLoggedIn(true)
         } else {
