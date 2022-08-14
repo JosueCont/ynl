@@ -68,7 +68,7 @@ module.exports = () => {
             ...commonConfig,
             slug: "ynl",
             version: "1.0.0",
-            android: android,
+            android: android
         };
     } else if (process.env.APP_ENV === "expo") {
         return {
