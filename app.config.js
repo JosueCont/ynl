@@ -28,12 +28,16 @@ const commonConfig = {
     extra: {
         production: false,
         URL: "https://ynl-api.herokuapp.com/",
-        URL_IMAGES: "https://ynl-api.herokuapp.com"
+        URL_IMAGES: "https://ynl-api.herokuapp.com",
+        eas: {
+            projectId: "a72f473a-2218-4a3a-8a61-c00f72861e6a"
+        }
+
     }
 };
 
 const ios = {
-    buildNumber: "28",
+    buildNumber: "29",
     supportsTablet: false,
     bundleIdentifier: "com.hiumanlab.ynl",
     usesAppleSignIn: true,

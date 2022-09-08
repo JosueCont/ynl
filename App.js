@@ -12,8 +12,6 @@ const Stack = createStackNavigator();
 LogBox.ignoreAllLogs();
 const store = generateStore();
 
-
-
 if (Text.defaultProps == null) Text.defaultProps = {};
 Text.defaultProps.allowFontScaling = false;
 
