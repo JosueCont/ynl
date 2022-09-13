@@ -114,7 +114,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
 
     const searchUsers = async (value) => {
         try {
-            const response = await getUsersByUserName(value.trim(), authDuck.user, membersExist)
+            const response = await getUsersByUserName(value.trim(), authDuck.user, authDuck.userSiteConfig, membersExist)
         } catch (e) {
             console.log("searchUsers error =>",e.toString())
         }

@@ -67,10 +67,10 @@ export let resetUsersSearch=()=> async(dispatch)=>{
 }
 
 
-export let getUsersByUserName=(username='', userCurrent, membersExist)=> async(dispatch)=>{
+export let getUsersByUserName=(username='', userCurrent, siteCurrent, membersExist)=> async(dispatch)=>{
     try {
         dispatch({type: GET_USERS});
-        let response = await ApiApp.getUsersByUsername(username);
+        let response = await ApiApp.getUsersByUsername(username, siteCurrent);
         let dataSucces = []
         if (response.data.length > 0){
             if (_.findIndex(response.data, { 'username': userCurrent.username }) !== -1){

@@ -28,8 +28,13 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                 label: route.params.emotion.attributes.name,
                 feeling: route.params.emotion.id,
                 user: authDuck.user.id,
-                comments: comment
+                comments: comment,
             }
+            if (authDuck.userSiteConfig.id) {
+                data.site = authDuck.userSiteConfig.id;
+            }
+            console.log("🚀 ~ file: RouletteStep4Screen.js ~ line 36 ~ saveFeelings ~ data", data)
+         
             let res = await saveEmotion({data})
             if (res) {
 

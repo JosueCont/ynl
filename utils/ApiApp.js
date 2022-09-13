@@ -75,8 +75,16 @@ class ApiApp {
         return APIKit.get(`https://api.linkedin.com/v2/me?oauth2_access_token=${access_token}`)
     }
 
-    static getHomeData = (userId) => {
-        return ApiApp.ApisType(`/api/home/user_main?userId=${userId}`, 'get')
+    static getHomeData = (userId, site) => {
+        if(site.id) 
+        {
+            return ApiApp.ApisType(`/api/home/user_main?userId=${userId}&siteId=${site.id}`, 'get')
+        }
+        else
+        {
+            return ApiApp.ApisType(`/api/home/user_main?userId=${userId}`, 'get')
+        }
+
     }
 
     static saveFeelAspects = (data) => {
@@ -96,8 +104,15 @@ class ApiApp {
     }
 
     //hace una busqueda basada en la palabra que le pasen como texto (username)
-    static getUsersByUsername = (usernameLike = '') => {
-        return ApiApp.ApisType(`/api/users?filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}`, 'get')
+    static getUsersByUsername = (usernameLike = '', site) => {
+        if(site.id) 
+        { 
+            return ApiApp.ApisType(`/api/users?filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}&filters[sites][id][$eq]=${site.id}`, 'get')
+        }
+        else
+        {
+            return ApiApp.ApisType(`/api/users?filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}&filters[sites][id][$null]=true`, 'get')
+        }
     }
 
     static getMyGroups = (userId) => {
@@ -197,13 +212,28 @@ class ApiApp {
      * Estadisticas
      */
 
-    static getHistoryFeelings = async (startDate, endDate, userId) => {
-        return ApiApp.ApisType(`/api/feeling-records?populate[feeling][populate][parent][populate][icon]=*&filters[createdAt][$gte]=${startDate}&filters[createdAt][$lt]=${endDate}&filters[user][id]=${userId}`, "get");
+    static getHistoryFeelings = async (startDate, endDate, userId, site) => {
+        if(site.id)
+        {
+            console.log("🚀 ~ file: ApiApp.js ~ line 209 ~ ApiApp ~ getHistoryFeelings= ~ id", startDate, endDate, userId, site.id)
+            return ApiApp.ApisType(`/api/feeling-records?populate[feeling][populate][parent][populate][icon]=*&filters[createdAt][$gte]=${startDate}&filters[createdAt][$lt]=${endDate}&filters[user][id]=${userId}&filters[site][id][$eq]=${site.id}`, "get");
+        }
+        else
+        {
+            return ApiApp.ApisType(`/api/feeling-records?populate[feeling][populate][parent][populate][icon]=*&filters[createdAt][$gte]=${startDate}&filters[createdAt][$lt]=${endDate}&filters[user][id]=${userId}`, "get");
+        }
     }
 
-    static getUserProgress = async (userID = '', option = '') => {
+    static getUserProgress = async (userID = '', site = null, option = '') => {
         // console.log(`/api/progress/user_progress?userId=${userID}&option=${option}`)
-        return ApiApp.ApisType(`/api/progress/user_progress?userId=${userID}&option=${option}`, 'get');
+        if(site.id) 
+        {
+            return ApiApp.ApisType(`/api/progress/user_progress?userId=${userID}&option=${option}&siteId=${site.id}`, 'get');
+        }
+        else
+        {
+            return ApiApp.ApisType(`/api/progress/user_progress?userId=${userID}&option=${option}`, 'get');
+        }
     }
 
     static forgotPassword = (data) => {
