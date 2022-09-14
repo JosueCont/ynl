@@ -27,11 +27,11 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
         }
     }, [isFocused])
 
-    const getHistoryData = async (userId) => {
+    const getHistoryData = async (userId, site) => {
         try {
             setLoading(true)
             let startDate = '2020-01-01', enDate = '2100-01-01';
-            const res = await ApiApp.getHistoryFeelings(startDate, enDate, userId)
+            const res = await ApiApp.getHistoryFeelings(startDate, enDate, userId, site)
             let arrayDates = _.map(res.data.data, (obj,index) => {
                 let dataItem = {
                     shortDate: moment(obj.attributes.createdAt).format().split('T')[0],
@@ -72,7 +72,7 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
                                 style={{backgroundColor: 'white'}}
                                 tintColor={Colors.red}
                                 refreshing={loading}
-                                onRefresh={() => getHistoryData(authDuck.user.id)}
+                                onRefresh={() => getHistoryData(authDuck.user.id,authDuck.userSiteConfig)}
                             />
                         }>
 

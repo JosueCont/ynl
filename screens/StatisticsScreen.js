@@ -36,8 +36,8 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
     const boot = async () => {
         try {
             setLoading(true)
-            await getHistoryData(authDuck.user.id)
-            await getCountFeelings(authDuck.user.id)
+            await getHistoryData(authDuck.user.id, authDuck.userSiteConfig)
+            await getCountFeelings(authDuck.user.id, authDuck.userSiteConfig)//
         } catch (e) {
             console.log('StatisticsScreen boot error =>',e.toString());
         } finally {
@@ -48,10 +48,10 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
     }
 
 
-    const getCountFeelings = async (userId, option = null) => {
+    const getCountFeelings = async (userId, site, option = null) => {
         try {
             setLoading(true)
-            const res = await ApiApp.getUserProgress(userId, option);
+            const res = await ApiApp.getUserProgress(userId, site, option);
             // console.log('semanal',res.data.data.feelings)
             setCountFeeling(res.data.data.feelings)
 
@@ -75,10 +75,11 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
         }
     }
 
-    const getHistoryData = async (userId) => {
+    const getHistoryData = async (userId, site) => {
+        console.log("🚀 ~ file: StatisticsScreen.js ~ line 79 ~ getHistoryData ~ site", site)
         try {
             let startDate = '2020-01-01', enDate = '2100-01-01';
-            const res = await ApiApp.getHistoryFeelings(startDate, enDate, userId)
+            const res = await ApiApp.getHistoryFeelings(startDate, enDate, userId, site)
             let arrayDates = _.map(res.data.data, (obj) => {
                 let dataItem = {
                     date: moment(obj.attributes.createdAt).format(),
@@ -88,7 +89,6 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
 
                 return dataItem;
             })
-
 
             setHistoryData(arrayDates)
 

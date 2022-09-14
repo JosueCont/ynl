@@ -132,7 +132,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const getHome = async () => {
         try {
 
-            const res = await ApiApp.getHomeData(authDuck.user.id)
+            const res = await ApiApp.getHomeData(authDuck.user.id, authDuck.userSiteConfig)
 
             // console.log('consolelog?===',res.data.data)
             if (_.get(res, 'data.data', null)) {
@@ -453,8 +453,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                     }
                                 }}>
                                 <Icon as={MaterialIcons} name={'groups'} size={6} color={'white'} mb={1}></Icon>
-                                <Text color={'white'} fontSize={11}>Mis
-                                    grupos</Text>
+                                <Text color={'white'} fontSize={11}>Mis grupos</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

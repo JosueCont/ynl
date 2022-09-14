@@ -20,6 +20,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
     const [finantialNumber, setFinantialNumber] = useState(1)
     const [relationNumber, setRelationNumber] = useState(1)
     const [user, setUser] = useState(false)
+    const [site, setSite] = useState(false)
     const toast = useToast();
     const [modalSuccessVisible, setModalSuccessVisible] = useState(null)
     const [modalErrorVisible, setModalErrorVisible] = useState(null)
@@ -28,6 +29,9 @@ const YourFeelScreen = ({authDuck, navigation}) => {
     useEffect(() => {
         if (authDuck.isLogged) {
             setUser(authDuck.user)
+            if (authDuck.userSiteConfig.id) {
+                setSite(authDuck.userSiteConfig)
+            } 
         }
     }, [authDuck])
 
@@ -48,8 +52,10 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                 mental: mentalNumber,
                 physical: physicalNumber,
                 relations: relationNumber,
-                user: user ? user.id : null
+                user: user ? user.id : null,
+                site: site ? site.id : null
             }
+            console.log("🚀 ~ file: YourFeelScreen.js ~ line 58 ~ saveYourFeel ~ data", data)
             const res = await ApiApp.saveFeelAspects({data})
             // console.log('res', res)
 
