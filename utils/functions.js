@@ -56,6 +56,7 @@ const arrayMonths=[
     'Abril',
     'Mayo',
     'junio',
+    'Julio',
     'Agosto',
     'Septiembre',
     'Octubre',
