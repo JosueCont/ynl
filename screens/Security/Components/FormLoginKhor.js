@@ -3,14 +3,17 @@ import {Button, FormControl, Image, Input, ScrollView, Text, View} from "native-
 import logo from '../../../assets/YNL.gif'
 import {useFormik} from 'formik';
 import * as Yup from 'yup'
+import {getShadowCircleStyle} from "../../../utils/functions";
+import {Colors} from "../../../utils/Colors";
 
 
-export default ({onRegister, loading}) => {
+export default ({onRegister, loading,step,...props}) => {
 
 
     const {handleSubmit, errors, setFieldValue, touched} = useFormik({
         initialValues: {
             identifier: '',
+            password:''
         },
         onSubmit: (formValue) => {
             onRegister(formValue)
@@ -18,6 +21,7 @@ export default ({onRegister, loading}) => {
         validateOnChange: false,
         validationSchema: Yup.object({
             identifier: Yup.string().email("El email no es correcto").required("El email es obligatorio"),
+            password: step ===2 &&  Yup.string().required("La contraseña es obligatoria"),
         }),
         enableReinitialize: false
     });
@@ -46,6 +50,27 @@ export default ({onRegister, loading}) => {
                             {errors.identifier}
                         </FormControl.ErrorMessage>
                     </FormControl>
+                    {
+                       step===2 &&  <FormControl isInvalid={errors.password} mb={2}>
+                            <View flex={1} style={getShadowCircleStyle(5, 5)}>
+                                <Input
+                                    height={50}
+                                    placeholder={'Contraseña'}
+                                    type="password"
+                                    onChangeText={text => setFieldValue('password', text)}
+                                    value={touched.password}
+                                    returnKeyType={'done'}
+                                    bgColor={'white'}
+                                    borderRadius={20}
+                                    color={Colors.red}
+                                />
+                            </View>
+                            <FormControl.ErrorMessage>
+                                {errors.password}
+                            </FormControl.ErrorMessage>
+
+                        </FormControl>
+                    }
 
                     <Button isLoading={loading} mt="2" onPress={handleSubmit} colorScheme="orange">
                         Continuar

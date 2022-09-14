@@ -59,6 +59,10 @@ class ApiApp {
         return ApiApp.ApisType('/api/auth/local', 'post', data)
     }
 
+    static loginWithKhonnect = (data) => {
+        return ApiApp.ApisType('/api/auth/khonnect', 'post', data)
+    }
+
     static loginWithApple = (access_token) => {
         return ApiApp.ApisType(`/api/auth/apple/callback?access_token=${access_token}`, 'get')
     }
