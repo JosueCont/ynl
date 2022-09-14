@@ -229,6 +229,14 @@ export default (props) => {
                                         colorScheme='orange'>
                                     Iniciar sesión
                                 </Button>
+
+                                <Button mt={2} mb={2} isLoading={props.loading} isLoadingText={'Iniciando'}
+                                        onPress={() => navigation.navigate('SiteListKhor')}
+                                        colorScheme='orange'>
+                                    Cuenta Khor
+                                </Button>
+
+
                                 <Link onPress={() => navigation.navigate('PasswordRecoveryScreen')} mb={4} _text={{
                                     fontSize: "xs",
                                     fontWeight: "500",
@@ -269,6 +277,9 @@ export default (props) => {
                                             <Image source={appleImage} w={10} h={10} alt="img"></Image>
                                         </TouchableOpacity>
                                     }
+
+
+
                                     {/*{*/}
                                     {/*    Platform.OS ==='ios' &&*/}
                                     {/*     <AppleAuthentication.AppleAuthenticationButton*/}
@@ -283,7 +294,11 @@ export default (props) => {
 
                                 </View>
 
+
                                 <HStack justifyContent="center">
+
+
+
                                     <Button size="sm" colorScheme={'orange'}
                                             onPress={() => navigation.navigate('Register')}
                                             variant="link">

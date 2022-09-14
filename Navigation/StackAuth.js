@@ -10,6 +10,7 @@ import VerificationCodeScreen from "../screens/Security/VerificationCodeScreen";
 import PhoneScreen from "../screens/Security/PhoneScreen";
 import SuccessScreen from "../screens/Security/SuccessScreen";
 import PasswordRecoveryScreen from "../screens/Security/PasswordRecoveryScreen";
+import SiteListKhor from "../screens/Security/SiteListKhor";
 import PasswordRecoverySuccessScreen from "../screens/Security/PasswordRecoverySuccessScreen";
 
 const Stack = createStackNavigator();
@@ -75,6 +76,7 @@ const StackAuth = ({}) => {
             {/*              component={RotateCustom}/>*/}
 
             <Stack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown: false}}/>
+            <Stack.Screen name="SiteListKhor" component={SiteListKhor} options={{headerShown: false}}/>
             <Stack.Screen name="Register" component={RegisterScreen} options={{title: ''}}/>
             <Stack.Screen name="PasswordRecoveryScreen" component={PasswordRecoveryScreen} options={{title: ''}}/>
             <Stack.Screen name="PasswordRecoverySuccessScreen" component={PasswordRecoverySuccessScreen}

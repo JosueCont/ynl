@@ -7,22 +7,7 @@ const initialData = {
     isLogged: false,
     loading: false,
     jwt: null,
-    userSiteConfig: {
-        "id": 8,
-        "app_id": "61f3140ace24e005a77924da",
-        "khonnect_id": "20",
-        "department_name": "Develop Department",
-        "department_id": "200",
-        "employment_name": "Develper",
-        "employment_id": "2000", 
-        "khor_name": "ORIGINAL TEST",
-        "company_name": null,
-        "company_id": null,
-        "url_logo": null,
-        "ynl_access": true,
-        "place_name": "Merida Norte",
-        "place_id": "22"
-    }
+    userSiteConfig:null
 }
 
 const START = 'START';
@@ -33,6 +18,9 @@ const ERROR_SERVER = 'ERROR_SERVER';
 const LOGIN_EMAIL = 'LOGIN_EMAIL';
 const LOGIN_EMAIL_SUCCESS = 'LOGIN_EMAIL_SUCCESS';
 const LOGIN_EMAIL_ERROR = 'LOGIN_EMAIL_ERROR';
+const LOGIN_KHOR = 'LOGIN_KHOR';
+const LOGIN_KHOR_SUCCESS = 'LOGIN_KHOR_SUCCESS';
+const LOGIN_KHOR_ERROR = 'LOGIN_EMAIL_ERROR';
 
 
 const authDuck = (state = initialData, action) => {
@@ -52,7 +40,13 @@ const authDuck = (state = initialData, action) => {
         case ERROR:
             return { ...state, error: action.payload }
         case ERROR_SERVER:
-            return { ...state, error: action.payload }
+            return {...state, error: action.payload}
+        case LOGIN_KHOR:
+            return {...state, loading: true, isLogged: false}
+        case LOGIN_KHOR_ERROR:
+            return {...state, loading: false, isLogged: false}
+        case LOGIN_KHOR_SUCCESS:
+            return {...state, loading: false, userSiteConfig:action.payload.site,  user: action.payload.user, jwt: action.payload.jwt, isLogged: true}
         default:
             return state
     }
@@ -103,6 +97,37 @@ export let loginEmail = (username, password) => async (dispatch) => {
         dispatch({ type: LOGIN_EMAIL_ERROR });
         console.log('authDuck loginEmail error =>', e.toString())
         return { status: e.response.status, message: e.response.data.error.message }
+    }
+}
+
+
+export let loginKhor = (username, password, site) => async (dispatch) => {
+    try {
+        dispatch({type: LOGIN_KHOR});
+        // console.log('loginEmail=========', username, password)
+
+        // console.log(username, password)
+        let response = await ApiApp.loginWithKhonnect({
+            identifier: username,
+            password: password,
+            app_id: site.app_id
+        })
+
+
+        // console.log(response, 60)
+        await saveUserData(response.data.user, response.data.jwt)
+        dispatch({type: LOGIN_KHOR_SUCCESS,
+            payload: {
+                user: response.data.user,
+                jwt: response.data.jwt,
+                site: response.data.site
+            }});
+        // console.log('login exitoso con email', response.data)
+        return {status:200, message:'ok'}
+    } catch (e) {
+        dispatch({type: LOGIN_KHOR_ERROR});
+        console.log('authDuck loginEmail error =>',e.toString())
+        return {status:e.response.status, message:e.response.data.error.message}
     }
 }
 
@@ -173,13 +198,17 @@ export let loginLinkedIn = (accessToken) => async (dispatch) => {
     }
 }
 
-const saveUserData = async (userData, jwt = null) => {
+const saveUserData = async (userData, jwt = null, site=null) => {
     try {
         await storeDataObject('@user', userData)
         if (jwt) {
             // console.log('jwt =>', jwt)
             await storeDataObject('@jwt', { jwt })
             console.log('jwt saved =>', jwt)
+        }
+
+        if(site){
+            await storeDataObject('@site', site)
         }
     } catch (e) {
         console.log('authDuck saveUserData error =>', e.toString())

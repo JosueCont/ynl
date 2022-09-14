@@ -59,6 +59,10 @@ class ApiApp {
         return ApiApp.ApisType('/api/auth/local', 'post', data)
     }
 
+    static loginWithKhonnect = (data) => {
+        return ApiApp.ApisType('/api/auth/khonnect', 'post', data)
+    }
+
     static loginWithApple = (access_token) => {
         return ApiApp.ApisType(`/api/auth/apple/callback?access_token=${access_token}`, 'get')
     }
@@ -259,6 +263,11 @@ class ApiApp {
 
     static addMemberGroup = (data) => {
         return ApiApp.ApisType(`/api/add-member-group`, 'post', data);
+    }
+
+    /// Login Khor
+    static getSitesKhor = (data) => {
+        return ApiApp.ApisType(`/api/auth/sites`, 'post', data);
     }
 
     static _baseURL = baseURL;
