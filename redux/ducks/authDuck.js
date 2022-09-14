@@ -6,7 +6,8 @@ const initialData = {
     user: null,
     isLogged: false,
     loading: false,
-    jwt: null
+    jwt: null,
+    userSiteConfig:{}
 }
 
 const START = 'START';

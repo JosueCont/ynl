@@ -231,6 +231,11 @@ class ApiApp {
         return ApiApp.ApisType(`/api/add-member-group`, 'post', data);
     }
 
+    /// Login Khor
+    static getSitesKhor = (data) => {
+        return ApiApp.ApisType(`/api/auth/sites`, 'post', data);
+    }
+
     static _baseURL = baseURL;
 
 
