@@ -177,7 +177,7 @@ export default (props) => {
                 }
                 {
                     !openLinkedIn &&
-                    <ScrollView p={10} px={5} bounces={false} flexGrow={1}>
+                    <ScrollView p={10} px={5} bounces={false} flexGrow={1} width={'85%'}>
                         <View flex={0.3} alignItems={'center'} justifyContent={'center'}>
                             <Image source={loginImage} style={{resizeMode: 'contain'}} w={resolvePlatform(250, 200)}
                                    h={resolvePlatform(250, 200)} alt="img"/>
