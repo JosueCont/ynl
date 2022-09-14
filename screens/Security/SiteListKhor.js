@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
-import {KeyboardAvoidingView, Platform, ScrollView, FlatList, Text, TouchableOpacity} from 'react-native'
+import {KeyboardAvoidingView, Platform, ScrollView, TouchableOpacity} from 'react-native'
 import {createSession, loginKhor} from "../../redux/ducks/authDuck";
 import {Colors} from "../../utils/Colors";
-import {View} from 'native-base'
 import FormLoginKhor from "./Components/FormLoginKhor";
 import ApiApp from "../../utils/ApiApp";
 import ModalError from "../Modals/ModalError";
+import { View, Text, Heading, Center, FlatList, Box } from "native-base";
 
 const SiteListKhor = ({navigation, loginKhor, ...props}) => {
 
@@ -16,10 +16,16 @@ const SiteListKhor = ({navigation, loginKhor, ...props}) => {
     const [sites, setSites] = useState(null)
     const [stepLogin, setStepLogin] =useState(1)
     const [siteSelected, setSiteSelected] = useState(null)
+    const [currentEmail, setCurrentEmail] = useState("")
 
 
     useEffect(() => {
     }, [])
+
+    const goStepTwo = () => {
+      setSiteSelected(null);
+      setStepLogin(2);
+    };
 
     const getSites = async (values) => {
         console.log(values)
@@ -27,7 +33,14 @@ const SiteListKhor = ({navigation, loginKhor, ...props}) => {
             setLoading(true);
             const response = await ApiApp.getSitesKhor(values)
             console.log(response.data?.sites)
-            setSites(response.data?.sites)
+            console.log("response.data.sites", response.data.sites);
+            if (response.data.sites.length === 1){
+                setSiteSelected(response.data.sites[0]);
+                setStepLogin(3);
+            } else{
+                setStepLogin(2);
+            }
+            setSites(response.data?.sites);
             //navigation.navigate('PasswordRecoverySuccessScreen')
         } catch (e) {
             console.log('register error =>', e.toString())
@@ -61,33 +74,61 @@ const SiteListKhor = ({navigation, loginKhor, ...props}) => {
     }
 
     return (
-        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
-                              style={{flex: 1, backgroundColor: 'white'}}>
-            <ScrollView style={{backgroundColor: Colors.white}}>
-                <FormLoginKhor step={stepLogin} loading={loading} onRegister={stepLogin===1?getSites:onLoginKhor}/>
-                <ModalError text={modalErrorText} visible={modalErrorVisible}
-                            setVisible={setModalErrorVisible}></ModalError>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1, backgroundColor: "white" }}
+      >
+        <ScrollView style={{ backgroundColor: Colors.white }}>
+          <FormLoginKhor
+            step={stepLogin}
+            loading={loading}
+            onRegister={stepLogin === 1 ? getSites : onLoginKhor}
+            siteSelected={siteSelected}
+            sitesLength={sites?.length}
+            goStepTwo={goStepTwo}
+            setEmail={setCurrentEmail}
+            email={currentEmail}
+          />
+          <ModalError
+            text={modalErrorText}
+            visible={modalErrorVisible}
+            setVisible={setModalErrorVisible}
+          ></ModalError>
 
-
-                <FlatList
-                    data={sites}
-                    renderItem={({item}) =>
-                        <TouchableOpacity onPress={ () =>{
-                            setSiteSelected(item)
-                            setStepLogin(2)
-                                }
-                        }>
-
-                            <View style={{padding: 30}}>
-                                <Text>Nombre: {item.khor_name}</Text>
-                            </View>
-                        </TouchableOpacity>
-
-                }
-                />
-            </ScrollView>
-        </KeyboardAvoidingView>
-    )
+          {sites?.length > 1 && stepLogin === 2 && (
+            <View flex={1} alignItems="center">
+              <Text fontSize="xl" bold underline textAlign={"center"} mb={10}>
+                Selecciona un sitio Khor
+              </Text>
+              <FlatList
+                width={"85%"}
+                data={sites}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    onPress={() => {
+                      setSiteSelected(item);
+                      setStepLogin(3);
+                    }}
+                  >
+                    <Box
+                      borderBottomWidth="1"
+                      _dark={{
+                        borderColor: "muted.50",
+                      }}
+                      pl={["0", "4"]}
+                      pr={["0", "5"]}
+                      py="4"
+                    >
+                      <Text fontSize="md">Nombre: {item.khor_name}</Text>
+                    </Box>
+                  </TouchableOpacity>
+                )}
+              />
+            </View>
+          )}
+        </ScrollView>
+      </KeyboardAvoidingView>
+    );
 }
 
 
