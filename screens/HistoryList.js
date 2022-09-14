@@ -16,6 +16,7 @@ const HistoryListScreen = ({productsDuck, navigation}) => {
 
     useEffect(() => {
         getFeels();
+        console.log('entra')
     }, [])
 
 

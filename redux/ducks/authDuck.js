@@ -57,7 +57,7 @@ export let createSession = (data) => async (dispatch) => {
     try {
         // validamos si hay un site en el localstorage
         if(data?.site){
-            dispatch({ type: LOGIN_KHOR_SUCCESS, payload: { user: data.user, jwt: data.jwt } });
+            dispatch({ type: LOGIN_KHOR_SUCCESS, payload: { user: data.user, jwt: data.jwt, site: data.site } });
         }else{
             dispatch({ type: LOGIN_EMAIL_SUCCESS, payload: { user: data.user, jwt: data.jwt } });
         }
