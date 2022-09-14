@@ -35,7 +35,6 @@ const ModalPasswordUpdate = ({visible, setVisible, action}) => {
             transparent={true}
             visible={visible}
             onRequestClose={() => {
-                Alert.alert("Modal has been closed.");
                 setVisible(!visible);
             }}
         >

@@ -39,7 +39,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
         try {
             setLoading(true)
             const response = await ApiApp.getProfile(authDuck.user.id)
-            // console.log(response.data)
+            console.log(response.data)
             setValues(response)
             setLoading(false)
         } catch (e) {
@@ -265,11 +265,12 @@ const ProfileScreen = ({authDuck, navigation}) => {
 
             <View flex={1} alignItems={'center'}>
                 <Stack space={4} w="90%">
-                    <FormControl isInvalid w="100%">
+                    <FormControl  isInvalid w="100%">
                         <View flex={1} mb={4} style={getShadowCircleStyle(10, 10)}>
                             <Input
                                 size={'2xl'}
                                 h={50}
+                                isReadOnly={authDuck?.userSiteConfig}
                                 placeholder={'Nombre(s)'}
                                 borderRadius={25}
                                 value={name}
@@ -283,6 +284,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                             <Input
                                 size={'2xl'}
                                 height={50}
+                                isReadOnly={authDuck?.userSiteConfig}
                                 placeholder={'Apellidos'}
                                 borderRadius={20}
                                 value={lastName}
@@ -299,6 +301,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                                 placeholder={'Correo electrónico'}
                                 borderRadius={20}
                                 value={email}
+                                isReadOnly={true}
                                 onChangeText={val => setEmail(val)}
                                 backgroundColor={Colors.white}
                                 color={Colors.red}
@@ -309,67 +312,80 @@ const ProfileScreen = ({authDuck, navigation}) => {
                         {/*       placeholderTextColor={Colors.red} textAlign={'center'}/>*/}
                         {/*<Input size={'2xl'} height={50} mb={6} placeholder={'Confirmar contraseña'} borderRadius={20}*/}
                         {/*       placeholderTextColor={Colors.red} textAlign={'center'}/>*/}
-                        <View mb={8}>
-                            <Text textAlign={'center'} fontSize={20} color={'gray.600'} mb={4}>Género</Text>
-                            <View flexDir={'row'} justifyContent={'space-between'} px={20}>
-                                <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
-                                          value="danger" colorScheme="orange" isChecked={gender === 0 ? true : false}
-                                          onChange={(v) => {
-                                              if (v) {
-                                                  setGender(0)
-                                              }
 
-                                          }}>
-                                    <Text color={Colors.red} fontSize={12}>Femenino</Text>
-                                </Checkbox>
-                                <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
-                                          value="info" colorScheme="orange" isChecked={gender === 1 ? true : false}
-                                          onChange={(v) => {
-                                              if (v) {
-                                                  setGender(1)
-                                              }
-                                          }}>
-                                    <Text color={Colors.red} fontSize={12}>Masculino</Text>
-                                </Checkbox>
+                        {
+                            !authDuck?.userSiteConfig && <View mb={8}>
+                                <Text textAlign={'center'} fontSize={20} color={'gray.600'} mb={4}>Género</Text>
+                                <View flexDir={'row'} justifyContent={'space-between'} px={20}>
+                                    <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
+                                              value="danger" colorScheme="orange" isChecked={gender === 0 ? true : false}
+                                              onChange={(v) => {
+                                                  if (v) {
+                                                      setGender(0)
+                                                  }
+
+                                              }}>
+                                        <Text color={Colors.red} fontSize={12}>Femenino</Text>
+                                    </Checkbox>
+                                    <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
+                                              value="info" colorScheme="orange" isChecked={gender === 1 ? true : false}
+                                              onChange={(v) => {
+                                                  if (v) {
+                                                      setGender(1)
+                                                  }
+                                              }}>
+                                        <Text color={Colors.red} fontSize={12}>Masculino</Text>
+                                    </Checkbox>
+                                </View>
+
                             </View>
+                        }
 
-                        </View>
 
-                        <View mb={8}>
-                            <Text textAlign={'center'} fontSize={20} color={'gray.600'} mb={4}>Compartir mi
-                                información</Text>
-                            <View flexDir={'row'} justifyContent={'space-between'} px={20} mx={10}>
-                                <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
-                                          value="danger" colorScheme="orange"
-                                          isChecked={shareMyInfo === 1 ? true : false}
-                                          onChange={(v) => {
-                                              if (v) {
-                                                  setShareMyInfo(1)
-                                              }
+                        {
+                            !authDuck?.userSiteConfig && <View mb={8}>
+                                <Text textAlign={'center'} fontSize={20} color={'gray.600'} mb={4}>Compartir mi
+                                    información</Text>
+                                <View flexDir={'row'} justifyContent={'space-between'} px={20} mx={10}>
+                                    <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
+                                              value="danger" colorScheme="orange"
+                                              isChecked={shareMyInfo === 1 ? true : false}
+                                              onChange={(v) => {
+                                                  if (v) {
+                                                      setShareMyInfo(1)
+                                                  }
 
-                                          }}>
-                                    <Text color={Colors.red} fontSize={12}>Sí</Text>
-                                </Checkbox>
-                                <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
-                                          value="info" colorScheme="orange" isChecked={shareMyInfo === 0 ? true : false}
-                                          onChange={(v) => {
-                                              if (v) {
-                                                  setShareMyInfo(0)
-                                              }
-                                          }}>
-                                    <Text color={Colors.red} fontSize={12}>No</Text>
-                                </Checkbox>
+                                              }}>
+                                        <Text color={Colors.red} fontSize={12}>Sí</Text>
+                                    </Checkbox>
+                                    <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
+                                              value="info" colorScheme="orange" isChecked={shareMyInfo === 0 ? true : false}
+                                              onChange={(v) => {
+                                                  if (v) {
+                                                      setShareMyInfo(0)
+                                                  }
+                                              }}>
+                                        <Text color={Colors.red} fontSize={12}>No</Text>
+                                    </Checkbox>
+                                </View>
+
                             </View>
+                        }
 
-                        </View>
 
-                        <TouchableOpacity style={{marginVertical: 20}}
-                                          onPress={() => setModalPasswordUpdateVisible(true)}>
-                            <Text textAlign={'center'} size={'md'} color={Colors.red} textDecorationLine={'underline'}>Actualizar
-                                contraseña</Text>
-                        </TouchableOpacity>
-                        <Button isLoading={loading} colorScheme={'orange'} onPress={() => updateProfileFunction()}
-                                mb={4}>Actualizar</Button>
+                        {
+                            !authDuck?.userSiteConfig && <>
+                                <TouchableOpacity style={{marginVertical: 20}}
+                                                  onPress={() => setModalPasswordUpdateVisible(true)}>
+                                    <Text textAlign={'center'} size={'md'} color={Colors.red} textDecorationLine={'underline'}>Actualizar
+                                        contraseña
+                                    </Text>
+                                </TouchableOpacity>
+                                <Button isLoading={loading} colorScheme={'orange'} onPress={() => updateProfileFunction()}
+                                        mb={4}>Actualizar</Button>
+                            </>
+                        }
+
 
                         <ModalPasswordUpdate action={updatePasswordFunction} visible={modalPasswordUpdateVisible}
                                              setVisible={setModalPasswordUpdateVisible}></ModalPasswordUpdate>

@@ -24,8 +24,9 @@ export default () => {
         try {
             const user = await getDataObject('@user')
             const jwt = await getDataObject('@jwt')
+            const site = await getDataObject('@site')
             if (user) {
-                createSession({user, jwt})(store.dispatch)
+                createSession({user, jwt, site})(store.dispatch)
                 emotionStatusAction(user.id)(store.dispatch)
             }
         } catch (e) {
