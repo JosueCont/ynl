@@ -111,7 +111,7 @@ class ApiApp {
     static getUsersByUsername = (usernameLike = '', site) => {
         if(site.id) 
         { 
-            return ApiApp.ApisType(`/api/users?filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}&filters[sites][id][$eq]=${site.id}`, 'get')
+            return ApiApp.ApisType(`/api/users?filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}&filters[sites][app_id][$eq]=${site.app_id}`, 'get')
         }
         else
         {
