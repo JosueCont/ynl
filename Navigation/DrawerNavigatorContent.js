@@ -5,7 +5,7 @@ import {ImageBackground, TouchableOpacity} from "react-native";
 import sidebarImage from "../assets/bgmenu.png";
 import { Text, View, Image} from "native-base";
 import logoSmall from "../assets/logoSmall.png";
-import logoKhor from "../assets/poweredby.png";
+import logoKhor from "../assets/logos.png";
 import {logOutAction} from "../redux/ducks/authDuck";
 import ApiApp from "../utils/ApiApp";
 
@@ -72,7 +72,8 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
                 <View flex={0.5} alignItems={'center'} justifyContent={'center'}>
                     <Image source={logoSmall} alt="img"/>
                 </View>
-                <View flex={1} alignItems={'center'}>
+
+                <View flex={0.5} alignItems={'center'}>
                     <TouchableOpacity onPress={() => {
                         navigation.navigate('ProfileScreen')
                     }}>
@@ -85,17 +86,18 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
                         navigation.navigate('StatisticsScreen')
 
                     }}>
-                        <Text color={'white'} fontSize={20} my={2}>Mis avance</Text>
+                        <Text color={'white'} fontSize={20} my={2}>Mi avance</Text>
                     </TouchableOpacity>
                 </View>
+
                 <View flex={0.5} alignItems={'center'}>
                     <TouchableOpacity onPress={() => logoutFunction()}>
                         <Text color={'white'} fontSize={14} style={{textDecorationLine: 'underline'}} my={2}>Cerrar
                             sesión</Text>
                     </TouchableOpacity>
-                    <View flex={1} alignItems={'center'} justifyContent={'center'}>
-                        <Image source={logoKhor} style={{width:100}} size={'xs'} alt="img"/>
-                    </View>
+                </View>
+                <View flex={0.5} alignItems={'center'} justifyContent={'center'}>
+                    <Image source={logoKhor}  alt="img"/>
                 </View>
             </ImageBackground>
 

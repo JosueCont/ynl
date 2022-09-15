@@ -113,13 +113,13 @@ const SiteListKhor = ({navigation, loginKhor, ...props}) => {
                     <Box
                       borderBottomWidth="1"
                       _dark={{
-                        borderColor: "muted.50",
+                        borderColor: "gray.100",
                       }}
                       pl={["0", "4"]}
                       pr={["0", "5"]}
                       py="4"
                     >
-                      <Text fontSize="md">Nombre: {item.khor_name}</Text>
+                      <Text fontSize="md">Sitio: {item.khor_name}</Text>
                     </Box>
                   </TouchableOpacity>
                 )}
