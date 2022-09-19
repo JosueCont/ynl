@@ -62,44 +62,72 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
     }
 
     return (
-        <DrawerContentScrollView
-            bounces={false}
-            {...props}
-            nestedScrollEnabled={true}
-            contentContainerStyle={{flex: 1}}
-        >
-            <ImageBackground source={sidebarImage} style={{flex: 1}}>
-                <View flex={0.5} alignItems={'center'} justifyContent={'center'}>
-                    <Image source={logoSmall} alt="img"/>
-                </View>
-                <View flex={1} alignItems={'center'}>
-                    <TouchableOpacity onPress={() => {
-                        navigation.navigate('ProfileScreen')
-                    }}>
-                        <Text color={'white'} fontSize={20} my={2}>Perfil</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => redirectValidation()}>
-                        <Text color={'white'} fontSize={20} my={2}>Mis grupos</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => {
-                        navigation.navigate('StatisticsScreen')
-
-                    }}>
-                        <Text color={'white'} fontSize={20} my={2}>Mis avance</Text>
-                    </TouchableOpacity>
-                </View>
-                <View flex={0.5} alignItems={'center'}>
-                    <TouchableOpacity onPress={() => logoutFunction()}>
-                        <Text color={'white'} fontSize={14} style={{textDecorationLine: 'underline'}} my={2}>Cerrar
-                            sesión</Text>
-                    </TouchableOpacity>
-                    <View flex={1} alignItems={'center'} justifyContent={'center'}>
-                        <Image source={logoKhor} style={{width:100}} size={'xs'} alt="img"/>
-                    </View>
-                </View>
-            </ImageBackground>
-
-        </DrawerContentScrollView>
+      <DrawerContentScrollView
+        bounces={false}
+        {...props}
+        nestedScrollEnabled={true}
+        contentContainerStyle={{ flex: 1 }}
+      >
+        <ImageBackground source={sidebarImage} style={{ flex: 1 }}>
+          <View flex={0.5} alignItems={"center"} justifyContent={"center"}>
+            <Image source={logoSmall} alt="img" />
+          </View>
+          <View flex={1} alignItems={"center"}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("HomeScreen");
+              }}
+            >
+              <Text color={"white"} fontSize={20} my={2}>
+                Inicio
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("ProfileScreen");
+              }}
+            >
+              <Text color={"white"} fontSize={20} my={2}>
+                Perfil
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => redirectValidation()}>
+              <Text color={"white"} fontSize={20} my={2}>
+                Mis grupos
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("StatisticsScreen");
+              }}
+            >
+              <Text color={"white"} fontSize={20} my={2}>
+                Mis avance
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View flex={0.5} alignItems={"center"}>
+            <TouchableOpacity onPress={() => logoutFunction()}>
+              <Text
+                color={"white"}
+                fontSize={14}
+                style={{ textDecorationLine: "underline" }}
+                my={2}
+              >
+                Cerrar sesión
+              </Text>
+            </TouchableOpacity>
+            <View flex={1} alignItems={"center"} justifyContent={"center"}>
+              <Image
+                source={logoKhor}
+                style={{ width: 100 }}
+                size={"xs"}
+                alt="img"
+              />
+            </View>
+          </View>
+        </ImageBackground>
+      </DrawerContentScrollView>
     );
 }
 
