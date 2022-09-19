@@ -55,7 +55,13 @@ const authDuck = (state = initialData, action) => {
 
 export let createSession = (data) => async (dispatch) => {
     try {
-        dispatch({ type: LOGIN_EMAIL_SUCCESS, payload: { user: data.user, jwt: data.jwt } });
+        // validamos si hay un site en el localstorage
+        if(data?.site){
+            dispatch({ type: LOGIN_KHOR_SUCCESS, payload: { user: data.user, jwt: data.jwt, site: data.site } });
+        }else{
+            dispatch({ type: LOGIN_EMAIL_SUCCESS, payload: { user: data.user, jwt: data.jwt } });
+        }
+
         return true
     } catch (e) {
         console.log('authDuck createSession error => ', e.toString())
@@ -115,7 +121,7 @@ export let loginKhor = (username, password, site) => async (dispatch) => {
 
 
         // console.log(response, 60)
-        await saveUserData(response.data.user, response.data.jwt)
+        await saveUserData(response.data.user, response.data.jwt, site)
         dispatch({type: LOGIN_KHOR_SUCCESS,
             payload: {
                 user: response.data.user,
@@ -220,6 +226,7 @@ export let logOutAction = () => async (dispatch) => {
     try {
         await AsyncStorage.removeItem('@user')
         await AsyncStorage.removeItem('@jwt')
+        await AsyncStorage.removeItem('@site')
         dispatch({ type: LOGOUT });
     } catch (e) {
         console.log('authDuck logOutAction error =>', e.toString())

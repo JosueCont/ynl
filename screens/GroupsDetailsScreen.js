@@ -139,7 +139,6 @@ const GroupsDetailsScreen = ({navigation, route}) => {
     const closeModalUpd = (flag) => {
         setUpdGroupName(flag);
         setNameForUp(null);
-        setModalSuccessVisible(true);
     }
 
     const updGroup = async (value) => {
@@ -152,6 +151,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
             const response = await ApiApp.updGroup(idUpd, data);
             if(response.status === 200){
                 closeModalUpd(false)
+                setModalSuccessVisible(true);
                 getGroupsMembersFunction();
                 filter(activeButton);
                 setSaving(false);
@@ -407,6 +407,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
           loading={saving}
         />
         <ModalSuccess
+        text={"Grupo actualizado"}
           visible={modalSuccessVisible}
           setVisible={setModalSuccessVisible}
         ></ModalSuccess>

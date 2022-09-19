@@ -232,8 +232,8 @@ export default (props) => {
 
                                 <Button mt={2} mb={2} isLoading={props.loading} isLoadingText={'Iniciando'}
                                         onPress={() => navigation.navigate('SiteListKhor')}
-                                        colorScheme='orange'>
-                                    Cuenta Khor
+                                        colorScheme='darkBlue'>
+                                   Ingresar con Khor
                                 </Button>
 
 

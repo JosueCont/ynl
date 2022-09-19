@@ -64,7 +64,7 @@ export default ({
           <View flex={1}>
             <Text fontSize={16} textAlign={"center"} mb={4}>
               {siteSelected === null
-                ? "Ingresa tu correo electronico"
+                ? "Ingresa tu usuario Khor"
                 : `Ingresa tu cuenta ${siteSelected?.khor_name}`}
             </Text>
             <FormControl isInvalid={errors.email} mb={3}>
@@ -110,7 +110,7 @@ export default ({
               isLoading={loading}
               mt="2"
               onPress={handleSubmit}
-              colorScheme="orange"
+              colorScheme="darkBlue"
             >
               Continuar
             </Button>

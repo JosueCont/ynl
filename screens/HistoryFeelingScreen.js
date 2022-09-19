@@ -23,11 +23,11 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
 
     useEffect(() => {
         if (isFocused) {
-            getHistoryData(authDuck.user.id)
+            getHistoryData(authDuck.user.id, authDuck.userSiteConfig)
         }
     }, [isFocused])
 
-    const getHistoryData = async (userId, site) => {
+    const getHistoryData = async (userId, site=null) => {
         try {
             setLoading(true)
             let startDate = '2020-01-01', enDate = '2100-01-01';

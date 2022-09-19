@@ -1,4 +1,4 @@
-import APIKit, {baseURL} from "./AxiosApi";
+import APIKit, { baseURL } from "./AxiosApi";
 import _ from "lodash";
 import moment from "moment";
 
@@ -24,7 +24,7 @@ class ApiApp {
         task = APIKit.delete(url);
         break;
       case "patch":
-        task = APIKit.patch(url, params);
+        task = APIKit.patch(url);
         break;
     }
     return task;
@@ -93,9 +93,9 @@ class ApiApp {
   };
 
   static getHomeData = (userId, site) => {
-    if (site.id) {
+    if (site?.id) {
       return ApiApp.ApisType(
-        `/api/home/user_main?userId=${userId}&siteId=${site.id}`,
+        `/api/home/user_main?userId=${userId}&siteId=${site?.id}`,
         "get"
       );
     } else {
@@ -124,7 +124,7 @@ class ApiApp {
 
   //hace una busqueda basada en la palabra que le pasen como texto (username)
   static getUsersByUsername = (usernameLike = "", site) => {
-    if (site.id) {
+    if (site?.id) {
       return ApiApp.ApisType(
         `/api/users?filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}&filters[sites][app_id][$eq]=${site.app_id}`,
         "get"
@@ -165,7 +165,6 @@ class ApiApp {
   };
 
   static updGroup = (groupId, data) => {
-      console.log("url =>", `/api/groups/${groupId}/`);
     return ApiApp.ApisType(`/api/groups/${groupId}/`, "put", data);
   };
 
@@ -230,16 +229,16 @@ class ApiApp {
    */
 
   static getHistoryFeelings = async (startDate, endDate, userId, site) => {
-    if (site.id) {
+    if (site?.id) {
       console.log(
         "🚀 ~ file: ApiApp.js ~ line 209 ~ ApiApp ~ getHistoryFeelings= ~ id",
         startDate,
         endDate,
         userId,
-        site.id
+        site?.id
       );
       return ApiApp.ApisType(
-        `/api/feeling-records?populate[feeling][populate][parent][populate][icon]=*&filters[createdAt][$gte]=${startDate}&filters[createdAt][$lt]=${endDate}&filters[user][id]=${userId}&filters[site][id][$eq]=${site.id}`,
+        `/api/feeling-records?populate[feeling][populate][parent][populate][icon]=*&filters[createdAt][$gte]=${startDate}&filters[createdAt][$lt]=${endDate}&filters[user][id]=${userId}&filters[site][id][$eq]=${site?.id}`,
         "get"
       );
     } else {
@@ -252,9 +251,9 @@ class ApiApp {
 
   static getUserProgress = async (userID = "", site = null, option = "") => {
     // console.log(`/api/progress/user_progress?userId=${userID}&option=${option}`)
-    if (site.id) {
+    if (site?.id) {
       return ApiApp.ApisType(
-        `/api/progress/user_progress?userId=${userID}&option=${option}&siteId=${site.id}`,
+        `/api/progress/user_progress?userId=${userID}&option=${option}&siteId=${site?.id}`,
         "get"
       );
     } else {

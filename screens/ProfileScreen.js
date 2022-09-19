@@ -27,7 +27,6 @@ const ProfileScreen = ({authDuck, navigation}) => {
 
     const [image, setImage] = useState(null);
     const [shareMyInfo, setShareMyInfo] = useState(null);
-    const [isKhor, setIsKhor] = useState(false)
 
 
     useEffect(() => {
@@ -36,19 +35,11 @@ const ProfileScreen = ({authDuck, navigation}) => {
         }
     }, [isFocused])
 
-    useEffect(() => {
-      console.log("authDuck", authDuck);
-      if(authDuck.userSiteConfig){
-          setIsKhor(true);
-      }
-    }, [authDuck]);
-    
-
     const getProfileFunction = async () => {
         try {
             setLoading(true)
             const response = await ApiApp.getProfile(authDuck.user.id)
-            // console.log(response.data)
+            console.log(response.data)
             setValues(response)
             setLoading(false)
         } catch (e) {
@@ -215,284 +206,195 @@ const ProfileScreen = ({authDuck, navigation}) => {
 
 
     return (
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            style={{ backgroundColor: "white" }}
-            tintColor={Colors.red}
-            refreshing={loading}
-            onRefresh={() => getProfileFunction()}
-          />
-        }
-        contentContainerStyle={{ flexGrow: 1, backgroundColor: Colors.white }}
-      >
-        <View justifyContent={"center"} alignItems={"center"}>
-          <TouchableOpacity onPress={() => pickImage()}>
-            {loadingImage === true ? (
-              <View style={getShadowCircleStyle(10, 10)}>
-                <Skeleton
-                  endColor="warmGray.50"
-                  size="220"
-                  rounded="full"
-                  mt={5}
-                  mb={10}
+        <ScrollView
+            refreshControl={
+                <RefreshControl
+                    style={{backgroundColor: 'white'}}
+                    tintColor={Colors.red}
+                    refreshing={loading}
+                    onRefresh={() => getProfileFunction()}
                 />
-              </View>
-            ) : image ? (
-              <View style={getShadowCircleStyle(10, 10)}>
-                <Image
-                  mt={5}
-                  mb={10}
-                  w={220}
-                  h={220}
-                  source={{ uri: image }}
-                  style={[{ resizeMode: "cover" }]}
-                  borderRadius={110}
-                  borderWidth={2}
-                  borderColor={"white"}
-                  alt="img"
-                />
-              </View>
-            ) : (
-              <View
-                style={[
-                  {
-                    width: 220,
-                    height: 220,
-                    alignSelf: "center",
-                    alignItems: "center",
-                  },
-                  getShadowCircleStyle(10, 10),
-                ]}
-                mt={5}
-                mb={10}
-              >
-                <View
-                  width={"100%"}
-                  height={"100%"}
-                  bgColor={"white"}
-                  alignItems={"center"}
-                  justifyContent={"center"}
-                  borderRadius={110}
-                  borderWidth={0.5}
-                  borderColor={"red.200"}
-                >
-                  <Icon
-                    as={Entypo}
-                    name="camera"
-                    size={20}
-                    color={"gray.200"}
-                  />
-                  <Text fontSize={12} color={Colors.red}>
-                    Sube tu foto aquí
-                  </Text>
-                </View>
-              </View>
-            )}
-          </TouchableOpacity>
+            }
+            contentContainerStyle={{flexGrow: 1, backgroundColor: Colors.white}}>
 
-          <View style={getShadowCircleStyle(10, 10)}></View>
-          <Image
-            source={bg1}
-            style={{
-              position: "absolute",
-              resizeMode: "contain",
-              zIndex: -1,
-              width: "150%",
-              height: 100,
-            }}
-            alt="img"
-          ></Image>
-        </View>
+            <View justifyContent={'center'} alignItems={'center'}>
+                <TouchableOpacity onPress={() => pickImage()}>
 
-        <View flex={1} alignItems={"center"}>
-          <Stack space={4} w="90%">
-            <FormControl isInvalid w="100%">
-              <View flex={1} mb={4} style={getShadowCircleStyle(10, 10)}>
-                <Input
-                  isReadOnly={isKhor}
-                  size={"2xl"}
-                  h={50}
-                  placeholder={"Nombre(s)"}
-                  borderRadius={25}
-                  value={name}
-                  onChangeText={(val) => setName(val)}
-                  backgroundColor={Colors.white}
-                  color={Colors.red}
-                  fontSize={18}
-                />
-              </View>
-              <View flex={1} mb={4} style={getShadowCircleStyle(10, 10)}>
-                <Input
-                  isReadOnly={isKhor}
-                  size={"2xl"}
-                  height={50}
-                  placeholder={"Apellidos"}
-                  borderRadius={20}
-                  value={lastName}
-                  onChangeText={(val) => setLastName(val)}
-                  backgroundColor={Colors.white}
-                  color={Colors.red}
-                  fontSize={18}
-                />
-              </View>
-              <View flex={1} mb={4} style={getShadowCircleStyle(10, 10)}>
-                <Input
-                  isReadOnly={isKhor}
-                  size={"2xl"}
-                  height={50}
-                  placeholder={"Correo electrónico"}
-                  borderRadius={20}
-                  value={email}
-                  onChangeText={(val) => setEmail(val)}
-                  backgroundColor={Colors.white}
-                  color={Colors.red}
-                  fontSize={18}
-                />
-              </View>
-              {/*<Input size={'2xl'} height={50} mb={4} placeholder={'Contraseña'} borderRadius={20}*/}
-              {/*       placeholderTextColor={Colors.red} textAlign={'center'}/>*/}
-              {/*<Input size={'2xl'} height={50} mb={6} placeholder={'Confirmar contraseña'} borderRadius={20}*/}
-              {/*       placeholderTextColor={Colors.red} textAlign={'center'}/>*/}
-              <View mb={8}>
-                <Text
-                  textAlign={"center"}
-                  fontSize={20}
-                  color={"gray.600"}
-                  mb={4}
-                >
-                  Género
-                </Text>
-                <View flexDir={"row"} justifyContent={"space-between"} px={20}>
-                  <Checkbox
-                    isReadOnly={isKhor}
-                    style={getShadowCircleStyle(5, 2)}
-                    borderRadius={10}
-                    borderWidth={0.5}
-                    value="danger"
-                    colorScheme="orange"
-                    isChecked={gender === 0 ? true : false}
-                    onChange={(v) => {
-                      if (v && !isKhor) {
-                        setGender(0);
-                      }
-                    }}
-                  >
-                    <Text color={Colors.red} fontSize={12}>
-                      Femenino
-                    </Text>
-                  </Checkbox>
-                  <Checkbox
-                    isReadOnly={isKhor}
-                    style={getShadowCircleStyle(5, 2)}
-                    borderRadius={10}
-                    borderWidth={0.5}
-                    value="info"
-                    colorScheme="orange"
-                    isChecked={gender === 1 ? true : false}
-                    onChange={(v) => {
-                      if (v && !isKhor) {
-                        setGender(1);
-                      }
-                    }}
-                  >
-                    <Text color={Colors.red} fontSize={12}>
-                      Masculino
-                    </Text>
-                  </Checkbox>
-                </View>
-              </View>
+                    {
+                        loadingImage === true ?
+                            <View style={getShadowCircleStyle(10, 10)}>
+                                <Skeleton endColor="warmGray.50" size="220" rounded="full" mt={5} mb={10}/>
+                            </View> :
+                            image ?
+                                <View style={getShadowCircleStyle(10, 10)}>
+                                    <Image mt={5} mb={10} w={220} h={220} source={{uri: image}}
+                                           style={[
+                                               {resizeMode: 'cover'}]}
+                                           borderRadius={110} borderWidth={2} borderColor={'white'} alt="img"/>
+                                </View> :
+                                <View style={[{
+                                    width: 220,
+                                    height: 220,
+                                    alignSelf: 'center',
+                                    alignItems: 'center'
+                                }, getShadowCircleStyle(10, 10)]} mt={5} mb={10}>
+                                    <View width={'100%'} height={'100%'} bgColor={'white'} alignItems={'center'}
+                                          justifyContent={'center'}
+                                          borderRadius={110} borderWidth={0.5}
+                                          borderColor={"red.200"}>
+                                        <Icon as={Entypo} name="camera" size={20} color={'gray.200'}/>
+                                        <Text fontSize={12} color={Colors.red}>Sube tu foto aquí</Text>
+                                    </View>
+                                </View>
 
-              <View mb={8}>
-                <Text
-                  textAlign={"center"}
-                  fontSize={20}
-                  color={"gray.600"}
-                  mb={4}
-                >
-                  Compartir mi información
-                </Text>
-                <View
-                  flexDir={"row"}
-                  justifyContent={"space-between"}
-                  px={20}
-                  mx={10}
-                >
-                  <Checkbox
-                    isReadOnly={isKhor}
-                    style={getShadowCircleStyle(5, 2)}
-                    borderRadius={10}
-                    borderWidth={0.5}
-                    value="danger"
-                    colorScheme="orange"
-                    isChecked={shareMyInfo === 1 ? true : false}
-                    onChange={(v) => {
-                      if (v && !isKhor) {
-                        setShareMyInfo(1);
-                      }
-                    }}
-                  >
-                    <Text color={Colors.red} fontSize={12}>
-                      Sí
-                    </Text>
-                  </Checkbox>
-                  <Checkbox
-                    isReadOnly={isKhor}
-                    style={getShadowCircleStyle(5, 2)}
-                    borderRadius={10}
-                    borderWidth={0.5}
-                    value="info"
-                    colorScheme="orange"
-                    isChecked={shareMyInfo === 0 ? true : false}
-                    onChange={(v) => {
-                      if (v && !isKhor) {
-                        setShareMyInfo(0);
-                      }
-                    }}
-                  >
-                    <Text color={Colors.red} fontSize={12}>
-                      No
-                    </Text>
-                  </Checkbox>
-                </View>
-              </View>
-
-              {!isKhor && (
-                <TouchableOpacity
-                  style={{ marginVertical: 20 }}
-                  onPress={() => setModalPasswordUpdateVisible(true)}
-                >
-                  <Text
-                    textAlign={"center"}
-                    size={"md"}
-                    color={Colors.red}
-                    textDecorationLine={"underline"}
-                  >
-                    Actualizar contraseña
-                  </Text>
+                    }
                 </TouchableOpacity>
-              )}
-              {!isKhor && (
-                <Button
-                  isLoading={loading}
-                  colorScheme={"orange"}
-                  onPress={() => updateProfileFunction()}
-                  mb={4}
-                >
-                  Actualizar
-                </Button>
-              )}
 
-              <ModalPasswordUpdate
-                action={updatePasswordFunction}
-                visible={modalPasswordUpdateVisible}
-                setVisible={setModalPasswordUpdateVisible}
-              ></ModalPasswordUpdate>
-            </FormControl>
-          </Stack>
-        </View>
-      </ScrollView>
-    );
+                <View style={getShadowCircleStyle(10, 10)}>
+
+                </View>
+                <Image source={bg1} style={{
+                    position: 'absolute',
+                    resizeMode: 'contain',
+                    zIndex: -1,
+                    width: '150%',
+                    height: 100
+                }} alt="img"></Image>
+            </View>
+
+
+            <View flex={1} alignItems={'center'}>
+                <Stack space={4} w="90%">
+                    <FormControl  isInvalid w="100%">
+                        <View flex={1} mb={4} style={getShadowCircleStyle(10, 10)}>
+                            <Input
+                                size={'2xl'}
+                                h={50}
+                                isReadOnly={authDuck?.userSiteConfig}
+                                placeholder={'Nombre(s)'}
+                                borderRadius={25}
+                                value={name}
+                                onChangeText={val => setName(val)}
+                                backgroundColor={Colors.white}
+                                color={Colors.red}
+                                fontSize={18}
+                            />
+                        </View>
+                        <View flex={1} mb={4} style={getShadowCircleStyle(10, 10)}>
+                            <Input
+                                size={'2xl'}
+                                height={50}
+                                isReadOnly={authDuck?.userSiteConfig}
+                                placeholder={'Apellidos'}
+                                borderRadius={20}
+                                value={lastName}
+                                onChangeText={val => setLastName(val)}
+                                backgroundColor={Colors.white}
+                                color={Colors.red}
+                                fontSize={18}
+                            />
+                        </View>
+                        <View flex={1} mb={4} style={getShadowCircleStyle(10, 10)}>
+                            <Input
+                                size={'2xl'}
+                                height={50}
+                                placeholder={'Correo electrónico'}
+                                borderRadius={20}
+                                value={email}
+                                isReadOnly={true}
+                                onChangeText={val => setEmail(val)}
+                                backgroundColor={Colors.white}
+                                color={Colors.red}
+                                fontSize={18}
+                            />
+                        </View>
+                        {/*<Input size={'2xl'} height={50} mb={4} placeholder={'Contraseña'} borderRadius={20}*/}
+                        {/*       placeholderTextColor={Colors.red} textAlign={'center'}/>*/}
+                        {/*<Input size={'2xl'} height={50} mb={6} placeholder={'Confirmar contraseña'} borderRadius={20}*/}
+                        {/*       placeholderTextColor={Colors.red} textAlign={'center'}/>*/}
+
+                        {
+                            !authDuck?.userSiteConfig && <View mb={8}>
+                                <Text textAlign={'center'} fontSize={20} color={'gray.600'} mb={4}>Género</Text>
+                                <View flexDir={'row'} justifyContent={'space-between'} px={20}>
+                                    <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
+                                              value="danger" colorScheme="orange" isChecked={gender === 0 ? true : false}
+                                              onChange={(v) => {
+                                                  if (v) {
+                                                      setGender(0)
+                                                  }
+
+                                              }}>
+                                        <Text color={Colors.red} fontSize={12}>Femenino</Text>
+                                    </Checkbox>
+                                    <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
+                                              value="info" colorScheme="orange" isChecked={gender === 1 ? true : false}
+                                              onChange={(v) => {
+                                                  if (v) {
+                                                      setGender(1)
+                                                  }
+                                              }}>
+                                        <Text color={Colors.red} fontSize={12}>Masculino</Text>
+                                    </Checkbox>
+                                </View>
+
+                            </View>
+                        }
+
+
+                        {
+                            !authDuck?.userSiteConfig && <View mb={8}>
+                                <Text textAlign={'center'} fontSize={20} color={'gray.600'} mb={4}>Compartir mi
+                                    información</Text>
+                                <View flexDir={'row'} justifyContent={'space-between'} px={20} mx={10}>
+                                    <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
+                                              value="danger" colorScheme="orange"
+                                              isChecked={shareMyInfo === 1 ? true : false}
+                                              onChange={(v) => {
+                                                  if (v) {
+                                                      setShareMyInfo(1)
+                                                  }
+
+                                              }}>
+                                        <Text color={Colors.red} fontSize={12}>Sí</Text>
+                                    </Checkbox>
+                                    <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
+                                              value="info" colorScheme="orange" isChecked={shareMyInfo === 0 ? true : false}
+                                              onChange={(v) => {
+                                                  if (v) {
+                                                      setShareMyInfo(0)
+                                                  }
+                                              }}>
+                                        <Text color={Colors.red} fontSize={12}>No</Text>
+                                    </Checkbox>
+                                </View>
+
+                            </View>
+                        }
+
+
+                        {
+                            !authDuck?.userSiteConfig && <>
+                                <TouchableOpacity style={{marginVertical: 20}}
+                                                  onPress={() => setModalPasswordUpdateVisible(true)}>
+                                    <Text textAlign={'center'} size={'md'} color={Colors.red} textDecorationLine={'underline'}>Actualizar
+                                        contraseña
+                                    </Text>
+                                </TouchableOpacity>
+                                <Button isLoading={loading} colorScheme={'orange'} onPress={() => updateProfileFunction()}
+                                        mb={4}>Actualizar</Button>
+                            </>
+                        }
+
+
+                        <ModalPasswordUpdate action={updatePasswordFunction} visible={modalPasswordUpdateVisible}
+                                             setVisible={setModalPasswordUpdateVisible}></ModalPasswordUpdate>
+                    </FormControl>
+
+                </Stack>
+            </View>
+        </ScrollView>
+    )
 }
 
 const mapState = (state) => {
