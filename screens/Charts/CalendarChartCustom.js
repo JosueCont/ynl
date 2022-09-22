@@ -35,14 +35,16 @@ const CalendarChartCustom = ({historyData}) => {
 
     useEffect(()=>{
          if(historyData){
-             console.log(historyData)
+             //console.log(historyData)
              let arr = {}
-             historyData = _.sortBy(historyData, ['date'])
+             //historyData = _.sortBy(historyData, ['date'])
+             
              historyData.forEach((obj, i)=>{
-                 console.log(obj.date)
-                 arr[moment(obj.date).format().split('T')[0]] = {textColor:'white',color: `#${obj.color}`, endingDay: true, startingDay: true}
+                 //console.log(obj.date)
+                 //arr[moment(obj.date).format().split('T')[0]] = {textColor:'white',color: `#${obj.color}`, endingDay: true, startingDay: true}
+                 arr[moment(obj.date).format().split('T')[0]] = {textColor:'white',color: `${obj.color}`, endingDay: true, startingDay: true}
              })
-
+             console.log(arr)
              setArrayDates(arr)
          }
     },[historyData])

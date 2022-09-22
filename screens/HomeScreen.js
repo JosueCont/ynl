@@ -145,6 +145,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                     if (res.data.data.lastEmotion.child) {
                         setLastEmotion1(res.data.data.lastEmotion.child.name)
                         setColorMainFeeling(res.data.data.lastEmotion.child.color)
+                        //console.log("🚀 ~ file: HomeScreen.js ~ line 148 ~ getHome ~ color", res.data.data.lastEmotion.child.color)
                     }
                 }
                 if (res.data.data.userInfo) {

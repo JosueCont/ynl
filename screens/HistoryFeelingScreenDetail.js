@@ -20,7 +20,7 @@ const HistoryFeelingScreenDetail = ({authDuck, route, navigation}) => {
 
         if (isFocused) {
             setLoading(true)
-            setDetailData(_.orderBy(detail, ['date'], ['desc']))
+            setDetailData(detail)//(_.orderBy(detail, ['date'], ['desc']))
             setTimeout(() => {
                 setLoading(false)
             }, 200)
@@ -61,7 +61,7 @@ const HistoryFeelingScreenDetail = ({authDuck, route, navigation}) => {
                                     <View
                                         flexDir={'row'}
                                         mb={2}
-                                        bgColor={'#' + _.get(ele, 'feeling.attributes.parent.data.attributes.color', '5F6367')}
+                                        bgColor={ele.color}//'#' + _.get(ele, 'feeling.attributes.parent.data.attributes.color', '5F6367')}
                                         style={getShadowCircleStyle(10, 10)}
                                         borderRadius={10}
                                         py={3}
@@ -70,14 +70,14 @@ const HistoryFeelingScreenDetail = ({authDuck, route, navigation}) => {
                                     >
                                         <View flex={0.5} alignItems={'center'} justifyContent={'center'}>
                                             <Image  style={{height: 60, width: 60}} alt="img"
-                                                   source={{uri: `${_.get(ele, 'feeling.attributes.parent.data.attributes.icon.data.attributes.url', 'https://app-ynl.s3.us-west-1.amazonaws.com/triste_4a4900f0cd.png')}`}}/>
+                                                   source={{ uri: ele?.url  ? ele.url : 'https://app-ynl.s3.us-west-1.amazonaws.com/triste_4a4900f0cd.png'}}/>
                                         </View>
                                         <View flex={1} justifyContent={'center'}>
                                             <Text color={'white'} style={{fontWeight: 'bold'}}
-                                                  fontSize={20}>{ele.feeling.attributes.name} </Text>
+                                                  fontSize={20}>{ele.name} </Text>
 
                                             <Text color={'white'} fontSize={16}
-                                                  mb={1}>{ele.feeling.attributes.parent.data.attributes.name}</Text>
+                                                  mb={1}>{ele.parent}</Text>
 
 
                                             {
@@ -87,7 +87,7 @@ const HistoryFeelingScreenDetail = ({authDuck, route, navigation}) => {
 
 
                                             <Text color={'white'}
-                                                  fontSize={9}>{moment(ele.date).format('hh:mm A')}</Text>
+                                                  fontSize={9}>{moment(ele.createdAt).format('hh:mm A')}</Text>
                                         </View>
                                     </View>
                                 )
