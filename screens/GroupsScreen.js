@@ -146,7 +146,8 @@ const GroupsScreen = ({authDuck, navigation}) => {
                                                         key={i}
                                                         groupId={item.id} 
                                                         title={item.name}
-                                                                navigation={navigation} deleteAction={() => {
+                                                        navigation={navigation} 
+                                                        deleteAction={() => {
                                                         Alert.alert(
                                                             "Your Next Level",
                                                             "¿Deseas eliminar este grupo?",
@@ -161,7 +162,9 @@ const GroupsScreen = ({authDuck, navigation}) => {
                                                                     onPress: () => groupDeleteFunction(item.id)
                                                                 }
                                                             ])
-                                                    }} isOwner = {item.owner.id === authDuck.user.id} thisOwner={authDuck.user.id} />
+                                                    }} 
+                                                    isOwner = {item.owner.id === authDuck.user.id} 
+                                                    thisOwner={authDuck.user.id} />
                                                 )}
                                             })
                                         }

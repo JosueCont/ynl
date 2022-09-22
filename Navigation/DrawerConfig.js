@@ -61,15 +61,15 @@ const DrawerConfig = () => {
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 borderRadius: 5,
-                                marginLeft: 10
+                                marginLeft: 10,
                             }}>
-                                <Icon as={MaterialIcons} name={'arrow-back-ios'} color={Colors.red} size={'xl'}/>
+                                <Icon as={MaterialIcons} name={'arrow-back-ios'} color={route?.params?.parent?.name === "Molesto" ? Colors.red :  Colors.white} size={'xl'}/>
 
                             </TouchableOpacity>
                         )
                     }
                 },
-                headerStyle: {backgroundColor: Colors.white},
+                headerStyle: {backgroundColor: Colors.white,  opacity:1},
                 headerTitleAlign: 'center',
                 headerTitleStyle: {color: 'black'},
                 headerTitle: () => {
@@ -88,7 +88,7 @@ const DrawerConfig = () => {
                         justifyContent: 'center',
                         marginRight: 5
                     }}>
-                        <Icon as={MaterialIcons} color={Colors.red} name={'menu'} size={'xl'}></Icon>
+                        <Icon as={MaterialIcons} color={route?.params?.parent?.name === "Molesto" ? Colors.red :  Colors.white} name={'menu'} size={'xl'}></Icon>
                     </TouchableOpacity>
                 ),
                 swipeEnabled: false
