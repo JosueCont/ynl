@@ -249,9 +249,9 @@ class ApiApp {
     }
   };
 
-  static getUserProgress = async (userID = "", site = null, option = "") => {
-    // console.log(`/api/progress/user_progress?userId=${userID}&option=${option}`)
-    if (site?.id) {
+  static getUserProgress = async (userID = "", site = null, option = "") => { 
+    //console.log("🚀 ~ file: ApiApp.js ~ line 254 ~ ApiApp ~ getUserProgress= ~ site", site, option, userID)
+    if (site?.id) { 
       return ApiApp.ApisType(
         `/api/progress/user_progress?userId=${userID}&option=${option}&siteId=${site?.id}`,
         "get"
@@ -260,6 +260,28 @@ class ApiApp {
       return ApiApp.ApisType(
         `/api/progress/user_progress?userId=${userID}&option=${option}`,
         "get"
+      );
+    }
+  };
+
+  static getLastEmotion = async (userID = "", site = null, option = "") => { 
+    //console.log("🚀 ~ file: ApiApp.js ~ line 254 ~ ApiApp ~ getUserProgress= ~ site", site, option, userID)
+    if (site?.id) { 
+      return ApiApp.ApisType(
+        `/api/feeling-records/getLastEmotion`,
+        "post",
+        { userId: userID,
+          siteId: site?.id,
+          option: option,
+         }
+      );
+    } else {
+      return ApiApp.ApisType(
+        `/api/feeling-records/getLastEmotion`,
+        "post",
+        { userId: userID, 
+          option: option,
+         }
       );
     }
   };

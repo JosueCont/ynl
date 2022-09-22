@@ -27,7 +27,7 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
         }
     }, [isFocused])
 
-    const getHistoryData = async (userId, site=null) => {
+    const getHistoryData_old = async (userId, site=null) => {
         try {
             setLoading(true)
             let startDate = '2020-01-01', enDate = '2100-01-01';
@@ -56,9 +56,23 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
         }
     }
 
+    const getHistoryData = async (userId, site) => {
+        //console.log("🚀 ~ file: StatisticsScreen.js ~ line 79 ~ getHistoryData ~ site", site)
+        try {
+            //let startDate = '2020-01-01', enDate = '2100-01-01';
+            const res = await ApiApp.getLastEmotion(userId, site)
+            //console.log("🚀 ~ file: StatisticsScreen.js ~ line 105 ~ getHistoryData ~ res", res.data.data)
+  
+            setHistoryData(res.data.data)
+
+        } catch (e) {
+            console.log('StatisticsScreen getHistoryData error =>',e.toString());
+        }
+    }
+
 
     const goToDetailHistory = (feel) => {
-        let arrayDetail = _.filter(historyDataDetail, {'shortDate': feel.shortDate});
+        let arrayDetail = feel.details;//_.filter(historyDataDetail, {'shortDate': feel.shortDate});
         navigation.navigate('HistoryFeelingScreenDetail', {detail: arrayDetail, date: moment(feel.date).format('L')})
     }
 
@@ -105,7 +119,7 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
                                             <View
                                                 flexDir={'row'}
                                                 mb={2}
-                                                bgColor={'#' + _.get(ele, 'feeling.attributes.parent.data.attributes.color', '5F6367')}
+                                                bgColor={ele.color} //'#' + _.get(ele, 'feeling.attributes.parent.data.attributes.color', '5F6367')
                                                 style={getShadowCircleStyle(10, 10)}
                                                 borderRadius={10}
                                                 py={3}
@@ -113,14 +127,14 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
                                             >
                                                 <View flex={0.5} alignItems={'center'} justifyContent={'center'}>
                                                     <Image style={{height: 50, width: 50}} alt="img"
-                                                           source={{uri: `${_.get(ele, 'feeling.attributes.parent.data.attributes.icon.data.attributes.url', 'https://app-ynl.s3.us-west-1.amazonaws.com/triste_4a4900f0cd.png')}`}}/>
+                                                           source={{ uri: ele?.url  ? ele.url : 'https://app-ynl.s3.us-west-1.amazonaws.com/triste_4a4900f0cd.png'}}/>
                                                 </View>
                                                 <View flex={1} justifyContent={'center'}>
                                                     <Text color={'white'} style={{fontWeight: 'bold'}}
-                                                          fontSize={20}>{_.get(ele, 'feeling.attributes.name', '5F6367')} </Text>
+                                                          fontSize={20}>{ele.name} </Text>
 
                                                     <Text color={'white'} fontSize={16}
-                                                          mb={1}>{_.get(ele, 'feeling.attributes.parent.data.attributes.name','--')}</Text>
+                                                          mb={1}>{ele.parent}</Text>
 
                                                     {
                                                         ele?.comments ? <Text color={'white'} fontSize={10} mb={1}>{ele?.comments}</Text>:null
@@ -128,7 +142,7 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
 
 
                                                     <Text color={'white'}
-                                                          fontSize={9}>{ele?.shortDate}</Text>
+                                                          fontSize={9}>{ele?.date}</Text>
                                                 </View>
                                             </View>
                                         </TouchableOpacity>

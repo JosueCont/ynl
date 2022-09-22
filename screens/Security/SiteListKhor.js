@@ -28,12 +28,12 @@ const SiteListKhor = ({navigation, loginKhor, ...props}) => {
     };
 
     const getSites = async (values) => {
-        console.log(values)
+        //console.log(values)
         try {
             setLoading(true);
             const response = await ApiApp.getSitesKhor(values)
-            console.log(response.data?.sites)
-            console.log("response.data.sites", response.data.sites);
+            //console.log(response.data?.sites)
+            //console.log("response.data.sites", response.data.sites);
             if (response.data.sites.length === 1){
                 setSiteSelected(response.data.sites[0]);
                 setStepLogin(3);

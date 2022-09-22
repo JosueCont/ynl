@@ -38,6 +38,7 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
             setLoading(true)
             await getHistoryData(authDuck.user.id, authDuck.userSiteConfig)
             await getCountFeelings(authDuck.user.id, authDuck.userSiteConfig)//
+            setActiveButton(2)
         } catch (e) {
             console.log('StatisticsScreen boot error =>',e.toString());
         } finally {
@@ -48,7 +49,7 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
     }
 
 
-    const getCountFeelings = async (userId, site, option = null) => {
+    const getCountFeelings = async (userId, site, option = 2) => {
         try {
             setLoading(true)
             const res = await ApiApp.getUserProgress(userId, site, option);
@@ -75,8 +76,8 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
         }
     }
 
-    const getHistoryData = async (userId, site) => {
-        console.log("🚀 ~ file: StatisticsScreen.js ~ line 79 ~ getHistoryData ~ site", site)
+    const getHistoryData_old = async (userId, site) => {
+        //console.log("🚀 ~ file: StatisticsScreen.js ~ line 79 ~ getHistoryData ~ site", site)
         try {
             let startDate = '2020-01-01', enDate = '2100-01-01';
             const res = await ApiApp.getHistoryFeelings(startDate, enDate, userId, site)
@@ -97,9 +98,38 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
         }
     }
 
+    const getHistoryData = async (userId, site, option = 2) => {
+        //console.log("🚀 ~ file: StatisticsScreen.js ~ line 79 ~ getHistoryData ~ site", site)
+        try {
+            //let startDate = '2020-01-01', enDate = '2100-01-01';
+            const res = await ApiApp.getLastEmotion(userId, site, option)
+            //console.log("🚀 ~ file: StatisticsScreen.js ~ line 105 ~ getHistoryData ~ res", res.data.data)
+            
+            let arrayDates = _.map(res.data.data, (obj, index) => {
+                
+                 
+                let dataItem = {
+                    date: moment(index).format(),
+                    color: obj.color,
+                    //feeling: obj.attributes.feeling.data,
+                }
+
+                return dataItem;
+            })
+
+            console.log("🚀 ~ file: StatisticsScreen.js ~ line 108 ~ arrayDates ~ obj", arrayDates)
+
+            setHistoryData(arrayDates)
+
+        } catch (e) {
+            console.log('StatisticsScreen getHistoryData error =>',e.toString());
+        }
+    }
+
     const filter = (option) => {
         // 1 - la semana anterior, 2 - la semana en curso, 3 el mes
-        getCountFeelings(authDuck.user.id, option)
+        getCountFeelings(authDuck.user.id, authDuck.userSiteConfig, option)
+        getHistoryData(authDuck.user.id, authDuck.userSiteConfig, option)
         setActiveButton(option)
     }
 
