@@ -49,6 +49,10 @@ export default ({
     }
   }, [email]);
   
+  const prevStep = () => {
+    setFieldValue("password", "");
+    goStepTwo();
+  }
 
 
 
@@ -115,7 +119,7 @@ export default ({
               Continuar
             </Button>
             {sitesLength > 1 && (
-              <TouchableOpacity onPress={goStepTwo}>
+              <TouchableOpacity onPress={() => prevStep()}>
                 <Text
                   italic
                   underline
