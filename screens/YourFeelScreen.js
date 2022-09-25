@@ -20,7 +20,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
     const [finantialNumber, setFinantialNumber] = useState(1)
     const [relationNumber, setRelationNumber] = useState(1)
     const [user, setUser] = useState(false)
-    const [site, setSite] = useState(false)
+    const [site, setSite] = useState(null)
     const toast = useToast();
     const [modalSuccessVisible, setModalSuccessVisible] = useState(null)
     const [modalErrorVisible, setModalErrorVisible] = useState(null)
@@ -29,7 +29,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
     useEffect(() => {
         if (authDuck.isLogged) {
             setUser(authDuck.user)
-            if (authDuck.userSiteConfig.id) {
+            if (authDuck.userSiteConfig?.id) {
                 setSite(authDuck.userSiteConfig)
             } 
         }
@@ -74,7 +74,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
     const getYourFeel = async () => {
         try {
             setLoading(true)
-            const response = await ApiApp.getFeelings(authDuck.user.id);
+            const response = await ApiApp.getFeelings(authDuck.user.id, authDuck.userSiteConfig);
             const {physical, finantial, mental, relations} = response.data.data[0].attributes;
             setPhysicalNumber(physical);
             setFinantialNumber(finantial);

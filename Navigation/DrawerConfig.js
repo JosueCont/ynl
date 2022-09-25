@@ -37,7 +37,7 @@ const DrawerConfig = () => {
         screenOptions={({ navigation, route }) => ({
           drawerPosition: "right",
           headerLeft: () => {
-            console.log("route", route.params?.parentItem.attributes.name);
+            //console.log("route", route?.params.parentItem.attributes.name);
             if (route.name.includes("HomeScreen")) {
               return <View />;
             } else {
