@@ -34,12 +34,18 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
             if (authDuck?.userSiteConfig?.id) {
                 data.site = authDuck?.userSiteConfig?.id;
             }
-            console.log("🚀 ~ file: RouletteStep4Screen.js ~ line 36 ~ saveFeelings ~ data", data)
+            //console.log("🚀 ~ file: RouletteStep4Screen.js ~ line 36 ~ saveFeelings ~ data", data)
          
             let res = await saveEmotion({data})
             if (res) {
-
+              //console.log("🚀 ~ file: RouletteStep4Screen.js ~ line 42 ~ saveFeelings ~ userSiteConfig", userSiteConfig)
+              if (authDuck.userSiteConfig?.id) {
+                await emotionStatusAction(authDuck.user.id, authDuck.userSiteConfig)
+              }
+              else{
                 await emotionStatusAction(authDuck.user.id)
+              }
+                
                 navigation.reset({
                     index: 0,
                     routes: [{name: 'HomeScreen'}],

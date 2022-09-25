@@ -69,10 +69,10 @@ export let createSession = (data) => async (dispatch) => {
     }
 }
 
-export let emotionStatusAction = (userId) => async (dispatch) => {
+export let emotionStatusAction = (userId, site=null) => async (dispatch) => {
     try {
         dispatch({ type: START });
-        let response = await ApiApp.getEmotionStatus(userId);
+        let response = await ApiApp.getEmotionStatus(userId, site);
 
         // console.log(response.data.data)
         dispatch({ type: SUCCESS, payload: { emotionStatus: response.data.data.length } });
@@ -118,10 +118,10 @@ export let loginKhor = (username, password, site) => async (dispatch) => {
             password: password,
             app_id: site.app_id
         })
-
-
+ 
         // console.log(response, 60)
-        await saveUserData(response.data.user, response.data.jwt, site)
+        await saveUserData(response.data.user, response.data.jwt, response.data.site)
+        console.log(`🚀 ~ file: authDuck.js ~ line 125 ~ loginKhor ~ ${response.data.user.id}, ${response.data.jwt}, ${ response.data.site.id}`)
         dispatch({type: LOGIN_KHOR_SUCCESS,
             payload: {
                 user: response.data.user,
@@ -210,7 +210,7 @@ const saveUserData = async (userData, jwt = null, site=null) => {
         if (jwt) {
             // console.log('jwt =>', jwt)
             await storeDataObject('@jwt', { jwt })
-            console.log('jwt saved =>', jwt)
+            //console.log('jwt saved =>', jwt)
         }
 
         if(site){

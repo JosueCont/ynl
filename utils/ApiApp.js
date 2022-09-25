@@ -46,13 +46,25 @@ class ApiApp {
     return ApiApp.ApisType(`/api/auth/local/register`, "post", data);
   };
 
-  static getEmotionStatus = (userId) => {
-    return ApiApp.ApisType(
-      `/api/feeling-records?filters[user][id][$eq]=${userId}&filters[createdAt][$gte]=${moment().format(
-        "YYYY-MM-DD"
-      )}&sort[0]=createdAt:desc&pagination[page]=1&pagination[pageSize]=1`,
-      "get"
-    );
+  static getEmotionStatus = (userId, site) => {
+    if(site?.id)
+    {
+      return ApiApp.ApisType(
+        `/api/feeling-records?filters[user][id][$eq]=${userId}&filters[site[id][$eq]=${site.id}&filters[createdAt][$gte]=${moment().format(
+          "YYYY-MM-DD"
+        )}&sort[0]=createdAt:desc&pagination[page]=1&pagination[pageSize]=1`,
+        "get"
+      );
+    }
+    else{
+      return ApiApp.ApisType(
+        `/api/feeling-records?filters[user][id][$eq]=${userId}&filters[createdAt][$gte]=${moment().format(
+          "YYYY-MM-DD"
+        )}&sort[0]=createdAt:desc&pagination[page]=1&pagination[pageSize]=1`,
+        "get"
+      );
+    }
+    
   };
 
   ///AUTH
@@ -107,11 +119,24 @@ class ApiApp {
     return ApiApp.ApisType("/api/feel-aspects", "post", data);
   };
 
-  static getFeelings = (userId) => {
-    return ApiApp.ApisType(
-      `/api/feel-aspects?filters[user][id][$eq]=${userId}&pagination[page]=1&pagination[pageSize]=1&sort[0]=updatedAt:desc`,
-      "get"
-    );
+  static getFeelings = (userId, site) => {
+    alert(site.id)
+    if (site?.id) {
+      return ApiApp.ApisType(
+        `/api/feel-aspects?filters[user][id][$eq]=${userId}&filters[site][id][$eq]=${site.id}&pagination[page]=1&pagination[pageSize]=1&sort[0]=updatedAt:desc`,
+        "get"
+      );
+    }
+    else{
+      return ApiApp.ApisType(
+        `/api/feel-aspects?filters[user][id][$eq]=${userId}&pagination[page]=1&pagination[pageSize]=1&sort[0]=updatedAt:desc`,
+        "get"
+      );
+    }
+
+    
+
+
   };
 
   static getFeelingsV2 = (query = "") => {

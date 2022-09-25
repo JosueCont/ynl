@@ -56,7 +56,7 @@ export default ({
 
 
 
-  console.log("siteSelected", siteSelected);
+  //console.log("siteSelected", siteSelected);
 
   return (
     <ScrollView _contentContainerStyle={{ flexGrow: 1 }} flex={1} mx={6}>

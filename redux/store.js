@@ -27,7 +27,15 @@ export default () => {
             const site = await getDataObject('@site')
             if (user) {
                 createSession({user, jwt, site})(store.dispatch)
-                emotionStatusAction(user.id)(store.dispatch)
+                //console.log("🚀 ~ file: store.js ~ line 31 ~ site", site)
+                if(site){ 
+                    emotionStatusAction(user.id, site.id)(store.dispatch)
+                }
+                else{
+                    emotionStatusAction(user.id)(store.dispatch)
+                }
+
+                
             }
         } catch (e) {
             console.log('store error => ',e.toString())

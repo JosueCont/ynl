@@ -49,17 +49,39 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
     const [intro, setIntro] = useState(null);
     const [image, setImage] = useState(null);
+    const [emotionsStatus, setEmotionsStatus] = useState(null);
 
-    useEffect(() => {
+    useEffect( () => {
 
         // console.log(authDuck.emotionStatus)
         if (intro === false) {
             navigation.navigate('IntroScreen')
-        } else if (authDuck.emotionStatus === 0 || authDuck.emotionStatus === undefined) {
-            navigation.navigate('RouletteStep1Screen')
+        } else  {   //if (authDuck.emotionStatus === 0 || authDuck.emotionStatus === undefined)
+            let fetchData
+            if(authDuck.userSiteConfig){ 
+                 fetchData = async () => {
+                     let responmse = await ApiApp.getEmotionStatus(authDuck.user.id, authDuck.userSiteConfig).then ((val) => {return val.data.data.length});
+                     setEmotionsStatus(responmse);
+                    }
+               
+            }
+            else{
+                fetchData = async () => {
+                    let responmse = await ApiApp.getEmotionStatus(authDuck.user.id).then ((val) => {return val.data.data.length});
+                    setEmotionsStatus(responmse);
+                }
+            }
+
+            fetchData() 
+            if (emotionsStatus === 0) {
+                navigation.navigate('RouletteStep1Screen')
+            }
+            
         }
 
-    }, [authDuck.emotionStatus, intro])
+    }, [intro])
+
+ 
 
     useEffect(() => {
         if (isFocused) {
