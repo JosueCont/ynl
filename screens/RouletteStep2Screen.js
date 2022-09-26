@@ -20,9 +20,9 @@ const RouletteStep2Screen = ({route, navigation}) => {
         getSubParents(route.params.parentItem.id)
         //console.log('param',route.params.parentItem.color)
         //console.log('color',route.params.parentItem.attributes.color)
-        navigation.setOptions({
-            headerStyle: {backgroundColor:'#'+ route.params.parentItem.attributes.color}
-        })
+        // navigation.setOptions({
+        //     headerStyle: {backgroundColor:'#'+ route.params.parentItem.attributes.color}
+        // })
     }, [route.params.parentItem.id])
 
     const getSubParents = async (parentId) => {
@@ -41,7 +41,7 @@ const RouletteStep2Screen = ({route, navigation}) => {
         <ScrollView style={{flex: 1, backgroundColor:'#'+route.params.parentItem.attributes.color}}
                     contentContainerStyle={{flex: 1}}>
 
-            <View flex={1} alignItems={'center'}>
+            <View flex={1} alignItems={'center'} style={{paddingTop: 20}}>
                 <Text
                     style={styles.shadow}
                     fontSize={18} textAlign={'center'} color={'white'}>Hoy te sientes...</Text>

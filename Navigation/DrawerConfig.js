@@ -69,13 +69,7 @@ const DrawerConfig = () => {
                   <Icon
                     as={MaterialIcons}
                     name={"arrow-back-ios"}
-                    color={
-                      route.name === "RouletteStep2Screen" &&
-                      route.params &&
-                      (route.params.parentItem.attributes.name === "Molesto" || route.params.parentItem.attributes.name === "Confundido")
-                        ? Colors.white
-                        : Colors.red
-                    }
+                    color={Colors.red}
                     size={"xl"}
                   />
                 </TouchableOpacity>
@@ -110,14 +104,7 @@ const DrawerConfig = () => {
             >
               <Icon
                 as={MaterialIcons}
-                color={
-                  route.name === "RouletteStep2Screen" &&
-                  route.params &&
-                  (route.params.parentItem.attributes.name === "Molesto" ||
-                    route.params.parentItem.attributes.name === "Confundido")
-                    ? Colors.white
-                    : Colors.red
-                }
+                color={Colors.red}
                 name={"menu"}
                 size={"xl"}
               ></Icon>
