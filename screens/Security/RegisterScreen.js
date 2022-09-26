@@ -11,12 +11,14 @@ const RegisterScreen = ({productsDuck, navigation, registerAction, setAttribute}
 
     const [loading, setLoading] = useState(false)
     const [modalErrorVisible, setModalErrorVisible] = useState(null);
+    const [textException, setTextException] = useState(null);
 
     useEffect(() => {
     }, [])
 
     const register = async (values) => {
        try{
+        const with_twilio = false;
         setLoading(true)
            const res = await ApiApp.getUserByEmail(values.email)
            // console.log(res.data)
@@ -25,11 +27,39 @@ const RegisterScreen = ({productsDuck, navigation, registerAction, setAttribute}
                // existe un usuario con ese email
                setLoading(false)
            }else{
-               setAttribute('registerData', values).then(() => {
-                   navigation.navigate('PhoneScreen')
-               }).catch(e =>{
-                console.log('register setAttribute error => ',e.toString())
-               })
+
+                if (with_twilio) {
+                    //twilio flow phone validation (user)
+                    setAttribute('registerData', values).then(() => {
+                        navigation.navigate('PhoneScreen')
+                    }).catch(e =>{
+                    console.log('register setAttribute error => ',e.toString())
+                    })
+                }
+                else{
+                    try {
+                        const {email, password} = values;
+                        console.log("🚀 ~ file: RegisterScreen.js ~ line 41 ~ register ~ values", values)
+                        await registerAction({
+                            username: email,
+                            email: email,
+                            password: password
+                        })
+
+                        navigation.navigate('SuccessScreen')
+                    } catch (e) {
+                        //console.log(typeof ex)
+                        console.log('verify error =>',e.toString())
+                        if (typeof e === 'object') {
+                            setTextException(e.response.data.error.message)
+                        } else {
+                            setTextException(e.toString())
+                        }
+                        setModalErrorVisible(true)
+                    }
+                    
+                }
+ 
            }
 
        } catch (e) { 
