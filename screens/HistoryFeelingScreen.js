@@ -27,34 +27,34 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
         }
     }, [isFocused])
 
-    const getHistoryData_old = async (userId, site=null) => {
-        try {
-            setLoading(true)
-            let startDate = '2020-01-01', enDate = '2100-01-01';
-            const res = await ApiApp.getHistoryFeelings(startDate, enDate, userId, site)
-            let arrayDates = _.map(res.data.data, (obj,index) => {
-                let dataItem = {
-                    shortDate: moment(obj.attributes.createdAt).format().split('T')[0],
-                    date: obj.attributes.createdAt,
-                    color: obj.attributes.feeling.data.attributes.color,
-                    comments: obj.attributes.comments,
-                    feeling: obj.attributes.feeling.data,
-                }
-                return dataItem;
-            })
+    // const getHistoryData_old = async (userId, site=null) => {
+    //     try {
+    //         setLoading(true)
+    //         let startDate = '2020-01-01', enDate = '2100-01-01';
+    //         const res = await ApiApp.getHistoryFeelings(startDate, enDate, userId, site)
+    //         let arrayDates = _.map(res.data.data, (obj,index) => {
+    //             let dataItem = {
+    //                 shortDate: moment(obj.attributes.createdAt).format().split('T')[0],
+    //                 date: obj.attributes.createdAt,
+    //                 color: obj.attributes.feeling.data.attributes.color,
+    //                 comments: obj.attributes.comments,
+    //                 feeling: obj.attributes.feeling.data,
+    //             }
+    //             return dataItem;
+    //         })
 
-            setHistoryDataDetail(arrayDates)
-            arrayDates = _.orderBy(arrayDates, ['date'], ['desc']);
-            arrayDates = _.uniqBy(arrayDates, 'shortDate');
-            console.log('arraydates', arrayDates.length)
+    //         setHistoryDataDetail(arrayDates)
+    //         arrayDates = _.orderBy(arrayDates, ['date'], ['desc']);
+    //         arrayDates = _.uniqBy(arrayDates, 'shortDate');
+    //         console.log('arraydates', arrayDates.length)
 
-            setHistoryData(arrayDates)
-        } catch (e) {
-            console.log('getHistoryData error =>', e.toString())
-        } finally {
-            setLoading(false)
-        }
-    }
+    //         setHistoryData(arrayDates)
+    //     } catch (e) {
+    //         console.log('getHistoryData error =>', e.toString())
+    //     } finally {
+    //         setLoading(false)
+    //     }
+    // }
 
     const getHistoryData = async (userId, site) => {
         //console.log("🚀 ~ file: StatisticsScreen.js ~ line 79 ~ getHistoryData ~ site", site)

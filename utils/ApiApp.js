@@ -120,7 +120,7 @@ class ApiApp {
   };
 
   static getFeelings = (userId, site) => {
-    alert(site.id)
+    //alert(site.id)
     if (site?.id) {
       return ApiApp.ApisType(
         `/api/feel-aspects?filters[user][id][$eq]=${userId}&filters[site][id][$eq]=${site.id}&pagination[page]=1&pagination[pageSize]=1&sort[0]=updatedAt:desc`,
@@ -164,7 +164,7 @@ class ApiApp {
 
   static getMyGroups = (userId, site = null) => {
     if (site?.id) {
-      let url = `/api/listByUserId?userId=${userId}&siteId=${site.id}`;
+      let url = `/api/listByUserId?userId=${userId}`; //&siteId=${site.id}
       return ApiApp.ApisType(url, "get");
     }
     else{
@@ -297,7 +297,7 @@ class ApiApp {
   };
 
   static getLastEmotion = async (userID = "", site = null, option = "") => { 
-    //console.log("🚀 ~ file: ApiApp.js ~ line 254 ~ ApiApp ~ getUserProgress= ~ site", site, option, userID)
+    console.log("🚀 ~ file: ApiApp.js ~ line 254 ~ ApiApp ~ getUserProgress= ~ site", site, option, userID)
     if (site?.id) { 
       return ApiApp.ApisType(
         `/api/feeling-records/getLastEmotion`,

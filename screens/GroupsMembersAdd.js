@@ -99,6 +99,12 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
     
                     }
                 }
+
+                if (authDuck.userSiteConfig?.id) {
+                    data.data.site= authDuck.userSiteConfig.id
+                }
+
+
                 // console.log(data)
                  let response = await ApiApp.createGroup(data)
                  setUsersSelected([])
