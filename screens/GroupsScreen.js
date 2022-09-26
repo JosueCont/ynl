@@ -27,7 +27,7 @@ const GroupsScreen = ({authDuck, navigation}) => {
     const getGroups = async () => {
         try {
             setLoading(true)
-            const response = await ApiApp.getMyGroups(authDuck.user.id)
+            const response = await ApiApp.getMyGroups(authDuck.user.id, authDuck.userSiteConfig)
             // setGroups(response.data.data)
             setGroups(response.data.data.entries)
         } catch (e) {

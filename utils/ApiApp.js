@@ -162,9 +162,16 @@ class ApiApp {
     }
   };
 
-  static getMyGroups = (userId) => {
-    let url = `/api/listByUserId?userId=${userId}`;
-    return ApiApp.ApisType(url, "get");
+  static getMyGroups = (userId, site = null) => {
+    if (site?.id) {
+      let url = `/api/listByUserId?userId=${userId}&siteId=${site.id}`;
+      return ApiApp.ApisType(url, "get");
+    }
+    else{
+      let url = `/api/listByUserId?userId=${userId}`;
+      return ApiApp.ApisType(url, "get");
+    }
+    
   };
 
   static getGroupsRequests = (userId) => {
