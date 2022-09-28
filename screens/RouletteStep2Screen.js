@@ -29,6 +29,10 @@ const RouletteStep2Screen = ({route, navigation}) => {
         try {
             setLoading(true);
             let response = await ApiApp.getFeelingsV2(`filters[$and][0][parent][id][$eq]=${parentId}&populate[parent][populate][0]=icon`)
+            
+            response.data.data = _.sortBy(_.uniqBy(response.data.data, 'attributes.name'), 'attributes.name');
+            //console.log("🚀 ~ file: RouletteStep2Screen.js ~ line 34 ~ getSubParents ~ response.data.data", response.data.data)
+            
             setSubParents(response.data.data)
         } catch (e) {
             console.log('getSubParents error =>',e.toString());
