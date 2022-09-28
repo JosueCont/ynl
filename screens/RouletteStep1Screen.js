@@ -128,10 +128,9 @@ const RouletteStep1Screen = ({navigation}) => {
 
 
                 <View flex={1} width={'100%'}>
-
                     <View flex={0.2} >
-                        <Text color={'#FD5902'} style={{fontWeight:'bold',fontSize:30, marginTop:30}}  textAlign={'center'}>¿Cómo te sientes hoy?</Text>
-                        <Text color={'#FD5902'} style={{fontSize:20, marginTop:10}}  textAlign={'center'}>{moment().format('LL')}</Text>
+                        <Text color={'#FD5902'} style={{fontWeight:'bold', marginTop:30}} size={'lg'}  textAlign={'center'}>¿Cómo te sientes hoy?</Text>
+                        <Text color={'#FD5902'} style={{marginTop:10}}  textAlign={'center'}>{moment().format('LL')}</Text>
                     </View>
                     <View flex={0.4} alignItems={'center'} justifyContent={'flex-end'}>
                         <Image alt={'roulette'} source={pointerImage} style={{resizeMode: 'contain'}} width={10} height={10}/>
@@ -149,13 +148,7 @@ const RouletteStep1Screen = ({navigation}) => {
 
                     </View>
 
-                    {/*<View>*/}
-                    {/*    {*/}
-                    {/*        <Text fontSize={24}>{emotions[emotionPosition].slug}</Text>*/}
-                    {/*    }*/}
-                    {/*</View>*/}
-
-                    <View flex={0.1} mx={4}>
+                    <View flex={0.2} mx={4}>
                         <Button colorScheme={'orange'}
                                 onPress={() => navigation.navigate('RouletteStep2Screen', {parentItem: _.find(parents, (o)=> {
                                         return o.attributes.slug_name === (definitionOfFeeling().slug)

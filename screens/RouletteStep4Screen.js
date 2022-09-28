@@ -155,8 +155,8 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                 <Text
                   bold
                   color={"#FFF"}
+                  mt={2}
                   style={styles.shadow}
-                  fontSize={20}
                   mb={2}
                 >
                   Compártenos por qué

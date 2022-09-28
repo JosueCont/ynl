@@ -90,9 +90,10 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
                             />
                         }>
 
-                <View flex={1} alignItems={'center'}>
-                    <Stack space={4} w="90%">
-                        <Text style={{fontSize: 20, color: '#FF5E00', textAlign: 'center', fontWeight: 'bold'}}>Mi Historial</Text>
+                <View flex={1} mx={5}>
+                            <Text size={'lg'}  style={{ color: '#FF5E00', textAlign: 'center', fontWeight: 'bold',marginTop:20}}>Mi Historial</Text>
+                            <Text mb={6} style={{fontSize: 10, color: '#FF5E00', textAlign: 'center', fontWeight: 'bold'}}>Ve el detalle al hacer clic en un elemento.</Text>
+
 
                         {
                             loading ?
@@ -155,7 +156,6 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
                         }
 
 
-                    </Stack>
                 </View>
             </ScrollView>
         </SafeAreaView>
