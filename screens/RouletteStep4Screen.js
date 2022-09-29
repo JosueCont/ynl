@@ -19,7 +19,7 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
         /* navigation.setOptions({
             headerStyle: {backgroundColor: '#' + route.params.color}
         }) */
-
+        setComment("")
     }, [route.params.emotion.id])
 
     const saveFeelings = async () => {
@@ -30,7 +30,7 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                 label: route.params.emotion.attributes.name,
                 feeling: route.params.emotion.id,
                 user: authDuck.user.id,
-                comments: comment,
+                comments: comment?.trim(),
             }
             if (authDuck?.userSiteConfig?.id) {
                 data.site = authDuck?.userSiteConfig?.id;
@@ -116,7 +116,10 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                   mb={4}
                   fontSize={40}
                   color={"white"}
+                  alignContent={"center"}
                   style={styles.shadow}
+                  numberOfLines={1}
+                  adjustsFontSizeToFit={true}
                 >{`${
                   route.params.emotion &&
                   route.params.emotion.attributes.name.toUpperCase()

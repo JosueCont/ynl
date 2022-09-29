@@ -399,7 +399,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                                 borderRadius: 10
                                             }}>
                                             <Text fontSize={12} color={'white'}>Última emoción</Text>
-                                            <Text color={'white'} style={{fontWeight: 'bold'}}
+                                            <Text color={'white'} style={{fontWeight: 'bold'}} numberOfLines={1}
                                                   fontSize={20}
                                                   adjustsFontSizeToFit>{lastEmotion}</Text>
                                             <Text color={'white'} fontSize={16} adjustsFontSizeToFit

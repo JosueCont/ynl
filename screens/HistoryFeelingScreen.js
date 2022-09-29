@@ -138,7 +138,7 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
                                                           mb={1}>{ele.parent}</Text>
 
                                                     {
-                                                        ele?.comments ? <Text color={'white'} fontSize={10} mb={1}>{ele?.comments}</Text>:null
+                                                        ele?.comments ? <Text color={'white'} fontSize={10} mb={1}>{ele?.comments?.trim()}</Text>:null
                                                     }
 
 
