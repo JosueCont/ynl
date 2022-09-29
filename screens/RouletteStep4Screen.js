@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Button, Image, KeyboardAvoidingView, Text, TextArea, View} from "native-base";
+import {Button, Image, KeyboardAvoidingView, ScrollView, Text, TextArea, View} from "native-base";
 import {connect} from "react-redux";
 import {Keyboard, Platform, TouchableWithoutFeedback} from "react-native";
 import {getDay, getMonth} from '../utils/functions'
@@ -7,6 +7,7 @@ import {saveEmotion} from "../redux/ducks/feelingsDuck";
 import ScreenBaseV1 from "./Components/ScreenBaseV1";
 import _ from "lodash";
 import {emotionStatusAction} from "../redux/ducks/authDuck";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionStatusAction}) => {
 
@@ -60,15 +61,19 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
 
     return (
       <ScreenBaseV1 color={"#" + route.params.color}>
+        <SafeAreaView style={{ flex: 1, width: "100%" }}>
+        <ScrollView showsVerticalScrollIndicator={false}
+        >
         <KeyboardAvoidingView
           style={{ flex: 1, width: "100%" }}
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          behavior={Platform.OS === "ios" ? "position" : ""}
+          keyboardVerticalOffset={100}
         >
           <TouchableWithoutFeedback
             onPress={Keyboard.dismiss}
-            accessible={false}
+            accessible={true}
           >
-            <View flex={1} mx={4}>
+            <View flex={1} mx={4} style={{ flexDirection: 'column' }}>
               <View flex={1} alignItems={"center"} mt={10}>
                 <Text
                   style={styles.shadow}
@@ -195,6 +200,8 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
             </View>
           </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
+        </ScrollView>
+        </SafeAreaView>
       </ScreenBaseV1>
     );
 }
