@@ -423,12 +423,12 @@ const ProfileScreen = ({authDuck, navigation}) => {
                             </>
                         }
 
-                        <>
-                            <Button mb={4} size="md" isLoading={loading} isLoadingText={'Eliminando'}
-                                        colorScheme={'red'}
-                                        onPress={() => setModalDeleteAccountVisible(true)}>
-                                    Eliminar cuenta
-                            </Button>
+                        <>  
+                            <TouchableOpacity style={{marginVertical: 20}}
+                                                  onPress={() => setModalDeleteAccountVisible(true)}>
+                                    <Text textAlign={'center'} size={'md'} color={'red'} textDecorationLine={'underline'}>Eliminar mi cuenta
+                                    </Text>
+                            </TouchableOpacity>
                         </>
 
 

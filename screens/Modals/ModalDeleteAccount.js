@@ -60,7 +60,7 @@ const ModalDeleteAccount = ({visible, setVisible, userId, site, logOutAction}) =
                     <View px={30} pt={10} mb={2}>
                         <Text textAlign={'center'} fontSize={20} style={{fontWeight: 'bold'}}>ATENCIÓN</Text>
                         <Text fontSize={18} style={styles.modalText}>Esta seguro que desea eliminar sus datos, esta acción es irreversible.</Text>
-                        <Button size={'xs'} colorScheme={'orange'} onPress={() => deleteAccount()}><Text size={'md'}
+                        <Button size={'xs'} colorScheme={'red'} onPress={() => deleteAccount()}><Text size={'md'}
                                                                                                            color={'white'}>Eliminar</Text></Button>
                     </View>
                 </View>
