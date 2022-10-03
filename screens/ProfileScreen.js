@@ -424,7 +424,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                         }
 
                         <>
-                            <Button m={2} size="md" isLoading={loading} isLoadingText={'Eliminando'}
+                            <Button mb={4} size="md" isLoading={loading} isLoadingText={'Eliminando'}
                                         colorScheme={'red'}
                                         onPress={() => setModalDeleteAccountVisible(true)}>
                                     Eliminar cuenta
