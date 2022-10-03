@@ -46,6 +46,10 @@ class ApiApp {
     return ApiApp.ApisType(`/api/auth/local/register`, "post", data);
   };
 
+  static deleteAccount = (userId) => {
+    return ApiApp.ApisType(`/api/auth/deleteAccount`, "post", {userId: userId});
+  };
+
   static getEmotionStatus = (userId, site) => {
     if(site?.id)
     {

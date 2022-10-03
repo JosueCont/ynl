@@ -7,6 +7,7 @@ import {Colors} from "../utils/Colors";
 import ApiApp from "../utils/ApiApp";
 import {useIsFocused} from "@react-navigation/native";
 import ModalPasswordUpdate from "./Modals/ModalPasswordUpdate";
+import ModalDeleteAccount from "./Modals/ModalDeleteAccount";
 import {getShadowCircleStyle} from "../utils/functions";
 import bg1 from "../assets/bg1.png";
 import * as ImagePicker from 'expo-image-picker';
@@ -23,6 +24,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
     const [gender, setGender] = useState(null);
     const [loading, setLoading] = useState(null);
     const [modalPasswordUpdateVisible, setModalPasswordUpdateVisible] = useState(null);
+    const [modalDeleteAccountVisible, setModalDeleteAccountVisible] = useState(null);
     const toast = useToast();
     const [loadingImage, setLoadingImage] = useState(null);
 
@@ -49,6 +51,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
             //
         }
     }
+ 
 
     const updateProfileFunction = async () => {
         try {
@@ -420,9 +423,21 @@ const ProfileScreen = ({authDuck, navigation}) => {
                             </>
                         }
 
+                        <>
+                            <Button m={2} size="md" isLoading={loading} isLoadingText={'Eliminando'}
+                                        colorScheme={'red'}
+                                        onPress={() => setModalDeleteAccountVisible(true)}>
+                                    Eliminar cuenta
+                            </Button>
+                        </>
+
 
                         <ModalPasswordUpdate action={updatePasswordFunction} visible={modalPasswordUpdateVisible}
                                              setVisible={setModalPasswordUpdateVisible}></ModalPasswordUpdate>
+
+                        <ModalDeleteAccount visible={modalDeleteAccountVisible} withGoback={true} userId={authDuck.user.id}
+                                             site={authDuck.userSiteConfig} setVisible={setModalDeleteAccountVisible}></ModalDeleteAccount>
+
                     </FormControl>
 
                 </Stack>
