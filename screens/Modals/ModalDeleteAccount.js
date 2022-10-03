@@ -23,7 +23,7 @@ const ModalDeleteAccount = ({visible, setVisible, userId, site, logOutAction}) =
              
             if (response.data.data.message === "Ok") { 
   
-                await logOutAction(site); 
+                await logOutAction(); 
             }
             else{
                  
