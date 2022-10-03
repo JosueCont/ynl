@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Button, Image, KeyboardAvoidingView, Text, TextArea, View} from "native-base";
+import {Button, Image, KeyboardAvoidingView, ScrollView, Text, TextArea, View} from "native-base";
 import {connect} from "react-redux";
 import {Keyboard, Platform, TouchableWithoutFeedback} from "react-native";
 import {getDay, getMonth} from '../utils/functions'
@@ -7,6 +7,7 @@ import {saveEmotion} from "../redux/ducks/feelingsDuck";
 import ScreenBaseV1 from "./Components/ScreenBaseV1";
 import _ from "lodash";
 import {emotionStatusAction} from "../redux/ducks/authDuck";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionStatusAction}) => {
 
@@ -18,7 +19,7 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
         /* navigation.setOptions({
             headerStyle: {backgroundColor: '#' + route.params.color}
         }) */
-
+        setComment("")
     }, [route.params.emotion.id])
 
     const saveFeelings = async () => {
@@ -29,7 +30,7 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                 label: route.params.emotion.attributes.name,
                 feeling: route.params.emotion.id,
                 user: authDuck.user.id,
-                comments: comment,
+                comments: comment?.trim(),
             }
             if (authDuck?.userSiteConfig?.id) {
                 data.site = authDuck?.userSiteConfig?.id;
@@ -60,15 +61,19 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
 
     return (
       <ScreenBaseV1 color={"#" + route.params.color}>
+        <SafeAreaView style={{ flex: 1, width: "100%" }}>
+        <ScrollView showsVerticalScrollIndicator={false}
+        >
         <KeyboardAvoidingView
           style={{ flex: 1, width: "100%" }}
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          behavior={Platform.OS === "ios" ? "position" : ""}
+          keyboardVerticalOffset={100}
         >
           <TouchableWithoutFeedback
             onPress={Keyboard.dismiss}
-            accessible={false}
+            accessible={true}
           >
-            <View flex={1} mx={4}>
+            <View flex={1} mx={4} style={{ flexDirection: 'column' }}>
               <View flex={1} alignItems={"center"} mt={10}>
                 <Text
                   style={styles.shadow}
@@ -111,7 +116,10 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                   mb={4}
                   fontSize={40}
                   color={"white"}
+                  alignContent={"center"}
                   style={styles.shadow}
+                  numberOfLines={1}
+                  adjustsFontSizeToFit={true}
                 >{`${
                   route.params.emotion &&
                   route.params.emotion.attributes.name.toUpperCase()
@@ -155,8 +163,8 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                 <Text
                   bold
                   color={"#FFF"}
+                  mt={2}
                   style={styles.shadow}
-                  fontSize={20}
                   mb={2}
                 >
                   Compártenos por qué
@@ -195,6 +203,8 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
             </View>
           </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
+        </ScrollView>
+        </SafeAreaView>
       </ScreenBaseV1>
     );
 }

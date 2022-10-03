@@ -120,7 +120,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
 
     const searchUsers = async (value) => {
         try {
-            const response = await getUsersByUserName(value.trim(), authDuck.user, authDuck.userSiteConfig, membersExist)
+            const response = await getUsersByUserName(value.trim().toLowerCase(), authDuck.user, authDuck.userSiteConfig, membersExist)
         } catch (e) {
             console.log("searchUsers error =>",e.toString())
         }
@@ -169,7 +169,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
             <View flex={1}>
                 <VStack my="4" space={5} w="100%" maxW="350px">
                     <VStack w="100%" space={0} alignSelf="center">
-                        <Input ref={searchBox} placeholder={`Buscar amigos para añadir a ${groupName}`}
+                        <Input ref={searchBox} placeholder={`Buscar amigos para añadir a ${groupName}, por correo`}
                                width="100%"
                                height={10}
                                autoCapitalize="none"

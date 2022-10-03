@@ -98,8 +98,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
 
                     <VStack mt={5} w={'100%'}>
                         <VStack mb={4} alignItems={'center'}>
-                            <Text bold style={{fontSize: 25}} color={Colors.red} textAlign={'center'} mb={6}>Del 1 al 10 {'\n'}¿Cómo te calificas en?</Text>
-
+                            <Text bold size={'md'} color={Colors.red} textAlign={'center'} mb={6}>Del 1 al 10 {'\n'}¿Cómo te calificas en?</Text>
                         </VStack>
                         {
                             loading ?

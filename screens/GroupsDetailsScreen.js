@@ -178,17 +178,17 @@ const GroupsDetailsScreen = ({navigation, route}) => {
           }
         >
           <View
-            style={{ justifyContent: "center" }}
+            style={{ justifyContent: "center", paddingHorizontal: 5}}
             flexDirection={"row"}
             display={"flex"}
           >
-            <Text textAlign={"center"} mb={2} color={Colors.red}>
+            <Text textAlign={"center"} size={'lg'} mb={2} color={Colors.red}>
               {name}
             </Text>
             <TouchableOpacity
               style={{
-                height: 40,
-                width: 40,
+                height: 20,
+                width: 20,
                 borderRadius: 20,
                 marginTop: "auto",
                 marginBottom: "auto",
@@ -200,7 +200,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
               <Icon
                 as={MaterialIcons}
                 name="edit"
-                size={6}
+                size={3}
                 margin={"auto"}
                 color={"white"}
               />

@@ -34,8 +34,7 @@ const HistoryFeelingScreenDetail = ({authDuck, route, navigation}) => {
 
             <View flex={1} alignItems={'center'}>
                 <Stack space={4} w="90%">
-                    <Text style={{
-                        fontSize: 20,
+                    <Text size={'md'} style={{
                         color: '#FF5E00',
                         textAlign: 'center',
                         fontWeight: 'bold'
@@ -82,7 +81,7 @@ const HistoryFeelingScreenDetail = ({authDuck, route, navigation}) => {
 
                                             {
                                                 ele?.comments ? <Text color={'white'} fontSize={10}
-                                                                      mb={1}>{ele.comments}</Text> : null
+                                                                      mb={1}>{ele.comments.trim()}</Text> : null
                                             }
 
 

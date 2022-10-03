@@ -4,19 +4,16 @@ import {connect} from "react-redux";
 import {ScrollView} from "react-native";
 import ApiApp from "../utils/ApiApp";
 import {Colors} from "../utils/Colors";
-import Constants from 'expo-constants';
 import _ from "lodash";
 
 const RouletteStep2Screen = ({route, navigation}) => {
 
     const [service, setService] = useState(null);
     const [subParents, setSubParents] = useState(null);
-    const [loading, setLoading] = useState(null);
-    const [subParentSelected, setSubParentSelected] = useState(null);
-    const [colorBack, setColorBack] = useState('FFF');
 
 
     useEffect(() => {
+        setSubParents(null)
         getSubParents(route.params.parentItem.id)
         //console.log('param',route.params.parentItem.color)
         //console.log('color',route.params.parentItem.attributes.color)
@@ -27,7 +24,6 @@ const RouletteStep2Screen = ({route, navigation}) => {
 
     const getSubParents = async (parentId) => {
         try {
-            setLoading(true);
             let response = await ApiApp.getFeelingsV2(`filters[$and][0][parent][id][$eq]=${parentId}&populate[parent][populate][0]=icon`)
             
             response.data.data = _.sortBy(_.uniqBy(response.data.data, 'attributes.name'), 'attributes.name');
@@ -36,8 +32,6 @@ const RouletteStep2Screen = ({route, navigation}) => {
             setSubParents(response.data.data)
         } catch (e) {
             console.log('getSubParents error =>',e.toString());
-        } finally {
-            setLoading(false)
         }
     }
 
@@ -54,7 +48,7 @@ const RouletteStep2Screen = ({route, navigation}) => {
                 <View w={200} h={200} bgColor={'white'} borderRadius={100} my={10} alignItems={'center'}
                       justifyContent={'center'}>
                     {
-                        _.has(route.params, 'parentItem.attributes.icon.data.attributes.url') &&
+                        subParents && _.has(route.params, 'parentItem.attributes.icon.data.attributes.url') &&
                         <Image
                             source={{uri: route.params.parentItem.attributes.animation.data.attributes.url}}
                             style={{width: 150, height: 250, resizeMode: 'contain'}} alt="img"/>
@@ -76,7 +70,7 @@ const RouletteStep2Screen = ({route, navigation}) => {
                 }}>
 
                     {
-                        (subParents && !subParentSelected) &&
+                        (subParents) &&
                         subParents.map((item, i) => {
                             return (
                                 <Select.Item label={item.attributes.name} key={i} value={item}/>

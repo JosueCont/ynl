@@ -4,7 +4,7 @@ import {Colors} from "./utils/Colors";
 export const theme = extendTheme({
     components: {
         Text: {
-            defaultProps: { size: 'lg' },
+            defaultProps: { size: 'sm' },
             sizes: {
                 xl: { fontSize: '64px' },
                 lg: { fontSize: '32px' },
