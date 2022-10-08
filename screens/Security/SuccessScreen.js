@@ -26,7 +26,7 @@ const SuccessScreen = ({navigation, authDuck, loginEmail}) => {
                 <Image source={logoSmall} alt="img"></Image>
             </View>
             <View flex={0.5}>
-                <Text color={'white'} textAlign={'center'} px={4}>Registro realizado exitosamente.</Text>
+                <Text color={'white'} size={'lg'} textAlign={'center'} px={4}>Registro realizado exitosamente.</Text>
             </View>
             <View flex={0.5} mx={20}>
                 <Button colorScheme="orange"

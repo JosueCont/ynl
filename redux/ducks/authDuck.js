@@ -36,7 +36,7 @@ const authDuck = (state = initialData, action) => {
         case SUCCESS:
             return { ...state, ...action.payload }
         case LOGOUT:
-            return { ...state, loading: false, isLogged: false }
+            return { ...state, loading: false, isLogged: false, userSiteConfig: null }
         case ERROR:
             return { ...state, error: action.payload }
         case ERROR_SERVER:

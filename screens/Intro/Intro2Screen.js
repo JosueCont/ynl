@@ -12,7 +12,7 @@ const Intro2Screen = () => {
                     <Image source={logoSmall} alt="img"></Image>
                 </View>
                 <View flex={1}>
-                    <Text color={'white'} textAlign={'center'} px={4} mt={4}>Podrás día a día consultar tu avance
+                    <Text color={'white'} size={'lg'} textAlign={'center'} px={4} mt={4}>Podrás día a día consultar tu avance
                         personal</Text>
                 </View>
             </ImageBackground>

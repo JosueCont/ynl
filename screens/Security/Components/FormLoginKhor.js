@@ -43,7 +43,6 @@ export default ({
   });
 
   useEffect(() => {
-      console.log('email =>',email)
     if(email){
         setFieldValue("identifier", email);
     }

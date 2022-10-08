@@ -291,7 +291,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                         </Stack>
                         <Progress
                           size={"xl"}
-                          colorScheme="warning"
+                          colorScheme={Math.round(ele.value)>50?'green':'red'}
                           value={Math.round(ele.value)}
                         />
                       </>
