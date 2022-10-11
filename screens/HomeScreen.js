@@ -438,7 +438,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                     navigation.navigate('StatisticsScreen')
                                 }}>
                                 <Icon as={MaterialIcons} name={'donut-large'} size={6} color={'white'} mb={1}></Icon>
-                                <Text color={'white'} fontSize={11}>Mis Avance</Text>
+                                <Text color={'white'} fontSize={11}>Mis emociones</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

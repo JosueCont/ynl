@@ -6,7 +6,7 @@ import {MaterialIcons} from "@expo/vector-icons";
 
 const GroupsMemberItem = ({title, pending = true, isOwner, deleteAction, thisOwner}) => {
     return (
-        <TouchableOpacity style={{flex: 1}} disabled={true}>
+        (pending && !isOwner)? <></>:  <TouchableOpacity style={{flex: 1}} disabled={true}>
             <View flexDir={'row'} flex={1} my={3} borderBottomWidth={0.5} borderBottomColor={Colors.red} mx={2} pb={4}>
                 <View flex={0.3} alignItems={'center'} justifyContent={'center'}>
                     <Avatar size="md" source={imageLogo} backgroundColor={'#FF5E00'}>
@@ -16,7 +16,7 @@ const GroupsMemberItem = ({title, pending = true, isOwner, deleteAction, thisOwn
                 <View flex={0.8} justifyContent={'center'} alignItems={'flex-start'}>
                     <Text fontSize={12} style={{opacity: pending ? 0.5 : 1}} color={Colors.red}>{title}</Text>
                     {
-                        pending && isOwner && <Badge width={'100%'} colorScheme={"info"}>{pending?'Pendiente por aceptar':''}</Badge>
+                        pending && <Badge width={'100%'} colorScheme={"info"}>{pending?'Pendiente por aceptar':''}</Badge>
                     }
                     
 

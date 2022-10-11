@@ -185,26 +185,30 @@ const GroupsDetailsScreen = ({navigation, route}) => {
             <Text textAlign={"center"} size={'lg'} mb={2} color={Colors.red}>
               {name}
             </Text>
-            <TouchableOpacity
-              style={{
-                height: 20,
-                width: 20,
-                borderRadius: 20,
-                marginTop: "auto",
-                marginBottom: "auto",
-                marginLeft: 10,
-                backgroundColor: Colors.red2,
-              }}
-              onPress={() => openModalUpd()}
-            >
-              <Icon
-                as={MaterialIcons}
-                name="edit"
-                size={3}
-                margin={"auto"}
-                color={"white"}
-              />
-            </TouchableOpacity>
+              {
+                  route?.params?.isOwner &&
+                  <TouchableOpacity
+                      style={{
+                          height: 20,
+                          width: 20,
+                          borderRadius: 20,
+                          marginTop: "auto",
+                          marginBottom: "auto",
+                          marginLeft: 10,
+                          backgroundColor: Colors.red2,
+                      }}
+                      onPress={() => openModalUpd()}
+                  >
+                      <Icon
+                          as={MaterialIcons}
+                          name="edit"
+                          size={3}
+                          margin={"auto"}
+                          color={"white"}
+                      />
+                  </TouchableOpacity>
+              }
+
           </View>
 
           <View mx={4}>
@@ -218,7 +222,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                 }}
                 onPress={() => setTabPosition(0)}
               >
-                <Text fontSize={18}>Detalles</Text>
+                <Text fontSize={18}>Detalle</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
@@ -229,7 +233,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                 }}
                 onPress={() => setTabPosition(1)}
               >
-                <Text fontSize={18}>Miembros</Text>
+                <Text fontSize={18}>Miembros {members && `(${members.length})`} </Text>
               </TouchableOpacity>
             </View>
 
@@ -280,14 +284,30 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                     return (
                       <>
                         <Stack direction={"row"} mt={3}>
-                          <Text ml={3} width={"75%"} fontSize={"xs"}>
+
+                          <Text ml={3} width={"75%"} pt={2} fontSize={"xs"}>
+                              <Icon
+                                  as={MaterialIcons}
+                                  mr={5}
+                                  pt={2}
+                                  style={{color:Math.round(ele.value)>50?"green":"red"}}
+                                  name={Math.round(ele.value)>50?"sentiment-satisfied-alt":"sentiment-dissatisfied"}
+                              />
+                              {'  '}
+
                             {ele.fullName && ele.fullName.includes("null")
                               ? ele.username
                               : ele.fullName}
+
+
                           </Text>
-                          <Text ml={3} width={"30%"} fontSize={"xs"}>
-                            {Math.round(ele.value)}%
+
+                          <Text ml={3} width={"30%"} fontSize={"md"}>
+
+
+                            {' '+Math.round(ele.value)}%
                           </Text>
+
                         </Stack>
                         <Progress
                           size={"xl"}
@@ -349,12 +369,12 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                         isOwner={route.params.isOwner}
                         title={item.name}
                         pending={
-                          item.status === 0 || item.status === 2 ? true : false
+                          item.status === 0 || item.status === 2
                         }
                         deleteAction={() => {
                           Alert.alert(
                             "Your Next Level",
-                            "¿Deseas desvincular al usuario del grupo?",
+                            "¿Deseas desvincular el usuario del grupo?",
                             [
                               {
                                 text: "No",

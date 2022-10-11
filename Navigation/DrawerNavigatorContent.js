@@ -103,7 +103,7 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
               }}
             >
               <Text color={"white"} fontSize={20} my={2}>
-                Mi avance
+                Mis emociones
               </Text>
             </TouchableOpacity>
           </View>

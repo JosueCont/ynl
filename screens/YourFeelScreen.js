@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {Box, Button, HStack, Image, Skeleton, Slider, Text, useToast, View, VStack} from "native-base";
+import {Box, Button, HStack, Icon, Image, Skeleton, Slider, Text, useToast, View, VStack} from "native-base";
 import {ScrollView} from "react-native";
 import {connect} from "react-redux";
 import bodyicon from '../assets/yourfeel/bodyicon.png'
+import { MaterialIcons } from "@expo/vector-icons";
 import mentalicon from '../assets/yourfeel/mentalicon.png'
 import relationicon from '../assets/yourfeel/relationicon.png'
 import finantialicon from '../assets/yourfeel/finantialicon.png'
@@ -102,11 +103,29 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                         </VStack>
                         {
                             loading ?
-                                <VStack px={9} pb={3}>
+                                <VStack px={9} mt={3} pb={3}>
                                     <Skeleton h={10}></Skeleton>
                                 </VStack>
                                 :
-                                <VStack px={9} pb={3}>
+                                <VStack px={9} mt={3} pb={3}>
+                                    <View flexDirection={'row'}>
+                                        <View style={{flex:1}}>
+                                            <Icon
+                                                as={MaterialIcons}
+                                                name="minimize"
+                                                size={3}
+                                            />
+                                        </View>
+
+                                        <View  style={{flex:1}}>
+                                            <Icon
+                                                as={MaterialIcons}
+                                                name="add"
+                                                style={{alignSelf: "flex-end"}}
+                                                size={3}
+                                            />
+                                        </View>
+                                    </View>
                                     <Slider step={1} minValue={1} maxValue={10} value={physicalNumber}
                                             colorScheme="orange"
                                             onChange={(v) => setPhysicalNumber(v)} size="lg">
@@ -129,10 +148,28 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                         }
                         {
                             loading ?
-                                <VStack px={9} pb={3}>
+                                <VStack px={9} mt={3} pb={3}>
                                     <Skeleton h={10}></Skeleton>
                                 </VStack>
-                                : <VStack px={9} pb={3}>
+                                : <VStack px={9} mt={3} pb={3}>
+                                    <View flexDirection={'row'}>
+                                        <View style={{flex:1}}>
+                                            <Icon
+                                                as={MaterialIcons}
+                                                name="minimize"
+                                                size={3}
+                                            />
+                                        </View>
+
+                                        <View  style={{flex:1}}>
+                                            <Icon
+                                                as={MaterialIcons}
+                                                name="add"
+                                                style={{alignSelf: "flex-end"}}
+                                                size={3}
+                                            />
+                                        </View>
+                                    </View>
                                     <Slider step={1} minValue={1} maxValue={10} value={mentalNumber} colorScheme="orange"
                                             onChange={(v) => setMentalNumber(v)} size="lg">
                                         <Slider.Track bg={'red.100'}>
@@ -156,10 +193,28 @@ const YourFeelScreen = ({authDuck, navigation}) => {
 
                         {
                             loading ?
-                                <VStack px={9} pb={3}>
+                                <VStack px={9} mt={3} pb={3}>
                                     <Skeleton h={10}></Skeleton>
                                 </VStack> :
-                                <VStack px={9} pb={3}>
+                                <VStack px={9} mt={3} pb={3}>
+                                    <View flexDirection={'row'}>
+                                        <View style={{flex:1}}>
+                                            <Icon
+                                                as={MaterialIcons}
+                                                name="minimize"
+                                                size={3}
+                                            />
+                                        </View>
+
+                                        <View  style={{flex:1}}>
+                                            <Icon
+                                                as={MaterialIcons}
+                                                name="add"
+                                                style={{alignSelf: "flex-end"}}
+                                                size={3}
+                                            />
+                                        </View>
+                                    </View>
                                     <Slider step={1} minValue={1} maxValue={10} value={finantialNumber}
                                             colorScheme="orange"
                                             onChange={(v) => setFinantialNumber(v)} size="lg">
@@ -183,10 +238,28 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                         }
                         {
                             loading ?
-                                <VStack px={9} pb={3}>
+                                <VStack px={9} mt={3} pb={3}>
                                     <Skeleton h={10}></Skeleton>
                                 </VStack> :
-                                <VStack px={9} pb={3}>
+                                <VStack px={9} mt={3} pb={3}>
+                                    <View flexDirection={'row'}>
+                                        <View style={{flex:1}}>
+                                            <Icon
+                                                as={MaterialIcons}
+                                                name="minimize"
+                                                size={3}
+                                            />
+                                        </View>
+
+                                        <View  style={{flex:1}}>
+                                            <Icon
+                                                as={MaterialIcons}
+                                                name="add"
+                                                style={{alignSelf: "flex-end"}}
+                                                size={3}
+                                            />
+                                        </View>
+                                    </View>
                                     <Slider step={1} minValue={1} maxValue={10} value={relationNumber}
                                             colorScheme="orange"
                                             onChange={(v) => setRelationNumber(v)} size="lg">
@@ -214,7 +287,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                                 <VStack px={9} pb={3}>
                                     <Skeleton h={10}></Skeleton>
                                 </VStack> :
-                                <Button m={4} size="lg" isLoading={loading} isLoadingText={'Guardando'}
+                                <Button m={4} mt={5} size="lg" isLoading={loading} isLoadingText={'Guardando'}
                                         colorScheme={'orange'}
                                         onPress={() => saveYourFeel()}>
                                     Guardar

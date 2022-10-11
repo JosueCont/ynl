@@ -300,51 +300,70 @@ const ProfileScreen = ({authDuck, navigation}) => {
             </View>
 
 
+            {
+                authDuck?.userSiteConfig &&
+                <View flex={1} alignItems={'center'}>
+                    <Text size={'md'}>
+                        {name} {lastName}
+                    </Text>
+                    <Text size={'md'}>
+                        {email}
+                    </Text>
+                </View>
+            }
+
+
             <View flex={1} alignItems={'center'}>
                 <Stack space={4} w="90%">
                     <FormControl  isInvalid w="100%">
-                        <View flex={1} mb={4} style={getShadowCircleStyle(10, 10)}>
-                            <Input
-                                size={'2xl'}
-                                h={50}
-                                isReadOnly={authDuck?.userSiteConfig}
-                                placeholder={'Nombre(s)'}
-                                borderRadius={25}
-                                value={name}
-                                onChangeText={val => setName(val)}
-                                backgroundColor={Colors.white}
-                                color={Colors.red}
-                                fontSize={18}
-                            />
-                        </View>
-                        <View flex={1} mb={4} style={getShadowCircleStyle(10, 10)}>
-                            <Input
-                                size={'2xl'}
-                                height={50}
-                                isReadOnly={authDuck?.userSiteConfig}
-                                placeholder={'Apellidos'}
-                                borderRadius={20}
-                                value={lastName}
-                                onChangeText={val => setLastName(val)}
-                                backgroundColor={Colors.white}
-                                color={Colors.red}
-                                fontSize={18}
-                            />
-                        </View>
-                        <View flex={1} mb={4} style={getShadowCircleStyle(10, 10)}>
-                            <Input
-                                size={'2xl'}
-                                height={50}
-                                placeholder={'Correo electrónico'}
-                                borderRadius={20}
-                                value={email}
-                                isReadOnly={true}
-                                onChangeText={val => setEmail(val)}
-                                backgroundColor={Colors.white}
-                                color={Colors.red}
-                                fontSize={18}
-                            />
-                        </View>
+                        {
+                            !authDuck?.userSiteConfig && <>
+
+                                <View flex={1} mb={4} style={getShadowCircleStyle(10, 10)}>
+                                    <Input
+                                        size={'2xl'}
+                                        h={50}
+                                        isReadOnly={authDuck?.userSiteConfig}
+                                        placeholder={'Nombre(s)'}
+                                        borderRadius={25}
+                                        value={name}
+                                        onChangeText={val => setName(val)}
+                                        backgroundColor={Colors.white}
+                                        color={Colors.red}
+                                        fontSize={18}
+                                    />
+                                </View>
+                                <View flex={1} mb={4} style={getShadowCircleStyle(10, 10)}>
+                                    <Input
+                                        size={'2xl'}
+                                        height={50}
+                                        isReadOnly={authDuck?.userSiteConfig}
+                                        placeholder={'Apellidos'}
+                                        borderRadius={20}
+                                        value={lastName}
+                                        onChangeText={val => setLastName(val)}
+                                        backgroundColor={Colors.white}
+                                        color={Colors.red}
+                                        fontSize={18}
+                                    />
+                                </View>
+                                <View flex={1} mb={4} style={getShadowCircleStyle(10, 10)}>
+                                    <Input
+                                        size={'2xl'}
+                                        height={50}
+                                        placeholder={'Correo electrónico'}
+                                        borderRadius={20}
+                                        value={email}
+                                        isReadOnly={true}
+                                        onChangeText={val => setEmail(val)}
+                                        backgroundColor={Colors.white}
+                                        color={Colors.red}
+                                        fontSize={18}
+                                    />
+                                </View>
+                            </>
+                        }
+
                         {/*<Input size={'2xl'} height={50} mb={4} placeholder={'Contraseña'} borderRadius={20}*/}
                         {/*       placeholderTextColor={Colors.red} textAlign={'center'}/>*/}
                         {/*<Input size={'2xl'} height={50} mb={6} placeholder={'Confirmar contraseña'} borderRadius={20}*/}
@@ -382,7 +401,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                         {
                             !authDuck?.userSiteConfig && <View mb={8}>
                                 <Text textAlign={'center'} fontSize={20} color={'gray.600'} mb={4}>Compartir mi
-                                    información</Text>
+                                    información con grupos</Text>
                                 <View flexDir={'row'} justifyContent={'space-between'} px={20} mx={10}>
                                     <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
                                               value="danger" colorScheme="orange"
