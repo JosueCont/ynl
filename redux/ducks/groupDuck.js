@@ -70,6 +70,13 @@ export let resetUsersSearch=()=> async(dispatch)=>{
 export let getUsersByUserName=(username='', userCurrent, siteCurrent, membersExist)=> async(dispatch)=>{
     try {
         dispatch({type: GET_USERS});
+        if(username===''){
+            dispatch({
+                type: GET_USERS_SUCCESS,
+                payload: null
+            });
+            return;
+        }
         let response = await ApiApp.getUsersByUsername(username, siteCurrent);
         let dataSucces = []
         if (response.data.length > 0){

@@ -131,6 +131,7 @@ const RouletteStep1Screen = ({navigation}) => {
                     <View flex={0.2} >
                         <Text color={'#FD5902'} style={{fontWeight:'bold', marginTop:30}} size={'lg'}  textAlign={'center'}>¿Cómo te sientes hoy?</Text>
                         <Text color={'#FD5902'} style={{marginTop:10}}  textAlign={'center'}>{moment().format('LL')}</Text>
+                        <Text color={'#FD5902'} style={{marginTop:10,paddingLeft:20, paddingRight:20}}  textAlign={'center'}>Gira la ruleta para elegir el sentimiento que más describe tu situación actual</Text>
                     </View>
                     <View flex={0.4} alignItems={'center'} justifyContent={'flex-end'}>
                         <Image alt={'roulette'} source={pointerImage} style={{resizeMode: 'contain'}} width={10} height={10}/>
