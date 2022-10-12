@@ -7,6 +7,7 @@ import PieChartCustom from "./Charts/PieChartCustom";
 import CalendarChartCustom from "./Charts/CalendarChartCustom";
 import ApiApp from "../utils/ApiApp";
 import _ from 'lodash'
+import {t} from 'i18n-js';
 import moment from 'moment'
 import {RefreshControl, SafeAreaView} from "react-native";
 import {getShadowCircleStyle} from "../utils/functions";
@@ -152,13 +153,13 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
                     }} size="sm">
                         <Button colorScheme={'orange'} onPress={() => {
                             filter(1)
-                        }} variant={activeButton === 1 ? 'solid' : 'outline'}>Semana anterior</Button>
+                        }} variant={activeButton === 1 ? 'solid' : 'outline'}>{t('dash_last_week')}</Button>
                         <Button colorScheme={'orange'} onPress={() => {
                             filter(2)
-                        }} variant={activeButton === 2 ? 'solid' : 'outline'}>Semana</Button>
+                        }} variant={activeButton === 2 ? 'solid' : 'outline'}>{t('week')}</Button>
                         <Button colorScheme={'orange'} onPress={() => {
                             filter(3)
-                        }} variant={activeButton === 3 ? 'solid' : 'outline'}>Mes</Button>
+                        }} variant={activeButton === 3 ? 'solid' : 'outline'}>{t('month')}</Button>
                     </Button.Group>
                 </View>
                 {

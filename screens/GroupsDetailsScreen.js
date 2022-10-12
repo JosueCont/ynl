@@ -10,6 +10,7 @@ import {
   Skeleton,
   Icon,
 } from "native-base";
+import {t} from 'i18n-js';
 import { MaterialIcons } from "@expo/vector-icons";
 import {useIsFocused} from "@react-navigation/native";
 import ApiApp from "../utils/ApiApp";
@@ -222,7 +223,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                 }}
                 onPress={() => setTabPosition(0)}
               >
-                <Text fontSize={18}>Detalle</Text>
+                <Text fontSize={18}>{t('detail')}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
@@ -233,7 +234,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                 }}
                 onPress={() => setTabPosition(1)}
               >
-                <Text fontSize={18}>Miembros {members && `(${members.length})`} </Text>
+                <Text fontSize={18}>{t('members')} {members && `(${members.length})`} </Text>
               </TouchableOpacity>
             </View>
 
@@ -256,7 +257,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                     }}
                     variant={activeButton === 1 ? "solid" : "outline"}
                   >
-                    Semana anterior
+                      {t('dash_last_week')}
                   </Button>
                   <Button
                     colorScheme={"orange"}
@@ -265,7 +266,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                     }}
                     variant={activeButton === 2 ? "solid" : "outline"}
                   >
-                    Semana
+                      {t('week')}
                   </Button>
                   <Button
                     colorScheme={"orange"}
@@ -274,7 +275,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                     }}
                     variant={activeButton === 3 ? "solid" : "outline"}
                   >
-                    Mes
+                      {t('month')}
                   </Button>
                 </Button.Group>
 
@@ -325,7 +326,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                     justifyContent={"center"}
                   >
                     <Text fontSize={20} color="gray.300">
-                      Sin datos
+                        {t('no_data')}
                     </Text>
                   </View>
                 )}
@@ -374,7 +375,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                         deleteAction={() => {
                           Alert.alert(
                             "Your Next Level",
-                            "¿Deseas desvincular el usuario del grupo?",
+                            t('groups_delete_member'),
                             [
                               {
                                 text: "No",
@@ -382,7 +383,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                                 style: "cancel",
                               },
                               {
-                                text: "Eliminar",
+                                text: t('delete'),
                                 onPress: () =>
                                   groupDeleteFunction(
                                     item.id,
@@ -414,7 +415,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                 })
               }
             >
-              Agregar miembros
+                {t('groups_add_member')}
             </Button>
           </View>
         )}

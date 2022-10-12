@@ -6,6 +6,7 @@ import {getDay, getMonth} from '../utils/functions'
 import {saveEmotion} from "../redux/ducks/feelingsDuck";
 import ScreenBaseV1 from "./Components/ScreenBaseV1";
 import _ from "lodash";
+import {t} from 'i18n-js';
 import {emotionStatusAction} from "../redux/ducks/authDuck";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -82,7 +83,7 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                   color={"white"}
                   mb={4}
                 >
-                  Hoy te sientes...
+                    {t('roulette_today_yourfeel')}
                 </Text>
 
                 <View
@@ -167,7 +168,7 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                   style={styles.shadow}
                   mb={2}
                 >
-                  Compártenos por qué
+                    {t('roulette_share_why')}
                 </Text>
                 <TextArea
                   h={20}
@@ -197,7 +198,7 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                   colorScheme={"orange"}
                   onPress={() => saveFeelings()}
                 >
-                  Terminar
+                    {t('roulette_finish')}
                 </Button>
               </View>
             </View>

@@ -2,6 +2,7 @@ import * as React from "react";
 import {Button, FormControl, Image, Input, ScrollView, Text, View} from "native-base";
 import logo from '../../../assets/YNL.gif'
 import {useFormik} from 'formik';
+import {t} from 'i18n-js'
 import * as Yup from 'yup'
 
 
@@ -17,7 +18,7 @@ export default ({onRegister, loading}) => {
         },
         validateOnChange: false,
         validationSchema: Yup.object({
-            email: Yup.string().email("El email no es correcto").required("El email es obligatorio"),
+            email: Yup.string().email(t('error_email_invalid')).required(t('error_email_required')),
         }),
         enableReinitialize: false
     });
@@ -31,12 +32,12 @@ export default ({onRegister, loading}) => {
             </View>
             <View flex={1}>
                 <View flex={1}>
-                    <Text fontSize={16} textAlign={'center'} mb={4}>Recuperar contraseña</Text>
+                    <Text fontSize={16} textAlign={'center'} mb={4}>{t('login_recover_password')}</Text>
                     <FormControl isInvalid={errors.email} mb={3}>
                         <Input
                             borderRadius={20}
                             height={50}
-                            placeholder={'Correo electrónico'}
+                            placeholder={t('email')}
                             autoCapitalize="none"
                             onChangeText={text => setFieldValue('email', text)}
                             value={touched.email}
@@ -48,7 +49,7 @@ export default ({onRegister, loading}) => {
                     </FormControl>
 
                     <Button isLoading={loading} mt="2" onPress={handleSubmit} colorScheme="orange">
-                        Continuar
+                        {t('continue')}
                     </Button>
                 </View>
             </View>

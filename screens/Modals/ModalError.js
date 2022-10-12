@@ -2,9 +2,10 @@ import React from "react";
 import {Alert, Modal, TouchableOpacity} from "react-native";
 import {styles} from "./ModalStyleSheet";
 import {Button, Icon, Text, View} from "native-base";
+import {t} from 'i18n-js';
 import {AntDesign} from "@expo/vector-icons";
 
-const ModalError = ({visible, setVisible, text = 'Ocurrio un error, intentalo mÃ¡s tarde'}) => {
+const ModalError = ({visible, setVisible, text = t('error_try_later')}) => {
     return (
         <Modal
             animationType={'slide'}
@@ -24,10 +25,10 @@ const ModalError = ({visible, setVisible, text = 'Ocurrio un error, intentalo mÃ
                         </TouchableOpacity>
                     </View>
                     <View px={30} pt={10} mb={2}>
-                        <Text textAlign={'center'} fontSize={20} style={{fontWeight: 'bold'}}>Aviso</Text>
+                        <Text textAlign={'center'} fontSize={20} style={{fontWeight: 'bold'}}>{t('warning')}</Text>
                         <Text fontSize={18} style={styles.modalText}>{text}</Text>
                         <Button size={'xs'} colorScheme={'orange'} onPress={() => setVisible(false)}><Text size={'md'}
-                                                                                                           color={'white'}>Entendido</Text></Button>
+                                                                                                           color={'white'}>{t('ok')}</Text></Button>
                     </View>
                 </View>
             </View>

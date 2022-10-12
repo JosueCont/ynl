@@ -2,6 +2,7 @@ import {Avatar, Text, View, Badge, Icon} from "native-base";
 import imageLogo from '../../../assets/logo.png'
 import {Colors} from "../../../utils/Colors";
 import {TouchableOpacity} from "react-native";
+import {t} from 'i18n-js';
 import {MaterialIcons} from "@expo/vector-icons";
 
 const GroupsMemberItem = ({title, pending = true, isOwner, deleteAction, thisOwner}) => {
@@ -14,7 +15,7 @@ const GroupsMemberItem = ({title, pending = true, isOwner, deleteAction, thisOwn
                 <View flex={0.8} justifyContent={'center'} alignItems={'flex-start'}>
                     <Text fontSize={12}  color={Colors.red}>{title}</Text>
                     {
-                        pending && <Badge width={'100%'} colorScheme={"info"}>{pending?'Pendiente por aceptar':''}</Badge>
+                        pending && <Badge width={'100%'} colorScheme={"info"}>{pending?t('groups_pending_to_accept'):''}</Badge>
                     }
                     
 

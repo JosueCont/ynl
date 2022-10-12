@@ -10,6 +10,7 @@ import ModalPasswordUpdate from "./Modals/ModalPasswordUpdate";
 import ModalDeleteAccount from "./Modals/ModalDeleteAccount";
 import {getShadowCircleStyle} from "../utils/functions";
 import bg1 from "../assets/bg1.png";
+import {t} from 'i18n-js';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system'
 import mime from 'react-native-mime-types'
@@ -69,7 +70,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                 duration: 2000,
                 render: () => {
                     return <Box bg="emerald.500" rounded="sm">
-                        <Text color={"white"} fontSize={16} p={3}>Actualizado correctamente.</Text>
+                        <Text color={"white"} fontSize={16} p={3}>{t('profile_success_update')}</Text>
                     </Box>;
                 }
             });
@@ -115,7 +116,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                 duration: 2000,
                 render: () => {
                     return <Box bg="emerald.500" rounded="sm">
-                        <Text color={"white"} fontSize={16} p={3}>Actualizado correctamente.</Text>
+                        <Text color={"white"} fontSize={16} p={3}>{t('profile_success_update')}</Text>
                     </Box>;
                 }
             });
@@ -126,7 +127,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
             let messageText = "";
 
             if (e.response.data.error.message === "Old password does not match.") {
-                messageText = "La contraseña anterior no coincide."
+                messageText = t('error_password_isnot_equal')
             } else {
                 messageText = e.response.data.error.message;
             }
@@ -186,7 +187,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
 
                 if (!isLt1_5MB){
                     setLoadingImage(false);
-                    alert("Solo puedes subir imagenes de 1.5Mb como máximo")
+                    alert(t('error_image_less_15'))
                     return;
                 }
                   updatePhotoFunction(result)
@@ -371,7 +372,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
 
                         {
                             !authDuck?.userSiteConfig && <View mb={8}>
-                                <Text textAlign={'center'} fontSize={20} color={'gray.600'} mb={4}>Género</Text>
+                                <Text textAlign={'center'} fontSize={20} color={'gray.600'} mb={4}>{t('gender')}</Text>
                                 <View flexDir={'row'} justifyContent={'space-between'} px={20}>
                                     <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
                                               value="danger" colorScheme="orange" isChecked={gender === 0 ? true : false}
@@ -381,7 +382,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                                                   }
 
                                               }}>
-                                        <Text color={Colors.red} fontSize={12}>Femenino</Text>
+                                        <Text color={Colors.red} fontSize={12}>{t('fem')}</Text>
                                     </Checkbox>
                                     <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
                                               value="info" colorScheme="orange" isChecked={gender === 1 ? true : false}
@@ -390,7 +391,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                                                       setGender(1)
                                                   }
                                               }}>
-                                        <Text color={Colors.red} fontSize={12}>Masculino</Text>
+                                        <Text color={Colors.red} fontSize={12}>{t('male')}</Text>
                                     </Checkbox>
                                 </View>
 
@@ -400,8 +401,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
 
                         {
                             !authDuck?.userSiteConfig && <View mb={8}>
-                                <Text textAlign={'center'} fontSize={20} color={'gray.600'} mb={4}>Compartir mi
-                                    información con grupos</Text>
+                                <Text textAlign={'center'} fontSize={20} color={'gray.600'} mb={4}>{t('profile_share_data')}</Text>
                                 <View flexDir={'row'} justifyContent={'space-between'} px={20} mx={10}>
                                     <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
                                               value="danger" colorScheme="orange"
@@ -412,7 +412,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                                                   }
 
                                               }}>
-                                        <Text color={Colors.red} fontSize={12}>Sí</Text>
+                                        <Text color={Colors.red} fontSize={12}>{t('yes')}</Text>
                                     </Checkbox>
                                     <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
                                               value="info" colorScheme="orange" isChecked={shareMyInfo === 0 ? true : false}
@@ -421,7 +421,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                                                       setShareMyInfo(0)
                                                   }
                                               }}>
-                                        <Text color={Colors.red} fontSize={12}>No</Text>
+                                        <Text color={Colors.red} fontSize={12}>{t('no')}</Text>
                                     </Checkbox>
                                 </View>
 
@@ -433,19 +433,18 @@ const ProfileScreen = ({authDuck, navigation}) => {
                             !authDuck?.userSiteConfig && <>
                                 <TouchableOpacity style={{marginVertical: 20}}
                                                   onPress={() => setModalPasswordUpdateVisible(true)}>
-                                    <Text textAlign={'center'} size={'md'} color={Colors.red} textDecorationLine={'underline'}>Actualizar
-                                        contraseña
+                                    <Text textAlign={'center'} size={'md'} color={Colors.red} textDecorationLine={'underline'}>{t('profile_upd_pass')}
                                     </Text>
                                 </TouchableOpacity>
                                 <Button isLoading={loading} colorScheme={'orange'} onPress={() => updateProfileFunction()}
-                                        mb={4}>Actualizar</Button>
+                                        mb={4}>{t('update')}</Button>
                             </>
                         }
 
                         <>  
                             <TouchableOpacity style={{marginVertical: 20}}
                                                   onPress={() => setModalDeleteAccountVisible(true)}>
-                                    <Text textAlign={'center'} size={'md'} color={'red'} textDecorationLine={'underline'}>Eliminar mi cuenta
+                                    <Text textAlign={'center'} size={'md'} color={'red'} textDecorationLine={'underline'}>{t('profile_delete_account')}
                                     </Text>
                             </TouchableOpacity>
                         </>

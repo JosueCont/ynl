@@ -6,6 +6,7 @@ import sidebarImage from "../assets/bgmenu.png";
 import { Text, View, Image} from "native-base";
 import logoSmall from "../assets/logoSmall.png";
 import logoKhor from "../assets/logos.png";
+import {t} from 'i18n-js';
 import {logOutAction} from "../redux/ducks/authDuck";
 import ApiApp from "../utils/ApiApp";
 
@@ -80,7 +81,7 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
               }}
             >
               <Text color={"white"} fontSize={20} my={2}>
-                Inicio
+                  {t('home')}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -89,12 +90,12 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
               }}
             >
               <Text color={"white"} fontSize={20} my={2}>
-                Perfil
+                  {t('profile')}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => redirectValidation()}>
               <Text color={"white"} fontSize={20} my={2}>
-                Mis grupos
+                  {t('home_my_groups')}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -103,7 +104,7 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
               }}
             >
               <Text color={"white"} fontSize={20} my={2}>
-                Mis emociones
+                  {t('home_my_emotions')}
               </Text>
             </TouchableOpacity>
           </View>
@@ -116,7 +117,7 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
                 style={{ textDecorationLine: "underline" }}
                 my={2}
               >
-                Cerrar sesión
+                  {t('home_logout')}
               </Text>
             </TouchableOpacity>
           </View>

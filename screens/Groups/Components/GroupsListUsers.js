@@ -2,6 +2,7 @@ import React from "react";
 import {Avatar, Box, Button, FlatList, HStack, Spacer, Text, VStack, ScrollView} from "native-base";
 import {Ionicons} from "@expo/vector-icons";
 import {connect} from "react-redux";
+import {t} from 'i18n-js';
 import {getUsersByUserName} from "../../../redux/ducks/groupDuck";
 import {TouchableOpacity} from "react-native";
 import NoDataIcon from "../../../components/Shared/NoDataIcon";
@@ -28,7 +29,7 @@ const GroupsListUsers = ({usersSelected, groupDuck, registerGroup, isUserSelecte
 
 
 
-            <FlatList style={{height:400}} ListEmptyComponent={<NoDataIcon text={'Si no encuentras a tu amigo en el listado puedes añadir su correo completo para invitarlo a ser parte de YNL'}/>} data={groupDuck.users} renderItem={({item}) =>
+            <FlatList style={{height:400}} ListEmptyComponent={<NoDataIcon text={t('groups_no_find_friends')}/>} data={groupDuck.users} renderItem={({item}) =>
                 <Box borderBottomWidth="1" _dark={{
                     borderColor: "gray.600"
                 }} borderColor="coolGray.200" pl="4" pr="5" py="2">
@@ -56,11 +57,11 @@ const GroupsListUsers = ({usersSelected, groupDuck, registerGroup, isUserSelecte
                 
             {isAddMembers && <Button isLoading={adding} onPress={registerGroup} isDisabled={usersSelected.length <= 0} size="lg" colorScheme={'orange'}
                     m={3}>
-                        Agregar
+                {t('add')}
             </Button>}
             {!isAddMembers && <Button isLoading={adding} onPress={registerGroup} isDisabled={usersSelected.length <= 0} size="lg" colorScheme={'orange'}
                     m={3}>
-                        Crear
+                {t('create')}
             </Button>}
         </VStack>
     )

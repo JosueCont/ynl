@@ -8,6 +8,7 @@ import {MaterialIcons} from "@expo/vector-icons";
 import ApiApp from "../utils/ApiApp";
 import bg1 from '../assets/bg1.png'
 import _ from 'lodash';
+import {t} from 'i18n-js';
 import moment from 'moment';
 import {getShadowCircleStyle} from "../utils/functions";
 import 'moment/locale/es';
@@ -382,7 +383,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                     <TouchableOpacity
                                         onPress={() => {
                                             navigation.navigate('RouletteStep1Screen')
-                                        }}><Text style={{fontSize: 20, color: '#FF5E00', fontWeight: 'bold', marginTop: 10}}>Registra tu primera emoción</Text>
+                                        }}><Text style={{fontSize: 20, color: '#FF5E00', fontWeight: 'bold', marginTop: 10}}>{t('home_register_first_emotion')}</Text>
                                     </TouchableOpacity>
                                 }
 
@@ -398,7 +399,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                                 justifyContent: 'center',
                                                 borderRadius: 10
                                             }}>
-                                            <Text fontSize={12} color={'white'}>Última emoción</Text>
+                                            <Text fontSize={12} color={'white'}>{t('last_emotion')}</Text>
                                             <Text color={'white'} style={{fontWeight: 'bold'}} numberOfLines={1}
                                                   fontSize={20}
                                                   adjustsFontSizeToFit>{lastEmotion}</Text>
@@ -422,7 +423,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                 }, getShadowCircleStyle(10, 10)]}
                                 onPress={() => navigation.navigate('YourFeelScreen')}>
                                 <Icon as={MaterialIcons} name={'mood'} size={6} color={'white'} mb={1}></Icon>
-                                <Text color={'white'} fontSize={11}>Del 1 al 10</Text>
+                                <Text color={'white'} fontSize={11}>{t('home_aspects')}</Text>
                             </TouchableOpacity>
                         </View>
                         <View flex={1} ml={2}>
@@ -438,7 +439,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                     navigation.navigate('StatisticsScreen')
                                 }}>
                                 <Icon as={MaterialIcons} name={'donut-large'} size={6} color={'white'} mb={1}></Icon>
-                                <Text color={'white'} fontSize={11}>Mis emociones</Text>
+                                <Text color={'white'} fontSize={11}>{t('home_my_emotions')}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -456,7 +457,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                     navigation.navigate('RouletteStep1Screen')
                                 }}>
                                 <Icon as={MaterialIcons} name={'nat'} size={6} color={'white'} mb={1}></Icon>
-                                <Text color={'white'} fontSize={11}>Nueva emoción</Text>
+                                <Text color={'white'} fontSize={11}>{t('home_new_emotion')}</Text>
                             </TouchableOpacity>
                         </View>
                         <View flex={1} height={70} ml={2}>
@@ -476,7 +477,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                     }
                                 }}>
                                 <Icon as={MaterialIcons} name={'groups'} size={6} color={'white'} mb={1}></Icon>
-                                <Text color={'white'} fontSize={11}>Mis grupos</Text>
+                                <Text color={'white'} fontSize={11}>{t('home_my_groups')}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

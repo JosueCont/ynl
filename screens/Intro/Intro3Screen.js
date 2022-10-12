@@ -2,6 +2,7 @@ import React from "react";
 import {ImageBackground} from "react-native";
 import bgIntro3 from '../../assets/bgIntro3.png';
 import {Image, Text, View} from "native-base";
+import {t} from 'i18n-js';
 import logoSmall from "../../assets/logoSmall.png";
 
 const Intro3Screen = () => {
@@ -13,8 +14,7 @@ const Intro3Screen = () => {
                     <Image source={logoSmall} alt="img"></Image>
                 </View>
                 <View flex={1}>
-                    <Text color={'white'} size={'lg'} textAlign={'center'} px={4} mt={4}>Crea diferentes grupos y comparte con tus
-                        amigos tu avance</Text>
+                    <Text color={'white'} size={'lg'} textAlign={'center'} px={4} mt={4}>{t('intro3_text')}</Text>
                 </View>
             </ImageBackground>
         </View>

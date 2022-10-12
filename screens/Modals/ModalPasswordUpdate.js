@@ -5,6 +5,7 @@ import {Button, FormControl, Icon, Input, Text, View} from "native-base";
 import {MaterialIcons} from "@expo/vector-icons";
 import {Colors} from "../../utils/Colors";
 import {useFormik} from "formik";
+import {t} from 'i18n-js';
 import * as Yup from "yup";
 
 const ModalPasswordUpdate = ({visible, setVisible, action}) => {
@@ -23,9 +24,9 @@ const ModalPasswordUpdate = ({visible, setVisible, action}) => {
         },
         validateOnChange: false,
         validationSchema: Yup.object({
-            oldPassword: Yup.string().required("La contraseña es obligatoria").min(8, "La contraseña debe ser de al menos 8 caracteres."),
-            password: Yup.string().required("La contraseña es obligatoria").min(8, "La contraseña debe ser de al menos 8 caracteres."),
-            repeatPassword: Yup.string().required("La contraseña es obligatoria").min(8, "La contraseña debe ser de al menos 8 caracteres.").oneOf([Yup.ref('password')], "Las contraseñas tienen que ser iguales."),
+            oldPassword: Yup.string().required(t('error_password_required')).min(8, t('error_password_minimun')),
+            password: Yup.string().required(t('error_password_required')).min(8, t('error_password_minimun')),
+            repeatPassword: Yup.string().required(t('error_password_required')).min(8, t('error_password_minimun')).oneOf([Yup.ref('password')], t('error_passwords_haveto_equal')),
         })
     });
 
@@ -45,7 +46,7 @@ const ModalPasswordUpdate = ({visible, setVisible, action}) => {
                         <Icon as={MaterialIcons} name={'close'} color={'gray'} size={'xl'}></Icon>
                     </TouchableOpacity>
                     <View mt={5}>
-                        <Text textAlign={'center'} color={Colors.red} fontSize={22} mb={4}>Actualizar contraseña</Text>
+                        <Text textAlign={'center'} color={Colors.red} fontSize={22} mb={4}>{t('profile_upd_pass')}</Text>
                     </View>
                     <View p={5} width={'100%'}>
                         <FormControl isInvalid={formik.errors.oldPassword} mb={2}>
@@ -57,7 +58,7 @@ const ModalPasswordUpdate = ({visible, setVisible, action}) => {
                                 //value={oldPassword}
                                 size={'md'}
                                 height={50}
-                                placeholder={'Contraseña anterior'}
+                                placeholder={t('profile_previus_password')}
                                 borderRadius={25}
                                 placeholderTextColor={Colors.red}
                                 textAlign={'center'}
@@ -75,7 +76,7 @@ const ModalPasswordUpdate = ({visible, setVisible, action}) => {
                                 size={'md'}
                                 height={50}
 
-                                placeholder={'Contraseña nueva'}
+                                placeholder={t('profile_new_password')}
                                 borderRadius={25}
                                 placeholderTextColor={Colors.red}
                                 textAlign={'center'}
@@ -92,7 +93,7 @@ const ModalPasswordUpdate = ({visible, setVisible, action}) => {
                                    }}
                                    size={'md'}
                                    height={50}
-                                   placeholder={'Confirmar contraseña nueva'}
+                                   placeholder={t('profile_confirm_password')}
                                    borderRadius={25}
                                    placeholderTextColor={Colors.red}
                                    textAlign={'center'}
@@ -105,13 +106,13 @@ const ModalPasswordUpdate = ({visible, setVisible, action}) => {
                             <View flex={1} mr={1}>
                                 <Button size={'sm'} colorScheme={'orange'} onPress={() => {
                                     setVisible(false)
-                                }}>Cancelar</Button>
+                                }}>{t('cancel')}</Button>
                             </View>
                             <View flex={1} ml={1}>
                                 <Button size={'sm'} colorScheme={'orange'}
                                         onPress={() => {
                                             formik.handleSubmit();
-                                        }}>Actualizar</Button>
+                                        }}>{t('update')}</Button>
                             </View>
                         </View>
                     </View>

@@ -6,6 +6,7 @@ import {MaterialIcons} from "@expo/vector-icons";
 import {Colors} from "../../utils/Colors";
 import {useFormik} from "formik";
 import * as Yup from "yup";
+import {t} from 'i18n-js';
 import {AntDesign} from "@expo/vector-icons";
 import ApiApp from "../../utils/ApiApp";
 import { logOutAction } from "../../redux/ducks/authDuck";
@@ -58,10 +59,10 @@ const ModalDeleteAccount = ({visible, setVisible, userId, site, logOutAction}) =
                         </TouchableOpacity>
                     </View>
                     <View px={30} pt={10} mb={2}>
-                        <Text textAlign={'center'} fontSize={20} style={{fontWeight: 'bold'}}>ATENCIÓN</Text>
-                        <Text fontSize={18} style={styles.modalText}>Esta seguro que desea eliminar sus datos, esta acción es irreversible.</Text>
+                        <Text textAlign={'center'} fontSize={20} style={{fontWeight: 'bold'}}>{t('atention')}</Text>
+                        <Text fontSize={18} style={styles.modalText}>{t('delete_account')}</Text>
                         <Button size={'xs'} colorScheme={'red'} onPress={() => deleteAccount()}><Text size={'md'}
-                                                                                                           color={'white'}>Eliminar</Text></Button>
+                                                                                                           color={'white'}>{t('delete')}</Text></Button>
                     </View>
                 </View>
             </View>

@@ -2,6 +2,7 @@ import React from "react";
 import {ImageBackground} from "react-native";
 import bgIntro4 from '../../assets/bgIntro4.jpg';
 import {Image, Text, View} from "native-base";
+import {t} from 'i18n-js';
 import logoSmall from "../../assets/logoSmall.png";
 
 const Intro4Screen = () => {
@@ -13,10 +14,7 @@ const Intro4Screen = () => {
                 </View>
                 <View flex={1}>
 
-                    <Text color={'white'} size={'lg'} textAlign={'center'} px={4} mt={4}>Descubre poco a poco nuevas herramientas
-                        que
-                        te ayudarán en tu
-                        desarrollo</Text>
+                    <Text color={'white'} size={'lg'} textAlign={'center'} px={4} mt={4}>{t('intro4_text')}</Text>
                 </View>
                 </ImageBackground>
             </View>

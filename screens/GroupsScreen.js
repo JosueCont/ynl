@@ -6,6 +6,7 @@ import {Colors} from "../utils/Colors";
 import ApiApp from "../utils/ApiApp";
 import {connect} from "react-redux";
 import {useIsFocused} from "@react-navigation/native";
+import {t} from 'i18n-js';
 import GroupsModalCreate from "./Groups/Components/GroupsModalCreate";
 
 const GroupsScreen = ({authDuck, navigation}) => {
@@ -109,8 +110,7 @@ const GroupsScreen = ({authDuck, navigation}) => {
                             {
                                 groupsRequests.length > 0 &&
                                 <View>
-                                    <Text fontSize={24} color={Colors.red} textAlign={'center'} mb={4}>Invitación a
-                                        grupos</Text>
+                                    <Text fontSize={24} color={Colors.red} textAlign={'center'} mb={4}>{t('groups_invitation_to_groups')}</Text>
                                     {
                                         groupsRequests.map((item,i) => {
                                             if (item.attributes.group.data){
@@ -134,8 +134,7 @@ const GroupsScreen = ({authDuck, navigation}) => {
                     {
                         loading === false &&
                         <View>
-                            <Text fontSize={24} color={Colors.red} textAlign={'center'} mb={4}>Mis
-                                            grupos</Text>
+                            <Text fontSize={24} color={Colors.red} textAlign={'center'} mb={4}>{t('groups_my_groups')}</Text>
                             {
                                 groups.length > 0 ?
                                     <View>
@@ -151,7 +150,7 @@ const GroupsScreen = ({authDuck, navigation}) => {
                                                         deleteAction={() => {
                                                         Alert.alert(
                                                             "Your Next Level",
-                                                            "¿Deseas eliminar este grupo?",
+                                                            t('groups_doyou_want_delete_group'),
                                                             [
                                                                 {
                                                                     text: "No",
@@ -159,7 +158,7 @@ const GroupsScreen = ({authDuck, navigation}) => {
                                                                     style: "cancel"
                                                                 },
                                                                 {
-                                                                    text: "Eliminar",
+                                                                    text: t('delete'),
                                                                     onPress: () => groupDeleteFunction(item.id)
                                                                 }
                                                             ])
@@ -173,14 +172,14 @@ const GroupsScreen = ({authDuck, navigation}) => {
                                     :
                                     groups.length === 0 &&
                                     <View flex={1} alignItems={'center'} justifyContent={'center'}>
-                                        <Text fontSize={20} color="gray.300">Sin grupos</Text>
+                                        <Text fontSize={20} color="gray.300">{t('groups_no_groups')}</Text>
                                     </View>
                             }
                         </View>
                     }
                 </ScrollView>
                 <View flex={0.1}>
-                    <Button colorScheme={'orange'} onPress={() => setModalGroupsCreate(true)}>Crear nuevo grupo</Button>
+                    <Button colorScheme={'orange'} onPress={() => setModalGroupsCreate(true)}>{t('groups_create_new_group')}</Button>
                 </View>
                 <GroupsModalCreate visible={modalGroupsCreate} setVisible={setModalGroupsCreate} action={createGroup}/>
             </View>

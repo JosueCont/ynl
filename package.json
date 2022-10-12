@@ -30,6 +30,7 @@
     "firebase": "^9.6.10",
     "formik": "^2.2.9",
     "moment": "^2.29.2",
+    "i18n-js": "^3.9.2",
     "native-base": "^3.3.11",
     "querystring": "^0.2.1",
     "react": "17.0.2",

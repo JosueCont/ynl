@@ -8,6 +8,7 @@ import {Colors} from "../utils/Colors";
 import pointerImage from '../assets/arrow2.png';
 import ApiApp from "../utils/ApiApp";
 import _ from "lodash";
+import {t} from 'i18n-js';
 import * as GH from 'react-native-gesture-handler';
 import moment from 'moment'
 
@@ -129,9 +130,9 @@ const RouletteStep1Screen = ({navigation}) => {
 
                 <View flex={1} width={'100%'}>
                     <View flex={0.2} >
-                        <Text color={'#FD5902'} style={{fontWeight:'bold', marginTop:30}} size={'lg'}  textAlign={'center'}>¿Cómo te sientes hoy?</Text>
+                        <Text color={'#FD5902'} style={{fontWeight:'bold', marginTop:30}} size={'lg'}  textAlign={'center'}>{t('roulette_how_are_you')}</Text>
                         <Text color={'#FD5902'} style={{marginTop:10}}  textAlign={'center'}>{moment().format('LL')}</Text>
-                        <Text color={'#FD5902'} style={{marginTop:10,paddingLeft:20, paddingRight:20}}  textAlign={'center'}>Gira la ruleta para elegir el sentimiento que más describe tu situación actual</Text>
+                        <Text color={'#FD5902'} style={{marginTop:10,paddingLeft:20, paddingRight:20}}  textAlign={'center'}>{t('roulette_istructions')}</Text>
                     </View>
                     <View flex={0.4} alignItems={'center'} justifyContent={'flex-end'}>
                         <Image alt={'roulette'} source={pointerImage} style={{resizeMode: 'contain'}} width={10} height={10}/>
@@ -153,7 +154,7 @@ const RouletteStep1Screen = ({navigation}) => {
                         <Button colorScheme={'orange'}
                                 onPress={() => navigation.navigate('RouletteStep2Screen', {parentItem: _.find(parents, (o)=> {
                                         return o.attributes.slug_name === (definitionOfFeeling().slug)
-                                    } )})}>Continuar</Button>
+                                    } )})}>{t('continue')}</Button>
                     </View>
                 </View>
             </GH.GestureHandlerRootView>

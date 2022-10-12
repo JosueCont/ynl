@@ -2,6 +2,7 @@ import React from "react";
 import {Alert, Modal, TouchableOpacity} from "react-native";
 import {styles} from "./ModalStyleSheet";
 import {Button, Icon, Text, View} from "native-base";
+import {t} from 'i18n-js';
 import {AntDesign} from "@expo/vector-icons";
 
 const ModalInfo = ({visible, setVisible}) => {
@@ -11,7 +12,6 @@ const ModalInfo = ({visible, setVisible}) => {
             transparent={true}
             visible={visible}
             onRequestClose={() => {
-                Alert.alert("Modal has been closed.");
                 setVisible(!visible);
             }}
         >
@@ -25,10 +25,10 @@ const ModalInfo = ({visible, setVisible}) => {
                         </TouchableOpacity>
                     </View>
                     <View px={30} pt={10} mb={2}>
-                        <Text textAlign={'center'} fontSize={20} style={{fontWeight: 'bold'}}>Aviso</Text>
-                        <Text fontSize={18} style={styles.modalText}>Registro exitoso</Text>
+                        <Text textAlign={'center'} fontSize={20} style={{fontWeight: 'bold'}}>{t('warning')}</Text>
+                        <Text fontSize={18} style={styles.modalText}>{t('register_success')}</Text>
                         <Button size={'xs'} colorScheme={'orange'}><Text size={'md'}
-                                                                         color={'white'}>Entendido</Text></Button>
+                                                                         color={'white'}>{t('ok')}</Text></Button>
                     </View>
                 </View>
             </View>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {Alert, Modal, Text} from "react-native";
 import {styles} from "./GroupModalCreateStyleSheet";
+import {t} from 'i18n-js';
 import {Button, Input, View} from "native-base";
 
 const GroupsModalCreate = ({ visible, setVisible, action, isUpd = false, name=null, loading = false }) => {
@@ -25,28 +26,27 @@ const GroupsModalCreate = ({ visible, setVisible, action, isUpd = false, name=nu
       transparent={true}
       visible={visible}
       onRequestClose={() => {
-        Alert.alert("Modal has been closed.");
         setVisible(!visible);
       }}
     >
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <Text style={styles.modalText}>
-            {isUpd ? "Editar grupo" : "Crear grupo"}{" "}
+            {isUpd ? t('groups_edit_group') : t('groups_create_group')}{" "}
           </Text>
           <Input
             fontSize={12}
             maxLength={50}
             onChangeText={(v) => {
-              if (v !== "") {
-                setDisabledButton(false);
-              } else {
-                setDisabledButton(true);
-              }
-              setValue(v);
+                if (v !== "") {
+                    setDisabledButton(false);
+                } else {
+                    setDisabledButton(true);
+                }
+                setValue(v);
             }}
             value={value}
-          ></Input>
+            />
           <View flexDir={"row"} mt={4}>
             <View flex={1} mr={1}>
               <Button
@@ -57,19 +57,19 @@ const GroupsModalCreate = ({ visible, setVisible, action, isUpd = false, name=nu
                 }}
                 isDisabled={loading}
               >
-                Cancelar
+                  {t('cancel')}
               </Button>
             </View>
             <View flex={1} ml={1}>
               <Button
                 isLoading={loading}
-                isLoadingText={"Guardando"}
+                isLoadingText={t('saving')}
                 size={"sm"}
                 colorScheme={disabledButton ? "gray" : "orange"}
                 disabled={disabledButton}
                 onPress={() => action(value)}
               >
-                {isUpd ? "Actualizar" : "Crear"}
+                {isUpd ? t('update') : t('create')}
               </Button>
             </View>
           </View>

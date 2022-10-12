@@ -11,7 +11,7 @@ import loginImage from '../../assets/login.png';
 import linkedInImage from '../../assets/linkedin.png'
 import googleImage from '../../assets/google.png';
 import appleImage from '../../assets/iconapple.png'
-
+import i18n, {t} from "i18n-js"
 import {Dimensions, Platform, SafeAreaView, StyleSheet, TouchableOpacity} from 'react-native';
 import WebView from "react-native-webview";
 import querystring from 'querystring';
@@ -46,8 +46,8 @@ export default (props) => {
         },
         validateOnChange: false,
         validationSchema: Yup.object({
-            email: Yup.string().email("El email no es correcto").required("El email es obligatorio"),
-            password: Yup.string().required("La contraseña es obligatoria"),
+            email: Yup.string().email(t('error_email_invalid')).required(t('error_email_required')),
+            password: Yup.string().required(t('error_password_required')),
         })
     });
 
@@ -149,7 +149,8 @@ export default (props) => {
                 console.log('accessToken', accessToken)
                 props.onLoginGoogle(accessToken)
             } else {
-                alert('Login cancelado')
+                let texterror = t('login_canceled')
+                alert(texterror)
             }
         } catch (e) {
             console.log('handleLoginGoogle error =>', e.toString())
@@ -183,15 +184,15 @@ export default (props) => {
                                    h={resolvePlatform(250, 200)} alt="img"/>
                         </View>
                         <View flex={1}>
-                            <Text textAlign={'center'} color={Colors.red} fontSize={42}>¡Hola!</Text>
-                            <Text textAlign={'center'} color={Colors.red} fontSize={24}>¿Cómo te sientes?</Text>
+                            <Text textAlign={'center'} color={Colors.red} fontSize={42}>{t('login_hello')}</Text>
+                            <Text textAlign={'center'} color={Colors.red} fontSize={24}>{t('login_how_are_you')}</Text>
                             <VStack space={3} mt="5">
                                 <FormControl isInvalid={errors.email} mb={2}>
                                     <View flex={1} style={getShadowCircleStyle(5, 5)}>
                                         <Input
                                             height={50}
                                             autoCapitalize="none"
-                                            placeholder={'Correo electrónico'}
+                                            placeholder={t('email')}
                                             autoCorrect={false}
                                             onChangeText={text => setFieldValue('email', text)}
                                             value={touched.email}
@@ -209,7 +210,7 @@ export default (props) => {
                                     <View flex={1} style={getShadowCircleStyle(5, 5)}>
                                         <Input
                                             height={50}
-                                            placeholder={'Contraseña'}
+                                            placeholder={t('password')}
                                             type="password"
                                             onChangeText={text => setFieldValue('password', text)}
                                             value={touched.password}
@@ -224,16 +225,16 @@ export default (props) => {
                                     </FormControl.ErrorMessage>
 
                                 </FormControl>
-                                <Button mt={2} mb={2} isLoading={props.loading} isLoadingText={'Iniciando'}
+                                <Button mt={2} mb={2} isLoading={props.loading} isLoadingText={t('starting')}
                                         onPress={handleSubmit}
                                         colorScheme='orange'>
-                                    Iniciar sesión
+                                    {t('login_session')}
                                 </Button>
 
-                                <Button mt={2} mb={2} isLoading={props.loading} isLoadingText={'Iniciando'}
+                                <Button mt={2} mb={2} isLoading={props.loading} isLoadingText={t('starting')}
                                         onPress={() => navigation.navigate('SiteListKhor')}
                                         colorScheme='darkBlue'>
-                                   Ingresar con Khor
+                                    {t('login_with_khor')}
                                 </Button>
 
 
@@ -242,19 +243,19 @@ export default (props) => {
                                     fontWeight: "500",
                                     color: Colors.red
                                 }} alignSelf="flex-end" mt="1">
-                                    ¿Olvidaste tu contraseña?
+                                    {t('login_forgot_password')}
                                 </Link>
                                 <View flexDir={'row'} mb={2}>
-                                    <TouchableOpacity onPress={() => {
-                                        setOpenLinkedIn(true);
-                                        setToken('');
-                                    }}
-                                                      style={[{
-                                                          flex: 1,
-                                                          alignItems: 'center'
-                                                      }, getShadowCircleStyle(10, 10)]}>
-                                        <Image source={linkedInImage} w={10} h={10} alt="img"></Image>
-                                    </TouchableOpacity>
+                                    {/*<TouchableOpacity onPress={() => {*/}
+                                    {/*    setOpenLinkedIn(true);*/}
+                                    {/*    setToken('');*/}
+                                    {/*}}*/}
+                                    {/*                  style={[{*/}
+                                    {/*                      flex: 1,*/}
+                                    {/*                      alignItems: 'center'*/}
+                                    {/*                  }, getShadowCircleStyle(10, 10)]}>*/}
+                                    {/*    <Image source={linkedInImage} w={10} h={10} alt="img"></Image>*/}
+                                    {/*</TouchableOpacity>*/}
 
                                     <TouchableOpacity onPress={()=>{ promptAsync({showInRecents: true})}} flex={1} alignItems={'center'}
                                                       justifyContent={'center'}
@@ -302,7 +303,7 @@ export default (props) => {
                                     <Button size="sm" colorScheme={'orange'}
                                             onPress={() => navigation.navigate('Register')}
                                             variant="link">
-                                        Registrarme
+                                        {t('login_register')}
                                     </Button>
                                 </HStack>
                             </VStack>

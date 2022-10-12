@@ -6,11 +6,17 @@ import {SSRProvider} from '@react-aria/ssr';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Provider} from "react-redux";
 import generateStore from './redux/store';
+import i18n from "i18n-js";
+import {langMessages} from './lang/messages';
 import NavigationContainerConfig from "./Navigation/NavigationContainerConfig";
 
 const Stack = createStackNavigator();
 LogBox.ignoreAllLogs();
 const store = generateStore();
+
+i18n.translations = {...langMessages};
+i18n.locale = 'es-mx';
+i18n.fallbacks = true;
 
 if (Text.defaultProps == null) Text.defaultProps = {};
 Text.defaultProps.allowFontScaling = false;

@@ -5,6 +5,7 @@ import ApiApp from "../utils/ApiApp";
 import {Ionicons} from "@expo/vector-icons";
 import {getUsersByUserName, resetUsersSearch} from '../redux/ducks/groupDuck'
 import _ from 'lodash'
+import {t} from 'i18n-js';
 import GroupsListUsers from "./Groups/Components/GroupsListUsers";
 import {useFocusEffect} from "@react-navigation/native";
 
@@ -169,7 +170,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
             <View flex={1}>
                 <VStack my="4" space={5} w="100%" maxW="350px">
                     <VStack w="100%" space={0} alignSelf="center">
-                        <Input ref={searchBox} placeholder={`Buscar amigos para añadir a ${groupName}, por correo`}
+                        <Input ref={searchBox} placeholder={`${t('groups_search_friends_to_add')} ${groupName}, ${t('groups_by_email')}`}
                                width="100%"
                                height={10}
                                autoCapitalize="none"

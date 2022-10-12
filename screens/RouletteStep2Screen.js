@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {ScrollView} from "react-native";
 import ApiApp from "../utils/ApiApp";
 import {Colors} from "../utils/Colors";
+import {t} from 'i18n-js';
 import _ from "lodash";
 
 const RouletteStep2Screen = ({route, navigation}) => {
@@ -42,7 +43,7 @@ const RouletteStep2Screen = ({route, navigation}) => {
             <View flex={1} alignItems={'center'} style={{paddingTop: 20}}>
                 <Text
                     style={styles.shadow}
-                    fontSize={18} textAlign={'center'} color={'white'}>Hoy te sientes...</Text>
+                    fontSize={18} textAlign={'center'} color={'white'}>{t('roulette_today_yourfeel')}</Text>
                 <Text mb={2} fontSize={40} color={'white'} style={styles.shadow}>{`${route.params.parentItem.attributes.name}`}</Text>
 
                 <View w={200} h={200} bgColor={'white'} borderRadius={100} my={10} alignItems={'center'}

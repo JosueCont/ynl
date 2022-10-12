@@ -9,6 +9,7 @@ import relationicon from '../assets/yourfeel/relationicon.png'
 import finantialicon from '../assets/yourfeel/finantialicon.png'
 import ApiApp from "../utils/ApiApp";
 import {Colors} from "../utils/Colors";
+import {t} from 'i18n-js';
 import ModalSuccess from "./Modals/ModalSuccess";
 import ModalError from "./Modals/ModalError";
 import {useIsFocused} from "@react-navigation/native";
@@ -99,7 +100,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
 
                     <VStack mt={5} w={'100%'}>
                         <VStack mb={4} alignItems={'center'}>
-                            <Text bold size={'md'} color={Colors.red} textAlign={'center'} mb={6}>Del 1 al 10 {'\n'}¿Cómo te calificas en?</Text>
+                            <Text bold size={'md'} color={Colors.red} textAlign={'center'} mb={6}>{t('aspects_1_to_10')} {'\n'} {t('aspects_how_are_in')}</Text>
                         </VStack>
                         {
                             loading ?
@@ -140,7 +141,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                                                    style={{resizeMode: 'contain'}} alt="img"/>
                                         </View>
                                         <View justifyContent={'center'}>
-                                            <Text fontSize="md" style={styles}> Física ({physicalNumber})</Text>
+                                            <Text fontSize="md" style={styles}> {t('fisica')} ({physicalNumber})</Text>
 
                                         </View>
                                     </View>
@@ -184,7 +185,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                                                    style={{resizeMode: 'contain'}} alt="img"/>
                                         </View>
                                         <View justifyContent={'center'}>
-                                            <Text fontSize="md" style={styles}> Mental ({mentalNumber})</Text>
+                                            <Text fontSize="md" style={styles}> {t('mental')} ({mentalNumber})</Text>
 
                                         </View>
                                     </View>
@@ -229,7 +230,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                                                    style={{resizeMode: 'contain'}} alt="img"/>
                                         </View>
                                         <View justifyContent={'center'}>
-                                            <Text fontSize="md" style={styles}> Financiera ({finantialNumber})</Text>
+                                            <Text fontSize="md" style={styles}> {t('finantial')} ({finantialNumber})</Text>
 
                                         </View>
                                     </View>
@@ -274,7 +275,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                                                    style={{resizeMode: 'contain'}} alt="img"/>
                                         </View>
                                         <View justifyContent={'center'}>
-                                            <Text fontSize="md" style={styles}> Relaciones Humanas
+                                            <Text fontSize="md" style={styles}> {t('relations')}
                                                 ({relationNumber})</Text>
                                         </View>
                                     </View>
@@ -290,7 +291,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                                 <Button m={4} mt={5} size="lg" isLoading={loading} isLoadingText={'Guardando'}
                                         colorScheme={'orange'}
                                         onPress={() => saveYourFeel()}>
-                                    Guardar
+                                    {t('save')}
                                 </Button>
                         }
 

@@ -5,6 +5,7 @@ import {createSession, registerAction, setAttribute} from "../../redux/ducks/aut
 import {Colors} from "../../utils/Colors";
 import FormPasswordRecovery from "./Components/FormPasswordRecovery";
 import ApiApp from "../../utils/ApiApp";
+import {t} from 'i18n-js'
 import ModalError from "../Modals/ModalError";
 
 const PasswordRecoveryScreen = ({productsDuck, navigation, registerAction, setAttribute}) => {
@@ -27,7 +28,7 @@ const PasswordRecoveryScreen = ({productsDuck, navigation, registerAction, setAt
         } catch (e) {
 
             console.log('register error =>', e.toString())
-            setModalErrorText('Email no relacionado a un usuario, verifica nuevamente')
+            setModalErrorText(t('error_email_not_related_user'))
             setModalErrorVisible(true)
         } finally {
             setLoading(false);

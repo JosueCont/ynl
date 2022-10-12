@@ -3,6 +3,7 @@ import {Alert, Modal, TouchableOpacity} from "react-native";
 import {styles} from "./ModalStyleSheet";
 import {Button, Icon, Text, View} from "native-base";
 import {AntDesign} from "@expo/vector-icons";
+import {t} from 'i18n-js'
 import { useNavigation } from '@react-navigation/native';
 
 const ModalError = ({visible, setVisible, withGoback=false, text=null}) => {
@@ -16,7 +17,6 @@ const ModalError = ({visible, setVisible, withGoback=false, text=null}) => {
         transparent={true}
         visible={visible}
         onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
           setVisible(!visible);
         }}
       >
@@ -53,11 +53,11 @@ const ModalError = ({visible, setVisible, withGoback=false, text=null}) => {
                 fontSize={20}
                 style={{ fontWeight: "bold" }}
               >
-                Aviso
+                  {t('warning')}
               </Text>
               <Text fontSize={18} style={styles.modalText}>
                 {" "}
-                {text ? text : "Registro exitoso"}
+                {text ? text : t('register_success')}
               </Text>
               <Button
                 size={"xs"}
@@ -70,7 +70,7 @@ const ModalError = ({visible, setVisible, withGoback=false, text=null}) => {
                 }}
               >
                 <Text size={"md"} color={"white"}>
-                  Entendido
+                    {t('ok')}
                 </Text>
               </Button>
             </View>

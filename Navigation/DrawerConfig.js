@@ -14,6 +14,7 @@ import StatisticsScreen from "../screens/StatisticsScreen";
 import GroupsDetailsScreen from "../screens/GroupsDetailsScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import IntroScreen from "../screens/IntroScreen";
+import {t} from 'i18n-js';
 import RouletteStep1Screen from "../screens/RouletteStep1Screen";
 import RouletteStep2Screen from "../screens/RouletteStep2Screen";
 import RouletteStep3Screen from "../screens/RouletteStep3Screen";
@@ -133,7 +134,7 @@ const DrawerConfig = () => {
         <Drawer.Screen
           name={"GroupsDetailsScreen"}
           component={GroupsDetailsScreen}
-          options={{ title: "Miembros" }}
+          options={{ title: t('members') }}
         />
         <Drawer.Screen
           name={"StatisticsScreen"}

@@ -4,6 +4,7 @@ import {Button, Image, Text, View} from "native-base";
 import logoSmall from "../../assets/logoSmall.png";
 import bgIntro from "../../assets/bgIntro.png";
 import {connect} from "react-redux";
+import {t} from 'i18n-js'
 import {loginEmail} from "../../redux/ducks/authDuck";
 
 const SuccessScreen = ({navigation, authDuck, loginEmail}) => {
@@ -16,13 +17,13 @@ const SuccessScreen = ({navigation, authDuck, loginEmail}) => {
             </View>
             <View flex={0.5}>
                 <Text color={'white'} textAlign={'center'} px={4} fontSize={20}>
-                    Correo electrónico enviado.{'\n'}
-                    Por favor sigue las instrucciones para poder recuperar tu contraseña.
+                    {t('email_send')} {'\n'}
+                    {t('login_message_recover_password')}
                 </Text>
             </View>
             <View flex={0.5} mx={20}>
                 <Button colorScheme="orange" onPress={() => navigation.navigate('LoginScreen')}>
-                    Entendido
+                    {t('ok')}
                 </Button>
             </View>
         </ImageBackground>

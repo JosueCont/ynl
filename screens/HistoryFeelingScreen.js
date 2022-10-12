@@ -8,6 +8,7 @@ import {useIsFocused} from "@react-navigation/native";
 import {getShadowCircleStyle} from "../utils/functions";
 import _ from "lodash";
 import moment from 'moment'
+import {t} from 'i18n-js'
 import NoDataIcon from "../components/Shared/NoDataIcon";
 
 
@@ -91,8 +92,8 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
                         }>
 
                 <View flex={1} mx={5}>
-                            <Text size={'lg'}  style={{ color: '#FF5E00', textAlign: 'center', fontWeight: 'bold',marginTop:20}}>Mi Historial</Text>
-                            <Text mb={6} style={{fontSize: 10, color: '#FF5E00', textAlign: 'center', fontWeight: 'bold'}}>Ve el detalle al hacer clic en un elemento.</Text>
+                            <Text size={'lg'}  style={{ color: '#FF5E00', textAlign: 'center', fontWeight: 'bold',marginTop:20}}>{t('history_my_history')}</Text>
+                            <Text mb={6} style={{fontSize: 10, color: '#FF5E00', textAlign: 'center', fontWeight: 'bold'}}>{t('history_detail')}</Text>
 
 
                         {

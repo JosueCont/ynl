@@ -2,6 +2,7 @@ import React from "react";
 import {ImageBackground} from "react-native";
 import bgIntro2 from '../../assets/bgIntro2.png';
 import {Image, Text, View} from "native-base";
+import {t} from 'i18n-js';
 import logoSmall from "../../assets/logoSmall.png";
 
 const Intro2Screen = () => {
@@ -12,8 +13,7 @@ const Intro2Screen = () => {
                     <Image source={logoSmall} alt="img"></Image>
                 </View>
                 <View flex={1}>
-                    <Text color={'white'} size={'lg'} textAlign={'center'} px={4} mt={4}>Podrás día a día consultar tu avance
-                        personal</Text>
+                    <Text color={'white'} size={'lg'} textAlign={'center'} px={4} mt={4}>{t('intro2_text')}</Text>
                 </View>
             </ImageBackground>
         </View>

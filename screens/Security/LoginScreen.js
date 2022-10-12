@@ -5,6 +5,7 @@ import {loginEmail, loginGoogle, loginLinkedIn,loginApple} from "../../redux/duc
 import FormLogin from "../../components/security/FormLogin";
 import {KeyboardAvoidingView, ScrollView} from "native-base";
 import ModalError from "../Modals/ModalError";
+import i18n, {t} from "i18n-js"
 import * as AppleAuthentication from "expo-apple-authentication";
 
 const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle,loginApple,loginLinkedIn, authDuck}) => {
