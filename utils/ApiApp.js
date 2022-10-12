@@ -168,7 +168,7 @@ class ApiApp {
 
   static getMyGroups = (userId, site = null) => {
     if (site?.id) {
-      let url = `/api/listByUserId?userId=${userId}`; //&siteId=${site.id}
+      let url = `/api/listByUserId?userId=${userId}&siteId=${site.id}`; //&siteId=${site.id}
       return ApiApp.ApisType(url, "get");
     }
     else{
