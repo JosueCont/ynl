@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {ScrollView} from "react-native";
 import ApiApp from "../utils/ApiApp";
 import {Colors} from "../utils/Colors";
+import {translateEmotions} from "../utils/functions"
 import {t} from 'i18n-js';
 import _ from "lodash";
 
@@ -44,7 +45,7 @@ const RouletteStep2Screen = ({route, navigation}) => {
                 <Text
                     style={styles.shadow}
                     fontSize={18} textAlign={'center'} color={'white'}>{t('roulette_today_yourfeel')}</Text>
-                <Text mb={2} fontSize={40} color={'white'} style={styles.shadow}>{`${route.params.parentItem.attributes.name}`}</Text>
+                <Text mb={2} fontSize={40} color={'white'} style={styles.shadow}>{`${translateEmotions(route.params.parentItem.attributes.name)}`}</Text>
 
                 <View w={200} h={200} bgColor={'white'} borderRadius={100} my={10} alignItems={'center'}
                       justifyContent={'center'}>
@@ -61,7 +62,7 @@ const RouletteStep2Screen = ({route, navigation}) => {
                     placeholderTextColor={'#' + route.params.parentItem.attributes.color} selectedValue={service}
                     minWidth="250"
                     borderRadius={20}
-                    backgroundColor={Colors.white} placeholder="Selecciona" _selectedItem={{
+                    backgroundColor={Colors.white} placeholder={t('select')} _selectedItem={{
                     backgroundColor: 'red.50',
                     endIcon: <CheckIcon size="5"/>,
                     bgColor: 'red.50'
@@ -74,7 +75,7 @@ const RouletteStep2Screen = ({route, navigation}) => {
                         (subParents) &&
                         subParents.map((item, i) => {
                             return (
-                                <Select.Item label={item.attributes.name} key={i} value={item}/>
+                                <Select.Item label={translateEmotions(item.attributes.name)} key={i} value={item}/>
                             )
                         })
                     }

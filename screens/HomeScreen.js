@@ -6,6 +6,7 @@ import {useIsFocused} from "@react-navigation/native";
 import {Colors} from "../utils/Colors";
 import {MaterialIcons} from "@expo/vector-icons";
 import ApiApp from "../utils/ApiApp";
+import { translateEmotions } from "../utils/functions";
 import bg1 from '../assets/bg1.png'
 import _ from 'lodash';
 import {t} from 'i18n-js';
@@ -157,7 +158,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
             const res = await ApiApp.getHomeData(authDuck.user.id, authDuck.userSiteConfig)
 
-            // console.log('consolelog?===',res.data.data)
+            console.log('consolelog?===',res.data.data)
             if (_.get(res, 'data.data', null)) {
                 setDays(res.data.data.days)
                 if (res.data.data.lastEmotion) {
@@ -325,7 +326,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                         loading ?
                             <Skeleton.Text px="10" lines={1}/> :
                             <Text fontSize={14} color={Colors.red}
-                                  textAlign={'center'}>{moment().locale('es').format('ll')}</Text>
+                                  textAlign={'center'}>{moment().format('LL')}</Text>
 
                     }
 
@@ -402,9 +403,9 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                             <Text fontSize={12} color={'white'}>{t('last_emotion')}</Text>
                                             <Text color={'white'} style={{fontWeight: 'bold'}} numberOfLines={1}
                                                   fontSize={20}
-                                                  adjustsFontSizeToFit>{lastEmotion}</Text>
+                                                  adjustsFontSizeToFit>{translateEmotions(lastEmotion)}</Text>
                                             <Text color={'white'} fontSize={16} adjustsFontSizeToFit
-                                                  numberOfLines={1}>{lastEmotion1}  </Text>
+                                                  numberOfLines={1}>{translateEmotions(lastEmotion1)}  </Text>
                                         </TouchableOpacity>
                                     </View>
                                 }

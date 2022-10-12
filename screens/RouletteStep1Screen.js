@@ -12,6 +12,7 @@ import {t} from 'i18n-js';
 import * as GH from 'react-native-gesture-handler';
 import moment from 'moment'
 
+moment.locale('en')
 const RouletteStep1Screen = ({navigation}) => {
 
     const [loading, setLoading] = useState(null);

@@ -2,13 +2,14 @@ import React, {useEffect, useState} from "react";
 import {Button, Image, KeyboardAvoidingView, ScrollView, Text, TextArea, View} from "native-base";
 import {connect} from "react-redux";
 import {Keyboard, Platform, TouchableWithoutFeedback} from "react-native";
-import {getDay, getMonth} from '../utils/functions'
+import {getDay, translateEmotions} from '../utils/functions'
 import {saveEmotion} from "../redux/ducks/feelingsDuck";
 import ScreenBaseV1 from "./Components/ScreenBaseV1";
 import _ from "lodash";
 import {t} from 'i18n-js';
 import {emotionStatusAction} from "../redux/ducks/authDuck";
 import { SafeAreaView } from "react-native-safe-area-context";
+import moment from "moment";
 
 const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionStatusAction}) => {
 
@@ -123,7 +124,7 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                   adjustsFontSizeToFit={true}
                 >{`${
                   route.params.emotion &&
-                  route.params.emotion.attributes.name.toUpperCase()
+                  translateEmotions(route.params.emotion.attributes.name).toUpperCase()
                 }`}</Text>
 
                 <View
@@ -140,7 +141,7 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                       fontSize={12}
                       style={{ fontWeight: "bold" }}
                     >
-                      {getMonth()}
+                      {moment().format('MMMM')}
                     </Text>
                   </View>
                   <View

@@ -27,10 +27,11 @@ export const esmx = {
     'roulette_today_yourfeel':'Hoy te sientes...',
     'roulette_share_why':'Compártenos por qué',
     'roulette_finish':'Terminar',
+    'select': 'Selecciona',
 
     //Aspectos
     'aspects_1_to_10':'Del 1 al 10',
-    'aspects_how_are_in':'¿Cóm te calificas en?',
+    'aspects_how_are_in':'¿Cómo te calificas en?',
 
 
     //Perfil
@@ -109,10 +110,103 @@ export const esmx = {
     'error_passwords_haveto_equal':'Las contraseñas tienen que ser iguales.',
     'error_image_less_15':'Solo puedes subir imágenes menores a 1.5Mb',
     'error_password_minimun':'La contraseña debe ser de al menos 8 caracteres',
-    'error_try_later':'Ocurrio un error, intentalo más tarde',
+    'error_try_later':'Ocurrió un error, intentalo más tarde',
     'no_data':'Sin datos',
     'delete_account':'¿Está seguro que desea eliminar sus datos?, esta acción es irreversible.',
     'atention':'Atención',
+
+    //Emotions
+    'contento': 'Contento',
+    'enpaz': 'En paz',
+    'inspirado': 'Inspirado',
+    'abierto': 'Abierto',
+    'confundido': 'Confundido',
+    'molesto': 'Molesto',
+    'deprimido': 'Deprimido',
+    
+    //Sub emotions happy
+    'alegre': 'Alegre',
+    'animoso': 'Animoso',
+    'debuenhumor': 'De buen humor',
+    'dichoso': 'Dichoso',
+    'divertido': 'Divertido',
+    'encantado': 'Encantado',
+    'festivo': 'Festivo',
+    'gozoso': 'Gozoso',
+    'gratificado': 'Gratificado',
+    'luminoso': 'Luminoso',
+
+    //Sub emotions peaceful
+    'adecuado': 'Adecuado',
+    'alentado': 'Alentado',
+    'asegurado': 'Asegurado',
+    'balanceado': 'Balanceado',
+    'bueno': 'Bueno',
+    'calmado': 'Calmado',
+    'confortable': 'Confortable',
+    'libredepreocupaciones': 'Libre de preocupaciones',
+    'pleno': 'Pleno',
+    'sereno': 'Sereno',
+
+    //Sub emotions inspired
+    'anhelante': 'Anhelante',
+    'atrevido': 'Atrevido',
+    'consciente': 'Consciente',
+    'constructivo': 'Constructivo',
+    'creativo': 'Creativo',
+    'deseoso': 'Deseoso',
+    'entusiasta': 'Entusiasta',
+    'motivado': 'Motivado',
+    'productivo': 'Productivo',
+    'sincero': 'Sincero',
+
+    //Sub emotions open
+    'aceptante': 'Aceptante',
+    'acogedor': 'Acogedor',
+    'armonioso': 'Armonioso',
+    'comprensivo': 'Comprensivo',
+    'conectado': 'Conectado',
+    'confiado': 'Confiado',
+    'escucha': 'Escucha',
+    'flexible': 'Flexible',
+    'libre': 'Libre',
+    'tolerante': 'Tolerante',
+
+    //Sub emotions confused
+    'desconfiado': 'Desconfiado',
+    'desorientado': 'Desorientado',
+    'distraido': 'Distraído',
+    'dudoso': 'Dudoso',
+    'incierto': 'Incierto',
+    'indeciso': 'Indeciso',
+    'inseguro': 'Inseguro',
+    'perdido': 'Perdido',
+    'prejuiciado': 'Prejuiciado',
+    'tenso': 'Tenso',
+
+    //Sub emotions angry
+    'amargado': 'Amargado',
+    'enojado': 'Enojado',
+    'frustrado': 'Frustrado',
+    'furioso': 'Furioso',
+    'irritado': 'Irritado',
+    'malhumorado': 'Malhumorado',
+    'ofensivo': 'Ofensivo',
+    'provocador': 'Provocador',
+    'resentido': 'Resentido',
+    'vengativo': 'Vengativo',
+
+    //Sub emotions depressed
+    'avergonzado': 'Avergonzado',
+    'culpable': 'Culpable',
+    'decepcionado': 'Decepcionado',
+    'desanimado': 'Desanimado',
+    'desconsolado': 'Desconsolado',
+    'insatisfecho': 'Insatisfecho',
+    'negativo': 'Negativo',
+    'pesimista': 'Pesimista',
+    'sensible': 'Sensible',
+    'sinenergia': 'Sin energía'
 
 
 }

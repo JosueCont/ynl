@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Platform} from "react-native";
+import {t} from 'i18n-js';
 
 export const storeDataObject = async (key='@data', value) => {
     try {
@@ -47,6 +48,12 @@ export const getData = async (key='') => {
 
 export const removeAllData = async () => {
 
+}
+
+export const translateEmotions = (emotion)=>{
+    let newStringEmotion = emotion.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    let msg = t(newStringEmotion.replace('.','').replace(/ /g,"").toLowerCase())
+    return msg.includes('missing') ? emotion : msg
 }
 
 const arrayMonths=[

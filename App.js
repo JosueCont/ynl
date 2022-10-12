@@ -15,7 +15,7 @@ LogBox.ignoreAllLogs();
 const store = generateStore();
 
 i18n.translations = {...langMessages};
-i18n.locale = 'es-mx';
+i18n.locale = 'en-us';
 i18n.fallbacks = true;
 
 if (Text.defaultProps == null) Text.defaultProps = {};
