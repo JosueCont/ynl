@@ -304,12 +304,23 @@ const ProfileScreen = ({authDuck, navigation}) => {
             {
                 authDuck?.userSiteConfig &&
                 <View flex={1} alignItems={'center'}>
-                    <Text size={'md'}>
+                    <Text size={'md'} style={{color:'#FF5E00'}}>
                         {name} {lastName}
                     </Text>
-                    <Text size={'md'}>
+                    <Text size={'sm'} mb={4}>
                         {email}
                     </Text>
+                    <Text size={'sm'}>
+                       Sitio khor: {authDuck?.userSiteConfig.khor_name}
+                    </Text>
+                    {
+                        authDuck?.userSiteConfig?.department_name ? <Text size={'sm'}> Departamento: { authDuck?.userSiteConfig.department_name} </Text>: <></>
+                    }
+
+                    {
+                        authDuck?.userSiteConfig?.employment_name ? <Text size={'sm'}> Puesto: { authDuck?.userSiteConfig.employment_name} </Text>: <></>
+                    }
+
                 </View>
             }
 
@@ -444,7 +455,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                         <>  
                             <TouchableOpacity style={{marginVertical: 20}}
                                                   onPress={() => setModalDeleteAccountVisible(true)}>
-                                    <Text textAlign={'center'} size={'md'} color={'red'} textDecorationLine={'underline'}>{t('profile_delete_account')}
+                                    <Text textAlign={'center'} size={'md'} style={{color:'red'}} textDecorationLine={'underline'}>{t('profile_delete_account')}
                                     </Text>
                             </TouchableOpacity>
                         </>
