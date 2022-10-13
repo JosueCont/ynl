@@ -37,14 +37,14 @@ const commonConfig = {
 };
 
 const ios = {
-    buildNumber: "30",
+    buildNumber: "31",
     supportsTablet: false,
     bundleIdentifier: "com.hiumanlab.ynl",
     usesAppleSignIn: true,
 };
 
 const android = {
-    versionCode: 30,
+    versionCode: 31,
     adaptiveIcon: {
         foregroundImage: "./assets/adaptive-icon.png",
         backgroundImage: "./assets/adaptive-icon-bg.png"
@@ -52,8 +52,6 @@ const android = {
     package: "com.hiumanlab.ynl",
     googleServicesFile: "./google-services.json",
     permissions: [
-        "ACCESS_COARSE_LOCATION",
-        "ACCESS_FINE_LOCATION",
         "INTERNET",
         "ACCESS_MEDIA_LOCATION"
     ]
@@ -64,7 +62,7 @@ module.exports = () => {
         return {
             ...commonConfig,
             slug: "ynl",
-            version: "1.0.0",
+            version: "1.1.0",
             ios: ios,
         };
     } else if (process.env.APP_ENV === "android") {
