@@ -145,10 +145,10 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
 
 
                                                     <Text color={'white'}
-                                                          fontSize={9}>{ele?.date}</Text>
+                                                          fontSize={9}>{moment(ele?.date).format('DD/MM/YYYY')}</Text>
                                                 </View>
                                                 <View flex={0.5} alignItems={'center'} justifyContent={'center'}>
-                                                    <Icon as={MaterialIcons} name={'arrow-forward-ios'} size={6} color={'white'} mb={1}></Icon>
+                                                    <Icon as={MaterialIcons} name={'arrow-forward-ios'} size={6} color={'white'} mb={1}/>
                                                 </View>
                                             </View>
                                         </TouchableOpacity>

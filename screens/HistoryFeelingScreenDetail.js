@@ -86,7 +86,7 @@ const HistoryFeelingScreenDetail = ({authDuck, route, navigation}) => {
 
 
                                             <Text color={'white'}
-                                                  fontSize={9}>{moment(ele.createdAt).format('hh:mm A')}</Text>
+                                                  fontSize={9}>{moment.utc(ele.createdAt).format('hh:mm A')}</Text>
                                         </View>
                                     </View>
                                 )
