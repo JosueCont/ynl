@@ -14,6 +14,7 @@ import {t} from 'i18n-js';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system'
 import mime from 'react-native-mime-types'
+import ModalError from "./Modals/ModalError";
 
 
 const ProfileScreen = ({authDuck, navigation}) => {
@@ -31,6 +32,8 @@ const ProfileScreen = ({authDuck, navigation}) => {
 
     const [image, setImage] = useState(null);
     const [shareMyInfo, setShareMyInfo] = useState(null);
+    const [modalErrorVisible, setModalErrorVisible] = useState(null)
+    const [modalErrorText, setModalErrorText] = useState('')
 
 
     useEffect(() => {
@@ -39,14 +42,19 @@ const ProfileScreen = ({authDuck, navigation}) => {
         }
     }, [isFocused])
 
-    const getProfileFunction = async () => {
+    const getProfileFunction = async (isUpdatePhoto = false) => {
         try {
             setLoading(true)
             const response = await ApiApp.getProfile(authDuck.user.id)
-            // console.log('profile',response.data)
-            setValues(response)
-            setShareMyInfo(response.data.shareMyData?1:0);
-            setLoading(false)
+            // console.log('profile',response)
+            if (isUpdatePhoto){
+                setImage(response.data.avatar.formats.small.url)
+                setLoading(false)
+            }else{
+                setValues(response)
+                setShareMyInfo(response.data.shareMyData?1:0);
+                setLoading(false)
+            }
         } catch (e) {
             console.log('getProfileFunction error =>', e.toString())
         } finally {
@@ -182,13 +190,16 @@ const ProfileScreen = ({authDuck, navigation}) => {
                     return
                 }
 
-                const isLt1_5MB = isLessThanTheMB(fileInfo.size, 1.5);
+                const isLt1_5MB = isLessThanTheMB(fileInfo.size, 0.9);
 
                 console.log("fileInfo  =====>", fileInfo);
+                console.log("El booleano...: ", isLt1_5MB)
 
                 if (!isLt1_5MB){
                     setLoadingImage(false);
-                    alert(t('error_image_less_15'))
+                    setModalErrorText(t('error_image_less_15'))
+                    setModalErrorVisible(true)
+                    // alert(t('error_image_less_15'))
                     return;
                 }
                   updatePhotoFunction(result)
@@ -218,6 +229,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                 name: imagePickerResult.uri.split('/').pop(),
                 type: mime.lookup(imagePickerResult.uri),
             };
+            console.log(photo)
 
 
             const formData = new FormData();
@@ -235,7 +247,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
 
             //   const responseSub = await ApiApp.updateProfile(authDuck.user.id, data)
 
-            await getProfileFunction()
+            await getProfileFunction(true)
 
         } catch (e) {
             console.log('updatePhotoFunction error => ', e.toString())
@@ -472,6 +484,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
 
                 </Stack>
             </View>
+            <ModalError visible={modalErrorVisible} setVisible={setModalErrorVisible} text={modalErrorText}></ModalError>
         </ScrollView>
     )
 }

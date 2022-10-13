@@ -108,7 +108,7 @@ export const enus = {
     'error_email_not_related_user':'This email is not related to any user, please check again',
     'error_password_isnot_equal':'The previous password does not match.',
     'error_passwords_haveto_equal':'Passwords must be identical.',
-    'error_image_less_15':'You can only upload pictures under 1.5Mb',
+    'error_image_less_15':'You can only upload pictures under 900 Kb',
     'error_password_minimun':'Password must be at least 8 characters',
     'error_try_later':'Error ocurred, plase try again later',
     'no_data':'No data',

@@ -108,7 +108,7 @@ export const esmx = {
     'error_email_not_related_user':'Email no relacionado a un usuario, verifica nuevamente',
     'error_password_isnot_equal':'La contraseña anterior no coincide.',
     'error_passwords_haveto_equal':'Las contraseñas tienen que ser iguales.',
-    'error_image_less_15':'Solo puedes subir imágenes menores a 1.5Mb',
+    'error_image_less_15':'Solo puedes subir imágenes menores a 900 Kb',
     'error_password_minimun':'La contraseña debe ser de al menos 8 caracteres',
     'error_try_later':'Ocurrió un error, intentalo más tarde',
     'no_data':'Sin datos',
