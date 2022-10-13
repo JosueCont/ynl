@@ -259,7 +259,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     }
 
     const tradDayString = (stringDay)=>{
-        const langCurrent = 'en'
+        const langCurrent = 'es'
         switch(stringDay) {
             case 'Lunes':
                 if(langCurrent == 'en'){

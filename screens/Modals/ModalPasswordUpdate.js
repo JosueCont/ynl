@@ -62,6 +62,7 @@ const ModalPasswordUpdate = ({visible, setVisible, action}) => {
                                 borderRadius={25}
                                 placeholderTextColor={Colors.red}
                                 textAlign={'center'}
+                                multiline={false}
                             />
                             <FormControl.ErrorMessage>
                                 {formik.errors.oldPassword}
@@ -80,6 +81,7 @@ const ModalPasswordUpdate = ({visible, setVisible, action}) => {
                                 borderRadius={25}
                                 placeholderTextColor={Colors.red}
                                 textAlign={'center'}
+                                multiline={false}
                             />
                             <FormControl.ErrorMessage>
                                 {formik.errors.password}
@@ -97,6 +99,7 @@ const ModalPasswordUpdate = ({visible, setVisible, action}) => {
                                    borderRadius={25}
                                    placeholderTextColor={Colors.red}
                                    textAlign={'center'}
+                                   multiline={false}
                             />
                             <FormControl.ErrorMessage>
                                 {formik.errors.repeatPassword}

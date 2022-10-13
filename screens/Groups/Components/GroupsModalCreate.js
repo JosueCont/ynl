@@ -3,8 +3,10 @@ import {Alert, Modal, Text} from "react-native";
 import {styles} from "./GroupModalCreateStyleSheet";
 import {t} from 'i18n-js';
 import {Button, Input, View} from "native-base";
+import {useIsFocused} from "@react-navigation/native";
 
 const GroupsModalCreate = ({ visible, setVisible, action, isUpd = false, name=null, loading = false }) => {
+  const isFocused = useIsFocused();
   const [value, setValue] = useState("");
   const [disabledButton, setDisabledButton] = useState(true);
 
@@ -13,6 +15,11 @@ const GroupsModalCreate = ({ visible, setVisible, action, isUpd = false, name=nu
           setValue(name)
       }
   }, [name])
+
+  useEffect(() => {
+    setValue("")
+    setDisabledButton(true)
+}, [isFocused])
 
 
   const closeModal = () =>{
@@ -38,7 +45,7 @@ const GroupsModalCreate = ({ visible, setVisible, action, isUpd = false, name=nu
             fontSize={12}
             maxLength={50}
             onChangeText={(v) => {
-                if (v !== "") {
+                if (v !== "" && v.trim() !== "") {
                     setDisabledButton(false);
                 } else {
                     setDisabledButton(true);
@@ -54,6 +61,7 @@ const GroupsModalCreate = ({ visible, setVisible, action, isUpd = false, name=nu
                 colorScheme={"orange"}
                 onPress={() => {
                   closeModal();
+                  setDisabledButton(true);
                 }}
                 isDisabled={loading}
               >
@@ -67,7 +75,7 @@ const GroupsModalCreate = ({ visible, setVisible, action, isUpd = false, name=nu
                 size={"sm"}
                 colorScheme={disabledButton ? "gray" : "orange"}
                 disabled={disabledButton}
-                onPress={() => action(value)}
+                onPress={() => {action(value);setDisabledButton(true)}}
               >
                 {isUpd ? t('update') : t('create')}
               </Button>

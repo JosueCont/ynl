@@ -23,7 +23,7 @@ export const enus = {
 
     //Ruleta
     'roulette_how_are_you':'How are you feeling?',
-    'roulette_istructions':'Spin to choose how your feel today',
+    'roulette_istructions':'Spin to choose how you feel today',
     'roulette_today_yourfeel':'Today you feel...',
     'roulette_share_why':'Please share why',
     'roulette_finish':'Finish',
@@ -31,7 +31,7 @@ export const enus = {
 
     //Aspectos
     'aspects_1_to_10':'From 1 to 10',
-    'aspects_how_are_in':'How do you feel about..',
+    'aspects_how_are_in':'How do you feel about...',
 
 
     //Perfil

@@ -179,7 +179,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
           }
         >
           <View
-            style={{ justifyContent: "center", paddingHorizontal: 5}}
+            style={{ justifyContent: "center", paddingHorizontal: 15}}
             flexDirection={"row"}
             display={"flex"}
           >
