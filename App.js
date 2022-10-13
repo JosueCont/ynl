@@ -9,14 +9,16 @@ import generateStore from './redux/store';
 import i18n from "i18n-js";
 import {langMessages} from './lang/messages';
 import NavigationContainerConfig from "./Navigation/NavigationContainerConfig";
+import moment from 'moment';
 
 const Stack = createStackNavigator();
 LogBox.ignoreAllLogs();
 const store = generateStore();
 
 i18n.translations = {...langMessages};
-i18n.locale = 'en-us';
+i18n.locale = 'es-mx';
 i18n.fallbacks = true;
+moment.locale('es')
 
 if (Text.defaultProps == null) Text.defaultProps = {};
 Text.defaultProps.allowFontScaling = false;

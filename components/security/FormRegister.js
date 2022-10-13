@@ -3,6 +3,7 @@ import {Button, FormControl, Image, Input, Text, View} from "native-base";
 import logo from '../../assets/YNL.gif'
 import {useFormik} from 'formik';
 import * as Yup from 'yup'
+import {t} from "i18n-js";
 
 
 export default ({onRegister, loading}) => {
@@ -31,7 +32,7 @@ export default ({onRegister, loading}) => {
             </View>
             <View flex={1} mx={6}>
                 <Text fontSize={16} textAlign={'center'} mb={4}>
-                    Registrarme
+                    {t('login_register')}
                 </Text>
                 <View>
                     <FormControl isInvalid={formik.errors.email} mb={3}>
@@ -40,7 +41,7 @@ export default ({onRegister, loading}) => {
                             height={50}
                             autoCapitalize="none"
                             onChangeText={text => formik.setFieldValue('email', text)}
-                            placeholder={'Correo electrónico'}
+                            placeholder={t('email')}
                             autoCorrect={false}
                         />
                         <FormControl.ErrorMessage>
@@ -48,7 +49,7 @@ export default ({onRegister, loading}) => {
                         </FormControl.ErrorMessage>
                     </FormControl>
                     <FormControl isInvalid={formik.errors.password} mb={3}>
-                        <Input borderRadius={20} height={50} type="password" placeholder={'Contraseña'}
+                        <Input borderRadius={20} height={50} type="password" placeholder={t('password')}
                                onChangeText={text => formik.setFieldValue('password', text)}/>
                         <FormControl.ErrorMessage>
                             {formik.errors.password}
@@ -57,7 +58,7 @@ export default ({onRegister, loading}) => {
                     <FormControl isInvalid={formik.errors.repeatPassword} mb={3}>
 
                         <Input borderRadius={20} height={50} type="password"
-                               placeholder={'Confirmar contraseña'}
+                               placeholder={t('profile_confirm_password')}
                                onChangeText={text => formik.setFieldValue('repeatPassword', text)}/>
                         <FormControl.ErrorMessage>
                             {formik.errors.repeatPassword}
@@ -65,7 +66,7 @@ export default ({onRegister, loading}) => {
                     </FormControl>
                     <Button isLoading={loading} mt="2"
                             onPress={formik.handleSubmit} colorScheme="orange">
-                        Continuar
+                        {t('continue')}
                     </Button>
 
                 </View>
