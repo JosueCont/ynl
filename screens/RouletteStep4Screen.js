@@ -129,7 +129,7 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
 
                 <View
                   mb={6}
-                  style={{ height: 100, width: 100 }}
+                  style={{ height: 100, width: 100, borderColor: "orange", borderWidth: 0.5 }}
                   bgColor={"#fff"}
                   borderRadius={10}
                   overflow={"hidden"}

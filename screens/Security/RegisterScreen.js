@@ -3,9 +3,10 @@ import {connect} from "react-redux";
 import {Platform} from 'react-native'
 import {createSession, registerAction, setAttribute} from "../../redux/ducks/authDuck";
 import FormRegister from "../../components/security/FormRegister";
-import {KeyboardAvoidingView} from "native-base";
+import {KeyboardAvoidingView, ScrollView} from "native-base";
 import ApiApp from "../../utils/ApiApp";
 import ModalError from "../Modals/ModalError";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const RegisterScreen = ({productsDuck, navigation, registerAction, setAttribute}) => {
 
@@ -71,12 +72,18 @@ const RegisterScreen = ({productsDuck, navigation, registerAction, setAttribute}
     }
 
     return (
-        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
-                              style={{flex: 1, backgroundColor: 'white'}}>
+        <SafeAreaView style={{ flex: 1, width: "100%" }}>
+        <ScrollView showsVerticalScrollIndicator={false}
+        >
+        <KeyboardAvoidingView style={{ flex: 1, width: "100%" }}
+          behavior={Platform.OS === "ios" ? "position" : ""}
+          keyboardVerticalOffset={150}>
             <FormRegister loading={loading} onRegister={register}/>
             <ModalError text={'Ya existe un usuario con este correo'} setVisible={setModalErrorVisible}
                         visible={modalErrorVisible}></ModalError>
         </KeyboardAvoidingView>
+        </ScrollView>
+        </SafeAreaView>
     )
 }
 

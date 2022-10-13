@@ -258,6 +258,56 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
     }
 
+    const tradDayString = (stringDay)=>{
+        const langCurrent = 'en'
+        switch(stringDay) {
+            case 'Lunes':
+                if(langCurrent == 'en'){
+                    return 'M'
+                }else{
+                    return 'L'
+                }
+            case 'Martes':
+                if(langCurrent == 'en'){
+                    return 'Tu'
+                }else{
+                    return 'M'
+                }
+            case 'Miercoles':
+                if(langCurrent == 'en'){
+                    return 'W'
+                }else{
+                    return 'M'
+                }
+            case 'Jueves':
+                if(langCurrent == 'en'){
+                    return 'Th'
+                }else{
+                    return 'J'
+                }
+            case 'Viernes':
+                if(langCurrent == 'en'){
+                    return 'F'
+                }else{
+                    return 'V'
+                }
+            case 'Sábado':
+                if(langCurrent == 'en'){
+                    return 'Sa'
+                }else{
+                    return 'S'
+                }
+            case 'Domingo':
+                if(langCurrent == 'en'){
+                    return 'Su'
+                }else{
+                    return 'D'
+                }
+            default:
+              return ''
+          }
+    }
+
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
@@ -290,19 +340,21 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                     </TouchableOpacity>
 
                                 </View> :
-                                <View style={[{
-                                    width: 220,
-                                    height: 220,
-                                    alignSelf: 'center',
-                                    alignItems: 'center'
-                                }, getShadowCircleStyle(10, 10)]} mt={5} mb={10}>
-                                    <View width={'100%'} height={'100%'} bgColor={'white'} alignItems={'center'}
-                                          justifyContent={'center'}
-                                          borderRadius={110} borderWidth={0.5}
-                                          borderColor={"red.200"}>
-                                        <Icon as={MaterialIcons} name="person-outline" size={20} color={'gray.200'}/>
+                                <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen')}>
+                                    <View style={[{
+                                        width: 220,
+                                        height: 220,
+                                        alignSelf: 'center',
+                                        alignItems: 'center'
+                                    }, getShadowCircleStyle(10, 10)]} mt={5} mb={10}>
+                                        <View width={'100%'} height={'100%'} bgColor={'white'} alignItems={'center'}
+                                            justifyContent={'center'}
+                                            borderRadius={110} borderWidth={0.5}
+                                            borderColor={"red.200"}>
+                                            <Icon as={MaterialIcons} name="person-outline" size={20} color={'gray.200'}/>
+                                        </View>
                                     </View>
-                                </View>
+                                </TouchableOpacity>
                     }
 
 
@@ -344,7 +396,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                             <View key={i} flex={1} height={20} style={getShadowCircleStyle(5, 5)}
                                                   alignItems={'center'} justifyContent={'center'}>
                                                 <Text fontSize={7} textAlign={'center'} mb={1}
-                                                      color={Colors.red}>{item.alias}</Text>
+                                                      color={Colors.red}>{tradDayString(item.name)}</Text>
                                                 <View style={{width: 20, height: 20}} bgColor={'#' + item.color}
                                                       borderRadius={15} borderWidth={0.5} borderColor={Colors.red}>
 
@@ -384,7 +436,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                     <TouchableOpacity
                                         onPress={() => {
                                             navigation.navigate('RouletteStep1Screen')
-                                        }}><Text style={{fontSize: 20, color: '#FF5E00', fontWeight: 'bold', marginTop: 10}}>{t('home_register_first_emotion')}</Text>
+                                        }}><Text fontSize={20} style={{color: '#FF5E00', fontWeight: 'bold', marginTop: 10}}>{t('home_register_first_emotion')}</Text>
                                     </TouchableOpacity>
                                 }
 

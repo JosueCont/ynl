@@ -108,7 +108,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                                     <Skeleton h={10}></Skeleton>
                                 </VStack>
                                 :
-                                <VStack px={9} mt={3} pb={3}>
+                                <VStack px={9} mt={3} pb={3} style={{alignContent: 'center'}}>
                                     <View flexDirection={'row'}>
                                         <View style={{flex:1}}>
                                             <Icon
@@ -127,9 +127,9 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                                             />
                                         </View>
                                     </View>
-                                    <Slider step={1} minValue={1} maxValue={10} value={physicalNumber}
+                                    <Slider step={1} minValue={0} maxValue={10} value={physicalNumber}
                                             colorScheme="orange"
-                                            onChange={(v) => setPhysicalNumber(v)} size="lg">
+                                            onChange={(v) => v === 0? setPhysicalNumber(1):setPhysicalNumber(v)} size="lg">
                                         <Slider.Track bg={'red.100'}>
                                             <Slider.FilledTrack bg={Colors.red}/>
                                         </Slider.Track>
@@ -171,8 +171,8 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                                             />
                                         </View>
                                     </View>
-                                    <Slider step={1} minValue={1} maxValue={10} value={mentalNumber} colorScheme="orange"
-                                            onChange={(v) => setMentalNumber(v)} size="lg">
+                                    <Slider step={1} minValue={0} maxValue={10} value={mentalNumber} colorScheme="orange"
+                                            onChange={(v) => v === 0? setMentalNumber(1):setMentalNumber(v)} size="lg">
                                         <Slider.Track bg={'red.100'}>
                                             <Slider.FilledTrack bg={Colors.red}/>
                                         </Slider.Track>
@@ -216,9 +216,9 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                                             />
                                         </View>
                                     </View>
-                                    <Slider step={1} minValue={1} maxValue={10} value={finantialNumber}
+                                    <Slider step={1} minValue={0} maxValue={10} value={finantialNumber}
                                             colorScheme="orange"
-                                            onChange={(v) => setFinantialNumber(v)} size="lg">
+                                            onChange={(v) => v === 0? setFinantialNumber(1):setFinantialNumber(v)} size="lg">
                                         <Slider.Track bg={'red.100'}>
                                             <Slider.FilledTrack bg={Colors.red}/>
                                         </Slider.Track>
@@ -261,9 +261,9 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                                             />
                                         </View>
                                     </View>
-                                    <Slider step={1} minValue={1} maxValue={10} value={relationNumber}
+                                    <Slider step={1} minValue={0} maxValue={10} value={relationNumber}
                                             colorScheme="orange"
-                                            onChange={(v) => setRelationNumber(v)} size="lg">
+                                            onChange={(v) => v === 0? setRelationNumber(1):setRelationNumber(v)} size="lg">
                                         <Slider.Track bg={'red.100'}>
                                             <Slider.FilledTrack bg={Colors.red}/>
                                         </Slider.Track>
