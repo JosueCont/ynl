@@ -13,6 +13,8 @@ import {RefreshControl, SafeAreaView} from "react-native";
 import {getShadowCircleStyle} from "../utils/functions";
 import LineChartCustom from "./Charts/LineChartCustom";
 import ProgressChartCustom from "./Charts/ProgressChart";
+import FeelingCard from "../components/FeelingCard";
+import NoDataIcon from "../components/Shared/NoDataIcon";
 
 const StatisticsScreen = ({authDuck, navigation, ...props}) => {
     const isFocused = useIsFocused();
@@ -22,6 +24,7 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
     const [loading, setLoading] = useState(null);
     const [refreshing, setRefreshing] = useState(null);
     const [dataPie, setDataPie] = useState(null);
+    const [feelingCard, setFeelingCard] = useState(null);
 
     useEffect(() => {
         if (isFocused) {
@@ -55,17 +58,21 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
             setLoading(true)
             const res = await ApiApp.getUserProgress(userId, site, option);
             // console.log('semanal',res.data.data.feelings)
-            setCountFeeling(res.data.data.feelings)
+            setCountFeeling(res?.data?.data?.feelings)
+            setFeelingCard(res?.data?.data?.feeling_card)
 
-            setDataPie(_.map(res.data.data.feelings, (ele, i) => {
-                return {
-                    name: ele.name,
-                    count: ele.count,
-                    color: '#' + ele.color,
-                    legendFontColor: "#7F7F7F",
-                    legendFontSize: 10
-                }
-            }))
+            if(res?.data?.data?.feelings_rev){
+                setDataPie(_.map(res.data.data.feelings_rev, (ele, i) => {
+                    return {
+                        name: ele.name,
+                        count: ele.count,
+                        color: '#' + ele.color,
+                        legendFontColor: "#7F7F7F",
+                        legendFontSize: 10
+                    }
+                }))
+            }
+
 
 
         } catch (e) {
@@ -127,8 +134,8 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
         }
     }
 
-    const filter = (option) => {
-        // 1 - la semana anterior, 2 - la semana en curso, 3 el mes
+    const filter = (option, startDate=null, endDate=null) => {
+        // 1 - la semana anterior, 2 - la semana en curso, 3 el mes, 4 mes anterior
         getCountFeelings(authDuck.user.id, authDuck.userSiteConfig, option)
         getHistoryData(authDuck.user.id, authDuck.userSiteConfig, option)
         setActiveButton(option)
@@ -160,6 +167,9 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
                         <Button colorScheme={'orange'} onPress={() => {
                             filter(3)
                         }} variant={activeButton === 3 ? 'solid' : 'outline'}>{t('month')}</Button>
+                        <Button colorScheme={'orange'} onPress={() => {
+                            filter(4)
+                        }} variant={activeButton === 4 ? 'solid' : 'outline'}>Mes anterior</Button>
                     </Button.Group>
                 </View>
                 {
@@ -193,16 +203,24 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
                     {
                         loading ?
                             <Skeleton height={250} p={2}></Skeleton> :
-                            dataPie &&
-                            <PieChartCustom dataCount={dataPie}/>
+                            (dataPie && feelingCard && feelingCard?.most_select?.count >0 ) ?
+                            <PieChartCustom dataCount={dataPie}/> : <NoDataIcon mt={10}/>
                     }
                 </View>
                 <View mx={2} my={2} mb={2}>
+
                     {
-                        loading ?
-                            <Skeleton height={250} p={2}></Skeleton> :
-                            <CalendarChartCustom historyData={historyData}/>
+                        loading &&  <Skeleton height={35} p={2}></Skeleton>
                     }
+                    {
+                     feelingCard && !loading && <FeelingCard feelingCard={feelingCard} user={authDuck.user}/>
+                    }
+
+                    {/*{*/}
+                    {/*    loading ?*/}
+                    {/*        <Skeleton height={250} p={2}></Skeleton> :*/}
+                    {/*        <CalendarChartCustom historyData={historyData}/>*/}
+                    {/*}*/}
                 </View>
 
                 {/*<View flex={0.1} mx={4} mb={5}>*/}

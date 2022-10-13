@@ -43,8 +43,9 @@ const ProfileScreen = ({authDuck, navigation}) => {
         try {
             setLoading(true)
             const response = await ApiApp.getProfile(authDuck.user.id)
-            console.log(response.data)
+            // console.log('profile',response.data)
             setValues(response)
+            setShareMyInfo(response.data.shareMyData?1:0);
             setLoading(false)
         } catch (e) {
             console.log('getProfileFunction error =>', e.toString())

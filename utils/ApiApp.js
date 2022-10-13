@@ -167,8 +167,8 @@ class ApiApp {
   };
 
   static getMyGroups = (userId, site = null) => {
-    if (site?.id) {
-      let url = `/api/listByUserId?userId=${userId}&siteId=${site.id}`; //&siteId=${site.id}
+    if (site?.app_id) {
+      let url = `/api/listByUserId?userId=${userId}&appId=${site.app_id}`; //&siteId=${site.id}
       return ApiApp.ApisType(url, "get");
     }
     else{
@@ -178,8 +178,17 @@ class ApiApp {
     
   };
 
-  static getGroupsRequests = (userId) => {
-    let url = `/api/group-requests?populate=*&filters[user][id][$eq]=${userId}`;
+  static getGroupsRequests = (userId, site=null) => {
+
+    let url = '';
+
+    if(site?.id){
+      url = `api/group-requests?populate=*&filters[user][id][$eq]=${userId}&filters[site][id][$eq]=${site.id}`
+      console.log('url_invitaciones:::::::', url, JSON.stringify(site))
+    }else{
+      url = `/api/group-requests?populate=*&filters[user][id][$eq]=${userId}`;
+    }
+
     return ApiApp.ApisType(url, "get");
   };
 

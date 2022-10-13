@@ -43,7 +43,8 @@ const RegisterScreen = ({productsDuck, navigation, registerAction, setAttribute}
                         await registerAction({
                             username: email,
                             email: email,
-                            password: password
+                            password: password,
+                            shareMyData:true
                         })
 
                         navigation.navigate('SuccessScreen')
