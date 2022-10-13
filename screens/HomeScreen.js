@@ -146,7 +146,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
     const getGroupsRequests = async () => {
         try {
-            const response = await ApiApp.getGroupsRequests(authDuck.user.id)
+            const response = await ApiApp.getGroupsRequests(authDuck.user.id, authDuck.userSiteConfig)
             setGroupsRequests(response.data.data)
         } catch (e) {
             console.log("HomeScreen getGroupsRequests error =>", e.toString())
