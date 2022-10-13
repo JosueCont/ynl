@@ -8,6 +8,7 @@ import CalendarChartCustom from "./Charts/CalendarChartCustom";
 import ApiApp from "../utils/ApiApp";
 import _ from 'lodash'
 import {t} from 'i18n-js';
+import DatePicker from 'react-native-date-ranges';
 import moment from 'moment'
 import {RefreshControl, SafeAreaView} from "react-native";
 import {getShadowCircleStyle} from "../utils/functions";
@@ -171,6 +172,8 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
                             filter(4)
                         }} variant={activeButton === 4 ? 'solid' : 'outline'}>Mes anterior</Button>
                     </Button.Group>
+
+
                 </View>
                 {
                     loading === true ?
