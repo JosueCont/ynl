@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {RefreshControl, SafeAreaView, ScrollView, TouchableOpacity} from "react-native";
 import {connect} from "react-redux";
-import {Image, Skeleton, Stack, Text, useToast, View} from "native-base";
+import {Icon, Image, Skeleton, Stack, Text, useToast, View} from "native-base";
 import {Colors} from "../utils/Colors";
 import ApiApp from "../utils/ApiApp";
 import {useIsFocused} from "@react-navigation/native";
@@ -10,6 +10,7 @@ import _ from "lodash";
 import moment from 'moment'
 import {t} from 'i18n-js'
 import NoDataIcon from "../components/Shared/NoDataIcon";
+import {MaterialIcons} from "@expo/vector-icons";
 
 
 const HistoryFeelingScreen = ({authDuck, navigation}) => {
@@ -145,6 +146,9 @@ const HistoryFeelingScreen = ({authDuck, navigation}) => {
 
                                                     <Text color={'white'}
                                                           fontSize={9}>{ele?.date}</Text>
+                                                </View>
+                                                <View flex={0.5} alignItems={'center'} justifyContent={'center'}>
+                                                    <Icon as={MaterialIcons} name={'arrow-forward-ios'} size={6} color={'white'} mb={1}></Icon>
                                                 </View>
                                             </View>
                                         </TouchableOpacity>

@@ -58,11 +58,11 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
             setLoading(true)
             const res = await ApiApp.getUserProgress(userId, site, option);
             // console.log('semanal',res.data.data.feelings)
-            setCountFeeling(res?.data?.data?.feelings)
+            setCountFeeling(res?.data?.data?.feelings_rev)
             setFeelingCard(res?.data?.data?.feeling_card)
 
             if(res?.data?.data?.feelings_rev){
-                setDataPie(_.map(res.data.data.feelings_rev, (ele, i) => {
+                setDataPie(_.map(res.data.data.feelings, (ele, i) => {
                     return {
                         name: ele.name,
                         count: ele.count,
