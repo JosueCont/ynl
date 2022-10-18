@@ -174,7 +174,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                 }
                 if (res.data.data.userInfo) {
                     if (res.data.data.userInfo.avatar) {
-                        setImage(res.data.data.userInfo.avatar.formats.small.url)
+                        setImage(res.data.data.userInfo.avatar.url)
                     }
                     setFullName(res.data.data.userInfo.fullName)
                     setIntro(res.data.data.userInfo.intro)

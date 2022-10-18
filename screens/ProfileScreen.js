@@ -46,10 +46,14 @@ const ProfileScreen = ({authDuck, navigation}) => {
         try {
             setLoading(true)
             const response = await ApiApp.getProfile(authDuck.user.id)
-            // console.log('profile',response)
             if (isUpdatePhoto){
-                setImage(response.data.avatar.formats.small.url)
-                setLoading(false)
+                if(response.data.avatar.url){
+                    setImage(response.data.avatar.url)
+                    setLoading(false)
+                }else{
+                    setModalErrorText('No se pudo cargar tu imagen de perfil, por favor intenta nuevamente o bien intenta con otra imagen')
+                    setModalErrorVisible(true)
+                }
             }else{
                 setValues(response)
                 setShareMyInfo(response.data.shareMyData?1:0);
@@ -104,7 +108,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
         setLastName(response.data.lastName)
         setEmail(response.data.email)
         setGender(response.data.gender)
-        setImage(response.data.avatar.formats.small.url)
+        setImage(response.data.avatar.url)
         setShareMyInfo(response.data.shareMyData === true ? 1 : 0)
     }
 
@@ -175,8 +179,6 @@ const ProfileScreen = ({authDuck, navigation}) => {
                 allowsEditing: true,
                 quality: 0.5,
             });
-            
-            // console.log(result);
 
             if (result.cancelled) {
                 setLoadingImage(false)
