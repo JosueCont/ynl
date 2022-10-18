@@ -93,35 +93,41 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
                   {t('profile')}
               </Text>
             </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('YourFeelScreen')}>
+                  <Text color={"white"} fontSize={20} my={2}>
+                      {t('home_my_aspects')}
+                  </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                  onPress={() => {
+                      navigation.navigate("StatisticsScreen");
+                  }}
+              >
+                  <Text color={"white"} fontSize={20} my={2}>
+                      {t('home_my_emotions')}
+                  </Text>
+              </TouchableOpacity>
             <TouchableOpacity onPress={() => redirectValidation()}>
               <Text color={"white"} fontSize={20} my={2}>
                   {t('home_my_groups')}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("StatisticsScreen");
-              }}
-            >
-              <Text color={"white"} fontSize={20} my={2}>
-                  {t('home_my_emotions')}
-              </Text>
-            </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => logoutFunction()}>
+                  <Text
+                      color={"white"}
+                      fontSize={14}
+                      style={{ textDecorationLine: "underline" }}
+                      my={2}
+                  >
+                      {t('home_logout')}
+                  </Text>
+              </TouchableOpacity>
+
           </View>
 
-          <View flex={0.5} alignItems={"center"}>
-            <TouchableOpacity onPress={() => logoutFunction()}>
-              <Text
-                color={"white"}
-                fontSize={14}
-                style={{ textDecorationLine: "underline" }}
-                my={2}
-              >
-                  {t('home_logout')}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View flex={0.5} alignItems={"center"} justifyContent={"center"}>
+
+          <View flex={0.5} style={{marginTop:10}} alignItems={"center"} justifyContent={"center"}>
             <Image source={logoKhor} alt="img" />
           </View>
         </ImageBackground>

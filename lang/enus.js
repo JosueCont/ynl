@@ -17,6 +17,7 @@ export const enus = {
     'home_aspects':'Life aspects',
     'home_register_first_emotion':'Register your first emotion',
     'home_logout':'Logout',
+    'home_my_aspects':'My aspects',
     //Historial
     'history_my_history':'My records',
     'history_detail':'Click to see the details.',

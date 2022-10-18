@@ -33,7 +33,27 @@ const FeelingCard = ({feelingCard,user}) => {
                              colorScheme={Math.round(feelingCard.percent)>50?'green':'red'}
                              value={Math.round(feelingCard.percent)}
                          />
+                         <View flexDirection={'row'}>
+                             <View style={{flex:1}}>
+                                 <Icon
+                                     as={MaterialIcons}
+                                     name="minimize"
+                                     size={3}
+                                 />
+                             </View>
+
+                             <View  style={{flex:1}}>
+                                 <Icon
+                                     as={MaterialIcons}
+                                     name="add"
+                                     style={{alignSelf: "flex-end"}}
+                                     size={3}
+                                 />
+                             </View>
+                         </View>
+
                      </VStack>
+
                      <TouchableOpacity>
                          {/*<Image size="20px" mt={5} source={arrowIcon} alt="img"/>*/}
                      </TouchableOpacity>
