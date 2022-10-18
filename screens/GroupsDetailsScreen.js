@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from "react";
 import {Alert, RefreshControl, TouchableOpacity} from "react-native";
 import {
-  ScrollView,
-  Text,
-  View,
-  Progress,
-  Stack,
-  Button,
-  Skeleton,
-  Icon,
+    ScrollView,
+    Text,
+    View,
+    Progress,
+    Stack,
+    Button,
+    Skeleton,
+    Icon, HStack, VStack,
 } from "native-base";
 import {t} from 'i18n-js';
 import { MaterialIcons } from "@expo/vector-icons";
@@ -315,6 +315,24 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                           colorScheme={Math.round(ele.value)>50?'green':'red'}
                           value={Math.round(ele.value)}
                         />
+                          <View flexDirection={'row'}>
+                              <View style={{flex:1}}>
+                                  <Icon
+                                      as={MaterialIcons}
+                                      name="minimize"
+                                      size={3}
+                                  />
+                              </View>
+
+                              <View  style={{flex:1}}>
+                                  <Icon
+                                      as={MaterialIcons}
+                                      name="add"
+                                      style={{alignSelf: "flex-end"}}
+                                      size={3}
+                                  />
+                              </View>
+                          </View>
                       </>
                     );
                   })}

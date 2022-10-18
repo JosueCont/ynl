@@ -153,17 +153,22 @@ class ApiApp {
 
   //hace una busqueda basada en la palabra que le pasen como texto (username)
   static getUsersByUsername = (usernameLike = "", site) => {
-    if (site?.id) {
-      return ApiApp.ApisType(
-        `/api/users?filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}&filters[sites][app_id][$eq]=${site.app_id}`,
+    // console.log('aqui pasa')
+    return ApiApp.ApisType(
+        `/api/users?filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}`,
         "get"
-      );
-    } else {
-      return ApiApp.ApisType(
-        `/api/users?filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}&filters[sites][id][$null]=true`,
-        "get"
-      );
-    }
+    );
+    // if (site?.id) {
+    //   return ApiApp.ApisType(
+    //     `/api/users?filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}&filters[sites][app_id][$eq]=${site.app_id}`,
+    //     "get"
+    //   );
+    // } else {
+    //   return ApiApp.ApisType(
+    //     `/api/users?filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}`,
+    //     "get"
+    //   );
+    // }
   };
 
   static getMyGroups = (userId, site = null) => {
@@ -182,12 +187,12 @@ class ApiApp {
 
     let url = '';
 
-    if(site?.id){
-      url = `api/group-requests?populate=*&filters[user][id][$eq]=${userId}&filters[site][id][$eq]=${site.id}`
-      console.log('url_invitaciones:::::::', url, JSON.stringify(site))
-    }else{
+    // if(site?.id){
+    //   url = `api/group-requests?populate=*&filters[user][id][$eq]=${userId}&filters[site][id][$eq]=${site.id}`
+    //   console.log('url_invitaciones:::::::', url, JSON.stringify(site))
+    // }else{
       url = `/api/group-requests?populate=*&filters[user][id][$eq]=${userId}`;
-    }
+    // }
 
     return ApiApp.ApisType(url, "get");
   };

@@ -9,6 +9,7 @@ import {getShadowCircleStyle, resolvePlatform} from "../../utils/functions";
 import {Colors} from "../../utils/Colors";
 import loginImage from '../../assets/login.png';
 import linkedInImage from '../../assets/linkedin.png'
+import iconKhor from '../../assets/khoricon.png'
 import googleImage from '../../assets/google.png';
 import appleImage from '../../assets/iconapple.png'
 import i18n, {t} from "i18n-js"
@@ -231,11 +232,6 @@ export default (props) => {
                                     {t('login_session')}
                                 </Button>
 
-                                <Button mt={2} mb={2} isLoading={props.loading} isLoadingText={t('starting')}
-                                        onPress={() => navigation.navigate('SiteListKhor')}
-                                        colorScheme='darkBlue'>
-                                    {t('login_with_khor')}
-                                </Button>
 
 
                                 <Link onPress={() => navigation.navigate('PasswordRecoveryScreen')} mb={4} _text={{
@@ -246,16 +242,16 @@ export default (props) => {
                                     {t('login_forgot_password')}
                                 </Link>
                                 <View flexDir={'row'} mb={2}>
-                                    {/*<TouchableOpacity onPress={() => {*/}
-                                    {/*    setOpenLinkedIn(true);*/}
-                                    {/*    setToken('');*/}
-                                    {/*}}*/}
-                                    {/*                  style={[{*/}
-                                    {/*                      flex: 1,*/}
-                                    {/*                      alignItems: 'center'*/}
-                                    {/*                  }, getShadowCircleStyle(10, 10)]}>*/}
-                                    {/*    <Image source={linkedInImage} w={10} h={10} alt="img"></Image>*/}
-                                    {/*</TouchableOpacity>*/}
+                                    <TouchableOpacity onPress={() => {
+                                        setToken('');
+                                        navigation.navigate('SiteListKhor')
+                                    }}
+                                                      style={[{
+                                                          flex: 1,
+                                                          alignItems: 'center'
+                                                      }, getShadowCircleStyle(10, 10)]}>
+                                        <Image source={iconKhor} w={10} h={10} alt="img"></Image>
+                                    </TouchableOpacity>
 
                                     <TouchableOpacity onPress={()=>{ promptAsync({showInRecents: true})}} flex={1} alignItems={'center'}
                                                       justifyContent={'center'}

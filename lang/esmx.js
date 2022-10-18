@@ -17,6 +17,8 @@ export const esmx = {
     'home_aspects':'Mis aspectos',
     'home_register_first_emotion':'Registra tu primera emoción',
     'home_logout':'Cerrar sesión',
+    'home_my_aspects':'Mis aspectos',
+
     //Historial
     'history_my_history':'Mi historial',
     'history_detail':'Ve el detalle al hacer clic en un elemento.',
