@@ -38,8 +38,10 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                 data.site = authDuck?.userSiteConfig?.id;
             }
             //console.log("🚀 ~ file: RouletteStep4Screen.js ~ line 36 ~ saveFeelings ~ data", data)
-         
+
+            console.log('data===', {data})
             let res = await saveEmotion({data})
+
             if (res) {
               //console.log("🚀 ~ file: RouletteStep4Screen.js ~ line 42 ~ saveFeelings ~ userSiteConfig", userSiteConfig)
               if (authDuck.userSiteConfig?.id) {
