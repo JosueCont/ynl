@@ -155,7 +155,7 @@ class ApiApp {
   static getUsersByUsername = (usernameLike = "", site) => {
     // console.log('aqui pasa')
     return ApiApp.ApisType(
-        `/api/users?filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}`,
+        `/api/users?filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}&filters[$and][1][blocked]=false`,
         "get"
     );
     // if (site?.id) {
@@ -360,6 +360,10 @@ class ApiApp {
 
   static deleteMemberGroup = (data) => {
     return ApiApp.ApisType(`/api/delete-member-group`, "post", data);
+  };
+
+  static reSendEmailMemberGroup = (data) => {
+    return ApiApp.ApisType(`/api/group-request/resendInvitation`, "post", data);
   };
 
   static addMemberGroup = (data) => {

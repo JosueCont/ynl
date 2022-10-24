@@ -4,6 +4,7 @@ import logo from '../../assets/YNL.gif'
 import {useFormik} from 'formik';
 import * as Yup from 'yup'
 import {t} from "i18n-js";
+import { Linking } from 'react-native';
 
 
 export default ({onRegister, loading}) => {
@@ -64,6 +65,11 @@ export default ({onRegister, loading}) => {
                             {formik.errors.repeatPassword}
                         </FormControl.ErrorMessage>
                     </FormControl>
+                    <Text underline
+                        size={'md'}
+                        onPress={() => Linking.openURL('https://www.grupohuman.com/aviso-privacidad')}>
+                    Aviso de privacidad
+                    </Text>
                     <Button isLoading={loading} mt="2"
                             onPress={formik.handleSubmit} colorScheme="orange">
                         {t('continue')}

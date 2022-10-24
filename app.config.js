@@ -37,14 +37,14 @@ const commonConfig = {
 };
 
 const ios = {
-    buildNumber: "34",
+    buildNumber: "36",
     supportsTablet: false,
     bundleIdentifier: "com.hiumanlab.ynl",
     usesAppleSignIn: true,
 };
 
 const android = {
-    versionCode: 34,
+    versionCode: 36,
     adaptiveIcon: {
         foregroundImage: "./assets/adaptive-icon.png",
         backgroundImage: "./assets/adaptive-icon-bg.png"
@@ -62,14 +62,14 @@ module.exports = () => {
         return {
             ...commonConfig,
             slug: "ynl",
-            version: "1.4.0",
+            version: "1.6.0",
             ios: ios,
         };
     } else if (process.env.APP_ENV === "android") {
         return {
             ...commonConfig,
             slug: "ynl",
-            version: "1.4.0",
+            version: "1.6.0",
             android: android
         };
     } else if (process.env.APP_ENV === "expo") {

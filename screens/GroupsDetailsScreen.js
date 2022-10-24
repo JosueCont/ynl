@@ -8,7 +8,7 @@ import {
     Stack,
     Button,
     Skeleton,
-    Icon, HStack, VStack,
+    Icon, HStack, VStack,useToast, Box
 } from "native-base";
 import {t} from 'i18n-js';
 import { MaterialIcons } from "@expo/vector-icons";
@@ -35,6 +35,8 @@ const GroupsDetailsScreen = ({navigation, route}) => {
     const [idUpd, setIdUpd] = useState(null)
     const [modalSuccessVisible, setModalSuccessVisible] = useState(null);
     const [saving, setSaving] = useState(false)
+    const [idOwnerAssigned, setIdOwnerAssigned] = useState(null)
+    const toast = useToast();
 
 
     useEffect(() => {
@@ -55,6 +57,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
         try{
             setLoadingStats(true)
             const response = await ApiApp.groupStats(route.params.groupId,option)
+            setIdOwnerAssigned(route?.params?.thisOwner)
             // console.log('respuesta',response.data.data);
             setStatsMembers(response.data.data.membersArray)
         } catch (e) {
@@ -82,18 +85,19 @@ const GroupsDetailsScreen = ({navigation, route}) => {
 
             for (let item of response.data.data.requests) {
                 // console.log(item)
-
                 if (item.user){
                     membersArray.push({
                         id: item.user.id,
                         name: item.user.email,
-                        status: item.status
+                        status: item.status,
+                        request_id: item.id
                     })
                 } else {
                     membersArray.push({
                         id: null,
                         name: item.public_email,
-                        status: item.status
+                        status: item.status,
+                        request_id: item.id
                     })
                 }
 
@@ -126,11 +130,47 @@ const GroupsDetailsScreen = ({navigation, route}) => {
         try {
             const dataPost = {data: {groupId: groupId, member: userId}}
             const response = await ApiApp.deleteMemberGroup(dataPost);
-            refreshView()
+            if (response?.data?.data){
+              toast.show({
+                duration: 2000,
+                render: () => {
+                    return <Box bg="emerald.500" rounded="sm">
+                        <Text color={"white"} fontSize={16} p={3}>{userId === idOwnerAssigned ? 'Haz salido del grupo exitosamente': 'Se eliminó usuario exitosamente'}</Text>
+                    </Box>;
+                }
+            });
+            }
+
+            // console.log(response?.data?.data)
+            if (userId === idOwnerAssigned){
+              navigation.goBack(0);
+            }else{
+              refreshView()
+            }
         } catch (e) {
             console.log("groupDeleteFunction error => ",e.toString())
         }
     }
+
+    const resendEmailFunction = async (item) => {
+      try {
+          const dataPost = {request_id: item.request_id}
+          const response = await ApiApp.reSendEmailMemberGroup(dataPost);
+          if (response?.data?.data === 'Ok'){
+            toast.show({
+              duration: 2000,
+              render: () => {
+                  return <Box bg="emerald.500" rounded="sm">
+                      <Text color={"white"} fontSize={16} p={3}>{'Se reenvió correo de manera exitosa'}</Text>
+                  </Box>;
+                  }
+              });
+          }
+          refreshView()
+      } catch (e) {
+          console.log("groupDeleteFunction error => ",e.toString())
+      }
+  }
 
     const openModalUpd = () => {
         setUpdGroupName(true);
@@ -387,13 +427,14 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                         thisOwner={item.id === route.params.thisOwner}
                         isOwner={route.params.isOwner}
                         title={item.name}
+                        thisCurrentUser = {idOwnerAssigned ? item.id === idOwnerAssigned : false}
                         pending={
                           item.status === 0 || item.status === 2
                         }
                         deleteAction={() => {
                           Alert.alert(
                             "Your Next Level",
-                            t('groups_delete_member'),
+                            item.id === idOwnerAssigned ? '¿Deseas salir del grupo?':t('groups_delete_member'),
                             [
                               {
                                 text: "No",
@@ -401,11 +442,31 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                                 style: "cancel",
                               },
                               {
-                                text: t('delete'),
+                                text: item.id === idOwnerAssigned ? 'Salir':'Desvincular',
                                 onPress: () =>
                                   groupDeleteFunction(
                                     item.id,
                                     route.params.groupId
+                                  ),
+                              },
+                            ]
+                          );
+                        }}
+                        emailConfirmation={() => {
+                          Alert.alert(
+                            "Your Next Level",
+                            `¿Deseas reenviar la invitación a ${item.name}?`,
+                            [
+                              {
+                                text: "No",
+                                onPress: () => console.log("Cancel Pressed"),
+                                style: "cancel",
+                              },
+                              {
+                                text: 'Enviar',
+                                onPress: () =>
+                                resendEmailFunction(
+                                    item
                                   ),
                               },
                             ]
