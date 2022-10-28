@@ -1,6 +1,7 @@
 import APIKit, { baseURL } from "./AxiosApi";
 import _ from "lodash";
 import moment from "moment";
+import jwt_decode from 'jwt-decode';
 
 class ApiApp {
   static ApisType = (url, method = "post", params = {}, formdata = null) => {
@@ -81,17 +82,33 @@ class ApiApp {
     return ApiApp.ApisType("/api/auth/khonnect", "post", data);
   };
 
-  static loginWithApple = (access_token) => {
+  static loginWithApple = async (access_token) => {
+
+    const token_des = jwt_decode(access_token.identityToken)
+    let request = {
+      typeAccess: 'apple',
+      username : access_token.email ? access_token.email : token_des.email,
+      firstName : access_token.fullName?.givenName ? access_token.fullName.givenName : "",
+      lastName : access_token.fullName?.familyName ? access_token.fullName.familyName: ""
+    }
+    // return ApiApp.ApisType(
+    //   `/api/auth/apple/callback?access_token=${access_token}`,
+    //   "get"
+    // );
     return ApiApp.ApisType(
-      `/api/auth/apple/callback?access_token=${access_token}`,
-      "get"
+      `/api/auth/register`,
+      "post",request
     );
   };
 
   static loginWithGoogle = (access_token) => {
+    // return ApiApp.ApisType(
+    //   `/api/auth/google/callback?access_token=${access_token}`,
+    //   "get"
+    // );
     return ApiApp.ApisType(
-      `/api/auth/google/callback?access_token=${access_token}`,
-      "get"
+      `/api/auth/register`,
+      "post",{typeAccess: 'google', token: access_token}
     );
   };
 

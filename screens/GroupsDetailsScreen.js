@@ -36,6 +36,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
     const [modalSuccessVisible, setModalSuccessVisible] = useState(null);
     const [saving, setSaving] = useState(false)
     const [idOwnerAssigned, setIdOwnerAssigned] = useState(null)
+    const [numMembersActive, setNumMembersActive] = useState(1)
     const toast = useToast();
 
 
@@ -111,6 +112,14 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                 })
             }
 
+            if (response?.data?.data?.group[0]?.members.length > 0){
+              if(route?.params?.isOwner){
+                setNumMembersActive(response.data.data.group[0].members.length + response.data.data.requests.length +1)
+              }else{
+                setNumMembersActive(response.data.data.group[0].members.length + 1)
+              }
+            }
+
             if (response.data.data.group[0].owner) {
                 membersArray.push({
                     id: response.data.data.group[0].owner.id,
@@ -126,9 +135,9 @@ const GroupsDetailsScreen = ({navigation, route}) => {
         }
     }
 
-    const groupDeleteFunction = async (userId, groupId) => {
+    const groupDeleteFunction = async (userId, groupId, is_owner) => {
         try {
-            const dataPost = {data: {groupId: groupId, member: userId}}
+            const dataPost = {data: {groupId: groupId, member: userId, is_owner: is_owner}}
             const response = await ApiApp.deleteMemberGroup(dataPost);
             if (response?.data?.data){
               toast.show({
@@ -274,7 +283,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                 }}
                 onPress={() => setTabPosition(1)}
               >
-                <Text fontSize={18}>{t('members')} {members && `(${members.length})`} </Text>
+                <Text fontSize={18}>{t('members')} {numMembersActive && `(${numMembersActive})`} </Text>
               </TouchableOpacity>
             </View>
 
@@ -331,8 +340,8 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                                   as={MaterialIcons}
                                   mr={5}
                                   pt={2}
-                                  style={{color:Math.round(ele.value)>50?"green":"red"}}
-                                  name={Math.round(ele.value)>50?"sentiment-satisfied-alt":"sentiment-dissatisfied"}
+                                  style={{color:Math.round(ele.value)>50?"green":Math.round(ele.value)==50?"orange":"red"}}
+                                  name={Math.round(ele.value)>50?"sentiment-satisfied-alt":Math.round(ele.value)==50?"sentiment-neutral":"sentiment-dissatisfied"}
                               />
                               {'  '}
 
@@ -352,7 +361,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                         </Stack>
                         <Progress
                           size={"xl"}
-                          colorScheme={Math.round(ele.value)>50?'green':'red'}
+                          colorScheme={Math.round(ele.value)>50?"green":Math.round(ele.value)==50?"orange":"red"}
                           value={Math.round(ele.value)}
                         />
                           <View flexDirection={'row'}>
@@ -431,7 +440,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                         pending={
                           item.status === 0 || item.status === 2
                         }
-                        deleteAction={() => {
+                        deleteAction={(is_owner) => {
                           Alert.alert(
                             "Your Next Level",
                             item.id === idOwnerAssigned ? '¿Deseas salir del grupo?':t('groups_delete_member'),
@@ -446,7 +455,8 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                                 onPress: () =>
                                   groupDeleteFunction(
                                     item.id,
-                                    route.params.groupId
+                                    route.params.groupId,
+                                    is_owner
                                   ),
                               },
                             ]
@@ -479,7 +489,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
             )}
           </View>
         </ScrollView>
-        {tabPosition === 1 && (
+        {tabPosition === 1 && route.params.isOwner && (
           <View flex={0.1}>
             <Button
               colorScheme={"orange"}

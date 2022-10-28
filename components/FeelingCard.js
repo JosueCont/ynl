@@ -9,9 +9,10 @@ import {MaterialIcons} from "@expo/vector-icons";
 const FeelingCard = ({feelingCard,user}) => {
 
 
-    useEffect(() => {
-        console.log(feelingCard)
-    }, [])
+    // useEffect(() => {
+    //     console.log("El feelingCard")
+    //     console.log(feelingCard)
+    // }, [])
 
     return (
          <Box  pl="4" pr="5" py="2">
@@ -21,7 +22,7 @@ const FeelingCard = ({feelingCard,user}) => {
                      <Image size="60px" source={{uri:feelingCard?.most_select?.icon}} alt="img"/>
                      <VStack w={'80%'} h={'50px'}>
                          <Text style={{color:`#${feelingCard?.most_select?.color}`}} ml={3} fontSize={"sm"}>
-                             Más frecuente:  {feelingCard?.most_select?.name}
+                             {feelingCard?.is_last_emotion?"Última emoción:":"Más frecuente:"}  {feelingCard?.most_select?.name}
                          </Text>
                          <Stack direction={"row"}>
                              <Text ml={3} fontSize={"sm"}>
@@ -30,7 +31,7 @@ const FeelingCard = ({feelingCard,user}) => {
                          </Stack>
                          <Progress
                              size={"md"}
-                             colorScheme={Math.round(feelingCard.percent)>50?'green':'red'}
+                             colorScheme={Math.round(feelingCard.percent)>50?"green":Math.round(feelingCard.percent)==50?"orange":"red"}
                              value={Math.round(feelingCard.percent)}
                          />
                          <View flexDirection={'row'}>

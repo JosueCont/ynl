@@ -32,7 +32,7 @@ const authDuck = (state = initialData, action) => {
         case LOGIN_EMAIL_ERROR:
             return { ...state, loading: false, isLogged: false }
         case LOGIN_EMAIL_SUCCESS:
-            return { ...state, loading: false, user: action.payload.user, jwt: action.payload.jwt, isLogged: true }
+            return { ...state, loading: false, userSiteConfig:action.payload.site, user: action.payload.user, jwt: action.payload.jwt, isLogged: true }
         case SUCCESS:
             return { ...state, ...action.payload }
         case LOGOUT:
@@ -59,7 +59,7 @@ export let createSession = (data) => async (dispatch) => {
         if(data?.site){
             dispatch({ type: LOGIN_KHOR_SUCCESS, payload: { user: data.user, jwt: data.jwt, site: data.site } });
         }else{
-            dispatch({ type: LOGIN_EMAIL_SUCCESS, payload: { user: data.user, jwt: data.jwt } });
+            dispatch({ type: LOGIN_EMAIL_SUCCESS, payload: { user: data.user, jwt: data.jwt, site: null } });
         }
 
         return true
@@ -96,7 +96,7 @@ export let loginEmail = (username, password) => async (dispatch) => {
 
         // console.log(response, 60)
         await saveUserData(response.data.user, response.data.jwt)
-        dispatch({ type: LOGIN_EMAIL_SUCCESS, payload: { user: response.data.user, jwt: response.data.jwt } });
+        dispatch({ type: LOGIN_EMAIL_SUCCESS, payload: { user: response.data.user, jwt: response.data.jwt, site: null } });
         // console.log('login exitoso con email', response.data)
         return { status: 200, message: 'ok' }
     } catch (e) {
@@ -142,8 +142,8 @@ export let loginGoogle = (accessToken) => async (dispatch) => {
         dispatch({ type: LOGIN_EMAIL });
         // console.log('accessToken=========', accessToken)
         let response = await ApiApp.loginWithGoogle(accessToken)
-        await saveUserData(response.data.user, response.data.jwt)
-        dispatch({ type: LOGIN_EMAIL_SUCCESS, payload: { user: response.data.user, jwt: response.data.jwt } });
+        await saveUserData(response.data.user, response.data.jwt, response.data.site)
+        dispatch({ type: LOGIN_EMAIL_SUCCESS, payload: { user: response.data.user, jwt: response.data.jwt, site: response.data.site } });
         // console.log('login exitoso con google', response.data.user)        
         return true;
     } catch (e) {
@@ -158,8 +158,9 @@ export let loginApple = (accessToken) => async (dispatch) => {
         dispatch({ type: LOGIN_EMAIL });
         // console.log('accessToken=========', accessToken)
         let response = await ApiApp.loginWithApple(accessToken)
-        await saveUserData(response.data.user, response.data.jwt)
-        dispatch({ type: LOGIN_EMAIL_SUCCESS, payload: { user: response.data.user, jwt: response.data.jwt } });
+        console.log("El usuario que llega...: ", response.data)
+        await saveUserData(response.data.user, response.data.jwt, response.data.site)
+        dispatch({ type: LOGIN_EMAIL_SUCCESS, payload: { user: response.data.user, jwt: response.data.jwt, site: response.data.site } });
         console.log('login exitoso con apple', response.data.user)
         return true;
     } catch (e) {

@@ -33,7 +33,13 @@ const GroupsMemberItem = ({title, pending = true, isOwner, deleteAction, thisOwn
                 </View>
                 {((isOwner && !pending && !thisOwner) || (!isOwner && thisCurrentUser)) &&
                         <View flex={0.2} alignItems={'flex-end'} justifyContent={'center'}>
-                            <TouchableOpacity onPress={() => deleteAction()} style={{
+                            <TouchableOpacity onPress={() => {
+                                if (!isOwner && thisCurrentUser){
+                                    deleteAction(false)
+                                }else{
+                                    deleteAction(true)
+                                }
+                            }} style={{
                                 height: 25,
                                 width: 25,
                                 backgroundColor: Colors.red,

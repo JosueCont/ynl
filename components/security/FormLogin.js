@@ -25,6 +25,7 @@ export default (props) => {
     const [openLinkedIn, setOpenLinkedIn] = useState(false)
     const [request, responseGoogle, promptAsync] = Google.useAuthRequest(
         {
+            responseType: "id_token",
             iosClientId:  "139145047906-9r09uc555jsi528qnrbjs440g84h1okt.apps.googleusercontent.com",
             androidClientId: "139145047906-u7lpmp4vuhk0cd3hc88f3k8tv9afe01b.apps.googleusercontent.com",
             expoClientId: "139145047906-8teh3chgt6as7mnhg7c5mrco0fka7bea.apps.googleusercontent.com" 
@@ -109,27 +110,28 @@ export default (props) => {
 
       useEffect(()=>{
         if (responseGoogle?.type === 'success') {
-            setAccessTockenGoogle(responseGoogle.authentication.accessToken);
-            console.log(responseGoogle);
-            getUserData();            
+            setAccessTockenGoogle(responseGoogle.params.id_token);
+            getUserData(responseGoogle.params.id_token);            
         }        
     }, [responseGoogle]);
 
-    const getUserData = async() => {
+    const getUserData = async(idToken) => {
         try {
             setGoogleSubmitting(true);
-            console.log(responseGoogle.authentication.state);
-            let userInfo = await fetch(`https://www.googleapis.com/userinfo/v2/me/`,{ //${response.authentication.state}?personFields=birthdays,genders&access_token=${response.authentication.accessToken}
-                headers: {Authorization: `Bearer ${responseGoogle.authentication.accessToken}`}
-            })
-            let UserDataGoogle;
-            props.onLoginGoogle(responseGoogle.authentication.accessToken)
-            userInfo.json().then(data=>{
-                UserDataGoogle = data;
-                setGoogleSubmitting(false);
-            }).catch(e => {
-                console.log('FormLogin userInfo error => ',e.toString())
-            })
+            // console.log(responseGoogle.authentication.state);
+            // let userInfo = await fetch(`https://www.googleapis.com/userinfo/v2/me/`,{ //${response.authentication.state}?personFields=birthdays,genders&access_token=${response.authentication.accessToken}
+            //     headers: {Authorization: `Bearer ${responseGoogle.authentication.accessToken}`}
+            // })
+            // let UserDataGoogle;
+            await props.onLoginGoogle(idToken)
+            setGoogleSubmitting(false);
+            // userInfo.json().then(data=>{
+            //     // UserDataGoogle = data;
+            //     // setGoogleSubmitting(false);
+            //     // console.log(data)
+            // }).catch(e => {
+            //     console.log('FormLogin userInfo error => ',e.toString())
+            // })
         } catch (e) {
             console.log('FormLogin getUserData error => ',e.toString())
         }

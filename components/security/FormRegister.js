@@ -1,13 +1,16 @@
-import * as React from "react";
-import {Button, FormControl, Image, Input, Text, View} from "native-base";
+import React, {useEffect, useState} from "react";
+import {Button, FormControl, Image, Input, Text, View, Checkbox, Spacer} from "native-base";
 import logo from '../../assets/YNL.gif'
 import {useFormik} from 'formik';
 import * as Yup from 'yup'
 import {t} from "i18n-js";
 import { Linking } from 'react-native';
+import {getShadowCircleStyle} from "../../utils/functions";
 
 
 export default ({onRegister, loading}) => {
+
+    const [privacidad, setPrivacidad] = useState(false);
 
     const formik = useFormik({
         initialValues: {
@@ -65,13 +68,24 @@ export default ({onRegister, loading}) => {
                             {formik.errors.repeatPassword}
                         </FormControl.ErrorMessage>
                     </FormControl>
-                    <Text underline
-                        size={'md'}
-                        onPress={() => Linking.openURL('https://www.grupohuman.com/aviso-privacidad')}>
-                    Aviso de privacidad
-                    </Text>
-                    <Button isLoading={loading} mt="2"
-                            onPress={formik.handleSubmit} colorScheme="orange">
+                    <View flexDirection={'row'} style={{paddingTop:10, paddingBottom:10}}>
+                        <Checkbox  colorScheme="orange" size={'md'} isChecked={privacidad}
+                                    onChange={(v) => {
+                                        setPrivacidad(v)
+                                    }}/>
+                        <Text
+                            size={'md'}>
+                            {' He leído y acepto el '}
+                        </Text>
+                        <Text underline
+                            size={'md'}
+                            onPress={() => Linking.openURL('https://www.grupohuman.com/aviso-privacidad')}>
+                            aviso de privacidad
+                        </Text>
+                    </View>
+                    
+                    <Button isLoading={loading} mt="2" disabled={!privacidad}
+                            onPress={formik.handleSubmit} colorScheme={privacidad?'orange':'gray'}>
                         {t('continue')}
                     </Button>
 

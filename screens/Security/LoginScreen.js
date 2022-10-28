@@ -128,7 +128,7 @@ const LoginScreen = ({productsDuck, navigation, loginEmail, loginGoogle,loginApp
             });
 
             console.log(credential)
-            await loginWithApple(credential.authorizationCode);
+            await loginWithApple(credential);
         }catch (e){
             console.log('onLoginApple===>', e)
         }

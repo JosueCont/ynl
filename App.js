@@ -12,6 +12,7 @@ import NavigationContainerConfig from "./Navigation/NavigationContainerConfig";
 import moment from 'moment';
 
 const Stack = createStackNavigator();
+// LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 const store = generateStore();
 
