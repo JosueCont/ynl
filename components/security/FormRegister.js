@@ -72,11 +72,13 @@ export default ({onRegister, loading}) => {
                         <Checkbox  colorScheme="orange" size={'md'} isChecked={privacidad}
                                     onChange={(v) => {
                                         setPrivacidad(v)
-                                    }}/>
-                        <Text
-                            size={'md'}>
-                            {' He leído y acepto el '}
-                        </Text>
+                                    }}>
+                            <Text
+                                size={'md'}>
+                                {' He leído y acepto el '}
+                            </Text>
+                        </Checkbox>
+
                         <Text underline
                             size={'md'}
                             onPress={() => Linking.openURL('https://www.grupohuman.com/aviso-privacidad')}>
