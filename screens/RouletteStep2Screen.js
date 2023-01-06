@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {CheckIcon, Image, Select, Text, View} from "native-base";
 import {connect} from "react-redux";
-import {ScrollView} from "react-native";
+import {ScrollView, ActivityIndicator} from "react-native";
 import ApiApp from "../utils/ApiApp";
 import {Colors} from "../utils/Colors";
 import {translateEmotions} from "../utils/functions"
@@ -12,9 +12,13 @@ const RouletteStep2Screen = ({route, navigation}) => {
 
     const [service, setService] = useState(null);
     const [subParents, setSubParents] = useState(null);
+    const [loaded, setLoaded] = useState(false)
 
 
     useEffect(() => {
+        setTimeout(() =>{
+            setLoaded(false)
+        },2000)
         setSubParents(null)
         getSubParents(route.params.parentItem.id)
         //console.log('param',route.params.parentItem.color)
@@ -22,6 +26,7 @@ const RouletteStep2Screen = ({route, navigation}) => {
         // navigation.setOptions({
         //     headerStyle: {backgroundColor:'#'+ route.params.parentItem.attributes.color}
         // })
+
     }, [route.params.parentItem.id])
 
     const getSubParents = async (parentId) => {
@@ -50,12 +55,20 @@ const RouletteStep2Screen = ({route, navigation}) => {
                 <View w={200} h={200} bgColor={'white'} borderRadius={100} my={10} alignItems={'center'}
                       justifyContent={'center'}>
                     {
+                        
                         subParents && _.has(route.params, 'parentItem.attributes.icon.data.attributes.url') &&
                         <Image
+                            onLoad={()=>setLoaded(true)}
                             source={{uri: route.params.parentItem.attributes.animation.data.attributes.url}}
                             style={{width: 150, height: 250, resizeMode: 'contain'}} alt="img"/>
-
                     }
+                    {loaded ? null : 
+
+                        <ActivityIndicator size={'large'} color={'#'+route.params.parentItem.attributes.color} style={{ width: loaded? 150 : 0, height: loaded? 250 : 0 }}/>
+                            // <Text style={styles.shadow}
+                            // fontSize={18} textAlign={'center'} color={'black'}> hola </Text>
+                    }
+                        
                 </View>
                 <Select
 
