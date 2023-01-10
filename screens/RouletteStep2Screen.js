@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {CheckIcon, Image, Select, Text, View} from "native-base";
 import {connect} from "react-redux";
-import {ScrollView} from "react-native";
+import {ScrollView, ActivityIndicator} from "react-native";
 import ApiApp from "../utils/ApiApp";
 import {Colors} from "../utils/Colors";
 import {translateEmotions} from "../utils/functions"
@@ -12,9 +12,11 @@ const RouletteStep2Screen = ({route, navigation}) => {
 
     const [service, setService] = useState(null);
     const [subParents, setSubParents] = useState(null);
+    const [loaded, setLoaded] = useState(false)
 
 
     useEffect(() => {
+        setLoaded(false)
         setSubParents(null)
         getSubParents(route.params.parentItem.id)
         //console.log('param',route.params.parentItem.color)
@@ -52,10 +54,17 @@ const RouletteStep2Screen = ({route, navigation}) => {
                     {
                         subParents && _.has(route.params, 'parentItem.attributes.icon.data.attributes.url') &&
                         <Image
+                            onLoadEnd={()=>setTimeout(() =>{
+                                setLoaded(true)
+                            },100)}
                             source={{uri: route.params.parentItem.attributes.animation.data.attributes.url}}
-                            style={{width: 150, height: 250, resizeMode: 'contain'}} alt="img"/>
-
+                            style={{width: loaded?150:1, height: loaded?250:1, resizeMode: 'contain'}} alt="img0"/>
                     }
+                    {loaded ? null : 
+
+                        <ActivityIndicator size={'large'} color={'#'+route.params.parentItem.attributes.color} style={{ width: loaded? 150 : 0, height: loaded? 250 : 0 }}/>
+                    }
+                        
                 </View>
                 <Select
 

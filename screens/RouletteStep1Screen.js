@@ -52,15 +52,10 @@ const RouletteStep1Screen = ({navigation}) => {
     const definitionOfFeeling = ()=>{
         let indexSelected = 0
         if (gradLast.value !== 0){
-            let positive = gradLast.value >= 0 ?true:false
-            let valueDeg = Math.abs(parseInt(gradLast.value%360))
+            let valueDeg = Math.abs(parseInt(360-gradLast.value))
             let valueRangeEmoticon = 360/emotions.length
             let chosenIndex = Math.floor(valueDeg/valueRangeEmoticon)
-            if (!positive){
-                indexSelected = emotions.length - ( 1 + chosenIndex)
-            }else{
-                indexSelected =chosenIndex
-            }
+            indexSelected =chosenIndex
         }
         return emotions[indexSelected]
     }
@@ -75,16 +70,20 @@ const RouletteStep1Screen = ({navigation}) => {
     const centery = useSharedValue(0);
     const gradLast = useSharedValue(0);
     const saveValue = useSharedValue(0)
+    const grad0 = useSharedValue(0);
+    const giroPositivo = useSharedValue(0);
     
 
     const onPanGestureEvent = useAnimatedGestureHandler({
       onStart: (_, ctx) => {
         ctx.startX = translateX.value;
         ctx.startY = translateY.value;
-        centery.value = 415
-        centerx.value = 208
-        gradLast.value = 0;
+        centery.value = 500
+        centerx.value = 218
+        // gradLast.value = 0;
         saveValue.value = ctx.velocityY;
+        velX.value = 0
+        velY.value = 0
 
       },
       onActive: (event, ctx) => {
@@ -116,30 +115,78 @@ const RouletteStep1Screen = ({navigation}) => {
         let x1 = absX.value
         let mLast = (-centerY+y1)/(centerX-x1)
         let degLast = Math.atan(mLast)*180/Math.PI;
-        console.log('grados',gradLast.value)
+        let degCurrent;
 
         if (Math.sign(positionCurrentX) < 0 && Math.sign(positionCurrentY)>0){
-            gradLast.value = (-degLast+ translateX.value);
-            //if(translateX.value > translateY.value) gradLast.value = -degLast+ translateX.value;
-            
-            //gradLast.value = -(degLast+180) 
+            degCurrent = degLast+180
         }else if(Math.sign(positionCurrentX) > 0 && Math.sign(positionCurrentY)>0){
-            gradLast.value = (-degLast - Math.sqrt(Math.pow(translateX.value,2) + Math.pow(translateY.value,2)))
-            //if(translateY.value > translateX.value) gradLast.value = -degLast - translateY.value
-            
-            //gradLast.value = -degLast 
+            degCurrent = degLast
         }else if(Math.sign(positionCurrentX) > 0 && Math.sign(positionCurrentY)<0){
-            gradLast.value = (-degLast - translateX.value)
-            //if(translateX.value>translateY.value) gradLast.value = -degLast - translateX.value
-            
-            //gradLast.value = -degLast 
+            degCurrent = degLast+360
         }else if(Math.sign(positionCurrentX) < 0 && Math.sign(positionCurrentY)<0){
-            gradLast.value = (-degLast - translateY.value)
-            //if(translateY.value > translateX.value) gradLast.value = -degLast - translateY.value
-             
-            //gradLast.value = -(degLast+180) 
+            degCurrent = degLast+180
+        }else if(Math.sign(positionCurrentX) === 0 && Math.sign(positionCurrentY)<0){
+            degCurrent = 270
+        }else if(Math.sign(positionCurrentX) === 0 && Math.sign(positionCurrentY)>0){
+            degCurrent = 90
+        }else if(Math.sign(positionCurrentY) === 0 && Math.sign(positionCurrentX)<0){
+            degCurrent = 180
+        }else if(Math.sign(positionCurrentY) === 0 && Math.sign(positionCurrentX)>0){
+            degCurrent = 0
         }
-        return gradLast.value
+
+        if (degCurrent !== undefined){
+            if (Math.abs(degCurrent-gradLast.value)<1 || Math.abs(degCurrent-gradLast.value)> 359){
+                if (-grad0.value + degCurrent < 0){
+                    giroPositivo.value = 0
+                }else{
+                    giroPositivo.value = 1
+                }
+
+                if(degCurrent < 0){
+                    gradLast.value = 360+degCurrent
+                    grad0.value = 360+degCurrent
+                }else if(degCurrent > 360){
+                    gradLast.value = degCurrent - 360
+                    grad0.value = degCurrent - 360
+                }else{
+                    gradLast.value = degCurrent%360
+                    grad0.value = degCurrent%360
+                }
+            }else{
+                if(Math.abs(grad0.value - degCurrent) >0){
+                    if (-grad0.value + degCurrent < 0){
+                        giroPositivo.value = 0
+                    }else{
+                        giroPositivo.value = 1
+                    }
+                    if (Math.abs(grad0.value - degCurrent) < (Math.sqrt(Math.pow(velX.value,2)+Math.pow(velY.value,2)) < 200 ?10:40) || Math.abs(grad0.value - degCurrent) > (Math.sqrt(Math.pow(velX.value,2)+Math.pow(velY.value,2)) < 200 ?350:320)){
+                        gradLast.value += -grad0.value + degCurrent
+                        if(gradLast.value < 0){
+                            let newValue_grad = 360+gradLast.value
+                            gradLast.value = newValue_grad
+                            grad0.value = newValue_grad
+                        }else if(gradLast.value > 360){
+                            let newValue_grad = gradLast.value - 360
+                            gradLast.value = newValue_grad
+                            grad0.value = newValue_grad
+                        }else{
+                            let newValue_grad = gradLast.value%360
+                            gradLast.value=newValue_grad
+                            grad0.value = newValue_grad
+                        }
+                    }else{
+                        if(degCurrent < 0){
+                            grad0.value = 360-degCurrent
+                        }else{
+                            grad0.value = degCurrent%360
+                        }
+                    }
+                }
+            }
+        }
+
+        return -gradLast.value%360
       }
       return {
         transform: [
