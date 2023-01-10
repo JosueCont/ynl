@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {Animated} from 'react-native';
+//import {Animated} from 'react-native';
 import circleParts from '../assets/ruleta.png';
-import {useSharedValue} from "react-native-reanimated";
+//import {useSharedValue} from "react-native-reanimated";
 import {Button, Image, Text, View} from "native-base";
 import ScreenBaseV1 from "./Components/ScreenBaseV1";
 import {Colors} from "../utils/Colors";
@@ -11,6 +11,7 @@ import _ from "lodash";
 import {t} from 'i18n-js';
 import * as GH from 'react-native-gesture-handler';
 import moment from 'moment'
+import Animated,{useSharedValue, useAnimatedGestureHandler,withSpring, useAnimatedStyle} from 'react-native-reanimated';
 
 const RouletteStep1Screen = ({navigation}) => {
 
@@ -50,29 +51,153 @@ const RouletteStep1Screen = ({navigation}) => {
 
     const definitionOfFeeling = ()=>{
         let indexSelected = 0
-        if (deg !== 0){
-            let positive = deg >= 0 ?true:false
-            let valueDeg = Math.abs(parseInt(deg%360))
+        if (gradLast.value !== 0){
+            let valueDeg = Math.abs(parseInt(360-gradLast.value))
             let valueRangeEmoticon = 360/emotions.length
             let chosenIndex = Math.floor(valueDeg/valueRangeEmoticon)
-            if (!positive){
-                indexSelected = emotions.length - ( 1 + chosenIndex)
-            }else{
-                indexSelected =chosenIndex
-            }
+            indexSelected =chosenIndex
         }
         return emotions[indexSelected]
     }
 
+    const translateX = useSharedValue(0);
+    const translateY = useSharedValue(0);
+    const velX = useSharedValue(0);
+    const velY = useSharedValue(0);
+    const absX = useSharedValue(0);
+    const absY = useSharedValue(0);
+    const centerx = useSharedValue(0);
+    const centery = useSharedValue(0);
+    const gradLast = useSharedValue(0);
+    const saveValue = useSharedValue(0)
+    const grad0 = useSharedValue(0);
+    const giroPositivo = useSharedValue(0);
+    
 
-    const rotation = useSharedValue(1);
-    const savedRotation = useSharedValue(1);
-    const [centerX, setCenterX] = useState(150)
-    const [centerY, setCenterY] = useState(150)
-    const [x1, setX1] = useState(null)
-    const [y1, setY1] = useState(null)
+    const onPanGestureEvent = useAnimatedGestureHandler({
+      onStart: (_, ctx) => {
+        ctx.startX = translateX.value;
+        ctx.startY = translateY.value;
+        centery.value = 500
+        centerx.value = 218
+        // gradLast.value = 0;
+        saveValue.value = ctx.velocityY;
+        velX.value = 0
+        velY.value = 0
 
-    const rotationGesture = GH.Gesture.Rotation()
+      },
+      onActive: (event, ctx) => {
+        translateX.value =  ctx.startX +event.translationX;
+        translateY.value = ctx.startY + event.translationY;
+        velX.value = event.velocityX
+        velY.value = event.velocityY
+        absX.value = event.absoluteX
+        absY.value = event.absoluteY;
+        saveValue.value = ctx.velocityY+ event.velocityY
+
+      },
+      onEnd: (_) => {
+        //translateX.value = withSpring(0);
+        // console.log(translateX.value + translateY.value)
+
+      },
+    });
+
+    const animatedStyle = useAnimatedStyle(() => {
+      const defineGrad = () =>{
+
+        let positionCurrentY = centery.value - absY.value
+        let positionCurrentX = absX.value - centerx.value
+
+        let centerY = centery.value
+        let centerX = centerx.value
+        let y1 = absY.value
+        let x1 = absX.value
+        let mLast = (-centerY+y1)/(centerX-x1)
+        let degLast = Math.atan(mLast)*180/Math.PI;
+        let degCurrent;
+
+        if (Math.sign(positionCurrentX) < 0 && Math.sign(positionCurrentY)>0){
+            degCurrent = degLast+180
+        }else if(Math.sign(positionCurrentX) > 0 && Math.sign(positionCurrentY)>0){
+            degCurrent = degLast
+        }else if(Math.sign(positionCurrentX) > 0 && Math.sign(positionCurrentY)<0){
+            degCurrent = degLast+360
+        }else if(Math.sign(positionCurrentX) < 0 && Math.sign(positionCurrentY)<0){
+            degCurrent = degLast+180
+        }else if(Math.sign(positionCurrentX) === 0 && Math.sign(positionCurrentY)<0){
+            degCurrent = 270
+        }else if(Math.sign(positionCurrentX) === 0 && Math.sign(positionCurrentY)>0){
+            degCurrent = 90
+        }else if(Math.sign(positionCurrentY) === 0 && Math.sign(positionCurrentX)<0){
+            degCurrent = 180
+        }else if(Math.sign(positionCurrentY) === 0 && Math.sign(positionCurrentX)>0){
+            degCurrent = 0
+        }
+
+        if (degCurrent !== undefined){
+            if (Math.abs(degCurrent-gradLast.value)<1 || Math.abs(degCurrent-gradLast.value)> 359){
+                if (-grad0.value + degCurrent < 0){
+                    giroPositivo.value = 0
+                }else{
+                    giroPositivo.value = 1
+                }
+
+                if(degCurrent < 0){
+                    gradLast.value = 360+degCurrent
+                    grad0.value = 360+degCurrent
+                }else if(degCurrent > 360){
+                    gradLast.value = degCurrent - 360
+                    grad0.value = degCurrent - 360
+                }else{
+                    gradLast.value = degCurrent%360
+                    grad0.value = degCurrent%360
+                }
+            }else{
+                if(Math.abs(grad0.value - degCurrent) >0){
+                    if (-grad0.value + degCurrent < 0){
+                        giroPositivo.value = 0
+                    }else{
+                        giroPositivo.value = 1
+                    }
+                    if (Math.abs(grad0.value - degCurrent) < (Math.sqrt(Math.pow(velX.value,2)+Math.pow(velY.value,2)) < 200 ?10:40) || Math.abs(grad0.value - degCurrent) > (Math.sqrt(Math.pow(velX.value,2)+Math.pow(velY.value,2)) < 200 ?350:320)){
+                        gradLast.value += -grad0.value + degCurrent
+                        if(gradLast.value < 0){
+                            let newValue_grad = 360+gradLast.value
+                            gradLast.value = newValue_grad
+                            grad0.value = newValue_grad
+                        }else if(gradLast.value > 360){
+                            let newValue_grad = gradLast.value - 360
+                            gradLast.value = newValue_grad
+                            grad0.value = newValue_grad
+                        }else{
+                            let newValue_grad = gradLast.value%360
+                            gradLast.value=newValue_grad
+                            grad0.value = newValue_grad
+                        }
+                    }else{
+                        if(degCurrent < 0){
+                            grad0.value = 360-degCurrent
+                        }else{
+                            grad0.value = degCurrent%360
+                        }
+                    }
+                }
+            }
+        }
+
+        return -gradLast.value%360
+      }
+      return {
+        transform: [
+          {
+            rotate:   defineGrad()    + 'deg',
+          },
+        ],
+      };
+    },[]);
+
+    /*const rotationGesture = GH.Gesture.Rotation()
         .onTouchesMove((e) => {
             //Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
             // let spins = (deg / 360);
@@ -120,8 +245,7 @@ const RouletteStep1Screen = ({navigation}) => {
             savedRotation.value = rotation.value;
             // console.log('end')
 
-        })
-
+        })*/
 
     return (
         <ScreenBaseV1>
@@ -139,14 +263,14 @@ const RouletteStep1Screen = ({navigation}) => {
                     </View>
 
                     <View flex={1} alignItems={'center'}>
-                        <GH.GestureDetector gesture={GH.Gesture.Exclusive(rotationGesture)}>
-                            <Animated.Image source={circleParts} style={{
+                        <GH.PanGestureHandler onGestureEvent={onPanGestureEvent}>
+                            <Animated.Image source={circleParts} style={[animatedStyle,{
                                 width: 300,
                                 height: 300,
-                                transform: [{rotate: deg + `deg`}],
+                                //transform: [{rotate: deg + `deg`}],
                                 borderRadius: 150
-                            }}/>
-                        </GH.GestureDetector>
+                            }]}/>
+                        </GH.PanGestureHandler>
 
                     </View>
 

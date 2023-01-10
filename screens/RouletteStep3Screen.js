@@ -22,7 +22,6 @@ const RouletteStep3Screen = ({route, navigation}) => {
     }, [route.params.parentItem.id])
 
 
-
     const getChildren = async (parentId) => {
         try {
             setLoading(true);
@@ -34,9 +33,8 @@ const RouletteStep3Screen = ({route, navigation}) => {
             setLoading(false)
         }
     }
-
     return (
-        <ScrollView style={{flex: 1, backgroundColor: '#' + route.params.parentItem.attributes.color, borderColor:'yellow'}}
+        <ScrollView style={{flex: 1, backgroundColor: '#' + route.params.parentItem.attributes.color}}
                     contentContainerStyle={{flex: 1}}>
 
             <View flex={1} alignItems={'center'}>
@@ -45,7 +43,6 @@ const RouletteStep3Screen = ({route, navigation}) => {
                 <View w={200} h={200} bgColor={'white'} borderRadius={100} my={10} alignItems={'center'}
                       justifyContent={'center'}>
                     {
-
                         _.has(route.params, 'parentItem.attributes.parent.data.attributes.icon.data.attributes.url') &&
                         <Image
                             source={{uri: route.params.parentItem.attributes.parent.data.attributes.icon.data.attributes.url}}
