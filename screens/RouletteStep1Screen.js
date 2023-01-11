@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-//import {Animated} from 'react-native';
+import {Dimensions} from 'react-native';
 import circleParts from '../assets/ruleta.png';
 //import {useSharedValue} from "react-native-reanimated";
 import {Button, Image, Text, View} from "native-base";
@@ -12,6 +12,9 @@ import {t} from 'i18n-js';
 import * as GH from 'react-native-gesture-handler';
 import moment from 'moment'
 import Animated,{useSharedValue, useAnimatedGestureHandler,withSpring, useAnimatedStyle} from 'react-native-reanimated';
+
+const window_height = Dimensions.get("screen").height
+const window_width = Dimensions.get("screen").width
 
 const RouletteStep1Screen = ({navigation}) => {
 
@@ -78,8 +81,8 @@ const RouletteStep1Screen = ({navigation}) => {
       onStart: (_, ctx) => {
         ctx.startX = translateX.value;
         ctx.startY = translateY.value;
-        centery.value = 500
-        centerx.value = 218
+        centery.value = window_height*0.5619
+        centerx.value = window_width*0.50
         // gradLast.value = 0;
         saveValue.value = ctx.velocityY;
         velX.value = 0
