@@ -51,9 +51,9 @@ const GroupsScreen = ({authDuck, navigation}) => {
         }
     }
 
-    const createGroup = async (value) => {
+    const createGroup = async (value,isPrivate) => {
         setModalGroupsCreate(false)
-        navigation.navigate('GroupsMembersAdd', {groupName: value, option:'create'})
+        navigation.navigate('GroupsMembersAdd', {groupName: value, option:'create', isPrivate })
     }
 
     const groupAcceptInvite = async (token, accept) => {
@@ -113,13 +113,13 @@ const GroupsScreen = ({authDuck, navigation}) => {
                                     <Text fontSize={24} color={Colors.red} textAlign={'center'} mb={4}>{t('groups_invitation_to_groups')}</Text>
                                     {
                                         groupsRequests.map((item,i) => {
-                                            if (item.attributes.group.data){
+                                            if (item?.attributes?.group?.data){
                                                 return (
                                                     <GroupsItem groupId={item.id}
                                                         key={i}
-                                                        title={item.attributes.group.data.attributes.name}
+                                                        title={item?.attributes?.group?.data?.attributes?.name}
                                                         navigation={navigation} acceptInvite={true}
-                                                        token={item.attributes.token}
+                                                        token={item.attributes?.token}
                                                         acceptAction={groupAcceptInvite}
                                                     />
                                                 )
@@ -146,6 +146,7 @@ const GroupsScreen = ({authDuck, navigation}) => {
                                                         key={i}
                                                         groupId={item.id} 
                                                         title={item.name}
+                                                        group={item}
                                                         navigation={navigation} 
                                                         deleteAction={() => {
                                                         Alert.alert(

@@ -17,6 +17,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
     const [usersSelected, setUsersSelected] = useState([])
     const [text, setText] = useState(null);
     const [isAddMembers, setisAddMembers] = useState(false)
+    const [isPrivate, setIsPrivate] = useState(false)
     const [membersExist, setMembersExist] = useState([])
     const searchBox = useRef();
 
@@ -45,6 +46,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
     useEffect(() => {
         if (route.params) {
             setGroupName(route.params.groupName)
+            setIsPrivate(route.params.isPrivate)
             if (route.params.option === 'add'){
                 setisAddMembers(true)
                 setMembersExist(route.params.members)
@@ -95,6 +97,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
                         name: groupName,
                         owner: authDuck.user.id,
                         description: "",
+                        is_private:isPrivate,
                         members: members.map((item) => item.id),
                         publicEmails: publicEmails.map((item) => item.email)
     
@@ -105,9 +108,7 @@ const GroupsMembersAdd = ({navigation, route, groupDuck, authDuck, getUsersByUse
                     data.data.site= authDuck.userSiteConfig.id
                 }
 
-
-                // console.log(data)
-                 let response = await ApiApp.createGroup(data)
+                let response = await ApiApp.createGroup(data)
                  setUsersSelected([])
                  navigation.navigate('GroupsScreen')
             }
