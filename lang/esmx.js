@@ -95,6 +95,7 @@ export const esmx = {
     'groups_pending_to_accept':'Pendiente por aceptar',
     'groups_search_friends_to_add':'Buscar amigos para añadir a',
     'groups_by_email':'por correo',
+    'private_group':'Grupo privado',
     'groups_no_find_friends':'Si no encuentras a tu amigo en el listado puedes añadir su correo completo para invitarlo a ser parte de YNL',
 
     // Intro

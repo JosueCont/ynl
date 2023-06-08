@@ -94,6 +94,7 @@ export const enus = {
     'groups_pending_to_accept':'Pending',
     'groups_search_friends_to_add':'Find friends to add',
     'groups_by_email':'by email',
+    'private_group':'Private group',
     'groups_no_find_friends':"If you can't find your friends in the list, you can invite them to YNL by email",
 
     // Intro

@@ -31,6 +31,8 @@ const GroupsDetailsScreen = ({navigation, route}) => {
     const [activeButton, setActiveButton] = useState(2)
     const [statsMembers, setStatsMembers] = useState(null)
     const [updGroupName, setUpdGroupName] = useState(false);
+    const [isPrivate, setIsPrivate] = useState(false);
+    const [privateForUp, setPrivateForUp] = useState(false);
     const [nameForUp, setNameForUp] = useState("")
     const [idUpd, setIdUpd] = useState(null)
     const [modalSuccessVisible, setModalSuccessVisible] = useState(null);
@@ -81,6 +83,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
             setLoading(true)
             const response = await ApiApp.getGroupMembers(route.params.groupId)
             setName(response.data.data.group[0].name)
+            setIsPrivate(response.data.data.group[0].is_private)
             setIdUpd(response.data.data.group[0].id);
             let membersArray = [];
 
@@ -184,18 +187,20 @@ const GroupsDetailsScreen = ({navigation, route}) => {
     const openModalUpd = () => {
         setUpdGroupName(true);
         setNameForUp(name)
+        setPrivateForUp(isPrivate)
     }
 
     const closeModalUpd = (flag) => {
         setUpdGroupName(flag);
         setNameForUp(null);
+        setPrivateForUp(null)
     }
 
-    const updGroup = async (value) => {
+    const updGroup = async (value,isPrivate=false) => {
         try {
             
             let data = {
-                data: {"name": value}
+                data: {name: value, is_private: isPrivate}
             }
             setSaving(true)
             const response = await ApiApp.updGroup(idUpd, data);
@@ -289,6 +294,7 @@ const GroupsDetailsScreen = ({navigation, route}) => {
 
             {tabPosition === 0 && (
               <View p={0}>
+
                 <Button.Group
                   style={{ marginBottom: 60 }}
                   isAttached
@@ -327,6 +333,9 @@ const GroupsDetailsScreen = ({navigation, route}) => {
                       {t('month')}
                   </Button>
                 </Button.Group>
+                  <Text>
+                      {isPrivate && "Grupo privado"}
+                  </Text>
 
                 {!loadingStats &&
                   statsMembers &&
@@ -512,15 +521,16 @@ const GroupsDetailsScreen = ({navigation, route}) => {
           visible={updGroupName}
           setVisible={closeModalUpd}
           isUpd={true}
+          privateGroup={privateForUp}
           name={nameForUp}
           action={updGroup}
           loading={saving}
         />
         <ModalSuccess
         text={"Grupo actualizado"}
-          visible={modalSuccessVisible}
-          setVisible={setModalSuccessVisible}
-        ></ModalSuccess>
+        visible={modalSuccessVisible}
+        setVisible={setModalSuccessVisible}
+        />
       </View>
     );
 }

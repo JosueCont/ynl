@@ -3,21 +3,25 @@ import {Colors} from "../../../utils/Colors";
 import {TouchableOpacity} from "react-native";
 import {MaterialIcons} from "@expo/vector-icons";
 
-const GroupsItem = ({groupId, title, navigation, acceptInvite = false, token = null, acceptAction, deleteAction, isOwner, thisOwner}) => {
+const GroupsItem = ({groupId, title, navigation, acceptInvite = false, token = null, acceptAction, deleteAction, isOwner, thisOwner,group}) => {
     return (
         <TouchableOpacity style={{flex: 1}} disabled={acceptInvite}
                           onPress={() => navigation.navigate('GroupsDetailsScreen', {groupId: groupId, isOwner: isOwner, thisOwner:thisOwner})}>
             <View flexDir={'row'} my={3} borderBottomWidth={0.5} borderBottomColor={Colors.red} mx={2} pb={4}>
                 <View flex={0.4} alignItems={'center'} justifyContent={'center'}>
 
-                    <View style={{width: 35, height: 35}} backgroundColor={Colors.red} borderRadius={20}
+                    <View style={{width: 35, height: 35}} backgroundColor={group?.is_private ? 'black' : Colors.red} borderRadius={20}
                           alignItems={'center'} justifyContent={'center'}>
-                        <Icon as={MaterialIcons} name={'group'} color={'white'} fontSize={20}></Icon>
+                        <Icon as={MaterialIcons} name={'group'} color={'white'} fontSize={20}/>
                     </View>
 
                 </View>
                 <View flex={1} justifyContent={'center'}>
-                    <Text fontSize={16} color={Colors.red}>{title}</Text>
+                    <Text fontSize={16} color={group?.is_private ? 'black' : Colors.red}>{title}</Text>
+                    {
+                        group?.is_private && <Text fontSize={10} color={group?.is_private ? 'black' : Colors.red}>{'Grupo privado'}</Text>
+                    }
+
                 </View>
                 {
                     acceptInvite === true ?
