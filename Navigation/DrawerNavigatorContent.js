@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import {DrawerContentScrollView,} from "@react-navigation/drawer";
 import {connect} from "react-redux";
-import {ImageBackground, TouchableOpacity} from "react-native";
+import {ImageBackground, TouchableOpacity, Dimensions} from "react-native";
 import sidebarImage from "../assets/bgmenu.png";
 import { Text, View, Image} from "native-base";
 import logoSmall from "../assets/logoSmall.png";
@@ -10,6 +10,7 @@ import {t} from 'i18n-js';
 import {logOutAction} from "../redux/ducks/authDuck";
 import ApiApp from "../utils/ApiApp";
 
+const {height} = Dimensions.get('screen');
 
 const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck, logOutAction, ...props}) => {
 
@@ -56,6 +57,7 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
 
     const logoutFunction = async () => {
         try {
+            console.log('aqui')
             await logOutAction()
         } catch (e) {
             console.log('DrawerConfig logoutFunction error => ',e.toString())
@@ -67,7 +69,7 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
         bounces={false}
         {...props}
         nestedScrollEnabled={true}
-        contentContainerStyle={{ flex: 1 }}
+        contentContainerStyle={{ height:height }}
       >
         <ImageBackground source={sidebarImage} style={{ flex: 1 }}>
           <View flex={0.5} alignItems={"center"} justifyContent={"center"}>
