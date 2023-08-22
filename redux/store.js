@@ -5,13 +5,15 @@ import {getDataObject} from '../utils/functions'
 import authDuck, {createSession, emotionStatusAction} from "./ducks/authDuck";
 import feelingsDuck from "./ducks/feelingsDuck";
 import groupDuck from "./ducks/groupDuck";
+import goalsDuck from './ducks/goalsDuck'
 
 
 const rootReducer = combineReducers({
     productsDuck: productsDuck,
     authDuck: authDuck,
     feelingsDuck:  feelingsDuck,
-    groupDuck: groupDuck
+    groupDuck: groupDuck,
+    goalsDuck: goalsDuck
 })
 
 export const store = createStore(

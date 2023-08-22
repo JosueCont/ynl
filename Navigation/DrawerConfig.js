@@ -14,6 +14,7 @@ import StatisticsScreen from "../screens/StatisticsScreen";
 import GroupsDetailsScreen from "../screens/GroupsDetailsScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import IntroScreen from "../screens/IntroScreen";
+import GoalsScreen from '../screens/GoalsScreen'
 import {t} from 'i18n-js';
 import RouletteStep1Screen from "../screens/RouletteStep1Screen";
 import RouletteStep2Screen from "../screens/RouletteStep2Screen";
@@ -39,7 +40,7 @@ const DrawerConfig = () => {
           drawerPosition: "right",
           headerLeft: () => {
             //console.log("route", route?.params.parentItem.attributes.name);
-            if (route.name.includes("HomeScreen")) {
+            if (route.name.includes("HomeScreen") || route.name.includes("GoalsScreen") ) {
               return <View />;
             } else {
               return (
@@ -77,20 +78,25 @@ const DrawerConfig = () => {
               );
             }
           },
-          headerStyle: { backgroundColor: Colors.white, opacity: 1 },
+          headerTransparent: route.name.includes("GoalsScreen") ? true : false,
+          headerStyle: { backgroundColor: Colors.white, opacity: 1, borderColor:'black'  },
           headerTitleAlign: "center",
           headerTitleStyle: { color: "black" },
           headerTitle: () => {
-            return (
-              <View flex={1}>
-                <Image
-                  tintColor={"gray"}
-                  style={{ marginTop: 10, height: 30, width: 30 }}
-                  size={"xs"}
-                  source={imageLogo}
-                />
-              </View>
-            );
+            if (route.name.includes("GoalsScreen") ) {
+              return <View />;
+            } else {
+              return (
+                <View flex={1}>
+                  <Image
+                    tintColor={"gray"}
+                    style={{ marginTop: 10, height: 30, width: 30 }}
+                    size={"xs"}
+                    source={imageLogo}
+                  />
+                </View>
+              );
+            }
           },
           headerRight: () => (
             <TouchableOpacity
@@ -125,6 +131,11 @@ const DrawerConfig = () => {
           name={"GroupsScreen"}
           component={GroupsScreen}
           options={{ title: "Mis grupos" }}
+        />
+        <Drawer.Screen
+          name={"GoalsScreen"}
+          component={GoalsScreen}
+          options={{ title: "Mis propositos" }}
         />
         <Drawer.Screen
           name={"GroupsStartScreen"}

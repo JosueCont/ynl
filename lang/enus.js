@@ -15,9 +15,11 @@ export const enus = {
     'home_new_emotion':'New emotion',
     'home_my_groups':'My groups',
     'home_aspects':'Life aspects',
+    'home_goals':' My goals',
     'home_register_first_emotion':'Register your first emotion',
     'home_logout':'Logout',
     'home_my_aspects':'My aspects',
+    'home_goals': 'My goals',
     //Historial
     'history_my_history':'My records',
     'history_detail':'Click to see the details.',

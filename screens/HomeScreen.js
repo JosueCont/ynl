@@ -12,6 +12,7 @@ import _ from 'lodash';
 import {t} from 'i18n-js';
 import moment from 'moment';
 import {getShadowCircleStyle} from "../utils/functions";
+import ModalDayPhrase from './Modals/ModalDayPhrase'
 import 'moment/locale/es';
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
@@ -53,6 +54,9 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const [image, setImage] = useState(null);
     const [emotionsStatus, setEmotionsStatus] = useState(null);
 
+    const [modalPhraseVisible, setModalPhraseVisible] = useState(false)
+    const [phraseDay, setPhraseDay] = useState(null)
+
     useEffect( () => {
 
         // console.log(authDuck.emotionStatus)
@@ -93,6 +97,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     }, [isFocused])
 
     useEffect(() => {
+
         registerForPushNotificationsAsync().then(token => setExpoPushToken(token)).catch(e => {
             console.log('HomeScreen registerForPushNotificationsAsync error => ', e.toString())
         });
@@ -106,6 +111,8 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
         responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
             console.log(" responseListener.current: ", response);
         });
+
+        queryDailyPhrase()
 
         return () => {
             Notifications.removeNotificationSubscription(notificationListener.current);
@@ -308,6 +315,19 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
           }
     }
 
+    const queryDailyPhrase = async () => {
+        try {
+            const response = await ApiApp.getUserDayPhrase(authDuck.user.id)
+            if(response.status === 200){
+                setPhraseDay(response?.data?.data?.phrase?.phrase)
+                if(response?.data?.data?.exist === false){
+                    setModalPhraseVisible(true)
+                }
+            }
+        } catch (e) {
+            console.log("HomeScreen queryDailyPhrase error =>", e.toString())
+        }
+    }
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
@@ -532,11 +552,12 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                 <Icon as={MaterialIcons} name={'groups'} size={6} color={'white'} mb={1}></Icon>
                                 <Text color={'white'} fontSize={11}>{t('home_my_groups')}</Text>
                             </TouchableOpacity>
+                            <ModalDayPhrase phrase={phraseDay}  visible={modalPhraseVisible} setVisible={setModalPhraseVisible} />
                         </View>
                     </View>
-
                 </View>
             </ScrollView>
+            
         </SafeAreaView>
     )
 }

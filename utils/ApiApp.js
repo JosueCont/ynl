@@ -392,6 +392,26 @@ class ApiApp {
     return ApiApp.ApisType(`/api/auth/sites`, "post", data);
   };
 
+
+  /* Phrases */
+  static getUserDayPhrase = (userID) => {
+    return ApiApp.ApisType(`/api/day-phrases/getUserDayPhrase/${userID}/`, "get");
+  };
+
+
+  /* Objetivos */
+  static getGoalCategories = () => {
+    return ApiApp.ApisType(`/api/goal-categories?filters[is_active][$eq]=true&populate=*`, "get");
+  }
+
+  static getDateGoal = (date) => {
+    return ApiApp.ApisType(`/api/daily-goals/?filters[target_date][$eq]=${date}&populate[goal_category][populate][0]=icon`, "get");
+  }
+
+  static saveDailyGoals = (data) => {
+    return ApiApp.ApisType(`/api/daily-goals/save/`, "post", data);
+  }
+
   static _baseURL = baseURL;
 }
 
