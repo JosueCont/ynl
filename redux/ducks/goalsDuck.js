@@ -1,14 +1,16 @@
 import ApiApp from "../../utils/ApiApp";
+/* import {loadingOverlay} from './authDuck' */
 
 const initialData = {
     categories: null,
     loading:false,
-    dailyGoals: []
+    dailyGoals: [],
 }
 
 const START = 'START';
 const FILLCATEGORIES = 'FILLCATEGORIES';
 const DAILYGOALS = 'DAILYGOALS'
+const LOADING = "LOADING"
 
 const goalsDuck = (state = initialData, action) => {
     switch (action.type) {
@@ -18,6 +20,8 @@ const goalsDuck = (state = initialData, action) => {
             return {...state, categories: action.payload}
         case DAILYGOALS:
             return {...state, dailyGoals: action.payload}
+        case LOADING:
+            return {...state, loading: action.payload}
         default:
             return state
     }
@@ -38,13 +42,16 @@ export let getGoalCategories = (data) => async (dispatch) => {
 
 export let getDateGoal = (date) => async (dispatch) => {
     try {
+        dispatch({type: LOADING, payload: true });
         let response = await ApiApp.getDateGoal(date)
         if(response?.status === 200){
             dispatch({type: DAILYGOALS, payload: response?.data?.data });
         }
+        dispatch({type: LOADING, payload: false });
         return true
     }catch (e) {
-        console.log('saveEmotion error =>', e.toString())
+        dispatch({type: LOADING, payload: false });
+        console.log('getDateGoal error =>', e.toString())
         return false
     }
 }

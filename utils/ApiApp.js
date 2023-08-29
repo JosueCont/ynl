@@ -405,6 +405,7 @@ class ApiApp {
   }
 
   static getDateGoal = (date) => {
+    console.log('date=>', date)
     return ApiApp.ApisType(`/api/daily-goals/?filters[target_date][$eq]=${date}&populate[goal_category][populate][0]=icon`, "get");
   }
 

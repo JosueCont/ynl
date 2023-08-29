@@ -17,17 +17,17 @@ const CategoriesOptionsList = ({open, setOpen, goalsDuck, confirm, ...props }) =
 
   return (
     <>
-        <Actionsheet isOpen={open} hideDragIndicator disableOverlay>
+        <Actionsheet isOpen={open} hideDragIndicator>
             <Actionsheet.Content >
             <View style={{ minWidth:'100%' }} borderBottomColor={Colors.yellow} borderBottomWidth={1}>
-                <HStack justifyContent={'space-between'} paddingX={5} paddingBottom={2}>
+                <HStack justifyContent={'space-between'} paddingX={5} paddingY={2}>
                     <TouchableOpacity onPress={() => setOpen(false) }>
-                        <Text>
+                        <Text fontSize={'md'}>
                             Cancelar
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity disabled={!optionSelected} onPress={() => confirmSelect()}>
-                        <Text>
+                        <Text fontSize={'md'}>
                             Confirmar
                         </Text>
                     </TouchableOpacity>
@@ -37,9 +37,13 @@ const CategoriesOptionsList = ({open, setOpen, goalsDuck, confirm, ...props }) =
                 goalsDuck?.categories?.map(item => (
                     <Actionsheet.Item style={{ height:50}} padding={0}  onPress={() => setOptionSelected(item)} backgroundColor={ optionSelected?.id === item.id ? Colors.yellow : 'white' } >
                     <VStack justifyContent={'center'} height={'100%'} >
-                        <HStack space={1} margin={0} minWidth={'100%'} justifyContent={'center'} >
-                            <Image height={6} width={5} source={{ uri: baseURL+item?.attributes?.icon?.data?.attributes?.url }} />
-                            <Text fontSize={'xl'} >{item?.attributes?.name}</Text>
+                        <HStack display={'flex'} space={1} margin={0} minWidth={'100%'} justifyContent={'center'}>
+                            <View  width={'7'} height={'100%'} marginY={'auto'}>
+                                <Image resizeMode='contain' aspectRatio={1}  source={{ uri: baseURL+item?.attributes?.icon?.data?.attributes?.url }} />
+                            </View>
+                            <View marginY={'auto'} >
+                                <Text fontSize={'xl'} >{item?.attributes?.name}</Text>
+                            </View>
                         </HStack>
                     </VStack>
                     </Actionsheet.Item>   

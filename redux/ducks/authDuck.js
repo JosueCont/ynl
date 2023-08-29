@@ -6,6 +6,7 @@ const initialData = {
     user: null,
     isLogged: false,
     loading: false,
+    loadingOverlay: false,
     jwt: null,
     userSiteConfig:null
 }
@@ -21,6 +22,7 @@ const LOGIN_EMAIL_ERROR = 'LOGIN_EMAIL_ERROR';
 const LOGIN_KHOR = 'LOGIN_KHOR';
 const LOGIN_KHOR_SUCCESS = 'LOGIN_KHOR_SUCCESS';
 const LOGIN_KHOR_ERROR = 'LOGIN_EMAIL_ERROR';
+const LOADING_OVERLAY = 'LOADING_OVERLAY'
 
 
 const authDuck = (state = initialData, action) => {
@@ -47,8 +49,18 @@ const authDuck = (state = initialData, action) => {
             return {...state, loading: false, isLogged: false}
         case LOGIN_KHOR_SUCCESS:
             return {...state, loading: false, userSiteConfig:action.payload.site,  user: action.payload.user, jwt: action.payload.jwt, isLogged: true}
+        case LOADING_OVERLAY: 
+            return {...state, loadingOverlay: action.payload}
         default:
             return state
+    }
+}
+
+export const loadingOverlay = (flag) => async (dispatch) => {
+    try {
+        dispatch({ type: LOADING_OVERLAY, payload: flag });
+    } catch (error) {
+        console.log('error al actualizar loading overlay')
     }
 }
 

@@ -22,17 +22,21 @@ import RouletteStep3Screen from "../screens/RouletteStep3Screen";
 import RouletteStep4Screen from "../screens/RouletteStep4Screen";
 import HistoryFeelingScreen from "../screens/HistoryFeelingScreen";
 import HistoryFeelingScreenDetail from "../screens/HistoryFeelingScreenDetail";
+import OverlaySpinner from '../components/OverlaySpinner'
 import imageLogo from '../assets/logo.png'
+import { useSelector } from "react-redux";
 
 const Drawer = createDrawerNavigator();
 
 const DrawerConfig = () => {
     const [redIcons, setredIcons] = useState(false)
 
-    
+    const loading = useSelector(state => state.authDuck?.loadingOverlay);
     
 
     return (
+      <>
+      { loading && <OverlaySpinner /> }
       <Drawer.Navigator
         useLegacyImplementation={true}
         backBehavior={"history"}
@@ -194,6 +198,7 @@ const DrawerConfig = () => {
           options={{ headerShown: false }}
         />
       </Drawer.Navigator>
+      </>
     );
 }
 

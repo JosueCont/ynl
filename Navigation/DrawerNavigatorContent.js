@@ -76,7 +76,7 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
             <Image source={logoSmall} alt="img" />
           </View>
 
-          <View flex={0.5} alignItems={"center"}>
+          <View flex={1} alignItems={"center"}  >
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate("HomeScreen");
@@ -119,17 +119,16 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
                   {t('home_goals')}
               </Text>
             </TouchableOpacity>
-
-              <TouchableOpacity onPress={() => logoutFunction()}>
-                  <Text
-                      color={"white"}
-                      fontSize={14}
-                      style={{ textDecorationLine: "underline" }}
-                      my={2}
-                  >
-                      {t('home_logout')}
-                  </Text>
-              </TouchableOpacity>
+            <TouchableOpacity onPress={() => logoutFunction()}>
+                <Text
+                    color={"white"}
+                    fontSize={14}
+                    style={{ textDecorationLine: "underline" }}
+                    my={2}
+                >
+                    {t('home_logout')}
+                </Text>
+            </TouchableOpacity>
 
           </View>
 
