@@ -16,10 +16,10 @@ export const esmx = {
     'home_my_groups':'Mis grupos',
     'home_aspects':'Mis aspectos',
     'home_goals':'Mis objetivos',
+    'my_progress': 'Mi avance',
     'home_register_first_emotion':'Registra tu primera emoción',
     'home_logout':'Cerrar sesión',
     'home_my_aspects':'Mis aspectos',
-    'home_goals': 'Mis propositos',
 
     //Historial
     'history_my_history':'Mi historial',

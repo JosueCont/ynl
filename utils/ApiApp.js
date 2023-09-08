@@ -405,13 +405,18 @@ class ApiApp {
   }
 
   static getDateGoal = (date) => {
-    console.log('date=>', date)
-    return ApiApp.ApisType(`/api/daily-goals/?filters[target_date][$eq]=${date}&populate[goal_category][populate][0]=icon`, "get");
+    
+    return ApiApp.ApisType(`/api/daily-goals/?filters[target_date][$eq]=${date}&populate[goal_category][populate][0]=icon&populate[goal_category][populate][1]=icon_white`, "get");
   }
 
   static saveDailyGoals = (data) => {
     return ApiApp.ApisType(`/api/daily-goals/save/`, "post", data);
   }
+
+  static getGoalsReport = (data) => {
+    return ApiApp.ApisType(`/api/daily-goals/${data?.userId}/report/?dateOne=${data?.dateOne}&dateTwo=${data?.dateTwo}`, "get");
+  }
+
 
   static _baseURL = baseURL;
 }

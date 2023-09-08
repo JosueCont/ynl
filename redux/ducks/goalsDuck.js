@@ -5,12 +5,14 @@ const initialData = {
     categories: null,
     loading:false,
     dailyGoals: [],
+    report: []
 }
 
 const START = 'START';
 const FILLCATEGORIES = 'FILLCATEGORIES';
 const DAILYGOALS = 'DAILYGOALS'
 const LOADING = "LOADING"
+const REPORT = "REPORT"
 
 const goalsDuck = (state = initialData, action) => {
     switch (action.type) {
@@ -22,6 +24,8 @@ const goalsDuck = (state = initialData, action) => {
             return {...state, dailyGoals: action.payload}
         case LOADING:
             return {...state, loading: action.payload}
+        case REPORT:
+            return {...state, report: action.payload}
         default:
             return state
     }
@@ -41,8 +45,8 @@ export let getGoalCategories = (data) => async (dispatch) => {
 }
 
 export let getDateGoal = (date) => async (dispatch) => {
+    dispatch({type: LOADING, payload: true });
     try {
-        dispatch({type: LOADING, payload: true });
         let response = await ApiApp.getDateGoal(date)
         if(response?.status === 200){
             dispatch({type: DAILYGOALS, payload: response?.data?.data });
@@ -65,5 +69,23 @@ export const saveDailyGoals = (data) => async (dispatch) => {
         return false
     }
 }
+
+export const getGoalsReport = (data) => async (dispatch) => {
+    try {
+        dispatch({type: REPORT, payload: [] })
+        let response = await ApiApp.getGoalsReport(data)
+        if(response?.status === 200){
+            dispatch({type: REPORT, payload: response.data })
+        }
+        /* dispatch({type: LOADING, payload: false }); */
+        return true
+    }catch (e) {
+        /* dispatch({type: LOADING, payload: false }); */
+        console.log('getReport error =>', e.toString())
+        return false
+    }
+}
+
+
 
 export default goalsDuck;

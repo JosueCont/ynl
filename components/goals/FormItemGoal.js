@@ -17,10 +17,7 @@ const FormItemGoal = ({data=[], idx=null, upd, disabled = false, isActive= true}
     const [optionSelected, setOptionSelected] = useState(null)
 
     const loading = useSelector(state => state.goalsDuck?.loading);
-  
-    useEffect(() => {
-      console.log('data=============',data)
-    }, [data])
+
 
     const onConfirm = (cat) => {
       upd('goal_category', cat, idx)
@@ -54,7 +51,7 @@ const FormItemGoal = ({data=[], idx=null, upd, disabled = false, isActive= true}
       {
         loading ? <Skeleton  width={25} height={25} /> : 
             isActive() ? 
-              <TouchableOpacity onPress={(val) => updCompleted(!data[idx]?.completed)} disabled={!data[idx]?.description} style={{ width: 25, height: 25, borderColor: Colors.yellow, borderWidth:2, borderRadius:9, justifyContent:'center'}}>
+              <TouchableOpacity onPress={(val) => updCompleted(!data[idx]?.completed)} disabled={!data[idx]?.description} style={{ width: 25, height: 25, borderWidth:2, borderRadius:9, justifyContent:'center'}}>
                 {
                   data[idx]?.completed && <Icon as={<FontAwesome name='check' color={'black'} style={{ textAlign:'center' }} />}/>  
                 }
@@ -71,7 +68,7 @@ const FormItemGoal = ({data=[], idx=null, upd, disabled = false, isActive= true}
           loading ? <Skeleton width={'100%'} height={'20'} />  : <FormControl>
             {
               isActive() ? 
-              <TextArea isDisabled={disabled} onChangeText={(val) => updDescription(val) } value={data[idx]?.description} width={'100%'} borderColor={data[idx]?.error_description ? Colors.red : Colors.yellow} borderWidth={3} borderRadius={15} /> :
+              <TextArea isDisabled={disabled} onChangeText={(val) => updDescription(val) } value={data[idx]?.description} width={'100%'} borderColor={data[idx]?.error_description ? Colors.red : Colors.black} borderWidth={3} borderRadius={15} /> :
               <View paddingX={2} paddingY={1} width={'100%'} height={20} borderColor={Colors.yellow} borderWidth={3} borderRadius={15}>
                 <Text>
                   {data[idx]?.description}

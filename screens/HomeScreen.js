@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import {Icon, Image, Skeleton, Text, View} from "native-base";
+import {HStack, Icon, Image, Skeleton, Text, View} from "native-base";
 import {connect} from "react-redux";
 import {Platform, RefreshControl, SafeAreaView, ScrollView, TouchableOpacity} from "react-native";
 import {useIsFocused} from "@react-navigation/native";
@@ -57,32 +57,59 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const [modalPhraseVisible, setModalPhraseVisible] = useState(false)
     const [phraseDay, setPhraseDay] = useState(null)
 
-    useEffect( () => {
+    /* useEffect(() => {
+        queryDailyPhrase()
+    }, []) */
+    
+    const closeModalPhrase = () => {
+        setModalPhraseVisible(false)
+    }
 
+    const validateEmotion = () => {
+        
+        let fetchData
+        if(authDuck.userSiteConfig){ 
+            fetchData = async () => {
+                let responmse = await ApiApp.getEmotionStatus(authDuck.user.id, authDuck.userSiteConfig).then ((val) => {return val.data.data.length});
+                setEmotionsStatus(responmse);
+                if(responmse === 0){
+                    navigation.navigate('RouletteStep1Screen')
+                }
+            }
+        }
+        else{
+            fetchData = async () => {
+                let responmse = await ApiApp.getEmotionStatus(authDuck.user.id).then ((val) => {return val.data.data.length});
+                setEmotionsStatus(responmse);
+                if(responmse === 0){
+                    navigation.navigate('RouletteStep1Screen')
+                }
+            }
+        }
+        fetchData()
+    }
+
+    const init = async () => {
+        if(await queryDailyPhrase() === false){
+            validateEmotion()
+        }
+
+        if(modalPhraseVisible === false){
+            /* fetchData() 
+            if (emotionsStatus === 0) {
+                navigation.navigate('RouletteStep1Screen')
+            } */
+            /* if(emotionsStatus !== 0){ */                
+        }
+    }
+
+    useEffect( () => {
         // console.log(authDuck.emotionStatus)
         if (intro === false) {
             navigation.navigate('IntroScreen')
-        } else  {   //if (authDuck.emotionStatus === 0 || authDuck.emotionStatus === undefined)
-            let fetchData
-            if(authDuck.userSiteConfig){ 
-                 fetchData = async () => {
-                     let responmse = await ApiApp.getEmotionStatus(authDuck.user.id, authDuck.userSiteConfig).then ((val) => {return val.data.data.length});
-                     setEmotionsStatus(responmse);
-                    }
-               
-            }
-            else{
-                fetchData = async () => {
-                    let responmse = await ApiApp.getEmotionStatus(authDuck.user.id).then ((val) => {return val.data.data.length});
-                    setEmotionsStatus(responmse);
-                }
-            }
-
-            fetchData() 
-            if (emotionsStatus === 0) {
-                navigation.navigate('RouletteStep1Screen')
-            }
-            
+        } else  {   //if (authDuck.emotionStatus === 0 || authDuck.emotionStatus === undefined)            
+            /* } */
+            init()
         }
 
     }, [intro])
@@ -112,7 +139,9 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             console.log(" responseListener.current: ", response);
         });
 
-        queryDailyPhrase()
+        
+
+        
 
         return () => {
             Notifications.removeNotificationSubscription(notificationListener.current);
@@ -319,13 +348,17 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
         try {
             const response = await ApiApp.getUserDayPhrase(authDuck.user.id)
             if(response.status === 200){
+                console.log('=================')
+                console.log(response.data)
                 setPhraseDay(response?.data?.data?.phrase?.phrase)
                 if(response?.data?.data?.exist === false){
                     setModalPhraseVisible(true)
+                    return true
                 }
             }
         } catch (e) {
             console.log("HomeScreen queryDailyPhrase error =>", e.toString())
+            return false
         }
     }
 
@@ -460,6 +493,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                     </TouchableOpacity>
                                 }
 
+
                                 {
                                     lastEmotion && <View flex={1} height={70} mr={1}>
                                         <TouchableOpacity
@@ -484,6 +518,13 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
                             </View>
                     }
+                    <HStack justifyContent={'center'}>
+                        <TouchableOpacity onPress={() => setModalPhraseVisible(true)}>
+                            <Text fontSize={15} marginBottom={10}>
+                                Ver mi frase del dia
+                            </Text>
+                        </TouchableOpacity>
+                    </HStack>
                     <View flexDir={'row'} mb={4} height={70}>
                         <View flex={1} mr={2}>
                             <TouchableOpacity
@@ -552,7 +593,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                 <Icon as={MaterialIcons} name={'groups'} size={6} color={'white'} mb={1}></Icon>
                                 <Text color={'white'} fontSize={11}>{t('home_my_groups')}</Text>
                             </TouchableOpacity>
-                            <ModalDayPhrase phrase={phraseDay}  visible={modalPhraseVisible} setVisible={setModalPhraseVisible} />
+                            <ModalDayPhrase phrase={phraseDay}  visible={modalPhraseVisible} closeModalPhrase={closeModalPhrase} />
                         </View>
                     </View>
                 </View>

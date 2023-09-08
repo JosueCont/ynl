@@ -119,6 +119,11 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
                   {t('home_goals')}
               </Text>
             </TouchableOpacity>
+            {/* <TouchableOpacity onPress={() => navigation.navigate("GoalsReport")}>
+              <Text color={"white"} fontSize={20} my={2}>
+                  {t('my_progress')}
+              </Text>
+            </TouchableOpacity> */}
             <TouchableOpacity onPress={() => logoutFunction()}>
                 <Text
                     color={"white"}

@@ -1,5 +1,10 @@
-import { HStack, Image, VStack, Text } from 'native-base';
+import { HStack, Image, VStack, Text,  } from 'native-base';
+import { Share} from 'react-native';
+
 import React, { Component, useEffect, useState } from 'react'
+import * as Sharing from 'expo-sharing';
+import * as FileSystem from 'expo-file-system';
+
 import {Alert, Modal, TouchableOpacity} from "react-native";
 import { StyleSheet,  View } from 'react-native'
 import newLogo from '../../assets/new_logo.png'
@@ -9,12 +14,24 @@ import shareIcon from '../../assets/Icon-feather-share.png'
 import iconClose from '../../assets/icon_close.png'
 
 
-const ModalDayPhrase = ({phrase = "", visible, setVisible, ...props}) => {
 
-    const closeModal = () => {
-        setVisible(false)
-    }
+
+
+
+const ModalDayPhrase = ({phrase = "", visible, closeModalPhrase, ...props}) => {
+
     
+    const share = async () => {
+        try {
+            const result = await Share.share({
+                message:
+                  phrase
+              });
+              
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
   return (
     <Modal
@@ -29,7 +46,7 @@ const ModalDayPhrase = ({phrase = "", visible, setVisible, ...props}) => {
             <HStack h={'100%'} justifyContent={"center"} >
                 <VStack alignItems={'center'} w={'100%'} h={'100%'} justifyContent={'center'}  paddingBottom={100} >
                     <TouchableOpacity 
-                        onPress={() => closeModal()}
+                        onPress={() => closeModalPhrase()}
                         style={{ 
                             position:'absolute',
                             top:20,
@@ -65,7 +82,9 @@ const ModalDayPhrase = ({phrase = "", visible, setVisible, ...props}) => {
                     <TouchableOpacity style={{ 
                         position:'absolute',
                         bottom: 100
-                     }}>
+                     }}
+                     onPress={() => share()}
+                     >
                         <Image
                             source={shareIcon}
                             alt='question1'

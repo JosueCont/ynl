@@ -1,18 +1,26 @@
 import { SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import React, { createRef, useEffect, useRef } from 'react'
-import { Button, Checkbox, HStack, Icon, Image, Select, Text, TextArea, Actionsheet, VStack, FormControl, KeyboardAvoidingView, ScrollView, useToast, Spinner } from 'native-base'
+import { Button, Checkbox, HStack, Icon, Image, Select, Text, TextArea, Actionsheet, VStack, FormControl, KeyboardAvoidingView, ScrollView, useToast, Spinner, Skeleton } from 'native-base'
 import {FontAwesome, Entypo, AntDesign } from "@expo/vector-icons";
 import { baseURL } from '../utils/AxiosApi'
 import {Keyboard, Platform, TouchableWithoutFeedback} from "react-native";
 import FormItemGoal from '../components/goals/FormItemGoal'
-import Logo from '../assets/new_logo.png'
-import Tree from '../assets/tree.png'
-import Phrase from '../assets/preguntas-08.png'
-import ImgYellow from '../assets/Rectángulo.png'
 import { Colors } from '../utils/Colors'
 import { useState } from 'react';
 import { connect } from 'react-redux';
 import OverlaySpinner from '../components/OverlaySpinner'
+import { Dimensions } from "react-native";
+import { useNavigation } from '@react-navigation/native';
+import {t} from 'i18n-js';
+
+import FooterLines from '../components/FooterLines'
+
+/* Assets */
+import Logo from '../assets/new_logo.png'
+import Tree from '../assets/tree.png'
+import Phrase from '../assets/phrase_goals.png'
+import ImgYellow from '../assets/Rectángulo.png'
+import Lines from '../assets/lines.png'
 
 
 
@@ -20,15 +28,20 @@ import { getGoalCategories, getDateGoal, saveDailyGoals } from '../redux/ducks/g
 import {loadingOverlay} from '../redux/ducks/authDuck'
 import moment from 'moment';
 
+
 const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals, authDuck, ...props}) => {
 
+  
   const toast = useToast();
+  const screenWidth = Dimensions.get("window").width;
+  const navigation = useNavigation();
+
+  const { loading } = goalsDuck
 
   const [dateSelected, setDateSelected] = useState(null)
   const [dateToday, setDateToday] = useState(null)
   const [dataSend, setDataSend] = useState([])
   const [saving, setSaving] = useState(false)
-  const [loading, setLoading] = useState(false)
 
   const fillCategories = async () => {
     await getGoalCategories()
@@ -158,6 +171,12 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
   }
   
 
+  useEffect(() => {
+    if(loading === true)
+      console.log("true")
+  }, [loading])
+  
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -171,7 +190,7 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
           accessible={true}
         >
           <View flex={1} mx={4} style={{ flexDirection: 'column' }}>
-            <HStack justifyContent={'center'} p={1} mt={10} marginTop={20}>
+            <HStack justifyContent={'center'} p={1} marginTop={20}>
               <Image
                 source={Logo}
                 alt='question1'
@@ -179,9 +198,13 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
               />
             </HStack>
             <HStack justifyContent={'center'} marginTop={5} space={5}>
-              <TouchableOpacity onPress={predDay}>
-                <Icon as={<AntDesign name="left"/>} size={7} marginY={'auto'} /> 
-              </TouchableOpacity>
+              {
+                loading ? <Skeleton width={10} />: 
+                <TouchableOpacity onPress={predDay}>
+                  <Icon as={<AntDesign name="left"/>} size={7} marginY={'auto'} /> 
+                </TouchableOpacity>
+              }
+              
               <View>
                 <Text fontSize={'sm'} textAlign={'center'}>
                   { dateToday?.format("YYYY-MM-DD") == dateSelected?.format("YYYY-MM-DD") && "Hoy"}
@@ -190,21 +213,26 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
                   {moment(dateSelected).format("LL")}
                 </Text>
               </View>
-              <TouchableOpacity onPress={nextDay} disabled={dateToday?.format("YYYY-MM-DD") == dateSelected?.format("YYYY-MM-DD") } >
-                <Icon opacity={dateToday?.format("YYYY-MM-DD") == dateSelected?.format("YYYY-MM-DD") ? 0 : 1} as={<AntDesign name="right" />} size={7} marginY={'auto'} /> 
-              </TouchableOpacity>
+              {
+                loading ? <Skeleton width={10} /> :
+                <TouchableOpacity onPress={nextDay} disabled={dateToday?.format("YYYY-MM-DD") == dateSelected?.format("YYYY-MM-DD") } >
+                  <Icon opacity={dateToday?.format("YYYY-MM-DD") == dateSelected?.format("YYYY-MM-DD") ? 0 : 1} as={<AntDesign name="right" />} size={7} marginY={'auto'} /> 
+                </TouchableOpacity>
+              }
             </HStack>
             <HStack justifyContent={'center'}>
-              <Image h={100} source={Phrase} alt='Phrase' />
+              <Image resizeMode='center' height={20} width={'80%'} source={Phrase} alt='Phrase' marginY={5} />
             </HStack>
             <VStack space={5}>
               <FormItemGoal isActive={isActive} data={dataSend} idx={0} upd={updData} disabled={saving} />
               <FormItemGoal isActive={isActive} data={dataSend} idx={1} upd={updData} disabled={saving}/>
               <FormItemGoal isActive={isActive} data={dataSend} idx={2} upd={updData} disabled={saving}/>
-              <HStack justifyContent={'space-between'}>
-                <View style={styles.orangeLeft} />
+              <HStack justifyContent={'center'}>
+                {/* <View style={styles.orangeLeft} /> */}
                 <VStack>
-                  <TouchableOpacity disabled={saving || loading || !isActive()} onPress={validateForm} style={{ width:150, height:40, backgroundColor: 'black', borderRadius:10, marginBottom:15, opacity: isActive() ? '1' : .7 }}>
+                  <TouchableOpacity disabled={saving || loading || !isActive()} onPress={validateForm} style={{ width:150, height:40, backgroundColor: 'black', borderRadius:10, marginBottom:15, 
+                  opacity: isActive() || !loading ? '1' : .5 
+                  }}>
                     {
                       saving ? <VStack height={'100%'} justifyContent={'center'} ><Spinner /></VStack> :
                         <Text color={Colors.white} fontSize={'md'} textAlign={'center'} marginY={'auto'} >
@@ -212,28 +240,27 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
                         </Text>
                     }
                   </TouchableOpacity>
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={() => navigation.navigate('GoalsReport')}>
                     <Text textAlign={'center'} style={{ textDecorationLine: 'underline'}} fontSize={15}>
                       Mi avance
                     </Text>
                   </TouchableOpacity>
                 </VStack>
-                <View style={styles.orangeRight} />
+                {/* <View style={styles.orangeRight} /> */}
               </HStack>
-              <HStack justifyContent={'center'}>
+              {/* <HStack justifyContent={'center'}>
                 <View style={styles.orangeCenter} />
-              </HStack>
-              <HStack space={1} justifyContent={'space-around'} display={'flex'}>
-                <View style={styles.orangeLeftPadding} marginBottom='auto' />
-                <TouchableOpacity>
-                  <Image resizeMode='center' width={12} height={12} source={Tree}  />
+              </HStack> */}
+              <HStack space={1} justifyContent={'space-around'} marginTop={55} marginBottom={2} >
+                <TouchableOpacity onPress={() => navigation.navigate('GoalsTree')}>
+                  <Image key={1} resizeMode='center' width={12} height={12} source={Tree} />
                 </TouchableOpacity>
-                <View style={styles.orangeRightPadding} marginBottom='auto' />
               </HStack>
             </VStack>
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
+      <FooterLines />
     </ScrollView>
   </SafeAreaView>
   )

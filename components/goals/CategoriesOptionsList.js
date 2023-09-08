@@ -35,7 +35,7 @@ const CategoriesOptionsList = ({open, setOpen, goalsDuck, confirm, ...props }) =
                 </View>
                 {
                 goalsDuck?.categories?.map(item => (
-                    <Actionsheet.Item style={{ height:50}} padding={0}  onPress={() => setOptionSelected(item)} backgroundColor={ optionSelected?.id === item.id ? Colors.yellow : 'white' } >
+                    <Actionsheet.Item style={{ height:50}} padding={0}  onPress={() => setOptionSelected(item)} backgroundColor={ optionSelected?.id === item.id ? 'gray.300' : 'white' } >
                     <VStack justifyContent={'center'} height={'100%'} >
                         <HStack display={'flex'} space={1} margin={0} minWidth={'100%'} justifyContent={'center'}>
                             <View  width={'7'} height={'100%'} marginY={'auto'}>
