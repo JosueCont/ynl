@@ -6,6 +6,7 @@ import authDuck, {createSession, emotionStatusAction} from "./ducks/authDuck";
 import feelingsDuck from "./ducks/feelingsDuck";
 import groupDuck from "./ducks/groupDuck";
 import goalsDuck from './ducks/goalsDuck'
+import projectsDuck from './ducks/projectsDuck'
 
 
 const rootReducer = combineReducers({
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
     authDuck: authDuck,
     feelingsDuck:  feelingsDuck,
     groupDuck: groupDuck,
-    goalsDuck: goalsDuck
+    goalsDuck: goalsDuck,
+    projectsDuck: projectsDuck
 })
 
 export const store = createStore(

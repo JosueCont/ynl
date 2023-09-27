@@ -1,8 +1,8 @@
 import axios from "axios";
 import {getDataObject} from "../utils/functions"
-const isprod = false
+export const isprod = false
 
-export const baseURL = isprod ? 'https://api.ynl.khorplus.com' : 'https://9648-189-202-188-235.ngrok-free.app';
+export const baseURL = isprod ? 'https://api.ynl.khorplus.com' : 'https://94e3-2806-10be-9-f3f-8707-e387-eefb-dce0.ngrok-free.app';
 
 let config = {
     baseURL:baseURL,

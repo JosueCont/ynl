@@ -9,7 +9,7 @@ const FooterLines = () => {
     const screenWidth = Dimensions.get("window").width;
     return (
         <View style={{ position:'absolute', zIndex:-1, bottom:0 }}>
-            <Image width={screenWidth} style={styles.linesImg}  source={Lines} />
+            <Image alt='lines' width={screenWidth} style={styles.linesImg}  source={Lines} />
         </View>
     )
 }

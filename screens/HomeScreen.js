@@ -126,7 +126,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     useEffect(() => {
 
         registerForPushNotificationsAsync().then(token => setExpoPushToken(token)).catch(e => {
-            console.log('HomeScreen registerForPushNotificationsAsync error => ', e.toString())
+            console.log('============================HomeScreen registerForPushNotificationsAsync error => ', e.toString())
         });
 
         // This listener is fired whenever a notification is received while the app is foregrounded
@@ -251,7 +251,6 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                 "provider": "expo",
                 "users_permissions_user": authDuck.user.id
             }
-            console.log(data)
             const res = await ApiApp.sendPushToken({data})
         } catch (e) {
             console.log("HomeScreen sendPushTokenToBack error =>", e)
@@ -348,8 +347,6 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
         try {
             const response = await ApiApp.getUserDayPhrase(authDuck.user.id)
             if(response.status === 200){
-                console.log('=================')
-                console.log(response.data)
                 setPhraseDay(response?.data?.data?.phrase?.phrase)
                 if(response?.data?.data?.exist === false){
                     setModalPhraseVisible(true)

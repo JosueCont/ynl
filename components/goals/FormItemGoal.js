@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 
 const FormItemGoal = ({data=[], idx=null, upd, disabled = false, isActive= true}) => {
 
-    const maxLength = 20
+    const maxLength = 200
     const [currenInfo, setCurrenInfo] = useState({})
     const [optionsOpen, setOptionsOpen] = useState(false)
     const [optionSelected, setOptionSelected] = useState(null)
@@ -26,7 +26,7 @@ const FormItemGoal = ({data=[], idx=null, upd, disabled = false, isActive= true}
     
 
     const updDescription = (newVal) => {
-      if(newVal.length <= 20){
+      if(newVal.length <= maxLength){
         upd('description', newVal, idx)
       }
     }

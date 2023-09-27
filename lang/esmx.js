@@ -16,6 +16,7 @@ export const esmx = {
     'home_my_groups':'Mis grupos',
     'home_aspects':'Mis aspectos',
     'home_goals':'Mis objetivos',
+    'home_projects':'Mis Proyectos',
     'my_progress': 'Mi avance',
     'home_register_first_emotion':'Registra tu primera emoción',
     'home_logout':'Cerrar sesión',

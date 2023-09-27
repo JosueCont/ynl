@@ -19,6 +19,7 @@ export const enus = {
     'home_logout':'Logout',
     'home_my_aspects':'My aspects',
     'home_goals': 'My goals',
+    'home_projects':'My Projects',
     'my_progress': 'My progress',
     //Historial
     'history_my_history':'My records',

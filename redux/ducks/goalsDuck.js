@@ -39,7 +39,7 @@ export let getGoalCategories = (data) => async (dispatch) => {
         }
         return true
     }catch (e) {
-        console.log('saveEmotion error =>', e.toString())
+        console.log('get Categories==> error =>', e.toString())
         return false
     }
 }

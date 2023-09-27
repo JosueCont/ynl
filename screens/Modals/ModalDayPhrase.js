@@ -8,7 +8,7 @@ import * as FileSystem from 'expo-file-system';
 import {Alert, Modal, TouchableOpacity} from "react-native";
 import { StyleSheet,  View } from 'react-native'
 import newLogo from '../../assets/new_logo.png'
-import textOne from '../../assets/preguntas-08.png'
+import textOne from '../../assets/una_simple_pregunta.png'
 import textTwo from '../../assets/preguntas-09.png'
 import shareIcon from '../../assets/Icon-feather-share.png'
 import iconClose from '../../assets/icon_close.png'
@@ -65,17 +65,21 @@ const ModalDayPhrase = ({phrase = "", visible, closeModalPhrase, ...props}) => {
                         />
                     </HStack>
                     <Image
-                        h={100}
+                        w={'80%'}
+                        height={20}
+                        resizeMode='contain'
                         source={textOne}
                         alt='question1'
                     />
-                    <HStack width={'70%'} justifyContent={'center'}>
+                    <HStack width={'70%'} justifyContent={'center'} paddingY={10} >
                         <Text fontSize={18} textAlign={'center'} lineHeight={22} > 
                             {phrase}
                         </Text>
                     </HStack>
                     <Image
-                        h={100}
+                        w={'100%'}
+                        height={20}
+                        resizeMode='contain'
                         source={textTwo}
                         alt='question1'
                     />

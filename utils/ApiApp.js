@@ -5,7 +5,6 @@ import jwt_decode from 'jwt-decode';
 
 class ApiApp {
   static ApisType = (url, method = "post", params = {}, formdata = null) => {
-    console.log('url:', url, method, params)
     let task = "";
     switch (method) {
       case "post":
@@ -25,7 +24,7 @@ class ApiApp {
         task = APIKit.delete(url);
         break;
       case "patch":
-        task = APIKit.patch(url);
+        task = APIKit.patch(url, params);
         break;
     }
     return task;
@@ -417,6 +416,31 @@ class ApiApp {
     return ApiApp.ApisType(`/api/daily-goals/${data?.userId}/report/?dateOne=${data?.dateOne}&dateTwo=${data?.dateTwo}`, "get");
   }
 
+  /* Projectos */
+  static getProjects = (user_id) => {
+    return ApiApp.ApisType(`/api/projects/?filters[user][id][$eq]=${user_id}&populate=*`, "get");
+  }
+
+  static uploadImage = (data) => {
+    return ApiApp.ApisType(`/api/upload/`, "post", data, {
+      headers: {
+        "Content-type": `multipart/form-data;`,
+      },
+    });
+  };
+
+  static createProject = (data) => {  
+    return ApiApp.ApisType(`/api/projects/`, "post", data)
+  }
+
+  static getProjectId = (project_id) => {
+    return ApiApp.ApisType(`/api/projects/${project_id}`, "get");
+  }
+
+  static updProject = (project_id, data) => {
+    console.log(`/api/projects/${project_id}/`)
+    return ApiApp.ApisType(`/api/projects/${project_id}/`, "put", data);
+  }
 
   static _baseURL = baseURL;
 }

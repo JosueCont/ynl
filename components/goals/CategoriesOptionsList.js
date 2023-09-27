@@ -13,6 +13,12 @@ const CategoriesOptionsList = ({open, setOpen, goalsDuck, confirm, ...props }) =
         confirm(optionSelected)
         setOpen(false)
     }
+
+
+    useEffect(() => {
+      console.log('goalsDuck?.categories',goalsDuck?.categories)
+    }, [goalsDuck?.categories])
+    
     
 
   return (

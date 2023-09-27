@@ -17,6 +17,8 @@ import IntroScreen from "../screens/IntroScreen";
 import GoalsScreen from '../screens/GoalsScreen'
 import GoalsReport from '../screens/GoalsReport'
 import GoalTree from '../screens/GoalTree'
+import Projects from '../screens/Projects'
+import ProjectForm from '../screens/ProjectForm'
 import {t} from 'i18n-js';
 import RouletteStep1Screen from "../screens/RouletteStep1Screen";
 import RouletteStep2Screen from "../screens/RouletteStep2Screen";
@@ -46,7 +48,7 @@ const DrawerConfig = () => {
           drawerPosition: "right",
           headerLeft: () => {
             //console.log("route", route?.params.parentItem.attributes.name);
-            if (route.name.includes("HomeScreen") || route.name.includes("GoalsScreen") || route.name.includes("GoalsReport") || route.name.includes("GoalsTree") ) {
+            if (route.name.includes("HomeScreen") || route.name.includes("GoalsScreen") || route.name.includes("GoalsReport") || route.name.includes("GoalsTree") || route.name.includes('ProjectsList') || route.name.includes('ProjectForm') ) {
               return <View />;
             } else {
               return (
@@ -84,12 +86,12 @@ const DrawerConfig = () => {
               );
             }
           },
-          headerTransparent: route.name.includes("GoalsScreen") || route.name.includes("GoalsReport") || route.name.includes("GoalsTree") ? true : false,
+          headerTransparent: route.name.includes("GoalsScreen") || route.name.includes("GoalsReport") || route.name.includes("GoalsTree") || route.name.includes("ProjectsList") || route.name.includes('ProjectForm') ? true : false,
           headerStyle: { backgroundColor: Colors.white, opacity: 1, borderColor:'black'  },
           headerTitleAlign: "center",
           headerTitleStyle: { color: "black" },
           headerTitle: () => {
-            if (route.name.includes("GoalsScreen") || route.name.includes("GoalsReport") || route.name.includes("GoalsTree")) {
+            if (route.name.includes("GoalsScreen") || route.name.includes("GoalsReport") || route.name.includes("GoalsTree") || route.name.includes("ProjectsList") || route.name.includes('ProjectForm')) {
               return <View />;
             } else {
               return (
@@ -141,7 +143,7 @@ const DrawerConfig = () => {
         <Drawer.Screen
           name={"GoalsScreen"}
           component={GoalsScreen}
-          options={{ title: "Mis propositos" }}
+          options={{ title: "Mis objetivos" }}
         />
         <Drawer.Screen
           name={"GoalsReport"}
@@ -153,7 +155,16 @@ const DrawerConfig = () => {
           component={GoalTree}
           options={{ title: "Categorias" }}
         />
-        
+        <Drawer.Screen
+          name={"ProjectsList"}
+          component={Projects}
+          options={{ title: "Projectos" }}
+        />
+        <Drawer.Screen
+          name={"ProjectForm"}
+          component={ProjectForm}
+          options={{ title: "Detalles del proyecto" }}
+        />
         <Drawer.Screen
           name={"GroupsStartScreen"}
           component={GroupsStartScreen}

@@ -1,6 +1,16 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Platform} from "react-native";
 import {t} from 'i18n-js';
+import { Image } from 'react-native';
+const exampleImage = require('../assets/new_logo.png')
+import { baseURL, isprod } from '../utils/AxiosApi'
+import * as Print from 'expo-print';
+import { shareAsync } from 'expo-sharing';
+import * as Sharing from 'expo-sharing';
+import * as FileSystem from 'expo-file-system';
+import moment from 'moment';
+import logoPng from '../assets/new_logo.png'
+
 
 export const storeDataObject = async (key='@data', value) => {
     try {
@@ -103,4 +113,250 @@ export const getShadowCircleStyle = (width, height) => {
 export const isEmailValid = (email) => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return reg.test(email);
+}
+
+export const getProgressProject = (project) => {
+    const val = 100/6
+
+    total = 0
+    if(project?.attributes?.goal){
+        total+= val
+    }
+    if(project?.attributes?.reason){
+        total+= val
+    }
+    if(project?.attributes?.how){
+        total+= val
+    }
+    if(project?.attributes?.when){
+        total+= val
+    }
+    if(project?.attributes?.where){
+        total+= val
+    }
+    if(project?.attributes?.how_much){
+        total+= val
+    }
+    if(total  === 0){
+        return 0
+    }else{
+        return Math.ceil(total)
+    }
+}
+
+export const getUrlImage = (url=null) => {
+    if(url){
+        return isprod ? url : baseURL+url
+    }else{
+        return 'https://i0.wp.com/fenamacajedrez.com/wp-content/uploads/2023/02/placeholder-5.png?fit=1200%2C800&ssl=1'
+    }
+}
+
+const fetchImageData = async (uri) => { // fetch Base64 string of image data
+    const data = await FileSystem.readAsStringAsync('file://' + uri, {
+     encoding: FileSystem.EncodingType.Base64,
+    });
+    return imageData = 'data:image/png;base64,' + data;
+   };
+
+export const printProject = async (data) => {
+    const { default: imageYnl } = await import('../assets/new_logo.png')
+    const { default: imageSixPack } = await import('../assets/six_pack.png')
+    const { default: appStore } = await import('../assets/app_store.png')
+    const { default: playStore } = await import('../assets/play_store.png')
+
+    const logoYnl = Image.resolveAssetSource(imageYnl).uri
+    const logoSixPack = Image.resolveAssetSource(imageSixPack).uri
+    const appStoreUrl = Image.resolveAssetSource(appStore).uri
+    const playStoreUrl = Image.resolveAssetSource(playStore).uri
+
+    const html = `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <table style="width: 100%;">
+            <tr>
+                <td style=" padding-top: 20px; padding-bottom:20px">
+                    <img src="${logoYnl }" width="100px" height="90px" />
+                </td>
+                <td style=" padding-top: 20px; padding-bottom:20px; ext-align: center; text-align: center;" >
+                    ${data?.attributes?.name}
+                </td>
+                <td style=" padding-top: 20px; padding-bottom:20px; text-align: right;">
+                    <img src="${logoSixPack }" width="100px" height="80px" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>Objetivo</b></td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding: 10px; padding-bottom: 50px;">${data?.attributes?.goal}</td>
+            </tr>
+            <tr>
+                <td colspan="3"  style="background-color: #F5AC00; padding:10px ;" ><b>¿Por que?</b></td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes?.reason}</td>
+            </tr>
+            <tr>
+                <td colspan="3"  style="background-color: #F5AC00; padding:10px ;" ><b>¿Como?</b></td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes?.how}</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>¿Cuando?</b></td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes?.when }</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>¿Donde?</b></td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes?.where}</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>¿Cuanto?</b></td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes?.how_much}</td>
+            </tr>
+            <tr style="text-align:center;" >
+                <td colspan="3">
+                    <table>
+                        <tr>
+                            <td>
+
+                            </td>
+                            <td colspan="2">
+                                Buscanos en las tiendas comom YNL: 
+                            </td>
+                            <td>
+                                <img src="${appStoreUrl }" width="160px" height="50px" />
+                            </td>
+                            <td>
+                                <img src="${playStoreUrl }" width="150px" height="65px" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>  
+            </tr>
+        </table>
+    </body>
+    </html>`
+
+    await Print.printAsync({
+        html,
+    });
+}
+
+export const SharePdfProject = async (data) => {
+    const { default: imageYnl } = await import('../assets/new_logo.png')
+    const { default: imageSixPack } = await import('../assets/six_pack.png')
+    const { default: appStore } = await import('../assets/app_store.png')
+    const { default: playStore } = await import('../assets/play_store.png')
+
+    const logoYnl = Image.resolveAssetSource(imageYnl).uri
+    const logoSixPack = Image.resolveAssetSource(imageSixPack).uri
+    const appStoreUrl = Image.resolveAssetSource(appStore).uri
+    const playStoreUrl = Image.resolveAssetSource(playStore).uri
+
+    const html = `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <table style="width: 100%;">
+            <tr>
+                <td style=" padding-top: 20px; padding-bottom:20px">
+                    <img src="${logoYnl }" width="100px" height="90px" />
+                </td>
+                <td style=" padding-top: 20px; padding-bottom:20px; ext-align: center; text-align: center;" >
+                    ${data?.attributes?.name}
+                </td>
+                <td style=" padding-top: 20px; padding-bottom:20px; text-align: right;">
+                    <img src="${logoSixPack }" width="100px" height="80px" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>Objetivo</b></td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding: 10px; padding-bottom: 50px;">${data?.attributes?.goal}</td>
+            </tr>
+            <tr>
+                <td colspan="3"  style="background-color: #F5AC00; padding:10px ;" ><b>¿Por que?</b></td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes?.reason}</td>
+            </tr>
+            <tr>
+                <td colspan="3"  style="background-color: #F5AC00; padding:10px ;" ><b>¿Como?</b></td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes?.how}</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>¿Cuando?</b></td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes?.when }</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>¿Donde?</b></td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes?.where}</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>¿Cuanto?</b></td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes?.how_much}</td>
+            </tr>
+            <tr style="text-align:center;" >
+                <td colspan="3">
+                    <table>
+                        <tr>
+                            <td>
+
+                            </td>
+                            <td colspan="2">
+                                Buscanos en las tiendas comom YNL: 
+                            </td>
+                            <td>
+                                <img src="${appStoreUrl }" width="160px" height="50px" />
+                            </td>
+                            <td>
+                                <img src="${playStoreUrl }" width="150px" height="65px" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>  
+            </tr>
+        </table>
+    </body>
+    </html>`
+
+    const { uri } = await Print.printToFileAsync({ html });
+    await shareAsync(uri, { UTI: '.pdf', mimeType: 'application/pdf' })
+}   
+
+export const getProjectsAvailable = (user) => {
+    const today =  moment()
+    const registerDate = moment(user?.createdAt)
+    const dif = today.diff(registerDate, 'days')
+    if(dif > 21){
+        return true
+    }else{
+        return false
+    }
 }

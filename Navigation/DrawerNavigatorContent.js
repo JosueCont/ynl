@@ -9,6 +9,7 @@ import logoKhor from "../assets/logos.png";
 import {t} from 'i18n-js';
 import {logOutAction} from "../redux/ducks/authDuck";
 import ApiApp from "../utils/ApiApp";
+import { getProjectsAvailable } from '../utils/functions'
 
 const {height} = Dimensions.get('screen');
 
@@ -119,6 +120,14 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
                   {t('home_goals')}
               </Text>
             </TouchableOpacity>
+            {
+              /* getProjectsAvailable() &&  */
+              <TouchableOpacity onPress={() => navigation.navigate("ProjectsList")}>
+                <Text color={"white"} fontSize={20} my={2}>
+                  {t('home_projects')}
+                </Text>
+              </TouchableOpacity>
+            }
             {/* <TouchableOpacity onPress={() => navigation.navigate("GoalsReport")}>
               <Text color={"white"} fontSize={20} my={2}>
                   {t('my_progress')}

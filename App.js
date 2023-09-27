@@ -10,6 +10,8 @@ import i18n from "i18n-js";
 import {langMessages} from './lang/messages';
 import NavigationContainerConfig from "./Navigation/NavigationContainerConfig";
 import moment from 'moment';
+import { useFonts } from 'expo-font';
+
 
 const Stack = createStackNavigator();
 // LogBox.ignoreLogs(['Warning: ...']);
@@ -33,6 +35,9 @@ TextInput.defaultProps.allowFontScaling = false;
 
 export default function App() {
 
+    const [fontsLoaded] = useFonts({
+        'Bebas-Regular': require('./assets/fonts/Bebas-Regular.ttf'),
+    });
 
     return (
         <SSRProvider>
