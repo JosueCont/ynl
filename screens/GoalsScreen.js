@@ -169,12 +169,7 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
     copy[idx] = item
     setDataSend(copy)
   }
-  
 
-  useEffect(() => {
-    if(loading === true)
-      console.log("true")
-  }, [loading])
   
 
   return (
@@ -221,7 +216,7 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
               }
             </HStack>
             <HStack justifyContent={'center'}>
-              <Image resizeMode='center' height={20} width={'80%'} source={Phrase} alt='Phrase' marginY={5} />
+              <Image resizeMode='contain' height={20} width={'80%'} source={Phrase} alt='Phrase' marginY={5} />
             </HStack>
             <VStack space={5}>
               <FormItemGoal isActive={isActive} data={dataSend} idx={0} upd={updData} disabled={saving} />

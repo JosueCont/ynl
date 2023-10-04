@@ -18,6 +18,7 @@ class ApiApp {
         task = APIKit.put(url, params);
         break;
       case "get":
+        console.log('===================>', url)
         task = APIKit.get(url);
         break;
       case "delete":
@@ -441,6 +442,12 @@ class ApiApp {
     console.log(`/api/projects/${project_id}/`)
     return ApiApp.ApisType(`/api/projects/${project_id}/`, "put", data);
   }
+
+  /* UserBooks */
+  static getUserBooks = (user_id) => {
+    return ApiApp.ApisType(`/api/user-books/getBooks/${user_id}`, "get");
+  }
+
 
   static _baseURL = baseURL;
 }

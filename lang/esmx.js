@@ -18,6 +18,8 @@ export const esmx = {
     'home_goals':'Mis objetivos',
     'home_projects':'Mis Proyectos',
     'my_progress': 'Mi avance',
+    'books':'Libros',
+    'read_books':'Leer libro',
     'home_register_first_emotion':'Registra tu primera emoción',
     'home_logout':'Cerrar sesión',
     'home_my_aspects':'Mis aspectos',

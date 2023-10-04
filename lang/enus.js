@@ -21,6 +21,8 @@ export const enus = {
     'home_goals': 'My goals',
     'home_projects':'My Projects',
     'my_progress': 'My progress',
+    'books':'Books',
+    'read_books':'Read Books',
     //Historial
     'history_my_history':'My records',
     'history_detail':'Click to see the details.',

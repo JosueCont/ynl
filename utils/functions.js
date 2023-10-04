@@ -146,6 +146,8 @@ export const getProgressProject = (project) => {
 
 export const getUrlImage = (url=null) => {
     if(url){
+        console.log("=>",baseURL+url)
+        console.log(isprod ? url : baseURL+url)
         return isprod ? url : baseURL+url
     }else{
         return 'https://i0.wp.com/fenamacajedrez.com/wp-content/uploads/2023/02/placeholder-5.png?fit=1200%2C800&ssl=1'
