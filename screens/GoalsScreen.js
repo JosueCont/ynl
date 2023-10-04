@@ -58,7 +58,7 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
   }
 
   const getData = () => {
-    getDateGoal(dateSelected.format("YYYY-MM-DD"))
+    getDateGoal(dateSelected.format("YYYY-MM-DD"), authDuck?.user?.id)
   }
 
   useEffect(() => {
@@ -148,7 +148,7 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
       setSaving(false)
     }finally{
       setSaving(false)
-      getDateGoal(dateSelected)
+      getDateGoal(dateSelected, authDuck?.user?.id)
     }
 
   }

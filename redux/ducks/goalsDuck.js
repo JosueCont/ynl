@@ -44,10 +44,10 @@ export let getGoalCategories = (data) => async (dispatch) => {
     }
 }
 
-export let getDateGoal = (date) => async (dispatch) => {
+export let getDateGoal = (date, user_id) => async (dispatch) => {
     dispatch({type: LOADING, payload: true });
     try {
-        let response = await ApiApp.getDateGoal(date)
+        let response = await ApiApp.getDateGoal(date, user_id)
         if(response?.status === 200){
             dispatch({type: DAILYGOALS, payload: response?.data?.data });
         }
