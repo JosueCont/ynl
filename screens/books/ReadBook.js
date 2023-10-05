@@ -1,6 +1,7 @@
 import {ScrollView , Text, View, HStack, Image, VStack, Progress, Center, Skeleton } from 'native-base'
 import { SafeAreaView, TouchableOpacity , StyleSheet, Dimensions, RefreshControl} from 'react-native'
 import React from 'react'
+import PDFReader from 'rn-pdf-reader-js'
 
 
 
@@ -21,37 +22,48 @@ const ReadBook = ({route, ...props}) => {
     const dispatch = useDispatch()
     const [refreshing, setRefreshing] = useState(false)
     const screenHeight = Dimensions.get("window").height;
-
-    const source = { uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf', cache: true };
+    const [currentBook, setCurrentBook] = useState(null)
 
 
     useEffect(() => {
-        if (route?.params?.book_id) {
-            console.log('===================>', route?.params?.book_id)
+        if (route?.params?.book) {
+            console.log("========>",route?.params?.book)
+            setCurrentBook(route?.params?.book)
         }
     }, [route.params])
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: Colors.white}}>
-        <ScrollView showsVerticalScrollIndicator={false} position={'relative'} backgroundColor={Colors.white}
-            refreshControl={<RefreshControl refreshing={refreshing}  /* onRefresh={refreshBooks} */ />}
-        >
-            <View flex={1} mx={5} mt={5} style={{ flexDirection: 'column' }} minHeight={screenHeight}>
-                <HStack justifyContent={'flex-end'} >
-                    <HStack space={2} >
-                        <Image source={Mark} width={8 } height={8 } resizeMode="contain" />
-                        <Image source={Search} width={8} height={8} resizeMode="contain" />
-                    </HStack>
+        <View flex={1} mx={5} mt={5} style={{ flexDirection: 'column' }} minHeight={screenHeight}>
+            <HStack justifyContent={'flex-end'} >
+                <HStack space={2} >
+                    <Image source={Search} width={8} height={8} opacity={currentBook?.locked ? 0.3 : 1} resizeMode="contain" />
+                    <Image source={Mark} width={8 } height={8 } opacity={currentBook?.locked ? 0.3 : 1} resizeMode="contain" />
                 </HStack>
-                <View>
-                    
+            </HStack>
+            {
+                currentBook?.locked ?
+                <View style={styles.pdfContent}> 
+                    <Image width={'100%'} resizeMode='contain' flex={1} source={{ uri: getUrlImage(currentBook?.back_cover?.url) }} />
+                </View> 
+                :
+                <View style={styles.pdfContent}>
+                    <PDFReader
+                        source={{
+                            uri:  getUrlImage(currentBook?.full_pdf?.url),
+                        }}
+                    />
                 </View>
-            </View>
-        </ScrollView>
+            }
+        </View>
     </SafeAreaView>
   )
 }
 
 export default ReadBook
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    pdfContent:{
+        marginTop:10, height: Dimensions.get("window").height-200
+    }
+})

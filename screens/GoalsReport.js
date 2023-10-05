@@ -1,6 +1,6 @@
-import { SafeAreaView, StyleSheet, TouchableOpacity, RefreshControl } from 'react-native'
+import { SafeAreaView, View, StyleSheet, TouchableOpacity, RefreshControl } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { HStack, ScrollView, View, Image, Text, VStack, Spinner, Skeleton } from 'native-base'
+import { HStack, ScrollView, Image, Text, VStack, Spinner, Skeleton } from 'native-base'
 import { Colors } from '../utils/Colors'
 import { connect, useDispatch, useSelector } from 'react-redux'
 import {baseURL} from '../utils/AxiosApi'
@@ -14,6 +14,7 @@ import {getGoalsReport} from '../redux/ducks/goalsDuck'
 import Logo from '../assets/new_logo.png'
 import moment from 'moment'
 import { useNavigation } from '@react-navigation/native'
+import { getUrlImage } from '../utils/functions'
 
 
 
@@ -110,8 +111,8 @@ const GoalsReport = ({goalsDuck, authDuck, getGoalsReport, ...props}) => {
         <ScrollView showsVerticalScrollIndicator={false}
             refreshControl={<RefreshControl refreshing={isRefresh}  onRefresh={onRefresh} />}
         >
-        <View flex={1} paddingX={10} style={{ flexDirection: 'column' }}>
-            <HStack justifyContent={'center'} p={1} marginTop={20} marginBottom={5}>
+        <View flex={1} style={{ flexDirection: 'column', paddingBottom:150, paddingHorizontal:30 }} >
+            <HStack justifyContent={'center'} p={1}   marginBottom={5}>
               <Image
                 source={Logo}
                 alt='question1'
@@ -148,7 +149,7 @@ const GoalsReport = ({goalsDuck, authDuck, getGoalsReport, ...props}) => {
                 {
                     report?.map(item => (
                         <View flex={1} >
-                            <Image alt='img1' resizeMode='contain' aspectRatio={3}  source={{ uri: baseURL+item?.icon?.url }} />
+                            <Image alt='img1' resizeMode='contain' aspectRatio={3}  source={{ uri: getUrlImage(item?.icon?.url) }} />
                             <Text textAlign={'center'}>
                                 {item?.name}
 
@@ -173,8 +174,8 @@ const GoalsReport = ({goalsDuck, authDuck, getGoalsReport, ...props}) => {
                 </HStack>
             }
         </View>
-        </ScrollView>
         <FooterLines />
+        </ScrollView>
     </SafeAreaView>
   )
 }
