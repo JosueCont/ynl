@@ -2,6 +2,8 @@ import {ScrollView , Text, View, HStack, Image, VStack, Progress, Center, Skelet
 import { SafeAreaView, TouchableOpacity , StyleSheet, Dimensions, RefreshControl} from 'react-native'
 import React from 'react'
 import PDFReader from 'rn-pdf-reader-js'
+import { getOneBook } from '../../redux/ducks/booksDuck'
+import {useIsFocused} from "@react-navigation/native";
 
 
 
@@ -19,18 +21,57 @@ import { Colors } from '../../utils/Colors'
 
 
 const ReadBook = ({route, ...props}) => {
+    const isFocused = useIsFocused();
     const dispatch = useDispatch()
     const [refreshing, setRefreshing] = useState(false)
     const screenHeight = Dimensions.get("window").height;
     const [currentBook, setCurrentBook] = useState(null)
+    const loading = useSelector(state => state?.booksDuck?.loading)
 
+    const getBook = async (book_code) => {
+        let book = await dispatch(getOneBook(book_code))
+        if(book.length > 0){
+            const oneBook = book[0]
+            setCurrentBook({
+                "id": oneBook?.id,
+                "name": oneBook?.attributes?.name,
+                "author": oneBook?.attributes?.author,
+                "front_page": {
+                    "id": oneBook?.attributes?.front_page?.data?.id,
+                    "name": oneBook?.attributes?.front_page?.data?.attributes?.name,
+                    "url": oneBook?.attributes?.front_page?.data?.attributes?.url
+                },
+                "back_cover": {
+                    "id": oneBook?.attributes?.back_cover?.data?.id,
+                    "name": oneBook?.attributes?.back_cover?.data?.attributes?.name,
+                    "url": oneBook?.attributes?.back_cover?.data?.attributes?.url
+                },
+                "full_pdf":{
+                    "id": oneBook?.attributes?.full_pdf?.data?.id,
+                    "name": oneBook?.attributes?.full_pdf?.data?.attributes?.name,
+                    "url": oneBook?.attributes?.full_pdf?.data?.attributes?.url
+                },
+                "locked": false
+            })
+        }
+        
+    }
 
     useEffect(() => {
-        if (route?.params?.book) {
-            console.log("========>",route?.params?.book)
-            setCurrentBook(route?.params?.book)
+        if(isFocused){
+            if (route?.params?.book) {
+                setCurrentBook(route?.params?.book)
+            }else if(route?.params?.book_code){
+                    getBook(route?.params?.book_code)
+                    
+            }
         }
-    }, [route.params])
+    }, [isFocused, route])
+
+    useEffect(() => {
+      console.log('currentBook==>', currentBook)
+    }, [currentBook])
+    
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: Colors.white}}>
@@ -42,6 +83,7 @@ const ReadBook = ({route, ...props}) => {
                 </HStack>
             </HStack>
             {
+                loading ? <Skeleton height={500} />  :
                 currentBook?.locked ?
                 <View style={styles.pdfContent}> 
                     <Image width={'100%'} resizeMode='contain' flex={1} source={{ uri: getUrlImage(currentBook?.back_cover?.url) }} />
