@@ -299,7 +299,7 @@ const ProjectForm = ({route, ...props}) => {
                                 NUEVO PROYECTO
                             </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonsAction}>
+                        <TouchableOpacity style={styles.buttonsAction} onPress={() => navigation.navigate("ReadBook",{book_code: "six"}) }>
                             <Text style={styles.txtBtnAction} fontSize={'md'} >
                                 CONSULTAR LIBRO
                             </Text>

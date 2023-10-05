@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
         height:15,
     },
     bookName:{
+        paddingTop:5,
         marginTop:5,
         fontSize:21,
         height:24,
