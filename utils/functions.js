@@ -160,6 +160,7 @@ const fetchImageData = async (uri) => { // fetch Base64 string of image data
    };
 
 export const printProject = async (data) => {
+    console.log('printProject', data)
     const { default: imageYnl } = await import('../assets/new_logo.png')
     const { default: imageSixPack } = await import('../assets/six_pack.png')
     const { default: appStore } = await import('../assets/app_store.png')
@@ -169,6 +170,7 @@ export const printProject = async (data) => {
     const logoSixPack = Image.resolveAssetSource(imageSixPack).uri
     const appStoreUrl = Image.resolveAssetSource(appStore).uri
     const playStoreUrl = Image.resolveAssetSource(playStore).uri
+    
 
     const html = `<!DOCTYPE html>
     <html lang="en">
@@ -194,37 +196,37 @@ export const printProject = async (data) => {
                 <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>Objetivo</b></td>
             </tr>
             <tr>
-                <td colspan="3" style="padding: 10px; padding-bottom: 50px;">${data?.attributes?.goal}</td>
+                <td colspan="3" style="padding: 10px; padding-bottom: 50px;">${data.attributes.goal === null ? "" : data?.attributes.goal}</td>
             </tr>
             <tr>
                 <td colspan="3"  style="background-color: #F5AC00; padding:10px ;" ><b>¿Por que?</b></td>
             </tr>
             <tr>
-                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes?.reason}</td>
+                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.reason === null ? "" : data?.attributes?.reason}</td>
             </tr>
             <tr>
                 <td colspan="3"  style="background-color: #F5AC00; padding:10px ;" ><b>¿Como?</b></td>
             </tr>
             <tr>
-                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes?.how}</td>
+                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.how === null ? "" : data?.attributes?.how}</td>
             </tr>
             <tr>
                 <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>¿Cuando?</b></td>
             </tr>
             <tr>
-                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes?.when }</td>
+                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.when === null ? "" : data?.attributes?.when }</td>
             </tr>
             <tr>
                 <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>¿Donde?</b></td>
             </tr>
             <tr>
-                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes?.where}</td>
+                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.where === null ? "" : data?.attributes?.where}</td>
             </tr>
             <tr>
                 <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>¿Cuanto?</b></td>
             </tr>
             <tr>
-                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes?.how_much}</td>
+                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.how_much === null ? "" : data?.attributes?.how_much}</td>
             </tr>
             <tr style="text-align:center;" >
                 <td colspan="3">
@@ -290,37 +292,37 @@ export const SharePdfProject = async (data) => {
                 <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>Objetivo</b></td>
             </tr>
             <tr>
-                <td colspan="3" style="padding: 10px; padding-bottom: 50px;">${data?.attributes?.goal}</td>
+                <td colspan="3" style="padding: 10px; padding-bottom: 50px;">${data?.attributes.goal === null ? "" : data?.attributes?.goal}</td>
             </tr>
             <tr>
                 <td colspan="3"  style="background-color: #F5AC00; padding:10px ;" ><b>¿Por que?</b></td>
             </tr>
             <tr>
-                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes?.reason}</td>
+                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.reason === null ? "" : data?.attributes.reason}</td>
             </tr>
             <tr>
                 <td colspan="3"  style="background-color: #F5AC00; padding:10px ;" ><b>¿Como?</b></td>
             </tr>
             <tr>
-                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes?.how}</td>
+                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.how === null ? "" : data?.attributes?.how}</td>
             </tr>
             <tr>
                 <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>¿Cuando?</b></td>
             </tr>
             <tr>
-                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes?.when }</td>
+                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.when === null ? "" : data?.attributes?.when }</td>
             </tr>
             <tr>
                 <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>¿Donde?</b></td>
             </tr>
             <tr>
-                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes?.where}</td>
+                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.where === null ? "" :data?.attributes?.where }</td>
             </tr>
             <tr>
                 <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>¿Cuanto?</b></td>
             </tr>
             <tr>
-                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes?.how_much}</td>
+                <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.how_much === null ? "" : data?.attributes?.how_much}</td>
             </tr>
             <tr style="text-align:center;" >
                 <td colspan="3">
