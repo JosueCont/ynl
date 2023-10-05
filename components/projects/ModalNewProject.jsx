@@ -25,7 +25,7 @@ const ModalNewProject = ({isOpen=false, closeModal=null}) => {
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
         let result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
           allowsEditing: true,
           aspect: [4, 3],
           quality: 1,
@@ -33,8 +33,7 @@ const ModalNewProject = ({isOpen=false, closeModal=null}) => {
     
         if (!result.canceled) {
             setFormData({...formData, image: result.assets[0] })
-            setImage(result.assets[0]);
-            console.log(result.assets[0])
+            /* setImage(result.assets[0]); */
         }
       };
 
@@ -55,10 +54,10 @@ const ModalNewProject = ({isOpen=false, closeModal=null}) => {
     
     const createNewProject = async () => {
         let project_id = await dispatch(createProject(formData))
-        console.log('resp', project_id)
-        setFormData({})
+        setFormData({user: user_id})
         setImage(null)
         if(project_id){
+          onCloseModal()
             navigation.navigate("ProjectForm",{
                 project_id: project_id,
               })
@@ -71,7 +70,7 @@ const ModalNewProject = ({isOpen=false, closeModal=null}) => {
     };
 
     const onCloseModal = () => {
-      setFormData({ ...formData, image: null })
+      setFormData({ ...formData, image: null, user: user_id })
       setImage(null)
       closeModal()
 
@@ -89,7 +88,7 @@ const ModalNewProject = ({isOpen=false, closeModal=null}) => {
                         backgroundColor={'red.200'}
                         width={100}
                         height={100}
-                        source={{ uri: image ? image.uri : getUrlImage(formData?.image) }}
+                        source={{ uri: getUrlImage(formData?.image?.uri) }}
                     />
                     <TouchableOpacity margin onPress={pickImage} style={{ paddingHorizontal:10, paddingVertical:2 }}>
                         <Text textDecorationLine={'underline'} >

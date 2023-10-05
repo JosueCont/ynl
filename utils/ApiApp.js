@@ -18,6 +18,7 @@ class ApiApp {
         task = APIKit.put(url, params);
         break;
       case "get":
+        console.log('===================>', url)
         task = APIKit.get(url);
         break;
       case "delete":
@@ -403,9 +404,9 @@ class ApiApp {
     return ApiApp.ApisType(`/api/goal-categories?filters[is_active][$eq]=true&populate=*`, "get");
   }
 
-  static getDateGoal = (date) => {
+  static getDateGoal = (date, user_id) => {
     
-    return ApiApp.ApisType(`/api/daily-goals/?filters[target_date][$eq]=${date}&populate[goal_category][populate][0]=icon&populate[goal_category][populate][1]=icon_white`, "get");
+    return ApiApp.ApisType(`/api/daily-goals/?filters[target_date][$eq]=${date}&filters[users_permissions_user][id][$eq]=${user_id}&populate[goal_category][populate][0]=icon&populate[goal_category][populate][1]=icon_white`, "get");
   }
 
   static saveDailyGoals = (data) => {
@@ -441,6 +442,12 @@ class ApiApp {
     console.log(`/api/projects/${project_id}/`)
     return ApiApp.ApisType(`/api/projects/${project_id}/`, "put", data);
   }
+
+  /* UserBooks */
+  static getUserBooks = (user_id) => {
+    return ApiApp.ApisType(`/api/user-books/getBooks/${user_id}`, "get");
+  }
+
 
   static _baseURL = baseURL;
 }

@@ -1,5 +1,5 @@
 import { HStack, Image, VStack, Text,  } from 'native-base';
-import { Share} from 'react-native';
+import { Platform, Share} from 'react-native';
 
 import React, { Component, useEffect, useState } from 'react'
 import * as Sharing from 'expo-sharing';
@@ -49,7 +49,7 @@ const ModalDayPhrase = ({phrase = "", visible, closeModalPhrase, ...props}) => {
                         onPress={() => closeModalPhrase()}
                         style={{ 
                             position:'absolute',
-                            top:20,
+                            top: Platform.OS === 'ios' ? 60 : 20,
                             right:20
                     }}>
                         <Image

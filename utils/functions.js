@@ -3,7 +3,7 @@ import {Platform} from "react-native";
 import {t} from 'i18n-js';
 import { Image } from 'react-native';
 const exampleImage = require('../assets/new_logo.png')
-import { baseURL, isprod } from '../utils/AxiosApi'
+import { baseURL, isprod, isDev } from '../utils/AxiosApi'
 import * as Print from 'expo-print';
 import { shareAsync } from 'expo-sharing';
 import * as Sharing from 'expo-sharing';
@@ -146,7 +146,7 @@ export const getProgressProject = (project) => {
 
 export const getUrlImage = (url=null) => {
     if(url){
-        return isprod ? url : baseURL+url
+        return (isprod || isDev)  ? url : baseURL+url
     }else{
         return 'https://i0.wp.com/fenamacajedrez.com/wp-content/uploads/2023/02/placeholder-5.png?fit=1200%2C800&ssl=1'
     }

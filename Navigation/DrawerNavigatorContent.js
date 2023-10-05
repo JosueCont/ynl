@@ -128,6 +128,19 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
                 </Text>
               </TouchableOpacity>
             }
+            {
+              /* getProjectsAvailable() &&  */
+              <TouchableOpacity onPress={() => navigation.navigate("BookList")}>
+                <Text color={"white"} fontSize={20} my={2}>
+                  {t('books')}
+                </Text>
+              </TouchableOpacity>
+            }
+            {/* <TouchableOpacity onPress={() => navigation.navigate("ReadBook")}>
+                <Text color={"white"} fontSize={20} my={2}>
+                  {t('read_books')}
+                </Text>
+              </TouchableOpacity> */}
             {/* <TouchableOpacity onPress={() => navigation.navigate("GoalsReport")}>
               <Text color={"white"} fontSize={20} my={2}>
                   {t('my_progress')}

@@ -194,7 +194,6 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
             const res = await ApiApp.getHomeData(authDuck.user.id, authDuck.userSiteConfig)
 
-            console.log('consolelog?===',res.data.data)
             if (_.get(res, 'data.data', null)) {
                 setDays(res.data.data.days)
                 if (res.data.data.lastEmotion) {

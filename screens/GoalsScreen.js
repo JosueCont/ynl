@@ -58,7 +58,7 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
   }
 
   const getData = () => {
-    getDateGoal(dateSelected.format("YYYY-MM-DD"))
+    getDateGoal(dateSelected.format("YYYY-MM-DD"), authDuck?.user?.id)
   }
 
   useEffect(() => {
@@ -148,7 +148,7 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
       setSaving(false)
     }finally{
       setSaving(false)
-      getDateGoal(dateSelected)
+      getDateGoal(dateSelected, authDuck?.user?.id)
     }
 
   }
@@ -169,28 +169,23 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
     copy[idx] = item
     setDataSend(copy)
   }
-  
 
-  useEffect(() => {
-    if(loading === true)
-      console.log("true")
-  }, [loading])
   
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: Colors.white}}>
       <ScrollView showsVerticalScrollIndicator={false}>
       <KeyboardAvoidingView
           style={{ flex: 1, width: "100%" }}
-          behavior={Platform.OS === "ios" ? "position" : ""}
-          keyboardVerticalOffset={100}
+          behavior={Platform.OS === "ios" ? "position" : null}
+          keyboardVerticalOffset={-100}
       >
         <TouchableWithoutFeedback
           onPress={Keyboard.dismiss}
           accessible={true}
         >
           <View flex={1} mx={4} style={{ flexDirection: 'column' }}>
-            <HStack justifyContent={'center'} p={1} marginTop={20}>
+            <HStack justifyContent={'center'} p={1} >
               <Image
                 source={Logo}
                 alt='question1'
@@ -221,17 +216,18 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
               }
             </HStack>
             <HStack justifyContent={'center'}>
-              <Image resizeMode='center' height={20} width={'80%'} source={Phrase} alt='Phrase' marginY={5} />
+              <Image resizeMode='contain' height={20} width={'80%'} source={Phrase} alt='Phrase' marginY={5} />
             </HStack>
             <VStack space={5}>
               <FormItemGoal isActive={isActive} data={dataSend} idx={0} upd={updData} disabled={saving} />
               <FormItemGoal isActive={isActive} data={dataSend} idx={1} upd={updData} disabled={saving}/>
               <FormItemGoal isActive={isActive} data={dataSend} idx={2} upd={updData} disabled={saving}/>
               <HStack justifyContent={'center'}>
-                {/* <View style={styles.orangeLeft} /> */}
                 <VStack>
+                {
+                  dateToday?.format("YYYY-MM-DD") == dateSelected?.format("YYYY-MM-DD") && 
                   <TouchableOpacity disabled={saving || loading || !isActive()} onPress={validateForm} style={{ width:150, height:40, backgroundColor: 'black', borderRadius:10, marginBottom:15, 
-                  opacity: isActive() || !loading ? '1' : .5 
+                    opacity: isActive() || !loading ? '1' : .5 
                   }}>
                     {
                       saving ? <VStack height={'100%'} justifyContent={'center'} ><Spinner /></VStack> :
@@ -240,6 +236,7 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
                         </Text>
                     }
                   </TouchableOpacity>
+                }
                   <TouchableOpacity onPress={() => navigation.navigate('GoalsReport')}>
                     <Text textAlign={'center'} style={{ textDecorationLine: 'underline'}} fontSize={15}>
                       Mi avance
@@ -257,10 +254,10 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
                 </TouchableOpacity>
               </HStack>
             </VStack>
+            <FooterLines />
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
-      <FooterLines />
     </ScrollView>
   </SafeAreaView>
   )

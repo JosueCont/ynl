@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity} from 'react-native'
 import React from 'react'
 import {Colors} from '../../utils/Colors'
 import { baseURL } from '../../utils/AxiosApi'
-import {getProgressProject} from '../../utils/functions'
+import {getProgressProject, getUrlImage} from '../../utils/functions'
 import { useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -36,7 +36,7 @@ const ProjectItem = ({project}) => {
                     <Image 
                         style={styles.imageProject}
                         resizeMode='center'
-                        source={{ uri: baseURL+ project?.attributes?.image?.data?.attributes?.url }} />
+                        source={{ uri: getUrlImage(project?.attributes?.image?.data?.attributes?.url) }} />
                 </HStack>
                 <Progress value={getProgressProject(project)} mt={2} size={'md'} bgColor={Colors.secondary} _filledTrack={{bg: Colors.orange }} />
             </VStack>
