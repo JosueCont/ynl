@@ -16,6 +16,7 @@ import SixPack from '../assets/six_pack.png'
 
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
+import { RefreshControl } from 'react-native-gesture-handler';
 
 const Projects = ({route, navigation, ...props}) => {
 
@@ -23,6 +24,13 @@ const Projects = ({route, navigation, ...props}) => {
     const user = useSelector(state => state?.authDuck?.user)
     const dispatch = useDispatch()
     const isFocused = useIsFocused();
+
+    const [refreshing, setRefreshing] = useState(false)
+    const [openModal, setOpenModal] = useState(false)
+    
+    const projectsList = useSelector(state => state?.projectsDuck?.projects) 
+    const loading = useSelector(state => state?.projectsDuck?.loading) 
+    const screenHeight = Dimensions.get("window").height;
     
 
     /* useEffect(() => {
@@ -39,11 +47,11 @@ const Projects = ({route, navigation, ...props}) => {
         }
     }, [isFocused])
     
-    const [openModal, setOpenModal] = useState(false)
-    
-    const projectsList = useSelector(state => state?.projectsDuck?.projects) 
-    const loading = useSelector(state => state?.projectsDuck?.loading) 
-    const screenHeight = Dimensions.get("window").height;
+    const refreshProjects = async () =>{
+        setRefreshing(true)
+        await dispatch(getProjects(user_id))
+        setRefreshing(false)
+    }
     
 
     const closeModal = () => {
@@ -52,7 +60,9 @@ const Projects = ({route, navigation, ...props}) => {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-      <ScrollView showsVerticalScrollIndicator={false} position={'relative'}>
+      <ScrollView showsVerticalScrollIndicator={false} position={'relative'}
+        refreshControl={<RefreshControl refreshing={refreshing}  onRefresh={refreshProjects} />}
+      >
         <View flex={1} mx={4} style={{ flexDirection: 'column' }} minHeight={screenHeight}>
             <>
                 <HStack justifyContent={'center'} p={1} marginTop={20}>
