@@ -1,6 +1,6 @@
 import { StyleSheet, View, TouchableOpacity, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { Text, Center, FormControl, Input, Modal, Button } from 'native-base'
+import { Text, Center, FormControl, Input, Modal, Button, useToast } from 'native-base'
 import { getUrlImage } from '../../utils/functions'
 import * as ImagePicker from 'expo-image-picker';
 import { Colors } from '../../utils/Colors';
@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ApiApp from '../../utils/ApiApp';
 import mime from 'react-native-mime-types'
 import { useNavigation } from '@react-navigation/native';
+
 
 const ModalNewProject = ({isOpen=false, closeModal=null}) => {
 
@@ -19,7 +20,7 @@ const ModalNewProject = ({isOpen=false, closeModal=null}) => {
     const [formData, setFormData] = useState({})
     const [errors, setErrors] = useState({});
     const [image, setImage] = useState(null);
-
+    const toast = useToast()
     const navigation = useNavigation();
 
     const pickImage = async () => {
@@ -54,6 +55,10 @@ const ModalNewProject = ({isOpen=false, closeModal=null}) => {
     
     const createNewProject = async () => {
         let project_id = await dispatch(createProject(formData))
+        if(!project_id){
+          toast.show({title: "La creación del proyecto falló, intenta con una imagen diferente"})
+          return
+        }
         setFormData({user: user_id})
         setImage(null)
         if(project_id){
@@ -98,7 +103,7 @@ const ModalNewProject = ({isOpen=false, closeModal=null}) => {
                 </Center>
                 <FormControl isRequired isInvalid={'name' in errors}>
                     <FormControl.Label>Nombre</FormControl.Label>
-                    <Input onChangeText={value => setFormData({ ...formData, name: value })} />
+                    <Input value={formData?.name} onChangeText={value => setFormData({ ...formData, name: value })} />
                     {'name' in errors && <FormControl.ErrorMessage>{errors?.name}</FormControl.ErrorMessage>}
                 </FormControl>
                 <Button mt="5" isLoading={saving} onPress={onSubmit} borderRadius={10} backgroundColor={Colors.orange} colorScheme="cyan">
