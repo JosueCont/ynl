@@ -42,27 +42,13 @@ const ProjectForm = ({route, ...props}) => {
     const dispatch = useDispatch()
     const loading = useSelector(state => state?.projectsDuck?.loading)
     const saving = useSelector(state => state?.projectsDuck?.saving)
+    const books = useSelector(state => state?.booksDuck?.books)
 
     const [activeSections, setActiveSections] = useState([]);
     const [project, setProject] = useState(null)
     const [form, setForm] = useState({})
     const [updinfo, setUpdinfo] = useState(false)
 
-    const html_ = `
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
-  </head>
-  <body style="text-align: center;">
-    <h1 style="font-size: 50px; font-family: Helvetica Neue; font-weight: normal;">
-      Hello Expo!
-    </h1>
-    <img
-      src="https://d30j33t1r58ioz.cloudfront.net/static/guides/sdk.png"
-      style="width: 90vw;" />
-  </body>
-</html>
-`;
 
     const navigation = useNavigation();
 
@@ -120,6 +106,7 @@ const ProjectForm = ({route, ...props}) => {
             getCurrentProject(route?.params?.project_id)
         }
     }, [route.params])
+    
 
     const setSections = (sections) => {
         setActiveSections(sections.includes(undefined) ? [] : sections);
@@ -312,7 +299,7 @@ const ProjectForm = ({route, ...props}) => {
                                 NUEVO PROYECTO
                             </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonsAction}>
+                        <TouchableOpacity style={styles.buttonsAction} onPress={() => navigation.navigate("ReadBook",{book_code: "six"}) }>
                             <Text style={styles.txtBtnAction} fontSize={'md'} >
                                 CONSULTAR LIBRO
                             </Text>
@@ -342,8 +329,8 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         fontFamily: 'Bebas-Regular',
         color: "#DCD7D7",
-        height: 27,
-        fontSize: 23,
+        height: 20,
+        fontSize: 20,
         verticalAlign:'middle'
     },
     buttonsAction: { 
@@ -353,8 +340,8 @@ const styles = StyleSheet.create({
         borderRadius: 2,
         shadowColor: "#B6840E",
         shadowOffset: {
-            width: 10,
-            height: 10,
+            width: 5,
+            height: 5,
          },
          shadowOpacity: 1,
          shadowRadius: 0,

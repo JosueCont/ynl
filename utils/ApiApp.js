@@ -449,6 +449,10 @@ class ApiApp {
     return ApiApp.ApisType(`/api/user-books/getBooks/${user_id}`, "get");
   }
 
+  static getOneBook = (book_code) => {
+    return ApiApp.ApisType(`/api/books/?populate=*&filters[code][$eq]=${book_code}`, "get");
+  }
+
   static postStreakDay = (data) => {
     return ApiApp.ApisType('/api/streak-day/save/', "post" , data);
   }

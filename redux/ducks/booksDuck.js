@@ -42,4 +42,21 @@ export const getBooks = (user_id) => async (dispatch) => {
     }
 }
 
+export const getOneBook = (book_code) => async (dispatch) => {
+    try {
+        dispatch({type: LOADING, payload: true })
+        let response = await ApiApp.getOneBook(book_code)
+        if(response?.status === 200){
+            dispatch({type: LOADING, payload: false });
+            return response?.data?.data
+        }
+        /* console.log(response?.data?.data) */
+    
+    }catch (e) {
+        dispatch({type: LOADING, payload: false });
+        console.log('getOneBook error =>', e.toString())
+        return false
+    }
+}
+
 export default booksDuck;
