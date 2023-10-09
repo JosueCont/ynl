@@ -161,9 +161,10 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             await getGroupsRequests();
             await getGroups()
             await getHome()
-
+            
             setTimeout(() => {
                 setLoading(false)
+                addStreakDay();
             }, 200)
         } catch (e) {
             console.log("boot error =>", e.toString())
@@ -178,6 +179,21 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
         }
 
+    }
+
+    const addStreakDay = async() => {
+        try {
+            let dataSend = {
+                date: moment().format('YYYY-MM-DD'),
+                userId: authDuck?.user?.id,
+            }
+            if(authDuck?.userSiteConfig?.id) dataSend.siteId = authDuck?.userSiteConfig?.id
+            console.log('dataSend',dataSend)
+            const requestDay = await ApiApp.postStreakDay(dataSend);
+            console.log('requestDay', requestDay)
+        } catch (e) {
+            console.log('error al agregar día',e )
+        }
     }
 
     const getGroupsRequests = async () => {

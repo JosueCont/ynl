@@ -5,6 +5,7 @@ import jwt_decode from 'jwt-decode';
 
 class ApiApp {
   static ApisType = (url, method = "post", params = {}, formdata = null) => {
+    console.log('api',baseURL, url, params)
     let task = "";
     switch (method) {
       case "post":
@@ -446,6 +447,34 @@ class ApiApp {
   /* UserBooks */
   static getUserBooks = (user_id) => {
     return ApiApp.ApisType(`/api/user-books/getBooks/${user_id}`, "get");
+  }
+
+  static postStreakDay = (data) => {
+    return ApiApp.ApisType('/api/streak-day/save/', "post" , data);
+  }
+
+  static getGoalDaily = (data) => {
+    return ApiApp.ApisType('/api/daily-goals/lastSuccess/','post',data);
+  }
+
+  static getDaysInRow = (data) => {
+    return ApiApp.ApisType('/api/streak-days-record/week/', 'post', data);
+  }
+
+  static getMaxStreak = (data) => {
+    return ApiApp.ApisType('/api/streak-day/getMaxStreak/', 'post', data)
+  }
+
+  static getFriendsSuggestions = (data) => {
+    return ApiApp.ApisType('/api/user-site-configs/friendsSuggestions/', 'post', data)
+  }
+
+  static followFriend = (data) => {
+    return ApiApp.ApisType('/api/follow/follow/', 'post', data);
+  }
+
+  static unFollowFriend = (data) => {
+    return ApiApp.ApisType('/api/follow/unFollow/', 'post', data)
   }
 
 

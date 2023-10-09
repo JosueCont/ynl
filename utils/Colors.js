@@ -7,6 +7,8 @@ export const Colors = {
     white: 'white',
     yellow: "#b0d90e",
     orange: '#F5AC00',
-    secondary: "#EEEEEE"
+    secondary: "#EEEEEE",
+    yellowV2:'#F5AC00',
+    gray:'#CCCCCC'
 
 }

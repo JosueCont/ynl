@@ -82,6 +82,8 @@ export const enus = {
     'add':'Add',
     'home':'Home',
     'profile':'Profile',
+    'my_profile':'My profile',
+
 
     //dashboard
     'dash_last_week':'Last week',

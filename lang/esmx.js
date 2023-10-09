@@ -83,6 +83,7 @@ export const esmx = {
     'add':'Agregar',
     'home':'Inicio',
     'profile':'Perfil',
+    'my_profile':'Mi perfil',
 
     //dashboard
     'dash_last_week':'Semana anterior',
