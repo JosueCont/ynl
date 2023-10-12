@@ -32,6 +32,10 @@ class ApiApp {
     return task;
   };
 
+  static getRoulette = () => {
+    return ApiApp.ApisType(`/api/feeling/geRoulette/`, "get");
+  };
+
   static sendPushToken = (data) => {
     return ApiApp.ApisType(`/api/push-tokens`, "post", data);
   };

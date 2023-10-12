@@ -20,21 +20,36 @@ const RouletteStep1Screen = ({navigation}) => {
 
     const [loading, setLoading] = useState(null);
     const [parents, setParents] = useState([]);
+    const [emotions, setEmotions] = useState([]);
 
-    const emotions = [
-        {slug:'contento', name: 'Contento', range: [0, 60], color: '#F9CF67'},
-        {slug:'en-paz', name: 'En paz', range: [60, 120], color: '#BBEBFF'},
-        {slug:'inspirado', name: 'Inspirado', range: [120, 180], color: '#F0A4BB'},
-        {slug:'abierto', name: 'Abierto', range: [180, 240], color: '#70DDEC'},
-        {slug:'confundido', name: 'Confundido', range: [240, 300], color: '#F6AA80'},
-        {slug:'molesto', name: 'Molesto', range: [300, 360], color: '#EF7C7C'},
-        {slug:'deprimido', name: 'Deprimido', range: [300, 360], color: '#B9CFEE'}
-    ]
+    // const emotions = [
+    //     {slug:'contento', name: 'Contento', range: [0, 60], color: '#F9CF67'},
+    //     {slug:'en-paz', name: 'En paz', range: [60, 120], color: '#BBEBFF'},
+    //     {slug:'inspirado', name: 'Inspirado', range: [120, 180], color: '#F0A4BB'},
+    //     {slug:'abierto', name: 'Abierto', range: [180, 240], color: '#70DDEC'},
+    //     {slug:'confundido', name: 'Confundido', range: [240, 300], color: '#F6AA80'},
+    //     {slug:'molesto', name: 'Molesto', range: [300, 360], color: '#EF7C7C'},
+    //     {slug:'deprimido', name: 'Deprimido', range: [300, 360], color: '#B9CFEE'}
+    // ]
 
     useEffect(() => {
         getParents()
+        getEmotions()
     }, [])
 
+    const getEmotions = async () => {
+        try {
+            setLoading(true);
+            let response = await ApiApp.getRoulette();
+            //console.log(response.data.data)
+            setEmotions(response.data)
+            //alert(JSON.stringify(response.data))
+        } catch (e) {
+            console.log('getEmotions error =>',e.toString());
+        } finally {
+            setLoading(false)
+        }
+    }
 
     const getParents = async () => {
         try {
