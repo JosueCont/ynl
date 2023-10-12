@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import CustomDrawerContent from "./DrawerNavigatorContent";
 import HomeScreen from "../screens/HomeScreen";
+import NewHome from '../screens/NewHome'
 import YourFeelScreen from "../screens/YourFeelScreen";
 import {Icon, Image, View, Text} from "native-base";
 import {Colors} from "../utils/Colors";
@@ -52,9 +53,9 @@ const DrawerConfig = () => {
           drawerPosition: "right",
           headerLeft: () => {
             //console.log("route", route?.params.parentItem.attributes.name);
-            if ((route.name.includes("HomeScreen") || route.name.includes("GoalsScreen") || route.name.includes("GoalsReport") || route.name.includes("GoalsTree") || route.name.includes('ProjectsList') || route.name.includes('ProjectForm') || route.name.includes("BookList") || route.name.includes("ReadBook") ) && Platform.OS !== "ios") {
+            if ((route.name.includes("NewHome") || route.name.includes("GoalsScreen") || route.name.includes("GoalsReport") || route.name.includes("GoalsTree") || route.name.includes('ProjectsList') || route.name.includes('ProjectForm') || route.name.includes("BookList") || route.name.includes("ReadBook") ) && Platform.OS !== "ios") {
               return <View />;
-            } else if(route.name.includes("HomeScreen")  && Platform.OS === "ios"){
+            } else if(route.name.includes("NewHome")  && Platform.OS === "ios"){
               return <View />;
             } else if(route.name.includes('ProfileScreen')){
               return(
@@ -90,9 +91,9 @@ const DrawerConfig = () => {
                   onPress={async () => {
                     try {
                       if (route.name.includes("GroupsScreen")) {
-                        navigation.navigate("HomeScreen");
+                        navigation.navigate("NewHome");
                       } else if (route.params.from === "intro") {
-                        navigation.navigate("HomeScreen");
+                        navigation.navigate("NewHome");
                       } else {
                         navigation.goBack(0);
                       }
@@ -126,7 +127,7 @@ const DrawerConfig = () => {
           headerTitleStyle: { color: "black" },
           headerShadowVisible:false,
           headerTitle: () => {
-            if (route.name.includes("GoalsScreen") || route.name.includes("GoalsReport") || route.name.includes("GoalsTree") || route.name.includes("ProjectsList") || route.name.includes('ProjectForm') || route.name.includes("BookList") || route.name.includes("ReadBook") ) {
+            if (route.name.includes("NewHome") || route.name.includes("GoalsScreen") || route.name.includes("GoalsReport") || route.name.includes("GoalsTree") || route.name.includes("ProjectsList") || route.name.includes('ProjectForm') || route.name.includes("BookList") || route.name.includes("ReadBook") ) {
               return <View />;
             } if(route.name.includes('ProfileScreen')){
               return <Text fontSize={getFontSize(19)} style={{fontWeight:'900'}}>{t('my_profile')}</Text>
@@ -167,8 +168,8 @@ const DrawerConfig = () => {
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
         <Drawer.Screen
-          name={"HomeScreen"}
-          component={HomeScreen}
+          name={"NewHome"}
+          component={NewHome}
           options={{ title: "" }}
         />
         <Drawer.Screen name={"YourFeelScreen"} component={YourFeelScreen} />
