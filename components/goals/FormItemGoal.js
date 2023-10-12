@@ -8,6 +8,7 @@ import ImgYellow from '../../assets/Rectángulo.png'
 import {baseURL} from '../../utils/AxiosApi'
 import CategoriesOptionsList from './CategoriesOptionsList'
 import { useSelector } from 'react-redux';
+import { getUrlImage } from '../../utils/functions';
 
 const FormItemGoal = ({data=[], idx=null, upd, disabled = false, isActive= true}) => {
 
@@ -56,7 +57,7 @@ const FormItemGoal = ({data=[], idx=null, upd, disabled = false, isActive= true}
                   data[idx]?.completed && <Icon as={<FontAwesome name='check' color={'black'} style={{ textAlign:'center' }} />}/>  
                 }
             </TouchableOpacity> :
-            <View style={{ width: 25, height: 25, borderColor: Colors.yellow, borderWidth:2, borderRadius:9, justifyContent:'center'}}>
+            <View style={{ width: 25, height: 25, borderColor: Colors.black, borderWidth:2, borderRadius:9, justifyContent:'center'}}>
             {
               data[idx]?.completed && <Icon as={<FontAwesome name='check' color={'black'} style={{ textAlign:'center' }} />}/>  
             }
@@ -69,7 +70,7 @@ const FormItemGoal = ({data=[], idx=null, upd, disabled = false, isActive= true}
             {
               isActive() ? 
               <TextArea isDisabled={disabled} onChangeText={(val) => updDescription(val) } value={data[idx]?.description} width={'100%'} borderColor={data[idx]?.error_description ? Colors.red : Colors.black} borderWidth={3} borderRadius={15} /> :
-              <View paddingX={2} paddingY={1} width={'100%'} height={20} borderColor={Colors.yellow} borderWidth={3} borderRadius={15}>
+              <View paddingX={2} paddingY={1} width={'100%'} height={20} borderColor={Colors.black} borderWidth={3} borderRadius={15}>
                 <Text>
                   {data[idx]?.description}
                 </Text>
@@ -93,7 +94,7 @@ const FormItemGoal = ({data=[], idx=null, upd, disabled = false, isActive= true}
                 <Icon marginY={'auto'} color={"#fff"} as={<AntDesign name="caretdown" size={24} />} /> 
                 {
                   data[idx]?.goal_category &&
-                  <Image height={5}  resizeMode='contain' aspectRatio={1}  source={{ uri: baseURL+ data[idx]?.goal_category?.attributes?.icon_white?.data?.attributes?.url }} />
+                  <Image height={5}  resizeMode='contain' aspectRatio={1}  source={{  uri: getUrlImage(data[idx]?.goal_category?.attributes?.icon_white?.data?.attributes?.url) }} />
                 }
               </HStack>
             </VStack>

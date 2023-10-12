@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import {Colors} from '../../utils/Colors'
 import {baseURL} from '../../utils/AxiosApi'
 import { TouchableOpacity } from 'react-native'
+import { getUrlImage } from '../../utils/functions'
 
 const CategoriesOptionsList = ({open, setOpen, goalsDuck, confirm, ...props }) => {
 
@@ -45,7 +46,7 @@ const CategoriesOptionsList = ({open, setOpen, goalsDuck, confirm, ...props }) =
                     <VStack justifyContent={'center'} height={'100%'} >
                         <HStack display={'flex'} space={1} margin={0} minWidth={'100%'} justifyContent={'center'}>
                             <View  width={'7'} height={'100%'} marginY={'auto'}>
-                                <Image resizeMode='contain' aspectRatio={1}  source={{ uri: baseURL+item?.attributes?.icon?.data?.attributes?.url }} />
+                                <Image resizeMode='contain' aspectRatio={1}  source={{ uri:getUrlImage(item?.attributes?.icon?.data?.attributes?.url) }} />
                             </View>
                             <View marginY={'auto'} >
                                 <Text fontSize={'xl'} >{item?.attributes?.name}</Text>

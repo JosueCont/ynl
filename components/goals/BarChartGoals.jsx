@@ -6,6 +6,7 @@ import { height, textAlign, zIndex } from 'styled-system';
 import { HStack, Image, Skeleton, Spinner, Text, VStack, View } from 'native-base';
 import { useSelector } from 'react-redux';
 import { baseURL } from '../../utils/AxiosApi';
+import { getUrlImage } from '../../utils/functions';
 
 
 const BarChartGoals = ({dataReport, loading, ...props}) => {
@@ -95,7 +96,7 @@ const BarChartGoals = ({dataReport, loading, ...props}) => {
         {
           dataReport?.map(item => (
             <View >
-                <Image alt={`${item.id}`} resizeMode='contain' aspectRatio={2}  source={{ uri: baseURL+item?.icon?.url }} />
+                <Image alt={`${item.id}`} resizeMode='contain' aspectRatio={2}  source={{ uri: getUrlImage(item?.icon?.url) }} />
                 <Text textAlign={'center'} fontSize={10}>
                     {item?.name}
                 </Text>

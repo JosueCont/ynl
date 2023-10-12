@@ -30,7 +30,8 @@ const commonConfig = {
         URL: "https://ynl-api.herokuapp.com/",
         URL_IMAGES: "https://ynl-api.herokuapp.com",
         eas: {
-            projectId: "a72f473a-2218-4a3a-8a61-c00f72861e6a"
+            projectId: "e40cc408-c905-40aa-8963-026e5b773e54"
+           // projectId: "a72f473a-2218-4a3a-8a61-c00f72861e6a"
         }
 
     }

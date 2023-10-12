@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { getUrlImage } from '../../utils/functions'
+import { Colors } from '../../utils/Colors'
 
 
 
@@ -69,11 +70,11 @@ const BookList = ({navigation, ...props}) => {
                                     alt="DiseñoLineas"
                                     borderRadius={16}
                             />
-                            <TouchableOpacity onPress={() => navigation.navigate("ReadBook",{book_id: book.id,}) } >
+                            <TouchableOpacity onPress={() => navigation.navigate("ReadBook",{book: book}) } >
                                 <HStack justifyContent={'center'}>
                                     <VStack  justifyContent={'center'}>
                                         {
-                                            book?.locked && (<Image source={Locked} position={'absolute'} width={12} height={12} zIndex={2} right={-10} top={-10} />)
+                                            book?.locked && (<Image backgroundColor={Colors.white} borderRadius={50} source={Locked} position={'absolute'} width={12} height={12} zIndex={2} right={-10} top={-10} />)
                                         }
                                         <Image width={230} height={230} borderRadius={16} source={{ uri: getUrlImage(book?.front_page?.url) }} />
                                     </VStack>
@@ -122,6 +123,7 @@ const styles = StyleSheet.create({
         height:15,
     },
     bookName:{
+        paddingTop:5,
         marginTop:5,
         fontSize:21,
         height:24,

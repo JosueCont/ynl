@@ -91,7 +91,7 @@ const DrawerConfig = () => {
               );
             }
           },
-          headerTransparent: route.name.includes("GoalsScreen") || route.name.includes("GoalsReport") || route.name.includes("GoalsTree") || route.name.includes("ProjectsList") || route.name.includes('ProjectForm') || route.name.includes("BookList") ? true : false,
+          headerTransparent: route.name.includes("GoalsTree") || route.name.includes("ProjectsList") || route.name.includes('ProjectForm') || route.name.includes("BookList") ? true : false,
           headerStyle: { backgroundColor: Colors.white, opacity: 1, borderColor:'transparent'  },
           headerTitleAlign: "center",
           headerTitleStyle: { color: "black" },
