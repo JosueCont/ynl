@@ -1,6 +1,7 @@
 import { Dimensions, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { Colors } from '../utils/Colors'
+import _ from 'lodash';
 import {getShadowCircleStyle} from "../utils/functions";
 import { HStack, Icon, Image, Skeleton, VStack } from 'native-base';
 import { useSelector } from 'react-redux';
@@ -23,45 +24,86 @@ import BookmarkIcon from '../assets/bookmark_icon.png'
 import ObjetivosIconHome from '../assets/objetivos_icon_home.png'
 import { LinearGradient } from 'expo-linear-gradient';
 import FooterLines from '../components/FooterLines'
+import ModalDayPhrase from './Modals/ModalDayPhrase'
 import moment from 'moment';
+import {useIsFocused} from "@react-navigation/native";
 
 
 const NewHome = ({navigation}) => {
     moment.locale();
     const [loading, setLoading] = useState(false);
     const [image, setImage] = useState(null);
+    const [intro, setIntro] = useState(null);
+    const [refreshing, setRefreshing] = useState(false);
+    const [modalPhraseVisible, setModalPhraseVisible] = useState(false)
+    const [phraseDay, setPhraseDay] = useState(null)
+    const [fullName, setFullName] = useState(null);
+
+    const isFocused = useIsFocused();
     const authDuck = useSelector(state => state?.authDuck)
 
     const screenWidth = Dimensions.get("window").width;
 
     useEffect(() => {
-      console.log('authDuck',authDuck)
-    }, [authDuck])
+        if (isFocused) {
+            boot()
+        }
+    }, [isFocused])
     
+    const closeModalPhrase = () => {
+        setModalPhraseVisible(false)
+    }
+
+    const boot = async () => {
+        try {
+            setLoading(true)
+            /* await getGroupsRequests();
+            await getGroups() */
+            await getHome()
+
+            setTimeout(() => {
+                setLoading(false)
+            }, 200)
+        } catch (e) {
+            console.log("boot error =>", e.toString())
+            setTimeout(() => {
+                setLoading(false)
+            }, 200)
+        } finally {
+            setTimeout(() => {
+                setRefreshing(false)
+                setLoading(false)
+            }, 200)
+
+        }
+
+    }
 
     const getHome = async () => {
         try {
 
             const res = await ApiApp.getHomeData(authDuck.user.id, authDuck.userSiteConfig)
-
+            
             if (_.get(res, 'data.data', null)) {
-                setDays(res.data.data.days)
+                /* setDays(res.data.data.days) */
                 if (res.data.data.lastEmotion) {
                     // console.log('lastEmotion =>', res.data.data.lastEmotion)
-                    setLastEmotion(res.data.data.lastEmotion.name)
-                    setMainFeeling(res.data.data.lastEmotion)
+                    /* setLastEmotion(res.data.data.lastEmotion.name)
+                    setMainFeeling(res.data.data.lastEmotion) */
 
-                    if (res.data.data.lastEmotion.child) {
+                    /* if (res.data.data.lastEmotion.child) {
                         setLastEmotion1(res.data.data.lastEmotion.child.name)
                         setColorMainFeeling(res.data.data.lastEmotion.child.color)
                         //console.log("🚀 ~ file: HomeScreen.js ~ line 148 ~ getHome ~ color", res.data.data.lastEmotion.child.color)
-                    }
+                    } */
                 }
                 if (res.data.data.userInfo) {
                     if (res.data.data.userInfo.avatar) {
                         setImage(res.data.data.userInfo.avatar.url)
                     }
                     setFullName(res.data.data.userInfo.fullName)
+                    console.log('setintro========>',res.data.data.userInfo.intro)
+
                     setIntro(res.data.data.userInfo.intro)
                 }
             }
@@ -69,6 +111,49 @@ const NewHome = ({navigation}) => {
             console.log("HomeScreen getHome error =>", e.toString())
         } finally {
             //
+        }
+    }
+
+    useEffect( () => {
+        // console.log(authDuck.emotionStatus)
+        if (intro === false) {
+            navigation.navigate('IntroScreen')
+        } else  {   //if (authDuck.emotionStatus === 0 || authDuck.emotionStatus === undefined)            
+            /* } */
+            init()
+        }
+
+    }, [intro])
+
+    const queryDailyPhrase = async () => {
+        try {
+            const response = await ApiApp.getUserDayPhrase(authDuck.user.id)
+            if(response.status === 200){
+                setPhraseDay(response?.data?.data?.phrase?.phrase)
+                if(response?.data?.data?.exist === false){
+                    setModalPhraseVisible(true)
+                    return true
+                }
+            }
+        } catch (e) {
+            console.log("HomeScreen queryDailyPhrase error =>", e.toString())
+            return false
+        }
+    }
+
+    const init = async () => {
+        console.log('init============')
+        if(await queryDailyPhrase() === false){
+            console.log('ERROR queryDailyPhrase')
+            //validateEmotion()
+        }
+
+        if(modalPhraseVisible === false){
+            /* fetchData() 
+            if (emotionsStatus === 0) {
+                navigation.navigate('RouletteStep1Screen')
+            } */
+            /* if(emotionsStatus !== 0){ */                
         }
     }
 
@@ -80,11 +165,11 @@ const NewHome = ({navigation}) => {
                 <RefreshControl
                     style={{backgroundColor: 'white'}}
                     tintColor={Colors.yellow}
-                    /* refreshing={loading && refreshing}
+                    refreshing={loading && refreshing}
                     onRefresh={() => {
                         setRefreshing(true)
                         boot()
-                    }} */
+                    }}
                 />
         }>
             <View flex={1}  mb={2} style={{ marginBottom:130 }} >
@@ -188,7 +273,7 @@ const NewHome = ({navigation}) => {
                                 <Image source={ObjetivosIcon} style={{alignSelf:'center'}} />
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => setModalPhraseVisible(true)}>
                             <View style={{ position:'relative', justifyContent:'center' }} width={45} height={45}>
                                 <Image source={Yellow} resizeMode='contain' style={{ position:'absolute', zIndex:-1 }} />
                                 <Image source={DailyPhraseIcon} style={{alignSelf:'center'}} />
@@ -241,6 +326,7 @@ const NewHome = ({navigation}) => {
                 } */}
             </View>
             <FooterLines bottom={20} />
+            <ModalDayPhrase phrase={phraseDay}  visible={modalPhraseVisible} closeModalPhrase={closeModalPhrase} />
         </ScrollView>
     </SafeAreaView>
   )
