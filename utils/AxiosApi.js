@@ -2,7 +2,7 @@ import axios from "axios";
 import {getDataObject} from "../utils/functions"
 export const isprod = false
 
-export const baseURL = isprod ? 'https://api.ynl.khorplus.com' : 'https://642b-200-110-107-2.ngrok-free.app';
+export const baseURL = isprod ? 'https://api.ynl.khorplus.com' : 'https://apisl.ynl.hiumanlab.com/';
 
 let config = {
     baseURL:baseURL,
