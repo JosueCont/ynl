@@ -185,10 +185,14 @@ const NewHome = ({navigation}) => {
                     </HStack>
                     <View style={{ width: screenWidth, justifyContent:'center', alignItems: 'center'  }}>
                         <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen')}>
-                            {/* <Image w={220} h={220} source={{uri: image}} alt="img" style={styles.phtoContainer} /> */}
-                            <View style={styles.phtoContainer}>
-                                <Icon as={MaterialIcons} name="person-outline" size={20} color={'gray.200'}/>
-                            </View>
+                            {
+                                image ? 
+                                <Image w={220} h={220} source={{uri: image}} alt="img" style={styles.phtoContainer} />
+                                :
+                                <View style={styles.phtoContainer}>
+                                    <Icon as={MaterialIcons} name="person-outline" size={20} color={'gray.200'}/>
+                                </View>
+                            }
                             
                         </TouchableOpacity>
                         <Image source={Lineas} style={{
@@ -206,19 +210,19 @@ const NewHome = ({navigation}) => {
                     </HStack>
                     <View style={{ width:'90%',  alignSelf:'center', justifyContent:'space-evenly', flexDirection:'row' }}>
                         <View  backgroundColor={{ position:'relative', padding: 20, justifyContent:'center', backgroundColor:Colors.black }}>
-                            <CircularProgress radius={45} activeStrokeWidth={5} value={58}  progressValueColor={'#F3BC38'} />
+                            <CircularProgress radius={45} activeStrokeWidth={10} value={100}  progressValueColor={'#F3BC38'} inActiveStrokeColor='#ECE8E8' />
                             <View style={{ textAlign:'center', backgroundColor:Colors.yellow, position:'absolute', justifyContent:'center', alignSelf:'center', marginTop:10, borderRadius:110, width: 66, height:66, left:12, top:2 }}>
                                 <Image source={EmotionalKargo} width={50} height={6} resizeMode='stretch' style={{ alignSelf:'center' }} />
                             </View>
                         </View>
                         <View  backgroundColor={{ position:'relative', backgroundColor:'red', padding: 20 }}>
-                            <CircularProgress radius={45} activeStrokeWidth={5} value={58}  progressValueColor={'#F3BC38'} />
+                            <CircularProgress radius={45} activeStrokeWidth={10} value={58}  progressValueColor={'#F3BC38'} inActiveStrokeColor='#ECE8E8' />
                             <View style={{ backgroundColor:"#93973D", position:'absolute', justifyContent:'center', alignSelf:'center', marginTop:10, borderRadius:110, width: 66, height:66, left:12, top:2 }}>
                                 <Image source={LifeMachine} width={50} height={6} resizeMode='stretch' style={{ alignSelf:'center' }} />
                             </View>
                         </View>
                         <View  backgroundColor={{ position:'relative', backgroundColor:'red', padding: 20 }}>
-                            <CircularProgress radius={45} activeStrokeWidth={5} value={58}  progressValueColor={'#F3BC38'} />
+                            <CircularProgress radius={45} activeStrokeWidth={10} value={0   }  progressValueColor={'#F3BC38'} inActiveStrokeColor='#ECE8E8' />
                             <View style={{ backgroundColor:Colors.red2, position:'absolute', justifyContent:'center', alignSelf:'center', marginTop:10, borderRadius:110, width: 65, height:65, left:13, top:2 }}>
                                 <Image source={SixPack} width={50} height={6} resizeMode='stretch' style={{ alignSelf:'center' }} />    
                             </View>
@@ -231,7 +235,7 @@ const NewHome = ({navigation}) => {
                         </View> */}
                     </View>
                     <HStack style={{ marginTop:30 }} space={5} justifyContent={'center'} >
-                        <TouchableOpacity  /* onPress={() => goToProject()} */>
+                        <TouchableOpacity  onPress={() => { navigation.navigate("StatisticsScreen") }}  >
                             <LinearGradient
                                 // Button Linear Gradient
                                 colors={['#5E5C5C', '#131212']}
@@ -245,7 +249,7 @@ const NewHome = ({navigation}) => {
                                 </VStack>
                             </LinearGradient>
                         </TouchableOpacity>
-                        <TouchableOpacity  /* onPress={() => goToProject()} */>
+                        <TouchableOpacity onPress={() => { navigation.navigate('RouletteStep1Screen')}} >
                             <LinearGradient
                                 // Button Linear Gradient
                                 colors={['#5E5C5C', '#131212']}
@@ -254,20 +258,20 @@ const NewHome = ({navigation}) => {
                                 <VStack justifyContent={'center'} alignSelf={'center'} >
                                     <Image source={NvaEmocion} alignSelf={'center'} />
                                     <Text style={{ color:Colors.white}} >
-                                        Mis emociones
+                                        Nueva emoción
                                     </Text>
                                 </VStack>
                             </LinearGradient>
                         </TouchableOpacity>
                     </HStack>
                     <HStack style={{ marginTop:30 }} space={5} justifyContent={'center'} >
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate("ProjectsList")} >
                             <View style={{ position:'relative', justifyContent:'center' }} width={45} height={45}>
                                 <Image source={Yellow} resizeMode='contain' style={{ position:'absolute', zIndex:-1 }} />
                                 <Image source={ListIcon} style={{alignSelf:'center'}} />
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate("GoalsScreen")}>
                             <View style={{ position:'relative', justifyContent:'center' }} width={45} height={45}>
                                 <Image source={Yellow} resizeMode='contain' style={{ position:'absolute', zIndex:-1 }} />
                                 <Image source={ObjetivosIcon} style={{alignSelf:'center'}} />
