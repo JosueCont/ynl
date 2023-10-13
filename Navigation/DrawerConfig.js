@@ -135,7 +135,7 @@ const DrawerConfig = () => {
                 <View flex={1}>
                   <Image
                     tintColor={"gray"}
-                    style={{ marginTop: 40, height: 55, width: 55 }}
+                    style={{ marginTop: 10, height: 30, width: 30 }}
                     size={"xs"}
                     source={imageLogo}
                   />
