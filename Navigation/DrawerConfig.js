@@ -30,7 +30,7 @@ import RouletteStep4Screen from "../screens/RouletteStep4Screen";
 import HistoryFeelingScreen from "../screens/HistoryFeelingScreen";
 import HistoryFeelingScreenDetail from "../screens/HistoryFeelingScreenDetail";
 import OverlaySpinner from '../components/OverlaySpinner'
-import imageLogo from '../assets/logo.png'
+import imageLogo from '../assets/new_logo.png'
 import { useSelector } from "react-redux";
 import { getFontSize } from "../utils/functions";
 
@@ -72,7 +72,7 @@ const DrawerConfig = () => {
                       <Icon
                       as={MaterialIcons}
                       name={"arrow-back-ios"}
-                      color={Colors.red}
+                      color={Colors.yellowV2}
                       size={"xl"}
                     />
                   </TouchableOpacity>
@@ -113,7 +113,7 @@ const DrawerConfig = () => {
                   <Icon
                     as={MaterialIcons}
                     name={"arrow-back-ios"}
-                    color={Colors.red}
+                    color={Colors.yellowV2}
                     size={"xl"}
                   />
                 </TouchableOpacity>
@@ -135,7 +135,7 @@ const DrawerConfig = () => {
                 <View flex={1}>
                   <Image
                     tintColor={"gray"}
-                    style={{ marginTop: 10, height: 30, width: 30 }}
+                    style={{ marginTop: 40, height: 55, width: 55 }}
                     size={"xs"}
                     source={imageLogo}
                   />
@@ -156,7 +156,7 @@ const DrawerConfig = () => {
             >
               <Icon
                 as={MaterialIcons}
-                color={Colors.red}
+                color={Colors.yellowV2}
                 name={"menu"}
                 size={"xl"}
               ></Icon>

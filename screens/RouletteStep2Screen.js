@@ -43,7 +43,7 @@ const RouletteStep2Screen = ({route, navigation}) => {
         <ScrollView style={{flex: 1, backgroundColor:'#'+route.params.parentItem.attributes.color}}
                     contentContainerStyle={{flex: 1}}>
 
-            <View flex={1} alignItems={'center'} style={{paddingTop: 20}}>
+            <View flex={1} alignItems={'center'} style={{paddingTop: 75}}>
                 <Text
                     style={styles.shadow}
                     fontSize={18} textAlign={'center'} color={'white'}>{t('roulette_today_yourfeel')}</Text>

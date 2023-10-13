@@ -2,22 +2,29 @@ import React, {useEffect, useState} from 'react';
 import {Dimensions} from 'react-native';
 import circleParts from '../assets/ruleta.png';
 //import {useSharedValue} from "react-native-reanimated";
-import {Button, Image, Text, View} from "native-base";
+import {Button, Image, Text, View, Icon} from "native-base";
+import {MaterialIcons} from "@expo/vector-icons";
 import ScreenBaseV1 from "./Components/ScreenBaseV1";
 import {Colors} from "../utils/Colors";
 import pointerImage from '../assets/arrow2.png';
 import ApiApp from "../utils/ApiApp";
+import Style from '../utils/styles'
 import _ from "lodash";
 import {t} from 'i18n-js';
 import * as GH from 'react-native-gesture-handler';
 import moment from 'moment'
 import Animated,{useSharedValue, useAnimatedGestureHandler,withSpring, useAnimatedStyle} from 'react-native-reanimated';
+import { useFonts } from 'expo-font';
+
 
 const window_height = Dimensions.get("screen").height
 const window_width = Dimensions.get("screen").width
 
 const RouletteStep1Screen = ({navigation}) => {
 
+    const [fontsLoaded] = useFonts({
+        'Amberla': require('../assets/fonts/Amberla.otf'),
+      }); 
     const [loading, setLoading] = useState(null);
     const [parents, setParents] = useState([]);
     const [emotions, setEmotions] = useState([]);
@@ -34,8 +41,10 @@ const RouletteStep1Screen = ({navigation}) => {
 
     useEffect(() => {
         getParents()
-        getEmotions()
+        getEmotions() 
     }, [])
+
+  
 
     const getEmotions = async () => {
         try {
@@ -271,16 +280,25 @@ const RouletteStep1Screen = ({navigation}) => {
 
 
                 <View flex={1} width={'100%'}>
-                    <View flex={0.2} >
-                        <Text color={'#FD5902'} style={{fontWeight:'bold', marginTop:30}} size={'lg'}  textAlign={'center'}>{t('roulette_how_are_you')}</Text>
+                    <View flex={0} style={{marginTop:20, marginBottom:-20}}>
+                     
+                    {fontsLoaded ? <Text color={Colors.black} style={{fontFamily: 'Amberla', fontSize:44, marginBottom:1, marginTop:60}} size={'xl'}  textAlign={'center'}>{t('roulette_how_i_feel')}</Text> : 
+                    (<Text> </Text> )}
+                        {/*<Text color={Colors.black} style={{marginBottom:1, marginTop:60, paddingLeft:20, paddingRight:20}} size={'lg'}  textAlign={'center'}>{t('roulette_how_are_you')}</Text> 
                         <Text color={'#FD5902'} style={{marginTop:10}}  textAlign={'center'}>{moment().format('LL')}</Text>
-                        <Text color={'#FD5902'} style={{marginTop:10,paddingLeft:20, paddingRight:20}}  textAlign={'center'}>{t('roulette_istructions')}</Text>
+                        <Text color={'#FD5902'} style={{marginTop:10, paddingLeft:20, paddingRight:20}}  textAlign={'center'}>{t('roulette_istructions')}</Text> */}
                     </View>
-                    <View flex={0.4} alignItems={'center'} justifyContent={'flex-end'}>
-                        <Image alt={'roulette'} source={pointerImage} style={{resizeMode: 'contain'}} width={10} height={10}/>
+                    <View flex={0} alignItems={'center'} justifyContent={'flex-end'} style={{marginTop:0}}>
+                        {/* <Image alt={'roulette'} source={pointerImage} style={{resizeMode: 'contain'}} width={10} height={10}/> */}
+                        <Icon
+                        style={{fontWeight:'bold', marginBottom:-16, position: 'relative',resizeMode: 'contain' }}
+                        as={MaterialIcons}
+                        name={"keyboard-arrow-down"}
+                        color={Colors.black}
+                        size={"5xl"}
+                        />
                     </View>
-
-                    <View flex={1} alignItems={'center'}>
+                    <View flex={0.6} alignItems={'center'}>
                         <GH.PanGestureHandler onGestureEvent={onPanGestureEvent}>
                             <Animated.Image source={circleParts} style={[animatedStyle,{
                                 width: 300,
@@ -289,11 +307,10 @@ const RouletteStep1Screen = ({navigation}) => {
                                 borderRadius: 150
                             }]}/>
                         </GH.PanGestureHandler>
-
                     </View>
 
-                    <View flex={0.2} mx={4}>
-                        <Button colorScheme={'orange'}
+                    <View flex={0} mx={4} style={{marginTop:20, paddingLeft:80, paddingRight:80}}>
+                        <Button style={Style.buttonGray}
                                 onPress={() => navigation.navigate('RouletteStep2Screen', {parentItem: _.find(parents, (o)=> {
                                         return o.attributes.slug_name === (definitionOfFeeling().slug)
                                     } )})}>{t('continue')}</Button>

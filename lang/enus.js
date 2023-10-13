@@ -29,10 +29,12 @@ export const enus = {
 
     //Ruleta
     'roulette_how_are_you':'How are you feeling?',
+    'roulette_how_i_feel':'How i feel?',
     'roulette_istructions':'Spin to choose how you feel today',
     'roulette_today_yourfeel':'Today you feel...',
     'roulette_share_why':'Please share why',
     'roulette_finish':'Finish',
+    'roulette_get_into':'Get into',
     'select': 'Select',
 
     //Aspectos
@@ -83,7 +85,9 @@ export const enus = {
     'home':'Home',
     'profile':'Profile',
     'my_profile':'My profile',
-
+    'today':'Today',
+    'i_feel': 'I feel',
+    'write_here':'Write here',
 
     //dashboard
     'dash_last_week':'Last week',

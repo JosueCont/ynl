@@ -6,7 +6,7 @@ export const Colors = {
     lightBlue: '',
     white: 'white',
     yellow: "#b0d90e",
-    orange: '#F5AC00',
+    orange: '#FD5902',
     secondary: "#EEEEEE",
     yellowV2:'#F5AC00',
     gray:'#CCCCCC'

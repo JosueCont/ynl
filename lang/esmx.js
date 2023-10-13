@@ -30,10 +30,12 @@ export const esmx = {
 
     //Ruleta
     'roulette_how_are_you':'¿Cómo te sientes hoy?',
+    'roulette_how_i_feel':'¿Cómo me siento?',
     'roulette_istructions':'Gira la ruleta para elegir el sentimiento que más describe tu situación actual',
     'roulette_today_yourfeel':'Hoy te sientes...',
     'roulette_share_why':'Compártenos por qué',
     'roulette_finish':'Terminar',
+    'roulette_get_into':'Ingresar',
     'select': 'Selecciona',
 
     //Aspectos
@@ -84,6 +86,9 @@ export const esmx = {
     'home':'Inicio',
     'profile':'Perfil',
     'my_profile':'Mi perfil',
+    'today':'Hoy',
+    'i_feel': 'Siento',
+    'write_here':'Escribe aquí',
 
     //dashboard
     'dash_last_week':'Semana anterior',
