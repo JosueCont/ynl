@@ -16,6 +16,7 @@ import ModalDayPhrase from './Modals/ModalDayPhrase'
 import 'moment/locale/es';
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -61,8 +62,17 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
         queryDailyPhrase()
     }, []) */
     
-    const closeModalPhrase = () => {
+    const closeModalPhrase = async() => {
         setModalPhraseVisible(false)
+        const navigateRoulete = await AsyncStorage.getItem('isChecked');
+
+        if(JSON.parse(navigateRoulete)){
+            setLoading(true)
+            setTimeout(() => {
+                navigation.navigate('RouletteStep1Screen')
+            },500)
+
+        }
     }
 
     const validateEmotion = () => {
@@ -95,6 +105,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
         }
 
         if(modalPhraseVisible === false){
+
             /* fetchData() 
             if (emotionsStatus === 0) {
                 navigation.navigate('RouletteStep1Screen')
@@ -361,11 +372,16 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const queryDailyPhrase = async () => {
         try {
             const response = await ApiApp.getUserDayPhrase(authDuck.user.id)
+            console.log('response daily',response.data)
             if(response.status === 200){
                 setPhraseDay(response?.data?.data?.phrase?.phrase)
                 if(response?.data?.data?.exist === false){
                     setModalPhraseVisible(true)
+                    await AsyncStorage.setItem('isChecked','true');
+
                     return true
+                }else{
+                    await AsyncStorage.setItem('isChecked','false');
                 }
             }
         } catch (e) {

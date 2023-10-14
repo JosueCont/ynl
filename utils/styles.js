@@ -5,12 +5,15 @@ const styles = StyleSheet.create({
 
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 12,
-    elevation: 2,
-    backgroundColor: 'rgba(20, 19, 20, 0.84)',
-    color:'#FFFF'
+    //paddingVertical: 12,
+    //paddingHorizontal: 32,
+    //borderRadius: 12,
+    //elevation: 2,
+    backgroundColor: '#424242',
+    color:'#FFFF',
+    width:150,
+    height:40,
+    borderRadius:15
   }, 
 });
 

@@ -86,7 +86,7 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
             accessible={true}
           >
             <View flex={1} mx={4} style={{ flexDirection: 'column' }}>
-              <View flex={1} alignItems={"center"} mt={10}>
+              <View flex={1} alignItems={"center"} mt={5}>
                 <Text
                   //style={styles.shadow}
                   fontSize={18}
@@ -218,7 +218,7 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                 </View>
               </View>
 
-              <View mb={6} mx={4} style={{ paddingLeft:80, paddingRight:80}}>
+              <View mb={6}  style={{ paddingLeft:80, paddingRight:80, justifyContent:'center',alignItems:'center'}}>
                 <Button
                   isLoading={loading}
                   size="md"

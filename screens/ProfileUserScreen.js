@@ -91,9 +91,10 @@ const ProfileUserScreen = ({authDuck, navigation}) => {
     const getCurrentStreak = async() => {
         try {
             let dataSend = {
-                userId: authDuck.user.id
+                userId: authDuck.user.id,
+                siteId: authDuck?.userSiteConfig?.id ? authDuck?.userSiteConfig?.id : null
             }
-            if(authDuck?.userSiteConfig?.id) dataSend.siteId = authDuck?.userSiteConfig?.id
+            //if(authDuck?.userSiteConfig?.id) dataSend.siteId = authDuck?.userSiteConfig?.id
             const response = await ApiApp.getMaxStreak(dataSend)
             if(response.data?.success)
                 setCurrentStreakDay(response.data.data.totalDays)
@@ -236,7 +237,7 @@ const ProfileUserScreen = ({authDuck, navigation}) => {
                         moveTo={() => navigation.navigate('Profile')}
                     />
 
-                    {suggestionFriends && suggestionFriends.length > 0 ? (
+                    {authDuck?.userSiteConfig?.id && suggestionFriends && suggestionFriends.length > 0 ? (
                         <View style={{marginHorizontal:35, marginTop:12, width: width/1.2}}>
                             {loading ? (
                                 <Skeleton.Text px="10" lines={1} mb={4}/>

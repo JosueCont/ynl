@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Dimensions} from 'react-native';
+import {Dimensions, Platform} from 'react-native';
 import circleParts from '../assets/ruleta.png';
 //import {useSharedValue} from "react-native-reanimated";
 import {Button, Image, Text, View, Icon} from "native-base";
@@ -273,22 +273,22 @@ const RouletteStep1Screen = ({navigation}) => {
             // console.log('end')
 
         })*/
-
+       const circleSize =  Math.min(window_height, window_width) * 0.78
     return (
         <ScreenBaseV1>
             <GH.GestureHandlerRootView>
 
 
                 <View flex={1} width={'100%'}>
-                    <View flex={0} style={{marginTop:20, marginBottom:-20}}>
+                    <View  style={{marginTop:15, marginBottom:-20}}>
                      
-                    {fontsLoaded ? <Text color={Colors.black} style={{fontFamily: 'Amberla', fontSize:44, marginBottom:1, marginTop:60}} size={'xl'}  textAlign={'center'}>{t('roulette_how_i_feel')}</Text> : 
+                    {fontsLoaded ? <Text color={Colors.black} style={{fontFamily: 'Amberla', fontSize:44, marginBottom:1,}} size={'xl'}  textAlign={'center'}>{t('roulette_how_i_feel')}</Text> : 
                     (<Text> </Text> )}
                         {/*<Text color={Colors.black} style={{marginBottom:1, marginTop:60, paddingLeft:20, paddingRight:20}} size={'lg'}  textAlign={'center'}>{t('roulette_how_are_you')}</Text> 
                         <Text color={'#FD5902'} style={{marginTop:10}}  textAlign={'center'}>{moment().format('LL')}</Text>
                         <Text color={'#FD5902'} style={{marginTop:10, paddingLeft:20, paddingRight:20}}  textAlign={'center'}>{t('roulette_istructions')}</Text> */}
                     </View>
-                    <View flex={0} alignItems={'center'} justifyContent={'flex-end'} style={{marginTop:0}}>
+                    <View  alignItems={'center'} justifyContent={'flex-end'} style={{marginTop:10}}>
                         {/* <Image alt={'roulette'} source={pointerImage} style={{resizeMode: 'contain'}} width={10} height={10}/> */}
                         <Icon
                         style={{fontWeight:'bold', marginBottom:-16, position: 'relative',resizeMode: 'contain' }}
@@ -298,7 +298,7 @@ const RouletteStep1Screen = ({navigation}) => {
                         size={"5xl"}
                         />
                     </View>
-                    <View flex={0.6} alignItems={'center'}>
+                    <View  alignItems={'center'}>
                         <GH.PanGestureHandler onGestureEvent={onPanGestureEvent}>
                             <Animated.Image source={circleParts} style={[animatedStyle,{
                                 width: 300,
@@ -309,11 +309,23 @@ const RouletteStep1Screen = ({navigation}) => {
                         </GH.PanGestureHandler>
                     </View>
 
-                    <View flex={0} mx={4} style={{marginTop:20, paddingLeft:80, paddingRight:80}}>
+                    <View   style={{marginTop:25, paddingLeft:80, paddingRight:80,}}>
                         <Button style={Style.buttonGray}
-                                onPress={() => navigation.navigate('RouletteStep2Screen', {parentItem: _.find(parents, (o)=> {
-                                        return o.attributes.slug_name === (definitionOfFeeling().slug)
-                                    } )})}>{t('continue')}</Button>
+                            onPress={() => navigation.navigate('RouletteStep2Screen', {parentItem: _.find(parents, (o)=> {
+                                    return o.attributes.slug_name === (definitionOfFeeling().slug)
+                                } )})}>{t('continue')}</Button>
+                    </View>
+                    <View style={{marginTop:20}}>
+                        <View flexDirection={'row'} justifyContent={'space-between'} style={{position:'relative'}}>
+                            <View backgroundColor={'#F5AC00'} style={{width:90, height:24, borderTopRightRadius:20, borderBottomRightRadius:20, position:'absolute', left:-50}}/>
+                            <View backgroundColor={'#F5AC00'} style={{width:90, height:24,position:'absolute', right:-50, borderTopLeftRadius:20, borderBottomLeftRadius:20}}/>
+                        </View>
+                        <View style={{width:300, height:17, justifyContent:'center', backgroundColor:'#F5AC00', marginTop:35, borderRadius:20}}></View>
+                        <View flexDirection={'row'}  style={{ marginTop:10}}>
+                        <Text alignSelf={'center'} style={{marginLeft:100}}>Your now limitless</Text>
+                            <View backgroundColor={'#F5AC00'} style={{width:90, height:24, borderTopRightRadius:20, borderBottomRightRadius:20, position:'absolute', left:-50}}/>
+                            <View backgroundColor={'#F5AC00'} style={{width:90, height:24,position:'absolute', right:-50, borderTopLeftRadius:20, borderBottomLeftRadius:20}}/>
+                        </View>
                     </View>
                 </View>
             </GH.GestureHandlerRootView>

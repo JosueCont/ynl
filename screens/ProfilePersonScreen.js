@@ -82,7 +82,8 @@ const ProfilePersonScreen = ({authDuck,navigation}) => {
     const getCurrentStreak = async() => {
         try {
             let dataSend = {
-                userId: route?.params?.id
+                userId: route?.params?.id,
+                siteId:null
             }
             //if(authDuck?.userSiteConfig?.id) dataSend.siteId = authDuck?.userSiteConfig?.id
             const response = await ApiApp.getMaxStreak(dataSend)

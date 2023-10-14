@@ -5,7 +5,6 @@ import jwt_decode from 'jwt-decode';
 
 class ApiApp {
   static ApisType = (url, method = "post", params = {}, formdata = null) => {
-    console.log('api',baseURL, url, params)
     let task = "";
     switch (method) {
       case "post":
