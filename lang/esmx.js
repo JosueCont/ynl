@@ -30,10 +30,12 @@ export const esmx = {
 
     //Ruleta
     'roulette_how_are_you':'¿Cómo te sientes hoy?',
+    'roulette_how_i_feel':'¿Cómo me siento?',
     'roulette_istructions':'Gira la ruleta para elegir el sentimiento que más describe tu situación actual',
     'roulette_today_yourfeel':'Hoy te sientes...',
     'roulette_share_why':'Compártenos por qué',
     'roulette_finish':'Terminar',
+    'roulette_get_into':'Ingresar',
     'select': 'Selecciona',
 
     //Aspectos
@@ -50,7 +52,13 @@ export const esmx = {
     'profile_previus_password':'Contraseña anterior',
     'profile_new_password':'Nueva contraseña',
     'profile_confirm_password':'Confirmar contraseña',
-
+    'profile_join_on':'Se unio el ',
+    'profile_days_streak':'Días de racha',
+    'profile_my_engr':'Mis engranes',
+    'profile_suggestions_friend':'Sugerencias de amigos',
+    'profile_follow':'Seguir',
+    'profile_unfollow':'Desseguir',
+    'profile_your_contacts':'Entre tus contactos',
     /// generales
     'email':'Correo electrónico',
     'password':'Contraseña',
@@ -83,6 +91,17 @@ export const esmx = {
     'add':'Agregar',
     'home':'Inicio',
     'profile':'Perfil',
+    'my_profile':'Mi perfil',
+    'today':'Hoy',
+    'i_feel': 'Siento',
+    'write_here':'Escribe aquí',
+    'week_mon':'Lun',
+    'week_tues':'Mar',
+    'week_wends':'Mie',
+    'week_thur':'Jue',
+    'week_fri':'Vie',
+    'week_sat':'Sab',
+    'week_sun':'Dom',
 
     //dashboard
     'dash_last_week':'Semana anterior',
