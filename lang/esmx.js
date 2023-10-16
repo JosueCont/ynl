@@ -52,7 +52,13 @@ export const esmx = {
     'profile_previus_password':'Contraseña anterior',
     'profile_new_password':'Nueva contraseña',
     'profile_confirm_password':'Confirmar contraseña',
-
+    'profile_join_on':'Se unio el ',
+    'profile_days_streak':'Días de racha',
+    'profile_my_engr':'Mis engranes',
+    'profile_suggestions_friend':'Sugerencias de amigos',
+    'profile_follow':'Seguir',
+    'profile_unfollow':'Desseguir',
+    'profile_your_contacts':'Entre tus contactos',
     /// generales
     'email':'Correo electrónico',
     'password':'Contraseña',
@@ -89,6 +95,13 @@ export const esmx = {
     'today':'Hoy',
     'i_feel': 'Siento',
     'write_here':'Escribe aquí',
+    'week_mon':'Lun',
+    'week_tues':'Mar',
+    'week_wends':'Mie',
+    'week_thur':'Jue',
+    'week_fri':'Vie',
+    'week_sat':'Sab',
+    'week_sun':'Dom',
 
     //dashboard
     'dash_last_week':'Semana anterior',

@@ -51,6 +51,13 @@ export const enus = {
     'profile_previus_password':'Previous password',
     'profile_new_password':'New password',
     'profile_confirm_password':'Confirm password',
+    'profile_join_on':'Join on ',
+    'profile_days_streak':'Streak days',
+    'profile_my_engr':'My gears',
+    'profile_suggestions_friend':'friend suggestions',
+    'profile_follow':'Follow',
+    'profile_unfollow':'Unfollow',
+    'profile_your_contacts':'Between your contacts',
 
     /// generales
     'email':'Email',
@@ -88,6 +95,13 @@ export const enus = {
     'today':'Today',
     'i_feel': 'I feel',
     'write_here':'Write here',
+    'week_mon':'Mon',
+    'week_tues':'Tue',
+    'week_wends':'Wen',
+    'week_thur':'Thu',
+    'week_fri':'Fri',
+    'week_sat':'Sat',
+    'week_sun':'Sun',
 
     //dashboard
     'dash_last_week':'Last week',

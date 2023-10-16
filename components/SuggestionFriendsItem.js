@@ -4,6 +4,7 @@ import { TouchableOpacity } from "react-native";
 import {FontAwesome, Entypo, AntDesign, MaterialIcons, FontAwesome5, Ionicons} from "@expo/vector-icons";
 import { getFontSize } from "../utils/functions";
 import { Colors } from "../utils/Colors";
+import { t } from "i18n-js";
 
 const SuggestionsFriendsItem = ({item,userId,onSetActionFollow, changeRoute, deleteSuggestion}) => {
     const [image, setImage] = useState(null)
@@ -57,11 +58,11 @@ const SuggestionsFriendsItem = ({item,userId,onSetActionFollow, changeRoute, del
 
                 </TouchableOpacity>
                 <Text fontSize={getFontSize(9)} style={{fontWeight:'900'}}>{item.firstName}</Text>
-                <Text fontSize={getFontSize(6)} style={{fontWeight:'500', letterSpacing:0}}>Entre tus contactos</Text>
+                <Text fontSize={getFontSize(6)} style={{fontWeight:'500', letterSpacing:0}}>{t('profile_your_contacts')}</Text>
                 <TouchableOpacity 
                     onPress={() => onSetActionFollow(item.id,isFollowing)}
                     style={{width:33,height:12, backgroundColor:Colors.yellowV2, borderRadius:2, justifyContent:'center',alignItems:'center', marginTop:5}}>
-                    <Text fontSize={getFontSize(6)} color={Colors.white}>{isFollowing ? 'Desseguir' : 'Seguir'}</Text>
+                    <Text fontSize={getFontSize(6)} color={Colors.white}>{isFollowing ? t('profile_unfollow') : t('profile_follow')}</Text>
                 </TouchableOpacity>
 
             </View>

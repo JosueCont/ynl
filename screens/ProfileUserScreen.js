@@ -12,6 +12,8 @@ import SuggestionsFriendsItem from "../components/SuggestionFriendsItem";
 import { useRoute } from "@react-navigation/native";
 import { getShadowCircleStyle } from "../utils/functions";
 import StadisticPerson from "../components/StadisticPerson";
+import {t} from 'i18n-js';
+
 
 const {height, width} = Dimensions.get('window');
 
@@ -163,13 +165,13 @@ const ProfileUserScreen = ({authDuck, navigation}) => {
 
 
     const days = [
-        {name:'lun'},
-        {name:'mar'},
-        {name:'mié'},
-        {name:'jue'},
-        {name:'vie'},
-        {name:'sab'},
-        {name:'dom'},
+        {name:t('week_mon')},
+        {name:t('week_tues')},
+        {name:t('week_wends')},
+        {name:t('week_thur')},
+        {name:t('week_fri')},
+        {name:t('week_sat')},
+        {name:t('week_sun')},
     ]
 
     const getDaysInARow = () => {
@@ -242,7 +244,7 @@ const ProfileUserScreen = ({authDuck, navigation}) => {
                             {loading ? (
                                 <Skeleton.Text px="10" lines={1} mb={4}/>
                             ) : (
-                                <Text fontSize={getFontSize(26)} style={{fontWeight:'700', marginBottom:7}}>Sugerencias de amigos</Text>
+                                <Text fontSize={getFontSize(26)} style={{fontWeight:'700', marginBottom:7}}>{t('profile_suggestions_friend')}</Text>
 
                             )}
                             {loading ? (
@@ -282,7 +284,7 @@ const ProfileUserScreen = ({authDuck, navigation}) => {
                         </View>
                     ) : (
                         <View style={{marginHorizontal:35, backgroundColor:Colors.secondary, width:width/1.2, height:91, borderRadius:16,alignItems:'center', paddingTop:11,marginTop:21}}>
-                            <Text fontSize={getFontSize(15)} style={{fontWeight:'900', textTransform:'uppercase'}}>Días de racha</Text>
+                            <Text fontSize={getFontSize(15)} style={{fontWeight:'900', textTransform:'uppercase'}}>{t('profile_days_streak')}</Text>
                             <View flexDirection={'row'}>
                                 {getDaysInARow()}
                             </View>

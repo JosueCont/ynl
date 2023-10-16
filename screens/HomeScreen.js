@@ -56,7 +56,8 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const [emotionsStatus, setEmotionsStatus] = useState(null);
 
     const [modalPhraseVisible, setModalPhraseVisible] = useState(false)
-    const [phraseDay, setPhraseDay] = useState(null)
+    const [phraseDay, setPhraseDay] = useState(null);
+    const [isFirstDay, setFirstDay] = useState(false)
 
     /* useEffect(() => {
         queryDailyPhrase()
@@ -64,9 +65,9 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     
     const closeModalPhrase = async() => {
         setModalPhraseVisible(false)
-        const navigateRoulete = await AsyncStorage.getItem('isChecked');
+        //const navigateRoulete = await AsyncStorage.getItem('isChecked');
 
-        if(JSON.parse(navigateRoulete)){
+        if(isFirstDay){
             setLoading(true)
             setTimeout(() => {
                 navigation.navigate('RouletteStep1Screen')
@@ -199,9 +200,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                 userId: authDuck?.user?.id,
             }
             if(authDuck?.userSiteConfig?.id) dataSend.siteId = authDuck?.userSiteConfig?.id
-            console.log('dataSend',dataSend)
             const requestDay = await ApiApp.postStreakDay(dataSend);
-            console.log('requestDay', requestDay)
         } catch (e) {
             console.log('error al agregar día',e )
         }
@@ -372,16 +371,17 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const queryDailyPhrase = async () => {
         try {
             const response = await ApiApp.getUserDayPhrase(authDuck.user.id)
-            console.log('response daily',response.data)
             if(response.status === 200){
                 setPhraseDay(response?.data?.data?.phrase?.phrase)
-                if(response?.data?.data?.exist === false){
-                    setModalPhraseVisible(true)
-                    await AsyncStorage.setItem('isChecked','true');
-
+                if(response?.data?.data?.exist){
+                    //await AsyncStorage.setItem('isChecked','false');
+                    setFirstDay(false)
                     return true
                 }else{
-                    await AsyncStorage.setItem('isChecked','false');
+                    setFirstDay(false)
+                    setModalPhraseVisible(true)
+                    //await AsyncStorage.setItem('isChecked','true');
+                    return true
                 }
             }
         } catch (e) {

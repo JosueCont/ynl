@@ -6,6 +6,7 @@ import { useRoute } from "@react-navigation/native";
 import { MaterialIcons, FontAwesome5, } from "@expo/vector-icons";
 import { getFontSize } from "../utils/functions";
 import { getShadowCircleStyle } from "../utils/functions";
+import {t} from 'i18n-js';
 
 const {height, width} = Dimensions.get('window');
 
@@ -23,7 +24,7 @@ const StadisticPerson = ({userName,dateCreatedUser,image,currentStreakDay,myGoal
                     ):(
                         <>
                             <Text fontSize={getFontSize(26)} style={{fontWeight:'700'}} textTransform={'capitalize'}>{userName}</Text>
-                            <Text fontSize={getFontSize(13)}>Se unio el {dateCreatedUser}</Text>
+                            <Text fontSize={getFontSize(13)}>{t('profile_join_on')} {dateCreatedUser}</Text>
 
                         </>
 
@@ -80,12 +81,12 @@ const StadisticPerson = ({userName,dateCreatedUser,image,currentStreakDay,myGoal
                             <FontAwesome5 name="fire-alt" size={23} color={'black'}/>
                             <View style={{marginLeft:8}}>
                                 <Text fontSize={getFontSize(15)} style={{fontWeight:'900',}}>{currentStreakDay}</Text>
-                                <Text fontSize={getFontSize(10)} style={{fontWeight:'900'}}>Días de racha</Text>
+                                <Text fontSize={getFontSize(10)} style={{fontWeight:'900'}}>{t('profile_days_streak')}</Text>
                             </View>
                         </View>
                         <View style={{width:width/2.4, height:55, backgroundColor:Colors.secondary, borderRadius:9, justifyContent:'center', alignItems:'center' }}>
                             <View>
-                                <Text  fontSize={getFontSize(15)} style={{fontWeight:'900',}}>MIS ENGRANES</Text>
+                                <Text  fontSize={getFontSize(15)} style={{fontWeight:'900', textTransform:'uppercase'}}>{t('profile_my_engr')}</Text>
                                 <Text fontSize={getFontSize(10)} style={{fontWeight:'900', alignSelf:'flex-start'}}>{myGoal}</Text>
 
                             </View>
