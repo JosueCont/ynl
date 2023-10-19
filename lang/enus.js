@@ -29,10 +29,12 @@ export const enus = {
 
     //Ruleta
     'roulette_how_are_you':'How are you feeling?',
+    'roulette_how_i_feel':'How i feel?',
     'roulette_istructions':'Spin to choose how you feel today',
     'roulette_today_yourfeel':'Today you feel...',
     'roulette_share_why':'Please share why',
     'roulette_finish':'Finish',
+    'roulette_get_into':'Get into',
     'select': 'Select',
 
     //Aspectos
@@ -49,6 +51,13 @@ export const enus = {
     'profile_previus_password':'Previous password',
     'profile_new_password':'New password',
     'profile_confirm_password':'Confirm password',
+    'profile_join_on':'Join on ',
+    'profile_days_streak':'Streak days',
+    'profile_my_engr':'My gears',
+    'profile_suggestions_friend':'friend suggestions',
+    'profile_follow':'Follow',
+    'profile_unfollow':'Unfollow',
+    'profile_your_contacts':'Between your contacts',
 
     /// generales
     'email':'Email',
@@ -82,6 +91,17 @@ export const enus = {
     'add':'Add',
     'home':'Home',
     'profile':'Profile',
+    'my_profile':'My profile',
+    'today':'Today',
+    'i_feel': 'I feel',
+    'write_here':'Write here',
+    'week_mon':'Mon',
+    'week_tues':'Tue',
+    'week_wends':'Wen',
+    'week_thur':'Thu',
+    'week_fri':'Fri',
+    'week_sat':'Sat',
+    'week_sun':'Sun',
 
     //dashboard
     'dash_last_week':'Last week',

@@ -3,7 +3,7 @@ import {createDrawerNavigator} from "@react-navigation/drawer";
 import CustomDrawerContent from "./DrawerNavigatorContent";
 import HomeScreen from "../screens/HomeScreen";
 import YourFeelScreen from "../screens/YourFeelScreen";
-import {Icon, Image, View} from "native-base";
+import {Icon, Image, View, Text} from "native-base";
 import {Colors} from "../utils/Colors";
 import {Platform, TouchableOpacity} from "react-native";
 import {MaterialIcons} from "@expo/vector-icons";
@@ -12,7 +12,8 @@ import GroupsMembersAdd from "../screens/GroupsMembersAdd";
 import GroupsStartScreen from "../screens/GroupsStartScreen";
 import StatisticsScreen from "../screens/StatisticsScreen";
 import GroupsDetailsScreen from "../screens/GroupsDetailsScreen";
-import ProfileScreen from "../screens/ProfileScreen";
+//import ProfileScreen from "../screens/ProfileScreen";
+import ProfileUserScreen from "../screens/ProfileUserScreen";
 import IntroScreen from "../screens/IntroScreen";
 import GoalsScreen from '../screens/GoalsScreen'
 import GoalsReport from '../screens/GoalsReport'
@@ -29,8 +30,9 @@ import RouletteStep4Screen from "../screens/RouletteStep4Screen";
 import HistoryFeelingScreen from "../screens/HistoryFeelingScreen";
 import HistoryFeelingScreenDetail from "../screens/HistoryFeelingScreenDetail";
 import OverlaySpinner from '../components/OverlaySpinner'
-import imageLogo from '../assets/logo.png'
+import imageLogo from '../assets/new_logo.png'
 import { useSelector } from "react-redux";
+import { getFontSize } from "../utils/functions";
 
 const Drawer = createDrawerNavigator();
 
@@ -54,7 +56,35 @@ const DrawerConfig = () => {
               return <View />;
             } else if(route.name.includes("HomeScreen")  && Platform.OS === "ios"){
               return <View />;
-            } else {
+            } else if(route.name.includes('ProfileScreen')){
+              return(
+                <View flexDirection={'row'}>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('HomeScreen')}
+                    style={{
+                      width: 50,
+                      height: "100%",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      borderRadius: 5,
+                      marginLeft: 10,
+                    }}>
+                      <Icon
+                      as={MaterialIcons}
+                      name={"arrow-back-ios"}
+                      color={Colors.yellowV2}
+                      size={"xl"}
+                    />
+                  </TouchableOpacity>
+                  <Image
+                    tintColor={"gray"}
+                    style={{ marginTop: 10, height: 30, width: 30 }}
+                    size={"xs"}
+                    source={imageLogo}
+                  />
+                </View>
+              )
+            }else{
               return (
                 <TouchableOpacity
                   onPress={async () => {
@@ -83,7 +113,7 @@ const DrawerConfig = () => {
                   <Icon
                     as={MaterialIcons}
                     name={"arrow-back-ios"}
-                    color={Colors.red}
+                    color={Colors.yellowV2}
                     size={"xl"}
                   />
                 </TouchableOpacity>
@@ -98,7 +128,9 @@ const DrawerConfig = () => {
           headerTitle: () => {
             if (route.name.includes("GoalsScreen") || route.name.includes("GoalsReport") || route.name.includes("GoalsTree") || route.name.includes("ProjectsList") || route.name.includes('ProjectForm') || route.name.includes("BookList") || route.name.includes("ReadBook") ) {
               return <View />;
-            } else {
+            } if(route.name.includes('ProfileScreen')){
+              return <Text fontSize={getFontSize(19)} style={{fontWeight:'900'}}>{t('my_profile')}</Text>
+            }else {
               return (
                 <View flex={1}>
                   <Image
@@ -124,7 +156,7 @@ const DrawerConfig = () => {
             >
               <Icon
                 as={MaterialIcons}
-                color={Colors.red}
+                color={Colors.yellowV2}
                 name={"menu"}
                 size={"xl"}
               ></Icon>
@@ -198,8 +230,8 @@ const DrawerConfig = () => {
         />
         <Drawer.Screen
           name={"ProfileScreen"}
-          component={ProfileScreen}
-          options={{ title: "Perfil" }}
+          component={ProfileUserScreen}
+          //options={{ title: "Perfil" }}
         />
         <Drawer.Screen
           name={"HistoryFeelingScreen"}

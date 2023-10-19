@@ -7,12 +7,19 @@ import {saveEmotion} from "../redux/ducks/feelingsDuck";
 import ScreenBaseV1 from "./Components/ScreenBaseV1";
 import _ from "lodash";
 import {t} from 'i18n-js';
+import {Colors} from "../utils/Colors";
 import {emotionStatusAction} from "../redux/ducks/authDuck";
 import { SafeAreaView } from "react-native-safe-area-context";
 import moment from "moment";
+import Style from '../utils/styles'
+import { useFonts } from 'expo-font';
 
 const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionStatusAction}) => {
 
+    const [fontsLoaded] = useFonts({
+      'SultanNahia': require('../assets/fonts/SultanNahia.ttf'),
+      'Amberla': require('../assets/fonts/Amberla.otf'),
+    }); 
     const [loading, setLoading] = useState(false)
     const [comment, setComment] = useState("")
 
@@ -64,7 +71,8 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
     }
 
     return (
-      <ScreenBaseV1 color={"#" + route.params.color}>
+      <ScreenBaseV1 > 
+        {/*  color={"#" + route.params.color} */}
         <SafeAreaView style={{ flex: 1, width: "100%" }}>
         <ScrollView showsVerticalScrollIndicator={false}
         >
@@ -78,23 +86,28 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
             accessible={true}
           >
             <View flex={1} mx={4} style={{ flexDirection: 'column' }}>
-              <View flex={1} alignItems={"center"} mt={10}>
+              <View flex={1} alignItems={"center"} mt={5}>
                 <Text
-                  style={styles.shadow}
+                  //style={styles.shadow}
                   fontSize={18}
                   textAlign={"center"}
-                  color={"white"}
-                  mb={4}
+                  color={Colors.black}
                 >
-                    {t('roulette_today_yourfeel')}
+                    {t('today')}
                 </Text>
+                <Text
+                fontSize={18}
+                 color={Colors.black} style={{marginTop:0}}  textAlign={'center'}>{moment().format('LL')}</Text>
+                 
+                 <Text
+                fontSize={14}
+                 color={Colors.black} style={{marginTop:0, marginBottom:-2}}  textAlign={'center'}>{t('i_feel')}</Text>
 
                 <View
-                  w={200}
-                  h={200}
+                  w={250}
+                  h={250}
                   bgColor={"white"}
-                  borderRadius={100}
-                  mb={4}
+                  borderRadius={100} 
                   alignItems={"center"}
                   justifyContent={"center"}
                 >
@@ -116,20 +129,29 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                     ></Image>
                   )}
                 </View>
-                <Text
-                  mb={4}
-                  fontSize={40}
-                  color={"white"}
-                  alignContent={"center"}
-                  style={styles.shadow}
+                {fontsLoaded ? <Text
+                  
+                  fontSize={50}
+                  color={Colors.black}
+                  alignContent={"center"} 
                   numberOfLines={1}
                   adjustsFontSizeToFit={true}
+                  style={{fontFamily: 'SultanNahia', marginTop:-20}}
                 >{`${
                   route.params.emotion &&
                   translateEmotions(route.params.emotion.attributes.name).toUpperCase()
-                }`}</Text>
+                }`}</Text> : <Text 
+                fontSize={40}
+                color={Colors.black}
+                alignContent={"center"} 
+                numberOfLines={1}
+                adjustsFontSizeToFit={true}
+              >{`${
+                route.params.emotion &&
+                translateEmotions(route.params.emotion.attributes.name).toUpperCase()
+              }`}</Text>}
 
-                <View
+                {/* <View
                   mb={6}
                   style={{ height: 100, width: 100, borderColor: "orange", borderWidth: 0.5 }}
                   bgColor={"#fff"}
@@ -160,15 +182,16 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                       {getDay()}
                     </Text>
                   </View>
-                </View>
+                </View> */}
               </View>
 
               <View mb={6} alignItems={"center"}>
                 <Text
-                  bold
-                  color={"#FFF"}
+                  //bold
+                  color={Colors.black}
                   mt={2}
-                  style={styles.shadow}
+                  //style={styles.shadow}
+                  style={{fontFamily: 'Amberla', fontSize:24, marginTop:5}}
                   mb={2}
                 >
                     {t('roulette_share_why')}
@@ -179,29 +202,33 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                   onChangeText={(text) =>
                     text.length <= 254 && setComment(text)
                   }
+                  placeholder={t('write_here')}
                   value={comment}
                   backgroundColor={"#FFF"}
-                  borderRadius={10}
-                  w="90%"
+                  borderRadius={18}
+                  borderColor={Colors.yellowV2}
+                  borderWidth={4}
+                  w="75%"
                   maxW="400"
                   returnKeyType={"done"}
                   multiline={true}
                 />
-                <View style={{ width: "90%" }} flexDirection={"row-reverse"}>
+                <View style={{ width: "70%" }} flexDirection={"row-reverse"}>
                   <Text fontSize="xs">{comment.length} / 254</Text>
                 </View>
               </View>
 
-              <View mb={6} mx={4}>
+              <View mb={6}  style={{ paddingLeft:80, paddingRight:80, justifyContent:'center',alignItems:'center'}}>
                 <Button
                   isLoading={loading}
                   size="md"
-                  style={{ borderColor: "orange", borderWidth: 0.5 }}
+                  //style={{ borderColor: "orange", borderWidth: 0.5 }}
+                  style={Style.buttonGray}
                   shadow={5}
                   colorScheme={"orange"}
                   onPress={() => saveFeelings()}
                 >
-                    {t('roulette_finish')}
+                    {t('roulette_get_into')}
                 </Button>
               </View>
             </View>

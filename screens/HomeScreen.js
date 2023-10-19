@@ -16,6 +16,7 @@ import ModalDayPhrase from './Modals/ModalDayPhrase'
 import 'moment/locale/es';
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -55,14 +56,24 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const [emotionsStatus, setEmotionsStatus] = useState(null);
 
     const [modalPhraseVisible, setModalPhraseVisible] = useState(false)
-    const [phraseDay, setPhraseDay] = useState(null)
+    const [phraseDay, setPhraseDay] = useState(null);
+    const [isFirstDay, setFirstDay] = useState(false)
 
     /* useEffect(() => {
         queryDailyPhrase()
     }, []) */
     
-    const closeModalPhrase = () => {
+    const closeModalPhrase = async() => {
         setModalPhraseVisible(false)
+        //const navigateRoulete = await AsyncStorage.getItem('isChecked');
+
+        if(isFirstDay){
+            setLoading(true)
+            setTimeout(() => {
+                navigation.navigate('RouletteStep1Screen')
+            },500)
+
+        }
     }
 
     const validateEmotion = () => {
@@ -95,6 +106,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
         }
 
         if(modalPhraseVisible === false){
+
             /* fetchData() 
             if (emotionsStatus === 0) {
                 navigation.navigate('RouletteStep1Screen')
@@ -161,9 +173,10 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             await getGroupsRequests();
             await getGroups()
             await getHome()
-
+            
             setTimeout(() => {
                 setLoading(false)
+                addStreakDay();
             }, 200)
         } catch (e) {
             console.log("boot error =>", e.toString())
@@ -178,6 +191,19 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
 
         }
 
+    }
+
+    const addStreakDay = async() => {
+        try {
+            let dataSend = {
+                date: moment().format('YYYY-MM-DD'),
+                userId: authDuck?.user?.id,
+            }
+            if(authDuck?.userSiteConfig?.id) dataSend.siteId = authDuck?.userSiteConfig?.id
+            const requestDay = await ApiApp.postStreakDay(dataSend);
+        } catch (e) {
+            console.log('error al agregar día',e )
+        }
     }
 
     const getGroupsRequests = async () => {
@@ -347,8 +373,14 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             const response = await ApiApp.getUserDayPhrase(authDuck.user.id)
             if(response.status === 200){
                 setPhraseDay(response?.data?.data?.phrase?.phrase)
-                if(response?.data?.data?.exist === false){
+                if(response?.data?.data?.exist){
+                    //await AsyncStorage.setItem('isChecked','false');
+                    setFirstDay(false)
+                    return true
+                }else{
+                    setFirstDay(true)
                     setModalPhraseVisible(true)
+                    //await AsyncStorage.setItem('isChecked','true');
                     return true
                 }
             }

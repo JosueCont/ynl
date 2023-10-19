@@ -30,6 +30,10 @@ class ApiApp {
     return task;
   };
 
+  static getRoulette = () => {
+    return ApiApp.ApisType(`/api/feeling/geRoulette/`, "get");
+  };
+
   static sendPushToken = (data) => {
     return ApiApp.ApisType(`/api/push-tokens`, "post", data);
   };
@@ -464,6 +468,34 @@ class ApiApp {
   static updLastPageRead = (data) => {
     return ApiApp.ApisType(`/api/user-books/updLastPage`, "post", data);
   }
+  static postStreakDay = (data) => {
+    return ApiApp.ApisType('/api/streak-day/save/', "post" , data);
+  }
+
+  static getGoalDaily = (data) => {
+    return ApiApp.ApisType('/api/daily-goals/lastSuccess/','post',data);
+  }
+
+  static getDaysInRow = (data) => {
+    return ApiApp.ApisType('/api/streak-days-record/week/', 'post', data);
+  }
+
+  static getMaxStreak = (data) => {
+    return ApiApp.ApisType('/api/streak-day/getMaxStreak/', 'post', data)
+  }
+
+  static getFriendsSuggestions = (data) => {
+    return ApiApp.ApisType('/api/user-site-configs/friendsSuggestions/', 'post', data)
+  }
+
+  static followFriend = (data) => {
+    return ApiApp.ApisType('/api/follow/follow/', 'post', data);
+  }
+
+  static unFollowFriend = (data) => {
+    return ApiApp.ApisType('/api/follow/unFollow/', 'post', data)
+  }
+
 
   static _baseURL = baseURL;
 }
