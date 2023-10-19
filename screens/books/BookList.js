@@ -69,7 +69,6 @@ const BookList = ({navigation, ...props}) => {
                                     resizeMode:'stretch'
                                     }}
                                     alt="DiseñoLineas"
-                                    borderRadius={16}
                             />
                             <TouchableOpacity onPress={() => navigation.navigate("ReadBook",{book: book}) } >
                                 <HStack justifyContent={'center'}>
