@@ -378,7 +378,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                     setFirstDay(false)
                     return true
                 }else{
-                    setFirstDay(false)
+                    setFirstDay(true)
                     setModalPhraseVisible(true)
                     //await AsyncStorage.setItem('isChecked','true');
                     return true
