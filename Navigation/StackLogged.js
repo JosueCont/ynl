@@ -86,7 +86,7 @@ const StackLogged = ({}) => {
             }
         })}>
 
-            <Stack.Screen name="DrawerNavigator" component={DrawerConfig}/>
+            <Stack.Screen name="DrawerNavigator" component={DrawerConfig} />
             <Stack.Screen name='Profile' component={ProfileScreen} options={{ title: "Perfil" }}/>
             <Stack.Screen name="ProfilePerson" component={ProfilePersonScreen} />
 
