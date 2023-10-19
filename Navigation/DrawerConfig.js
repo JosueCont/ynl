@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from "react";
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import CustomDrawerContent from "./DrawerNavigatorContent";
-import HomeScreen from "../screens/HomeScreen";
+/* import HomeScreen from "../screens/HomeScreen"; */
+import HomeScreen from '../screens/NewHome'
 import YourFeelScreen from "../screens/YourFeelScreen";
 import {Icon, Image, View, Text} from "native-base";
 import {Colors} from "../utils/Colors";
