@@ -19,6 +19,7 @@ const BookList = ({navigation, ...props}) => {
 
     const screenHeight = Dimensions.get("window").height;
     const user_id = useSelector(state => state?.authDuck?.user?.id)
+    const loading = useSelector(state => state?.booksDuck?.loading)
     const books = useSelector(state => state?.booksDuck?.books)
 
     const [refreshing, setRefreshing] = useState(false)
@@ -60,7 +61,7 @@ const BookList = ({navigation, ...props}) => {
                     books?.map(book => (
                         <>
                         <VStack width={'100%'} justifyContent={'center'}  key={book.id}>
-                            <Image  source={Lineas} style={{
+                            <Image source={Lineas} style={{
                                     height:105,
                                     position: 'absolute',
                                     zIndex: -1,
@@ -72,10 +73,12 @@ const BookList = ({navigation, ...props}) => {
                             <TouchableOpacity onPress={() => navigation.navigate("ReadBook",{book: book}) } >
                                 <HStack justifyContent={'center'}>
                                     <VStack  justifyContent={'center'}>
-                                        {
-                                            book?.locked && (<Image backgroundColor={Colors.white} borderRadius={50} source={Locked} position={'absolute'} width={12} height={12} zIndex={2} right={-10} top={-10} />)
-                                        }
-                                        <Image width={230} height={230} borderRadius={16} source={{ uri: getUrlImage(book?.front_page?.url) }} />
+                                        <Skeleton isLoaded={!loading} h={230} w={230} borderRadius={16} >
+                                            {
+                                                book?.locked && (<Image backgroundColor={Colors.white} borderRadius={50} source={Locked} position={'absolute'} width={12} height={12} zIndex={2} right={-10} top={-10} />)
+                                            }
+                                            <Image width={230} height={230} borderRadius={16} source={{ uri: getUrlImage(book?.front_page?.url) }} />
+                                        </Skeleton>
                                     </VStack>
                                 </HStack>
                                 <HStack justifyContent={'center'}>

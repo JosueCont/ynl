@@ -18,7 +18,6 @@ class ApiApp {
         task = APIKit.put(url, params);
         break;
       case "get":
-        console.log('===================>', url)
         task = APIKit.get(url);
         break;
       case "delete":
@@ -29,6 +28,10 @@ class ApiApp {
         break;
     }
     return task;
+  };
+
+  static getRoulette = () => {
+    return ApiApp.ApisType(`/api/feeling/geRoulette/`, "get");
   };
 
   static sendPushToken = (data) => {
@@ -448,8 +451,49 @@ class ApiApp {
     return ApiApp.ApisType(`/api/user-books/getBooks/${user_id}`, "get");
   }
 
-  static getOneBook = (book_code) => {
-    return ApiApp.ApisType(`/api/books/?populate=*&filters[code][$eq]=${book_code}`, "get");
+  /* Books */
+  static getPagesBook = (book_code) => {
+    return ApiApp.ApisType(`/api/book-pages/?populate=*&filters[book][code]=${book_code}&sort=page`, "get");
+  }
+
+  /* Markers */
+  static getMarkers = (user_id, book_code) => {
+    return ApiApp.ApisType(`/api/markers?filters[users_permissions_user][id][$eq]=${user_id}&filters[book][code][$eq]=${book_code}&populate=*`, "get");
+  }
+
+  static addMarker = (data) => {
+    return ApiApp.ApisType(`/api/markers`, "post", data);
+  }
+
+  static updLastPageRead = (data) => {
+    return ApiApp.ApisType(`/api/user-books/updLastPage`, "post", data);
+  }
+  static postStreakDay = (data) => {
+    return ApiApp.ApisType('/api/streak-day/save/', "post" , data);
+  }
+
+  static getGoalDaily = (data) => {
+    return ApiApp.ApisType('/api/daily-goals/lastSuccess/','post',data);
+  }
+
+  static getDaysInRow = (data) => {
+    return ApiApp.ApisType('/api/streak-days-record/week/', 'post', data);
+  }
+
+  static getMaxStreak = (data) => {
+    return ApiApp.ApisType('/api/streak-day/getMaxStreak/', 'post', data)
+  }
+
+  static getFriendsSuggestions = (data) => {
+    return ApiApp.ApisType('/api/user-site-configs/friendsSuggestions/', 'post', data)
+  }
+
+  static followFriend = (data) => {
+    return ApiApp.ApisType('/api/follow/follow/', 'post', data);
+  }
+
+  static unFollowFriend = (data) => {
+    return ApiApp.ApisType('/api/follow/unFollow/', 'post', data)
   }
 
 

@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Platform} from "react-native";
+import {Platform,PixelRatio} from "react-native";
 import {t} from 'i18n-js';
 import { Image } from 'react-native';
 const exampleImage = require('../assets/new_logo.png')
@@ -362,3 +362,6 @@ export const getProjectsAvailable = (user) => {
         return false
     }
 }
+
+const fontScale = PixelRatio.getFontScale();
+export const getFontSize = size => size/fontScale;

@@ -28,7 +28,7 @@ const RouletteStep2Screen = ({route, navigation}) => {
 
     const getSubParents = async (parentId) => {
         try {
-            let response = await ApiApp.getFeelingsV2(`filters[$and][0][parent][id][$eq]=${parentId}&populate[parent][populate][0]=icon`)
+            let response = await ApiApp.getFeelingsV2(`filters[$and][0][parent][id][$eq]=${parentId}&populate[parent][populate][0]=icon&filters[is_active][$eq]=true`)
             
             response.data.data = _.sortBy(_.uniqBy(response.data.data, 'attributes.name'), 'attributes.name');
             //console.log("🚀 ~ file: RouletteStep2Screen.js ~ line 34 ~ getSubParents ~ response.data.data", response.data.data)
@@ -43,7 +43,7 @@ const RouletteStep2Screen = ({route, navigation}) => {
         <ScrollView style={{flex: 1, backgroundColor:'#'+route.params.parentItem.attributes.color}}
                     contentContainerStyle={{flex: 1}}>
 
-            <View flex={1} alignItems={'center'} style={{paddingTop: 20}}>
+            <View flex={1} alignItems={'center'} style={{paddingTop: 75}}>
                 <Text
                     style={styles.shadow}
                     fontSize={18} textAlign={'center'} color={'white'}>{t('roulette_today_yourfeel')}</Text>

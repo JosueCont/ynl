@@ -4,6 +4,7 @@ import {createStackNavigator} from "@react-navigation/stack";
 import StackAuth from "./StackAuth";
 import {useSelector} from "react-redux";
 import DrawerConfig from "./DrawerConfig";
+import StackLogged from "./StackLogged";
 import {Spinner, View} from "native-base";
 import {Colors} from "../utils/Colors";
 import * as Notifications from "expo-notifications";
@@ -41,7 +42,7 @@ const NavigationContainerConfig = ({introStatus}) => {
                         <Spinner size={'sm'} color={'white'}></Spinner>
                     </View> :
                     (loading === false && loggedIn === true) ?
-                        <DrawerConfig/> :
+                        <StackLogged/> :
                         <StackAuth/>
 
             }
