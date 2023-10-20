@@ -3,7 +3,7 @@ const commonConfig = {
     orientation: "portrait",
     icon: "./assets/icon.png",
     splash: {
-        image: "./assets/splash.png",
+        image: "./assets/splash.jpg",
         resizeMode: "cover",
         backgroundColor: "#ffffff"
     },
