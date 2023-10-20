@@ -33,11 +33,13 @@ const NewHome = ({navigation}) => {
     moment.locale();
     const [loading, setLoading] = useState(false);
     const [image, setImage] = useState(null);
-    const [intro, setIntro] = useState(null);
+    const [intro, setIntro] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
     const [modalPhraseVisible, setModalPhraseVisible] = useState(false)
     const [phraseDay, setPhraseDay] = useState(null)
     const [fullName, setFullName] = useState(null);
+    const [isFirstDay, setFirstDay] = useState(false)
+
 
     const isFocused = useIsFocused();
     const authDuck = useSelector(state => state?.authDuck)
@@ -52,6 +54,13 @@ const NewHome = ({navigation}) => {
     
     const closeModalPhrase = () => {
         setModalPhraseVisible(false)
+        if(isFirstDay){
+            setLoading(true)
+            setTimeout(() => {
+                navigation.navigate('RouletteStep1Screen')
+            },500)
+
+        }
     }
 
     const boot = async () => {
@@ -130,7 +139,11 @@ const NewHome = ({navigation}) => {
             const response = await ApiApp.getUserDayPhrase(authDuck.user.id)
             if(response.status === 200){
                 setPhraseDay(response?.data?.data?.phrase?.phrase)
-                if(response?.data?.data?.exist === false){
+                if(response?.data?.data?.exist){ 
+                    setFirstDay(false)
+                    return true
+                }else{
+                    setFirstDay(true)
                     setModalPhraseVisible(true)
                     return true
                 }
