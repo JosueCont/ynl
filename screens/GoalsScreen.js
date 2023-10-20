@@ -41,6 +41,12 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
   const [dateSelected, setDateSelected] = useState(null)
   const [dateToday, setDateToday] = useState(null)
   const [dataSend, setDataSend] = useState([])
+
+  const [goalOne, setGoalOne] = useState({})
+  const [goalTwo, setGoalTwo] = useState({})
+  const [goalthree, setGoalthree] = useState({})
+  
+
   const [saving, setSaving] = useState(false)
 
   const fillCategories = async () => {
@@ -93,23 +99,33 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
 
   const validateForm = () => {
     let error_exist = false
-    let validData = dataSend.map(item => {
-      if(!item.goal_category && item.description){
-        /* Si axiste descripción si categoria, agregamos el error en la categoria */
-        error_exist = true
-        item['error_category'] = true
-      }else if(item.goal_category && !item.description){
-        error_exist = true
-        /* Si existe categoria sin descripción, agregamos el error en descripción */
-        item['error_description'] = true
-      }
-      return item
-    })
+    if((goalOne.goal_category && !goalOne.description) || (goalOne.completed && !goalOne.description)){
+      setGoalOne({...goalOne, error: "No puedes dejar vacía la descripción"})
+      error_exist = true
+    }
+    if((!goalOne.goal_category && goalOne.description)){
+      setGoalOne({...goalOne, error: "Debes elegir una categoria"})
+      error_exist = true
+    }
 
+    if((goalTwo.goal_category && !goalTwo.description) || (goalTwo.completed && !goalTwo.description)){
+      setGoalTwo({...goalTwo, error: "No puedes dejar vacía la descripción"})
+      error_exist = true
+    }
+    if((!goalTwo.goal_category && goalTwo.description)){
+      setGoalTwo({...goalTwo, error: "Debes elegir una categoria"})
+      error_exist = true
+    }
 
-    if(error_exist){
-      setDataSend(validData)
-    }else{
+    if((goalthree.goal_category && !goalthree.description) || (goalthree.completed && !goalthree.description)){
+      setGoalthree({...goalthree, error: "No puedes dejar vacía la descripción"})
+      error_exist = true
+    }
+    if((!goalthree.goal_category && goalthree.description)){
+      setGoalTwo({...goalthree, error: "Debes elegir una categoria"})
+      error_exist = true
+    }
+    if(!error_exist){
       saveGoals()
     }
   }
@@ -121,20 +137,33 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
   const saveGoals = async () => { 
     setSaving(true)
     try {
-      const newData = dataSend.map(item => {
-        let newItem = {
-          "goal_category": item?.goal_category?.id,
-          "description": item?.description,
-          "target_date": item.target_date ? item.target_date : dateSelected,
-          "completed": item.completed ? true : false,
+      const newData = [
+        {
+          "id": goalOne?.id,
+          "goal_category": goalOne?.goal_category?.id,
+          "description": goalOne?.description,
+          "target_date": goalOne.target_date ? goalOne.target_date : dateSelected,
+          "completed": goalOne.completed ? true : false,
+          "user": authDuck.user,
+
+        },
+        {
+          "id": goalTwo?.id,
+          "goal_category": goalTwo?.goal_category?.id,
+          "description": goalTwo?.description,
+          "target_date": goalTwo.target_date ? goalTwo.target_date : dateSelected,
+          "completed": goalTwo.completed ? true : false,
+          "user": authDuck.user,
+        },
+        {
+          "id": goalthree?.id,
+          "goal_category": goalthree?.goal_category?.id,
+          "description": goalthree?.description,
+          "target_date": goalthree.target_date ? goalthree.target_date : dateSelected,
+          "completed": goalthree.completed ? true : false,
           "user": authDuck.user,
         }
-        if(item.id){
-          newItem['id'] = item.id
-        }
-        return newItem
-      })
-
+      ]
 
       let resp = await saveDailyGoals(newData)
       if(resp['success']){
@@ -153,21 +182,38 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
 
   }
 
-  const updData = (field, val, idx) => {
-     /* Copia de los datos originales */
-    let copy = [...dataSend]
-    /* Obtenemos el elemento de la posición */
-    let item;
-    if(dataSend[idx]){
-      item = dataSend[idx]
-      item[field] = val
-    }else{
-      item = {[field]:val}
+  const updateDataOne = (val, field) =>{
+      let copy = {...goalOne} 
+      copy[field] = val
+      if(field === 'description'){
+        copy['error'] = false
+      }
+      setGoalOne(copy)
+  }
+
+  const updateDataTwo = (val, field) =>{
+    let copy = {...goalTwo} 
+    copy[field] = val
+    if(field === 'description'){
+      copy['error'] = false
     }
-    delete item.error_description
-    delete item.error_category
-    copy[idx] = item
-    setDataSend(copy)
+    setGoalTwo(copy)
+  }
+
+  const updateDataThree = (val, field) =>{
+    let copy = {...goalthree} 
+    copy[field] = val
+    if(field === 'description'){
+      copy['error'] = false
+    }
+    setGoalthree(copy)
+}
+
+  const updData = (field, val, numGoal) => {
+    if(numGoal === 1){
+      /* Copia de los datos originales */
+      
+    }
   }
 
   
@@ -219,15 +265,18 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
               <Image resizeMode='contain' height={20} width={'80%'} source={Phrase} alt='Phrase' marginY={5} />
             </HStack>
             <VStack space={5}>
-              <FormItemGoal isActive={isActive} data={dataSend} idx={0} upd={updData} disabled={saving} />
-              <FormItemGoal isActive={isActive} data={dataSend} idx={1} upd={updData} disabled={saving}/>
-              <FormItemGoal isActive={isActive} data={dataSend} idx={2} upd={updData} disabled={saving}/>
+              <FormItemGoal isActive={isActive} data={goalOne} updateData={updateDataOne}  disabled={saving} />
+              <FormItemGoal isActive={isActive} data={goalTwo} updateData={updateDataTwo} disabled={saving}/>
+              <FormItemGoal isActive={isActive} data={goalthree} updateData={updateDataThree} disabled={saving}/>
               <HStack justifyContent={'center'}>
                 <VStack>
                 {
                   dateToday?.format("YYYY-MM-DD") == dateSelected?.format("YYYY-MM-DD") && 
-                  <TouchableOpacity disabled={saving || loading || !isActive()} onPress={validateForm} style={{ width:150, height:40, backgroundColor: 'black', borderRadius:10, marginBottom:15, 
-                    opacity: isActive() || !loading ? '1' : .5 
+                  <TouchableOpacity 
+                    disabled={
+                      saving || loading || !isActive() || (!goalOne.description && !goalTwo.description && !goalthree.description)
+                    } onPress={validateForm} style={{ width:150, height:40, backgroundColor: 'black', borderRadius:10, marginBottom:15, 
+                    opacity: saving || loading || !isActive() || !goalOne.description && !goalTwo.description && !goalthree.description ? .5 : '1'
                   }}>
                     {
                       saving ? <VStack height={'100%'} justifyContent={'center'} ><Spinner /></VStack> :
