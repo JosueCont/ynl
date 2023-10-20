@@ -87,7 +87,7 @@ const SearchResultsList = ({pages, pageSelected, results, searched = false, sear
                                     <HStack justifyContent={'center'} >
                                         <Text textAlign='center' > Capitulo {item.Capitulo}</Text>
                                     </HStack>
-                                    <Image height={160} width={'100%'} resizeMode='contain'  source={{ uri: pages[item.page-1] }}  />
+                                    <Image height={160} width={'100%'} resizeMode='contain'  source={{ uri: pages[item.page-1]?.url }}  />
                                     <HStack justifyContent={'center'}>
                                         <Text textAlign='center'>{item?.titulo}</Text>
                                     </HStack>

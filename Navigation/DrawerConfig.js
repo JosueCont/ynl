@@ -127,7 +127,7 @@ const DrawerConfig = () => {
           headerTitleStyle: { color: "black" },
           headerShadowVisible:false,
           headerTitle: () => {
-            if (route.name.includes("GoalsScreen") || route.name.includes("GoalsReport") || route.name.includes("GoalsTree") || route.name.includes("ProjectsList") || route.name.includes('ProjectForm') || route.name.includes("BookList") || route.name.includes("ReadBook") ) {
+            if (route.name.includes("HomeScreen") || route.name.includes("GoalsScreen") || route.name.includes("GoalsReport") || route.name.includes("GoalsTree") || route.name.includes("ProjectsList") || route.name.includes('ProjectForm') || route.name.includes("BookList") || route.name.includes("ReadBook") ) {
               return <View />;
             } if(route.name.includes('ProfileScreen')){
               return <Text fontSize={getFontSize(19)} style={{fontWeight:'900'}}>{t('my_profile')}</Text>
