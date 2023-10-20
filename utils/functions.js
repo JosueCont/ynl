@@ -236,7 +236,7 @@ export const printProject = async (data) => {
 
                             </td>
                             <td colspan="2">
-                                Buscanos en las tiendas comom YNL: 
+                                Encuentranos en las tiendas como YNL: 
                             </td>
                             <td>
                                 <img src="${appStoreUrl }" width="160px" height="50px" />
@@ -332,7 +332,7 @@ export const SharePdfProject = async (data) => {
 
                             </td>
                             <td colspan="2">
-                                Buscanos en las tiendas comom YNL: 
+                                Encuentranos en las tiendas como YNL: 
                             </td>
                             <td>
                                 <img src="${appStoreUrl }" width="160px" height="50px" />
