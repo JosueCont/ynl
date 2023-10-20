@@ -11,11 +11,12 @@ import {t} from 'i18n-js';
 import DatePicker from 'react-native-date-ranges';
 import moment from 'moment'
 import {RefreshControl, SafeAreaView} from "react-native";
-import {getShadowCircleStyle} from "../utils/functions";
+import {getFontSize, getShadowCircleStyle} from "../utils/functions";
 import LineChartCustom from "./Charts/LineChartCustom";
 import ProgressChartCustom from "./Charts/ProgressChart";
 import FeelingCard from "../components/FeelingCard";
 import NoDataIcon from "../components/Shared/NoDataIcon";
+import { MaterialIcons, FontAwesome5, } from "@expo/vector-icons";
 
 const StatisticsScreen = ({authDuck, navigation, ...props}) => {
     const isFocused = useIsFocused();
@@ -26,6 +27,7 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
     const [refreshing, setRefreshing] = useState(null);
     const [dataPie, setDataPie] = useState(null);
     const [feelingCard, setFeelingCard] = useState(null);
+    const [noData, setNotData] = useState(false)
 
     useEffect(() => {
         if (isFocused) {
@@ -58,20 +60,27 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
         try {
             setLoading(true)
             const res = await ApiApp.getUserProgress(userId, site, option);
-            // console.log('semanal',res.data.data.feelings)
-            setCountFeeling(res?.data?.data?.feelings_rev)
-            setFeelingCard(res?.data?.data?.feeling_card)
-
-            if(res?.data?.data?.feelings_rev){
-                setDataPie(_.map(res.data.data.feelings, (ele, i) => {
-                    return {
-                        name: ele.name,
-                        count: ele.count,
-                        color: '#' + ele.color,
-                        legendFontColor: "#7F7F7F",
-                        legendFontSize: 10
-                    }
-                }))
+             console.log('semanal',res.data)
+             let countEmotions =  res.data.data.feelings_rev.reduce((accumulator, feeling) => accumulator + feeling.count, 0);
+            console.log('countEmotions',countEmotions)
+            
+            if(countEmotions >= 1){
+                setCountFeeling(res?.data?.data?.feelings_rev)
+                setFeelingCard(res?.data?.data?.feeling_card)
+                setNotData(false)
+                if(res?.data?.data?.feelings_rev){
+                    setDataPie(_.map(res.data.data.feelings, (ele, i) => {
+                        return {
+                            name: ele.name,
+                            count: ele.count,
+                            color: '#' + ele.color,
+                            legendFontColor: "#7F7F7F",
+                            legendFontSize: 10
+                        }
+                    }))
+                }
+            }else{
+                setNotData(true)
             }
 
 
@@ -112,6 +121,7 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
         try {
             //let startDate = '2020-01-01', enDate = '2100-01-01';
             const res = await ApiApp.getLastEmotion(userId, site, option)
+            console.log('history',res.data)
             //console.log("🚀 ~ file: StatisticsScreen.js ~ line 105 ~ getHistoryData ~ res", res.data.data)
             
             let arrayDates = _.map(res.data.data, (obj, index) => {
@@ -175,56 +185,70 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
 
 
                 </View>
-                {
-                    loading === true ?
-                        <View mx={2} my={2}>
-                            <Skeleton height={100} p={2}></Skeleton>
+
+                {noData ? (
+                    <View justifyContent={'center'} alignItems={'center'} flex={1}>
+                        <FontAwesome5 name="sad-tear" size={40} color="black" />
+                        <Text fontSize={getFontSize(20)}>No se encontro información</Text>
+                    </View>
+                ):(
+                    <>
+                        {
+                            loading === true ?
+                                <View mx={2} my={2}>
+                                    <Skeleton height={100} p={2}></Skeleton>
+                                </View>
+                                :
+                                <View mx={2} my={2} style={[
+                                    getShadowCircleStyle(10, 10), {
+                                        backgroundColor: 'white'
+                                    }]}
+                                    borderRadius={30} alignItems={'center'}>
+                                    <Stack direction="row" mb="2.5" mt="1.5" space={4} p={2}>
+                                        {
+                                            countFeeling && countFeeling.map((ele, i) => {
+                                                return (
+                                                    <View key={i}>
+                                                        <Image source={{uri: ele.icon}} width={30} height={30} mb={1} alt="img"/>
+                                                        <Text textAlign={'center'} color={`#${ele.color}`} fontSize={14}>{ele.count}</Text>
+                                                    </View>
+                                                )
+                                            })
+                                        }
+                                    </Stack>
+                                </View>
+                        }
+
+
+                        <View mx={2} my={2} alignItems={'center'}>
+                            {
+                                loading ?
+                                    <Skeleton height={250} p={2}></Skeleton> :
+                                    (dataPie && feelingCard && feelingCard?.most_select?.count >0 ) ?
+                                    <PieChartCustom dataCount={dataPie}/> : <NoDataIcon mt={10}/>
+                            }
                         </View>
-                        :
-                        <View mx={2} my={2} style={[
-                            getShadowCircleStyle(10, 10), {
-                                backgroundColor: 'white'
-                            }]}
-                              borderRadius={30} alignItems={'center'}>
-                            <Stack direction="row" mb="2.5" mt="1.5" space={4} p={2}>
-                                {
-                                    countFeeling && countFeeling.map((ele, i) => {
-                                        return (
-                                            <View key={i}>
-                                                <Image source={{uri: ele.icon}} width={30} height={30} mb={1} alt="img"/>
-                                                <Text textAlign={'center'} color={`#${ele.color}`} fontSize={14}>{ele.count}</Text>
-                                            </View>
-                                        )
-                                    })
-                                }
-                            </Stack>
+                        <View mx={2} my={2} mb={2}>
+
+                            {
+                                loading &&  <Skeleton height={35} p={2}></Skeleton>
+                            }
+                            {
+                            feelingCard && !loading && <FeelingCard feelingCard={feelingCard} user={authDuck.user}/>
+                            }
+
+                            {/*{*/}
+                            {/*    loading ?*/}
+                            {/*        <Skeleton height={250} p={2}></Skeleton> :*/}
+                            {/*        <CalendarChartCustom historyData={historyData}/>*/}
+                            {/*}*/}
                         </View>
-                }
 
 
-                <View mx={2} my={2} alignItems={'center'}>
-                    {
-                        loading ?
-                            <Skeleton height={250} p={2}></Skeleton> :
-                            (dataPie && feelingCard && feelingCard?.most_select?.count >0 ) ?
-                            <PieChartCustom dataCount={dataPie}/> : <NoDataIcon mt={10}/>
-                    }
-                </View>
-                <View mx={2} my={2} mb={2}>
+                    </>
 
-                    {
-                        loading &&  <Skeleton height={35} p={2}></Skeleton>
-                    }
-                    {
-                     feelingCard && !loading && <FeelingCard feelingCard={feelingCard} user={authDuck.user}/>
-                    }
+                )}
 
-                    {/*{*/}
-                    {/*    loading ?*/}
-                    {/*        <Skeleton height={250} p={2}></Skeleton> :*/}
-                    {/*        <CalendarChartCustom historyData={historyData}/>*/}
-                    {/*}*/}
-                </View>
 
                 {/*<View flex={0.1} mx={4} mb={5}>*/}
                 {/*    /!*<Button isLoading={loading} size="md" colorScheme={'orange'}*!/*/}

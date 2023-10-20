@@ -3,7 +3,7 @@ import {Box, Button, HStack, Image, Input, Text, View, VStack} from "native-base
 import {ImageBackground, ScrollView} from "react-native";
 import {connect} from "react-redux";
 import groupicon from '../assets/groupicon.png'
-import backgroundGroup from '../assets/backGroups.png'
+import backgroundGroup from '../assets/backGroups.jpg'
 import {getMyGroups} from '../redux/ducks/groupDuck'
 
 const GroupsStartScreen = ({authDuck, navigation, groupDuck, getMyGroups}) => {

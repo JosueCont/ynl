@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Button, Image, KeyboardAvoidingView, ScrollView, Text, TextArea, View} from "native-base";
 import {connect} from "react-redux";
 import {Keyboard, Platform, TouchableWithoutFeedback} from "react-native";
-import {getDay, translateEmotions} from '../utils/functions'
+import {getDay, getFontSize, translateEmotions} from '../utils/functions'
 import {saveEmotion} from "../redux/ducks/feelingsDuck";
 import ScreenBaseV1 from "./Components/ScreenBaseV1";
 import _ from "lodash";
@@ -19,6 +19,7 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
     const [fontsLoaded] = useFonts({
       'SultanNahia': require('../assets/fonts/SultanNahia.ttf'),
       'Amberla': require('../assets/fonts/Amberla.otf'),
+      'Ole-Regular':require('../assets/fonts/Ole-Regular.ttf')
     }); 
     const [loading, setLoading] = useState(false)
     const [comment, setComment] = useState("")
@@ -186,16 +187,22 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
               </View>
 
               <View mb={6} alignItems={"center"}>
-                <Text
-                  //bold
-                  color={Colors.black}
-                  mt={2}
-                  //style={styles.shadow}
-                  style={{fontFamily: 'Amberla', fontSize:24, marginTop:5}}
-                  mb={2}
-                >
-                    {t('roulette_share_why')}
-                </Text>
+                {fontsLoaded ? (
+                  <View style={{ height:70}}>
+                    <Text
+                      //bold
+                      //color={Colors.black}
+                      mt={2}
+                      //style={styles.shadow}
+                      style={{fontFamily: 'Ole-Regular', fontSize:getFontSize(39), marginTop:5, paddingBottom:10,  paddingTop:20, paddingHorizontal:4, flex:1}}
+                    >
+                      {t('roulette_share_why')}
+                    </Text>
+
+                  </View>
+
+                ): null}
+
                 <TextArea
                   h={20}
                   number
