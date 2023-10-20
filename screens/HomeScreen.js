@@ -51,7 +51,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const [days, setDays] = useState([]);
     const [fullName, setFullName] = useState(null);
 
-    const [intro, setIntro] = useState(null);
+    const [intro, setIntro] = useState(true);
     const [image, setImage] = useState(null);
     const [emotionsStatus, setEmotionsStatus] = useState(null);
 
@@ -66,7 +66,6 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     const closeModalPhrase = async() => {
         setModalPhraseVisible(false)
         //const navigateRoulete = await AsyncStorage.getItem('isChecked');
-
         if(isFirstDay){
             setLoading(true)
             setTimeout(() => {
@@ -101,7 +100,8 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
     }
 
     const init = async () => {
-        if(await queryDailyPhrase() === false){
+        const getPhrase  = await queryDailyPhrase();
+        if(getPhrase === false){
             validateEmotion()
         }
 
@@ -373,8 +373,8 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
             const response = await ApiApp.getUserDayPhrase(authDuck.user.id)
             if(response.status === 200){
                 setPhraseDay(response?.data?.data?.phrase?.phrase)
-                if(response?.data?.data?.exist){
-                    //await AsyncStorage.setItem('isChecked','false');
+                if(response?.data?.data?.exist){ 
+                    //await AsyncStorage.setItem('isChecked','false'); 
                     setFirstDay(false)
                     return true
                 }else{

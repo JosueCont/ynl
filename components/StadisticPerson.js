@@ -18,9 +18,9 @@ const StadisticPerson = ({userName,dateCreatedUser,image,currentStreakDay,myGoal
     return(
         <View>
             <View flexDirection={'row'} style={{marginTop:60, marginLeft:60, marginRight: 40, paddingVertical:10}}>
-                <View>
+                <View style={{width:235}}>
                     {loading ? (
-                        <Skeleton lines={1} width={200} height={50}   />
+                        <Skeleton lines={1} width={220} height={50}   />
                     ):(
                         <>
                             <Text fontSize={getFontSize(26)} style={{fontWeight:'700'}} textTransform={'capitalize'}>{userName}</Text>
@@ -32,12 +32,12 @@ const StadisticPerson = ({userName,dateCreatedUser,image,currentStreakDay,myGoal
                 </View>
                 {loading ? (
                     <View style={getShadowCircleStyle(10, 10)}>
-                        <Skeleton endColor="warmGray.50" size="90" rounded="full" ml={3} />
+                        <Skeleton endColor="warmGray.50" size="90" rounded="full"  />
                     </View>
                 ): (
                     <TouchableOpacity  
                         onPress={() => isMyProfile ? moveTo(): console.log('Pressed')}
-                        style={{width:75, height:75, backgroundColor:Colors.black, marginLeft: Platform.OS === 'ios' ? 30:40, borderRadius:37.5, justifyContent:'center', alignItems:'center', marginBottom:40}}>
+                        style={{width:75, height:75, backgroundColor:Colors.black, marginLeft: 10, borderRadius:37.5, justifyContent:'center', alignItems:'center', marginBottom:40}}>
                         <>
                             {image != null ? (
                                 <Image  w={65} h={65} source={{uri: image}}

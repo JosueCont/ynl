@@ -21,7 +21,7 @@ export const enus = {
     'home_goals': 'My goals',
     'home_projects':'My Projects',
     'my_progress': 'My progress',
-    'books':'Books',
+    'books':'My books',
     'read_books':'Read Books',
     //Historial
     'history_my_history':'My records',
@@ -32,7 +32,7 @@ export const enus = {
     'roulette_how_i_feel':'How i feel?',
     'roulette_istructions':'Spin to choose how you feel today',
     'roulette_today_yourfeel':'Today you feel...',
-    'roulette_share_why':'Please share why',
+    'roulette_share_why':'Why do I feel this way?',
     'roulette_finish':'Finish',
     'roulette_get_into':'Get into',
     'select': 'Select',

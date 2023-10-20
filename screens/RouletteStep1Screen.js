@@ -279,7 +279,7 @@ const RouletteStep1Screen = ({navigation}) => {
             <GH.GestureHandlerRootView>
 
 
-                <View flex={1} width={'100%'}>
+                <View  width={'100%'}>
                     <View  style={{marginTop:15, marginBottom:-20}}>
                      
                     {fontsLoaded ? <Text color={Colors.black} style={{fontFamily: 'Amberla', fontSize:44, marginBottom:1,}} size={'xl'}  textAlign={'center'}>{t('roulette_how_i_feel')}</Text> : 
@@ -298,7 +298,7 @@ const RouletteStep1Screen = ({navigation}) => {
                         size={"5xl"}
                         />
                     </View>
-                    <View  alignItems={'center'}>
+                    <View  alignItems={'center'} justifyContent={'center'}>
                         <GH.PanGestureHandler onGestureEvent={onPanGestureEvent}>
                             <Animated.Image source={circleParts} style={[animatedStyle,{
                                 width: 300,
@@ -309,26 +309,26 @@ const RouletteStep1Screen = ({navigation}) => {
                         </GH.PanGestureHandler>
                     </View>
 
-                    <View   style={{marginTop:25, paddingLeft:80, paddingRight:80,}}>
-                        <Button style={Style.buttonGray}
-                            onPress={() => navigation.navigate('RouletteStep2Screen', {parentItem: _.find(parents, (o)=> {
-                                    return o.attributes.slug_name === (definitionOfFeeling().slug)
-                                } )})}>{t('continue')}</Button>
-                    </View>
-                    <View style={{marginTop:20}}>
-                        <View flexDirection={'row'} justifyContent={'space-between'} style={{position:'relative'}}>
-                            <View backgroundColor={'#F5AC00'} style={{width:90, height:24, borderTopRightRadius:20, borderBottomRightRadius:20, position:'absolute', left:-50}}/>
-                            <View backgroundColor={'#F5AC00'} style={{width:90, height:24,position:'absolute', right:-50, borderTopLeftRadius:20, borderBottomLeftRadius:20}}/>
-                        </View>
-                        <View style={{width:300, height:17, justifyContent:'center', backgroundColor:'#F5AC00', marginTop:35, borderRadius:20}}></View>
-                        <View flexDirection={'row'}  style={{ marginTop:10}}>
-                        <Text alignSelf={'center'} style={{marginLeft:100}}>Your now limitless</Text>
-                            <View backgroundColor={'#F5AC00'} style={{width:90, height:24, borderTopRightRadius:20, borderBottomRightRadius:20, position:'absolute', left:-50}}/>
-                            <View backgroundColor={'#F5AC00'} style={{width:90, height:24,position:'absolute', right:-50, borderTopLeftRadius:20, borderBottomLeftRadius:20}}/>
-                        </View>
-                    </View>
                 </View>
             </GH.GestureHandlerRootView>
+            <View   style={{marginTop:25, paddingLeft:80, paddingRight:80,}}>
+                <Button style={Style.buttonGray}
+                    onPress={() => navigation.navigate('RouletteStep2Screen', {parentItem: _.find(parents, (o)=> {
+                            return o.attributes.slug_name === (definitionOfFeeling().slug)
+                        } )})}>{t('continue')}</Button>
+            </View>
+            <View style={{marginTop:20}}>
+                <View flexDirection={'row'} justifyContent={'space-between'} style={{position:'relative'}}>
+                    <View backgroundColor={'#F5AC00'} style={{width:90, height:24, borderTopRightRadius:20, borderBottomRightRadius:20, position:'absolute', left:-55}}/>
+                    <View backgroundColor={'#F5AC00'} style={{width:90, height:24,position:'absolute', right:-55, borderTopLeftRadius:20, borderBottomLeftRadius:20}}/>
+                </View>
+                <View style={{width:300, height:17, justifyContent:'center', backgroundColor:'#F5AC00', marginTop:35, borderRadius:20}}></View>
+                <View flexDirection={'row'}  style={{ marginTop:10}} justifyContent={'center'} alignItems={'center'}>
+                <Text alignSelf={'center'} >Your now limitless</Text>
+                    <View backgroundColor={'#F5AC00'} style={{width:53, height:13, borderRadius:20, position:'absolute', left:-20}}/>
+                    <View backgroundColor={'#F5AC00'} style={{width:53, height:13,position:'absolute', right:-20, borderRadius:20,}}/>
+                </View>
+            </View>
         </ScreenBaseV1>
     );
 };
