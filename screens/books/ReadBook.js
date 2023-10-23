@@ -1,5 +1,5 @@
 import {ScrollView , Text, View, HStack, Image, VStack, Progress, Center, Skeleton, Menu, Modal, Button, FormControl, Input, KeyboardAvoidingView, useToast, Spinner, Heading, IconButton, Icon, Spacer, FlatList } from 'native-base'
-import { SafeAreaView, TouchableOpacity , StyleSheet, Dimensions, RefreshControl, Pressable, Platform, TouchableHighlight} from 'react-native'
+import { SafeAreaView, TouchableOpacity , StyleSheet, Dimensions, RefreshControl, Pressable, Platform, TouchableHighlight, Modal as ModalView  } from 'react-native'
 import React from 'react'
 import PDFReader from 'rn-pdf-reader-js'
 import { getMarkers, getPagesBook, addMarker, updLastPageRead } from '../../redux/ducks/booksDuck'
@@ -11,6 +11,7 @@ import ModalMarkers from '../../components/books/ModalMarkers'
 import { FontAwesome5, AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons'; 
 import SearchResultsList from '../../components/books/SearchResults'
 import { BackHandler } from 'react-native';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 
 
@@ -68,7 +69,7 @@ const ReadBook = ({route, navigation, ...props}) => {
         if(bookPages.length > 0){
             let imgs = []
             for (let i = 0; i < bookPages.length; i++) { 
-                imgs.push( getUrlImage(bookPages[i]['attributes']['file']['data']['attributes']['url']))
+                imgs.push( {url: getUrlImage(bookPages[i]['attributes']['file']['data']['attributes']['url'])})
             }
             setPages(imgs)
         }
@@ -285,7 +286,17 @@ const ReadBook = ({route, navigation, ...props}) => {
                             </>
                         :
                         <>
-                            <SliderBox     
+                            <View height={Dimensions.get("window").height-(Dimensions.get("window").height*.25)} > 
+                                <ImageViewer 
+                                index={currentPage}  
+                                imageUrls={pages}
+                                onChange={index =>  setTimeout(function(){
+                                    setCurrentPage(index)
+                                }, 200)}
+                                backgroundColor={'white'}
+                                />
+                            </View>
+                            {/* <SliderBox     
                                 images={pages}
                                 firstItem={currentPage}
                                 sliderBoxHeight={Dimensions.get("window").height-(Dimensions.get("window").height*.25)}
@@ -296,7 +307,7 @@ const ReadBook = ({route, navigation, ...props}) => {
                                 dotStyle={{
                                     display: 'none'
                                 }}
-                            />
+                            /> */}
                             <View mx={5} >
                                 <VStack width={'100%'} textAlign={'center'} alignSelf={'center'} >
                                     <Progress value={ (100/pages.length)*(currentPage+1) } />
