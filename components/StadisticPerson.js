@@ -14,7 +14,6 @@ const {height, width} = Dimensions.get('window');
 const StadisticPerson = ({userName,dateCreatedUser,image,currentStreakDay,myGoal,loading, isMyProfile, moveTo}) => {
 
     const route = useRoute();
-    console.log('route',route.params)
     return(
         <View>
             <View flexDirection={'row'} style={{marginTop:60, marginLeft:60, marginRight: 40, paddingVertical:10}}>

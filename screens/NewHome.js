@@ -49,11 +49,11 @@ const NewHome = ({navigation,}) => {
 
     const screenWidth = Dimensions.get("window").width;
 
-    useEffect(() => {
-        if(authDuck){
-            getInfoModules()
-        }
-    },[authDuck])
+    //useEffect(() => {
+    //    if(authDuck){
+    //        getInfoModules()
+    //    }
+    //},[authDuck])
 
     useEffect(() => {
         if (isFocused) {

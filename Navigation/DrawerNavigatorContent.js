@@ -10,7 +10,7 @@ import {t} from 'i18n-js';
 import {logOutAction} from "../redux/ducks/authDuck";
 import ApiApp from "../utils/ApiApp";
 import { getProjectsAvailable } from '../utils/functions'
-import {MaterialIcons, FontAwesome, Ionicons, FontAwesome5} from "@expo/vector-icons";
+import {MaterialIcons, FontAwesome, Ionicons, FontAwesome5, Fontisto} from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
 import ModalDayPhrase from "../screens/Modals/ModalDayPhrase";
 
@@ -136,6 +136,15 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
                   </Text>
               </TouchableOpacity>
             </View> ) : null }
+
+            <View flexDirection={'row'} justifyContent={'center'} alignItems={'center'}>
+              <Ionicons name="md-happy-outline" size={25} color={Colors.white}/>
+              <TouchableOpacity style={{marginLeft:15}} onPress={() => navigation.navigate('YourFeelScreen')}>
+                <Text color={"white"} fontSize={20} my={2}>
+                    {t('home_aspects')}
+                </Text>
+              </TouchableOpacity>
+            </View>
 
             <View flexDirection={'row'} justifyContent={'center'} alignItems={'center'}>
               <MaterialIcons  name="group" size={25} color={Colors.white} />
