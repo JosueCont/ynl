@@ -305,12 +305,13 @@ const ProjectForm = ({route, ...props}) => {
                           animation="rotate"
                           easing="linear"
                           iterationCount="infinite"
-                          duration={1000}
+                          duration={800}
                         >
-                          <AntDesign name="reload1" size={20} color={Colors.yellowV2} />
+                          <Ionicons style={{marginRight:4}} name="reload" size={20} color={Colors.yellowV2} />
                         </Animatable.View>
                       ) : (
                         <Ionicons
+                          style={{marginRight:4}}
                           size={20}
                           color={Colors.yellowV2}
                           name="md-save"

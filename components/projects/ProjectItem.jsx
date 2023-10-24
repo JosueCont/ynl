@@ -187,7 +187,7 @@ const ProjectItem = ({project, refreshProjects}) => {
               <MaterialIcons
                 size={26}
                 color={"white"}
-                name="delete"
+                name="cancel"
                 resizeMode="contain"
                 pl={14}
                 // onPress={() => handleDeleteProject(project.id)}
@@ -255,8 +255,8 @@ const styles = StyleSheet.create({
       },
     deleteIconContainer: {
         position: 'absolute',
-        top: 2, // Adjust the position as needed
-        left: 2, // Adjust the position as needed
+        top: -7, // Adjust the position as needed
+        left: -7, // Adjust the position as needed
       },
       modalContainer: {
         flex: 1,
