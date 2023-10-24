@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import CustomDrawerContent from "./DrawerNavigatorContent";
 /* import HomeScreen from "../screens/HomeScreen"; */
@@ -6,7 +6,7 @@ import HomeScreen from '../screens/NewHome'
 import YourFeelScreen from "../screens/YourFeelScreen";
 import {Icon, Image, View, Text} from "native-base";
 import {Colors} from "../utils/Colors";
-import {Platform, TouchableOpacity} from "react-native";
+import {Platform, TouchableOpacity, BackHandler} from "react-native";
 import {MaterialIcons} from "@expo/vector-icons";
 import GroupsScreen from "../screens/GroupsScreen";
 import GroupsMembersAdd from "../screens/GroupsMembersAdd";
@@ -34,6 +34,9 @@ import OverlaySpinner from '../components/OverlaySpinner'
 import imageLogo from '../assets/new_logo.png'
 import { useSelector } from "react-redux";
 import { getFontSize } from "../utils/functions";
+import { useFocusEffect } from "@react-navigation/native";
+import ApiApp from "../utils/ApiApp";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Drawer = createDrawerNavigator();
 
@@ -41,6 +44,39 @@ const DrawerConfig = () => {
     const [redIcons, setredIcons] = useState(false)
 
     const loading = useSelector(state => state.authDuck?.loadingOverlay);
+    const authDuck = useSelector(state => state.authDuck)
+    useEffect(() => {
+      if(authDuck){
+          getInfoModules()
+      }
+    },[authDuck])
+
+    const getInfoModules = async() => {
+      try {
+        await getValidateSub()
+        await getModules();
+      } catch (e) {
+        console.log('error',e)
+      }
+    }
+
+    const getValidateSub = async() => {
+      try {
+          const suscription = await ApiApp.getValidateSuscription(authDuck.user.id);
+      } catch (e) {
+          console.log('error al obtener modulos',e)
+      }
+    }
+
+    const getModules = async() => {
+        try {
+            const modules = await ApiApp.getModulesSuscription(authDuck.user.id)
+            await AsyncStorage.setItem(`modules${authDuck?.user?.id.toString()}`,JSON.stringify(modules.data))
+        } catch (error) {
+            console.log('error al obtener modulos',e)
+        }
+    }
+
     
 
     return (
@@ -52,6 +88,23 @@ const DrawerConfig = () => {
         screenOptions={({ navigation, route }) => ({
           drawerPosition: "right",
           headerLeft: () => {
+            useFocusEffect(
+              useCallback(() => {
+            
+                const onBackPress = () => {
+                  console.log('pressed',route)
+                  if (route.name === 'RouletteStep1Screen') {
+                    navigation.navigate('HomeScreen')
+                  }else if(route.name==='HomeScreen'){
+                    return true;
+                  }
+                };
+            
+                BackHandler.addEventListener('hardwareBackPress', onBackPress);
+            
+                return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+              }, [route])
+            );
             //console.log("route", route?.params.parentItem.attributes.name);
             if ((route.name.includes("HomeScreen") || route.name.includes("GoalsScreen") || route.name.includes("GoalsReport") || route.name.includes("GoalsTree") || route.name.includes('ProjectsList') || route.name.includes('ProjectForm') || route.name.includes("BookList") || route.name.includes("ReadBook") ) && Platform.OS !== "ios") {
               return <View />;

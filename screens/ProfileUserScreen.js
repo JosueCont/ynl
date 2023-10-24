@@ -30,6 +30,8 @@ const ProfileUserScreen = ({authDuck, navigation}) => {
     const [myGoal, setGoal] = useState(null);
     const [marksDays, setMarksDays] = useState([]);
     const [isFollowSomeone, setFollowSomeone] = useState(false)
+    const [disableButtonFollow, setDisableButton] = useState(false)
+
 
     //useEffect(() => {
     //    console.log('authDuck',authDuck.user)
@@ -207,6 +209,7 @@ const ProfileUserScreen = ({authDuck, navigation}) => {
 
     const onSetActionFollow = async(id, follow) => {
         try {
+            setDisableButton(true)
             let dataSend = {
                 userId: authDuck?.user?.id,
                 //followId: id
@@ -216,11 +219,13 @@ const ProfileUserScreen = ({authDuck, navigation}) => {
                 const response = await ApiApp.unFollowFriend(dataSend)
                 if(response?.data?.success) setFollowSomeone(!isFollowSomeone)
                 console.log('Se tiene que dejar de seguir', response.data)
+                setDisableButton(false)
             }else{
                 dataSend.followId = id
                 const response = await ApiApp.followFriend(dataSend);
                 console.log('response follow',response.data)
                 if(response?.data?.success) setFollowSomeone(!isFollowSomeone)
+                setDisableButton(false)
             }
 
         } catch (e) {
@@ -277,6 +282,7 @@ const ProfileUserScreen = ({authDuck, navigation}) => {
                                             onSetActionFollow={(id,follow) =>  onSetActionFollow(id,follow)}
                                             changeRoute={(id,name, image) => navigation.navigate('ProfilePerson',{id,name,image})}
                                             deleteSuggestion={(id) => onDeletePerson(id)}
+                                            disableButton={disableButtonFollow}
                                         />
                                         
                                 )}
