@@ -185,31 +185,31 @@ const ProjectForm = ({route, ...props}) => {
           icon: ObjetivoIcon
         },
         {
-            title: '¿POR QUE?',
+            title: '¿POR QUÉ?',
             name: 'reason',
             content: '',
             icon: PorQueIcon
         },
         {
-            title: '¿COMO?',
+            title: '¿CÓMO?',
             name: 'how',
             content: '',
             icon: ComoIcon
         },
         {
-            title: '¿CUANDO?',
+            title: '¿CUÁNDO?',
             name: 'when',
             content: '',
             icon: CuandoIcon
         },
         {
-            title: '¿DONDE?',
+            title: '¿DÓNDE?',
             name: 'where',
             content: '',
             icon: DondeIcon
         },
         {
-            title: '¿CUANTO?',
+            title: '¿CUÁNTO?',
             name: 'how_much',
             content: '',
             icon: CuantoIcon
