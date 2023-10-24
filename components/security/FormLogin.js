@@ -247,8 +247,8 @@ export default (props) => {
 
 
                                 <TouchableOpacity
-                                     onPress={handleSubmit} style={{ width:'100%', height:40, backgroundColor: 'black', borderRadius:10, marginBottom:15}}>
-                                            <Text color={Colors.white} isLoadingText={t('starting')} fontSize={'md'} textAlign={'center'} marginY={'auto'} >
+                                     onPress={handleSubmit} isLoadingText={t('starting')} style={{ width:'100%', height:40, backgroundColor: 'black', borderRadius:10, marginBottom:15}}>
+                                            <Text color={Colors.white}  fontSize={'md'} textAlign={'center'} marginY={'auto'} >
                                                 {t('login_session')}
                                             </Text>
                                 </TouchableOpacity>
