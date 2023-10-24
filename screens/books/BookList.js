@@ -1,3 +1,4 @@
+import React, {useEffect,useState} from 'react'
 import {ScrollView , Text, View, HStack, Image, VStack, Progress, Center, Skeleton } from 'native-base'
 import { SafeAreaView, TouchableOpacity , StyleSheet, Dimensions, RefreshControl} from 'react-native'
 import { getBooks } from '../../redux/ducks/booksDuck'
@@ -6,7 +7,6 @@ import { getBooks } from '../../redux/ducks/booksDuck'
 import Logo from '../../assets/new_logo.png'
 import Lineas from '../../assets/lineas.png'
 import Locked from '../../assets/candado.png'
-import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { getUrlImage } from '../../utils/functions'
@@ -21,6 +21,7 @@ const BookList = ({navigation, ...props}) => {
     const user_id = useSelector(state => state?.authDuck?.user?.id)
     const loading = useSelector(state => state?.booksDuck?.loading)
     const books = useSelector(state => state?.booksDuck?.books)
+    const modules = useSelector(state => state?.modulesDuck.progress)
 
     const [refreshing, setRefreshing] = useState(false)
 
@@ -37,7 +38,12 @@ const BookList = ({navigation, ...props}) => {
             dispatch(getBooks(user_id))  
         }
     }, [])
+
     
+
+    const getPermissionsBooks = (book,moduleIndex) => {
+        return !modules[moduleIndex] || modules[moduleIndex].percentToNext < 100;
+    }    
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
@@ -58,7 +64,7 @@ const BookList = ({navigation, ...props}) => {
                 <VStack space={5} >
                 
                 {
-                    books?.map(book => (
+                    books?.map((book,index) => (
                         <>
                         <VStack width={'100%'} justifyContent={'center'}  key={book.id}>
                             <Image source={Lineas} style={{
@@ -70,12 +76,12 @@ const BookList = ({navigation, ...props}) => {
                                     }}
                                     alt="DiseñoLineas"
                             />
-                            <TouchableOpacity onPress={() => navigation.navigate("ReadBook",{book: book}) } >
+                            <TouchableOpacity onPress={() => navigation.navigate("ReadBook",{book: book, isLocked:getPermissionsBooks(book,index)}) } >
                                 <HStack justifyContent={'center'}>
                                     <VStack  justifyContent={'center'}>
                                         <Skeleton isLoaded={!loading} h={230} w={230} borderRadius={16} >
                                             {
-                                                book?.locked && (<Image backgroundColor={Colors.white} borderRadius={50} source={Locked} position={'absolute'} width={12} height={12} zIndex={2} right={-10} top={-10} />)
+                                                getPermissionsBooks(book,index) && (<Image backgroundColor={Colors.white} borderRadius={50} source={Locked} position={'absolute'} width={12} height={12} zIndex={2} right={-10} top={-10} />)
                                             }
                                             <Image width={230} height={230} borderRadius={16} source={{ uri: getUrlImage(book?.front_page?.url) }} />
                                         </Skeleton>

@@ -8,6 +8,7 @@ import groupDuck from "./ducks/groupDuck";
 import goalsDuck from './ducks/goalsDuck'
 import projectsDuck from './ducks/projectsDuck'
 import booksDuck from './ducks/booksDuck'
+import modulesDuck from "./ducks/modulesDuck";
 
 
 const rootReducer = combineReducers({
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
     groupDuck: groupDuck,
     goalsDuck: goalsDuck,
     projectsDuck: projectsDuck,
-    booksDuck: booksDuck
+    booksDuck: booksDuck,
+    modulesDuck: modulesDuck
 })
 
 export const store = createStore(

@@ -4,7 +4,7 @@ import { Colors } from '../utils/Colors'
 import _ from 'lodash';
 import {getShadowCircleStyle} from "../utils/functions";
 import { HStack, Icon, Image, Skeleton, VStack } from 'native-base';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {MaterialIcons} from "@expo/vector-icons";
 import Lineas from '../assets/lineas.png'
 import ApiApp from '../utils/ApiApp';
@@ -27,9 +27,10 @@ import FooterLines from '../components/FooterLines'
 import ModalDayPhrase from './Modals/ModalDayPhrase'
 import moment from 'moment';
 import {useIsFocused} from "@react-navigation/native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { saveInfoModules, savePhraseDay } from '../redux/ducks/modulesDuck';
 
-
-const NewHome = ({navigation}) => {
+const NewHome = ({navigation,}) => {
     moment.locale();
     const [loading, setLoading] = useState(false);
     const [image, setImage] = useState(null);
@@ -43,20 +44,48 @@ const NewHome = ({navigation}) => {
 
     const isFocused = useIsFocused();
     const authDuck = useSelector(state => state?.authDuck)
+    const modules = useSelector(state => state?.modulesDuck)
+    const dispatch = useDispatch();
 
     const screenWidth = Dimensions.get("window").width;
+
+    useEffect(() => {
+        if(authDuck){
+            getInfoModules()
+        }
+    },[authDuck])
 
     useEffect(() => {
         if (isFocused) {
             boot()
         }
     }, [isFocused])
+
+    const getInfoModules = async() => {
+        try {
+            //Revisa lo almacenado y si pasa un día vulve a hacer las llamadas y guarda info
+            const currentDate = moment();
+            const lastEjecution = await AsyncStorage.getItem(`ultimaEjecucionEndpoint${authDuck?.user?.id.toString()}`);
+
+            if (!lastEjecution || currentDate.diff(moment(lastEjecution), 'days') >= 1){
+                //ejecuta los endpoints
+                await getValidateSub()
+                await getModules();
+                await AsyncStorage.setItem(`ultimaEjecucionEndpoint${authDuck?.user?.id.toString()}`, currentDate.toISOString());
+            }else{
+                console.log('El endpoint ya se ejecutó hoy. No se ejecutará de nuevo.');
+            }
+        } catch (e) {
+            console.error('Error al ejecutar el endpoint:', e);
+        }
+    }
     
     const closeModalPhrase = () => {
         setModalPhraseVisible(false)
         if(isFirstDay){
             setLoading(true)
             setTimeout(() => {
+                setFirstDay(false)
                 navigation.navigate('RouletteStep1Screen')
             },500)
 
@@ -69,8 +98,10 @@ const NewHome = ({navigation}) => {
             /* await getGroupsRequests();
             await getGroups() */
             await getHome()
-
+            await getModulesAndProgress()
+            
             setTimeout(() => {
+                addStreakDay();
                 setLoading(false)
             }, 200)
         } catch (e) {
@@ -86,6 +117,33 @@ const NewHome = ({navigation}) => {
 
         }
 
+    }
+
+    const getModulesAndProgress = async() => {
+        try {
+            const modules = await AsyncStorage.getItem(`modules${authDuck?.user?.id.toString()}`)
+            if(modules) dispatch(saveInfoModules(JSON.parse(modules)))
+
+        } catch (e) {
+            console.log('error',e)
+        }
+    }
+
+    const getValidateSub = async() => {
+        try {
+            const suscription = await ApiApp.getValidateSuscription(authDuck.user.id);
+        } catch (e) {
+            console.log('error al obtener modulos',e)
+        }
+    }
+
+    const getModules = async() => {
+        try {
+            const modules = await ApiApp.getModulesSuscription(authDuck.user.id)
+            await AsyncStorage.setItem(`modules${authDuck?.user?.id.toString()}`,JSON.stringify(modules.data))
+        } catch (error) {
+            console.log('error al obtener modulos',e)
+        }
     }
 
     const getHome = async () => {
@@ -139,6 +197,7 @@ const NewHome = ({navigation}) => {
             const response = await ApiApp.getUserDayPhrase(authDuck.user.id)
             if(response.status === 200){
                 setPhraseDay(response?.data?.data?.phrase?.phrase)
+                dispatch(savePhraseDay(response?.data?.data?.phrase?.phrase))
                 if(response?.data?.data?.exist){ 
                     setFirstDay(false)
                     return true
@@ -168,6 +227,23 @@ const NewHome = ({navigation}) => {
             } */
             /* if(emotionsStatus !== 0){ */                
         }
+    }
+
+    const addStreakDay = async() => {
+        try {
+            let dataSend = {
+                date: moment().format('YYYY-MM-DD'),
+                userId: authDuck?.user?.id,
+            }
+            if(authDuck?.userSiteConfig?.id) dataSend.siteId = authDuck?.userSiteConfig?.id
+            const requestDay = await ApiApp.postStreakDay(dataSend);
+        } catch (e) {
+            console.log('error al agregar día',e )
+        }
+    }
+
+    const getPermissionsModules = (permission) => {
+        return modules.modules.includes(permission);
     }
 
   return (
@@ -223,19 +299,19 @@ const NewHome = ({navigation}) => {
                     </HStack>
                     <View style={{ width:'90%',  alignSelf:'center', justifyContent:'space-evenly', flexDirection:'row' }}>
                         <View  backgroundColor={{ position:'relative', padding: 20, justifyContent:'center', backgroundColor:Colors.black }}>
-                            <CircularProgress radius={45} activeStrokeWidth={10} value={100}  progressValueColor={'#F3BC38'} inActiveStrokeColor='#ECE8E8' />
+                            <CircularProgress radius={45} activeStrokeWidth={10} value={modules?.progress[0]?.percentToNext}  progressValueColor={'#F3BC38'} inActiveStrokeColor='#ECE8E8' />
                             <View style={{ textAlign:'center', backgroundColor:Colors.yellow, position:'absolute', justifyContent:'center', alignSelf:'center', marginTop:10, borderRadius:110, width: 66, height:66, left:12, top:2 }}>
                                 <Image source={EmotionalKargo} width={50} height={6} resizeMode='stretch' style={{ alignSelf:'center' }} />
                             </View>
                         </View>
                         <View  backgroundColor={{ position:'relative', backgroundColor:'red', padding: 20 }}>
-                            <CircularProgress radius={45} activeStrokeWidth={10} value={58}  progressValueColor={'#F3BC38'} inActiveStrokeColor='#ECE8E8' />
+                            <CircularProgress radius={45} activeStrokeWidth={10} value={modules?.progress[1]?.percentToNext}  progressValueColor={'#F3BC38'} inActiveStrokeColor='#ECE8E8' />
                             <View style={{ backgroundColor:"#93973D", position:'absolute', justifyContent:'center', alignSelf:'center', marginTop:10, borderRadius:110, width: 66, height:66, left:12, top:2 }}>
                                 <Image source={LifeMachine} width={50} height={6} resizeMode='stretch' style={{ alignSelf:'center' }} />
                             </View>
                         </View>
                         <View  backgroundColor={{ position:'relative', backgroundColor:'red', padding: 20 }}>
-                            <CircularProgress radius={45} activeStrokeWidth={10} value={0   }  progressValueColor={'#F3BC38'} inActiveStrokeColor='#ECE8E8' />
+                            <CircularProgress radius={45} activeStrokeWidth={10} value={modules?.progress[2]?.percentToNext}  progressValueColor={'#F3BC38'} inActiveStrokeColor='#ECE8E8' />
                             <View style={{ backgroundColor:Colors.red2, position:'absolute', justifyContent:'center', alignSelf:'center', marginTop:10, borderRadius:110, width: 65, height:65, left:13, top:2 }}>
                                 <Image source={SixPack} width={50} height={6} resizeMode='stretch' style={{ alignSelf:'center' }} />    
                             </View>
@@ -248,6 +324,7 @@ const NewHome = ({navigation}) => {
                         </View> */}
                     </View>
                     <HStack style={{ marginTop:30 }} space={5} justifyContent={'center'} >
+                        {getPermissionsModules('EMOTIONS') ? (
                         <TouchableOpacity  onPress={() => { navigation.navigate("StatisticsScreen") }}  >
                             <LinearGradient
                                 // Button Linear Gradient
@@ -261,7 +338,8 @@ const NewHome = ({navigation}) => {
                                     </Text>
                                 </VStack>
                             </LinearGradient>
-                        </TouchableOpacity>
+                        </TouchableOpacity> ): null}
+                        {getPermissionsModules('EMOTIONS') ? (
                         <TouchableOpacity onPress={() => { navigation.navigate('RouletteStep1Screen')}} >
                             <LinearGradient
                                 // Button Linear Gradient
@@ -275,39 +353,42 @@ const NewHome = ({navigation}) => {
                                     </Text>
                                 </VStack>
                             </LinearGradient>
-                        </TouchableOpacity>
+                        </TouchableOpacity> ) : null}
                     </HStack>
                     <HStack style={{ marginTop:30 }} space={5} justifyContent={'center'} >
+                       { getPermissionsModules('SIXPACK') ? (
                         <TouchableOpacity onPress={() => navigation.navigate("ProjectsList")} >
                             <View style={{ position:'relative', justifyContent:'center' }} width={45} height={45}>
                                 <Image source={Yellow} resizeMode='contain' style={{ position:'absolute', zIndex:-1 }} />
                                 <Image source={ListIcon} style={{alignSelf:'center'}} />
                             </View>
-                        </TouchableOpacity>
+                        </TouchableOpacity> ) : null}
+                        {getPermissionsModules('GOALS') ? (
                         <TouchableOpacity onPress={() => navigation.navigate("GoalsScreen")}>
                             <View style={{ position:'relative', justifyContent:'center' }} width={45} height={45}>
                                 <Image source={Yellow} resizeMode='contain' style={{ position:'absolute', zIndex:-1 }} />
                                 <Image source={ObjetivosIcon} style={{alignSelf:'center'}} />
                             </View>
-                        </TouchableOpacity>
+                        </TouchableOpacity>) : null}
                         <TouchableOpacity onPress={() => setModalPhraseVisible(true)}>
-                            <View style={{ position:'relative', justifyContent:'center' }} width={45} height={45}>
+                            <View style={{ position:'relative', justifyContent:'center', alignItems:'center' }} width={45} height={45}>
                                 <Image source={Yellow} resizeMode='contain' style={{ position:'absolute', zIndex:-1 }} />
-                                <Image source={DailyPhraseIcon} style={{alignSelf:'center'}} />
+                                <MaterialIcons name="textsms" size={24} color="white" />
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        {getPermissionsModules('BOOKS') ? (
+                        <TouchableOpacity onPress={() => navigation.navigate('BookList')}>
                             <View style={{ position:'relative', justifyContent:'center' }} width={45} height={45}>
                                 <Image source={Yellow} resizeMode='contain' style={{ position:'absolute', zIndex:-1 }} />
                                 <Image source={BookmarkIcon} style={{alignSelf:'center'}} />
                             </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
+                        </TouchableOpacity>) : null}
+                        {/*<TouchableOpacity>
                             <View style={{ position:'relative', justifyContent:'center' }} width={45} height={45}>
                                 <Image source={Yellow} resizeMode='contain' style={{ position:'absolute', zIndex:-1 }} />
                                 <Image source={ObjetivosIconHome} style={{alignSelf:'center'}} />
                             </View>
-                        </TouchableOpacity>
+                    </TouchableOpacity>*/}
                     </HStack>
                 </VStack>
                 {/* {
@@ -349,7 +430,7 @@ const NewHome = ({navigation}) => {
   )
 }
 
-export default NewHome
+export default NewHome;
 
 const styles = StyleSheet.create({
     phtoContainer:{
