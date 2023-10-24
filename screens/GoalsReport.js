@@ -197,11 +197,11 @@ const styles = StyleSheet.create({
         display: 'flex'
     },
     optionSelected:{
-        borderColor: Colors.yellow,
+        borderColor: Colors.yellowV2,
         borderWidth: 1,
         height:40,
         display: 'flex',
-        backgroundColor: Colors.yellow,
+        backgroundColor: Colors.yellowV2,
         color: Colors.white
     },
 

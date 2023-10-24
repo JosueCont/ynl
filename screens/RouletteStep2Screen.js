@@ -71,7 +71,7 @@ const RouletteStep2Screen = ({route, navigation}) => {
                     placeholderTextColor={'#' + route.params.parentItem.attributes.color} selectedValue={service}
                     minWidth="250"
                     borderRadius={20}
-                    backgroundColor={Colors.white} placeholder={t('select')} _selectedItem={{
+                    backgroundColor={Colors.white} placeholder={t('i_feel')} _selectedItem={{
                     backgroundColor: 'red.50',
                     endIcon: <CheckIcon size="5"/>,
                     bgColor: 'red.50'
