@@ -1,5 +1,19 @@
 import React, {useEffect, useState} from "react";
-import {Button, Center, FormControl, HStack, Image, Input, Link, NativeBaseProvider, ScrollView, Text, View, VStack} from "native-base";
+import {
+    Button,
+    Center,
+    FormControl,
+    HStack,
+    Image,
+    Input,
+    Link,
+    NativeBaseProvider,
+    ScrollView,
+    Spinner,
+    Text,
+    View,
+    VStack
+} from "native-base";
 import {useNavigation} from '@react-navigation/native';
 import {useFormik} from 'formik';
 import * as Yup from 'yup'
@@ -186,8 +200,8 @@ export default (props) => {
                                    h={resolvePlatform(250, 200)} alt="img"/>
                         </View>
                         <View flex={1}>
-                            <Text textAlign={'center'} color={Colors.red} fontSize={42}>{t('login_hello')}</Text>
-                            <Text textAlign={'center'} color={Colors.red} fontSize={24}>{t('login_how_are_you')}</Text>
+                            <Text textAlign={'center'} fontSize={42}>{t('login_hello')}</Text>
+                            <Text textAlign={'center'} color={Colors.yellowV2} fontSize={24}>{t('login_how_are_you')}</Text>
                             <VStack space={3} mt="5">
                                 <FormControl isInvalid={errors.email} mb={2}>
                                     <View flex={1} style={getShadowCircleStyle(5, 5)}>
@@ -201,7 +215,6 @@ export default (props) => {
                                             returnKeyType={'done'}
                                             bgColor={'white'}
                                             borderRadius={20}
-                                            color={Colors.red}
                                         />
                                     </View>
                                     <FormControl.ErrorMessage>
@@ -219,7 +232,6 @@ export default (props) => {
                                             returnKeyType={'done'}
                                             bgColor={'white'}
                                             borderRadius={20}
-                                            color={Colors.red}
                                         />
                                     </View>
                                     <FormControl.ErrorMessage>

@@ -4,6 +4,8 @@ import logo from '../../../assets/YNL.gif'
 import {useFormik} from 'formik';
 import {t} from 'i18n-js'
 import * as Yup from 'yup'
+import {TouchableOpacity} from "react-native";
+import {Colors} from "../../../utils/Colors";
 
 
 export default ({onRegister, loading}) => {
@@ -48,9 +50,16 @@ export default ({onRegister, loading}) => {
                         </FormControl.ErrorMessage>
                     </FormControl>
 
-                    <Button isLoading={loading} mt="2" onPress={handleSubmit} colorScheme="orange">
-                        {t('continue')}
-                    </Button>
+                    <TouchableOpacity
+                        onPress={handleSubmit} style={{ width:'100%', height:40, backgroundColor: 'black', borderRadius:10, marginBottom:15}}>
+                        <Text color={Colors.white} isLoading={loading} fontSize={'md'} textAlign={'center'} marginY={'auto'} >
+                            {t('continue')}
+                        </Text>
+                    </TouchableOpacity>
+
+                    {/*<Button isLoading={loading} mt="2" onPress={handleSubmit} colorScheme="orange">*/}
+                    {/*    {t('continue')}*/}
+                    {/*</Button>*/}
                 </View>
             </View>
         </ScrollView>
