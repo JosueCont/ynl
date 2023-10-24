@@ -61,6 +61,7 @@ const ModalDeleteAccount = ({visible, setVisible, userId, site, logOutAction}) =
                     <View px={30} pt={10} mb={2}>
                         <Text textAlign={'center'} fontSize={20} style={{fontWeight: 'bold'}}>{t('atention')}</Text>
                         <Text fontSize={18} style={styles.modalText}>{t('delete_account')}</Text>
+                        <Text fontSize={18} style={styles.modalText}>{t('delete_account2')}</Text>
                         <Button size={'xs'} colorScheme={'red'} onPress={() => deleteAccount()}><Text size={'md'}
                                                                                                            color={'white'}>{t('delete')}</Text></Button>
                     </View>
