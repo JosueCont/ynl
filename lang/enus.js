@@ -139,7 +139,8 @@ export const enus = {
     'error_password_minimun':'Password must be at least 8 characters',
     'error_try_later':'Error ocurred, plase try again later',
     'no_data':'No data',
-    'delete_account':`Are you sure you want to delete this data?, This action is irreversible, and you won't be able to recover your data once deleted `,
+    'delete_account':`Are you sure you want to delete this data? `,
+    'delete_account2':`This action is irreversible, and you won't be able to recover your data once deleted`,
     'atention':'Warning',
 
     //Emotions

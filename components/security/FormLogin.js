@@ -227,21 +227,33 @@ export default (props) => {
                                     </FormControl.ErrorMessage>
 
                                 </FormControl>
-                                <Button mt={2} mb={2} isLoading={props.loading} isLoadingText={t('starting')}
+                                <Button mt={2} mb={1} isLoading={props.loading} isLoadingText={t('starting')}
                                         onPress={handleSubmit}
                                         colorScheme='orange'>
                                     {t('login_session')}
                                 </Button>
 
 
+                                <HStack justifyContent={'center'}>
+                                    <Link onPress={() => navigation.navigate('PasswordRecoveryScreen')} mb={4} _text={{
+                                        fontSize: "xs",
+                                        fontWeight: "500",
+                                        color: Colors.red
+                                    }} alignSelf="flex-end" mt="1">
+                                        {t('login_forgot_password')}
+                                    </Link>
 
-                                <Link onPress={() => navigation.navigate('PasswordRecoveryScreen')} mb={4} _text={{
-                                    fontSize: "xs",
-                                    fontWeight: "500",
-                                    color: Colors.red
-                                }} alignSelf="flex-end" mt="1">
-                                    {t('login_forgot_password')}
-                                </Link>
+                                </HStack>
+                                    <HStack justifyContent="center">
+    
+    
+    
+                                        <Button size="sm" colorScheme={'orange'}
+                                                onPress={() => navigation.navigate('Register')}
+                                                variant="link">
+                                            {t('login_register')}
+                                        </Button>
+                                    </HStack>
                                 <View flexDir={'row'} mb={2}>
                                     <TouchableOpacity onPress={() => {
                                         setToken('');
@@ -293,16 +305,6 @@ export default (props) => {
                                 </View>
 
 
-                                <HStack justifyContent="center">
-
-
-
-                                    <Button size="sm" colorScheme={'orange'}
-                                            onPress={() => navigation.navigate('Register')}
-                                            variant="link">
-                                        {t('login_register')}
-                                    </Button>
-                                </HStack>
                             </VStack>
                         </View>
                     </ScrollView>
