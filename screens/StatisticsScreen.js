@@ -59,9 +59,10 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
     const getCountFeelings = async (userId, site, option = 2) => {
         try {
             setLoading(true)
+            console.log('dataSend',userId, site, option)
             const res = await ApiApp.getUserProgress(userId, site, option);
-             console.log('semanal',res.data)
-             let countEmotions =  res.data.data.feelings_rev.reduce((accumulator, feeling) => accumulator + feeling.count, 0);
+             console.log('semanal',res?.data)
+             let countEmotions =  res.data?.data?.feelings_rev.reduce((accumulator, feeling) => accumulator + feeling.count, 0);
             console.log('countEmotions',countEmotions)
             
             if(countEmotions >= 1){
@@ -87,7 +88,7 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
 
         } catch (e) {
             setCountFeeling(null)
-
+            setNotData(true)
             console.log('StatisticsScreen getCountFeelings error =>',e.toString());
         }finally {
             setLoading(false)
@@ -186,7 +187,14 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
 
                 </View>
 
-                {noData ? (
+                {noData ? loading ? (
+                    <View justifyContent={'center'} alignItems={'center'} flex={1}>
+                        <View style={getShadowCircleStyle(10, 10)}>
+                            <Skeleton  size="50" rounded="full"  />
+                        </View>
+                        <Skeleton height={20} p={8}></Skeleton>
+                    </View>
+                ):(
                     <View justifyContent={'center'} alignItems={'center'} flex={1}>
                         <FontAwesome5 name="sad-tear" size={40} color="black" />
                         <Text fontSize={getFontSize(20)}>No se encontro información</Text>

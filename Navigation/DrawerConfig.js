@@ -57,7 +57,29 @@ const DrawerConfig = () => {
               return <View />;
             } else if(route.name.includes("HomeScreen")  && Platform.OS === "ios"){
               return <View />;
-            } else if(route.name.includes('ProfileScreen')){
+            }else if(route.name.includes('RouletteStep1Screen')){
+              console.log('routeparams',route.params)
+              return(
+                <TouchableOpacity
+                  onPress={() => route?.params?.from === 'intro' ? navigation.navigate('HomeScreen') : navigation.goBack()}
+                  style={{
+                    width: 50,
+                    height: "100%",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: 5,
+                    marginLeft: 10,
+                  }}
+                >
+                  <Icon
+                    as={MaterialIcons}
+                    name={"arrow-back-ios"}
+                    color={Colors.yellowV2}
+                    size={"xl"}
+                  />
+                </TouchableOpacity>
+              )
+            }else if(route.name.includes('ProfileScreen')){
               return(
                 <View flexDirection={'row'}>
                   <TouchableOpacity

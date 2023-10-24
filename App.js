@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import {LogBox, StyleSheet, Text as TextRN, TextInput} from 'react-native';
 import {NativeBaseProvider, Text} from 'native-base';
 import {theme} from "./theme";
@@ -11,6 +11,7 @@ import {langMessages} from './lang/messages';
 import NavigationContainerConfig from "./Navigation/NavigationContainerConfig";
 import moment from 'moment';
 import { useFonts } from 'expo-font';
+import ApiApp from './utils/ApiApp';
 
 
 const Stack = createStackNavigator();

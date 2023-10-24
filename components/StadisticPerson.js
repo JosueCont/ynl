@@ -18,13 +18,13 @@ const StadisticPerson = ({userName,dateCreatedUser,image,currentStreakDay,myGoal
     return(
         <View>
             <View flexDirection={'row'} style={{marginTop:60, marginLeft:60, marginRight: 40, paddingVertical:10}}>
-                <View style={{width:235}}>
+                <View style={{width:width/1.8, }}>
                     {loading ? (
-                        <Skeleton lines={1} width={220} height={50}   />
+                        <Skeleton lines={1} width={width/1.9} height={50}   />
                     ):(
                         <>
-                            <Text fontSize={getFontSize(26)} style={{fontWeight:'700'}} textTransform={'capitalize'}>{userName}</Text>
-                            <Text fontSize={getFontSize(13)}>{t('profile_join_on')} {dateCreatedUser}</Text>
+                            <Text fontSize={getFontSize(25)} style={{fontWeight:'700'}} textTransform={'capitalize'}>{userName}</Text>
+                            <Text fontSize={getFontSize(12)}>{t('profile_join_on')} {dateCreatedUser}</Text>
 
                         </>
 

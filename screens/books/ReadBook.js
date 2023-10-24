@@ -55,6 +55,7 @@ const ReadBook = ({route, navigation, ...props}) => {
     const [searchResults, setSearchResults] = useState(null)
     const [searched, setSearched] = useState(false)
     const [searching, setSearching] = useState(false)
+    const [isLocked, setLocked] = useState(false)
 
 
 
@@ -65,6 +66,7 @@ const ReadBook = ({route, navigation, ...props}) => {
 
     const getBook = async (book_code) => {
         let bookPages = await dispatch(getPagesBook(book_code))
+        console.log('libro',bookPages)
         if(bookPages.length > 0){
             let imgs = []
             for (let i = 0; i < bookPages.length; i++) { 
@@ -142,8 +144,10 @@ const ReadBook = ({route, navigation, ...props}) => {
 
     useEffect(() => {
         if(isFocused){
+            console.log('isLocked',route.params)
             if (route?.params?.book) {
                 setCurrentBook(route?.params?.book)
+                setLocked(route.params.isLocked)
             }/* else if(route?.params?.book_code){
                 getBook(route?.params?.book_code)
                 getMarkersBook()
@@ -217,9 +221,9 @@ const ReadBook = ({route, navigation, ...props}) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: Colors.white}}>
         <View flex={1} mt={5} style={{ flexDirection: 'column' }} minHeight={screenHeight}>
-            <HStack mx={5} justifyContent={currentBook?.locked || searchActive ? 'flex-end' : 'space-between'} >
+            <HStack mx={5} justifyContent={isLocked || searchActive ? 'flex-end' : 'space-between'} >
                 {
-                    !currentBook?.locked && !searchActive &&
+                    !isLocked && !searchActive &&
                         <TouchableOpacity onPress={() => setCurrentPage(currentBook.last_page_read)}>
                             <Text fontSize={18} paddingBottom={0}>
                                 Continuar donde lo deje{"  "}
@@ -236,14 +240,14 @@ const ReadBook = ({route, navigation, ...props}) => {
                                 
                             </Spacer>
                             :
-                            <IconButton onPress={() => dispatch({type: "SEARCH_ACTIVE", payload: true })} opacity={currentBook?.locked ? 0.3 : 1} colorScheme="black" key={'ghost'} variant={'ghost'} _icon={{
+                            <IconButton onPress={() => dispatch({type: "SEARCH_ACTIVE", payload: true })} opacity={isLocked ? 0.3 : 1} colorScheme="black" key={'ghost'} variant={'ghost'} _icon={{
                                 as: AntDesign,
                                 name: "search1"
                               }} />
                         }
                         
                         <Menu shadow={2} right={8} trigger={triggerProps => {
-                            return <IconButton disabled={currentBook?.locked} /* onPress={() => setSearchActive(true)} */ opacity={currentBook?.locked ? 0.3 : 1}  colorScheme="black" key={'ghost'} variant={'ghost'} _icon={{
+                            return <IconButton disabled={isLocked} /* onPress={() => setSearchActive(true)} */ opacity={isLocked ? 0.3 : 1}  colorScheme="black" key={'ghost'} variant={'ghost'} _icon={{
                                         as: Ionicons,
                                         name: "bookmark-sharp"
                                     }} 
@@ -272,7 +276,7 @@ const ReadBook = ({route, navigation, ...props}) => {
             </HStack>
             <Skeleton height={500} isLoaded={!loading} marginTop={10} >
             {
-                currentBook?.locked === true ?
+                isLocked === true ?
                 <View alignSelf={'center'} width={'90%'} h={Dimensions.get("window").height-(Dimensions.get("window").height*.25)}> 
                     <Image width={'100%'} resizeMode='contain' flex={1} source={{ uri: getUrlImage(currentBook?.back_cover?.url) }} />
                 </View> 

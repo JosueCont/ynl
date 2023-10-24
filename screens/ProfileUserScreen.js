@@ -13,7 +13,7 @@ import { useRoute } from "@react-navigation/native";
 import { getShadowCircleStyle } from "../utils/functions";
 import StadisticPerson from "../components/StadisticPerson";
 import {t} from 'i18n-js';
-
+import 'moment/locale/es';
 
 const {height, width} = Dimensions.get('window');
 
@@ -61,6 +61,8 @@ const ProfileUserScreen = ({authDuck, navigation}) => {
     const getData = async() => {
         try {
             setLoading(true)
+            moment.locale('es');
+
             await getPrifileData()
             await getDailyGoal()
             await getDays()
@@ -142,9 +144,16 @@ const ProfileUserScreen = ({authDuck, navigation}) => {
         try {
             const response = await ApiApp.getProfile(authDuck.user.id)
             if(response?.data?.username){
-                let firstName = response.data.firstName.split(' ');
-                let lastName = response.data.lastName.split(' ');
-                let dateCreated = moment(response.data.createdAt).format("DD [de] MMMM [del] YYYY");
+                let firstName;
+                let lastName
+                if(response?.data?.firstName != null && response.data.lastName != null){
+                    firstName = response.data.firstName.split(' ');
+                    lastName = response.data.lastName.split(' ');
+                }else{
+                    firstName = ['Actualiza']
+                    lastName = ['tus datos']
+                }
+                let dateCreated = moment(response.data.createdAt,).format("DD [de] MMMM [del] YYYY");
                 setImage(response?.data?.avatar?.url)
                 setUserNane(`${firstName[0]} ${lastName[0]}`)
                 setDateUser(dateCreated)
@@ -189,7 +198,7 @@ const ProfileUserScreen = ({authDuck, navigation}) => {
                         ): null}
                         
                     </View>
-                    <Text fontSize={getFontSize(11)} style={{fontWeight:'900', textTransform:'uppercase'}}>{item.name}</Text>
+                    <Text fontSize={getFontSize(11)} style={{fontWeight:'900', textTransform:'uppercase', textAlign:'center'}}>{item.name}</Text>
                 </View>
 
             )
@@ -279,11 +288,11 @@ const ProfileUserScreen = ({authDuck, navigation}) => {
 
                     {loading ? (
                         <View justifyContent={'center'} alignItems={'center'}>
-                            <Skeleton lines={1} width={width/1.2} height={91} mt={4}/>
+                            <Skeleton lines={1} width={width/1.18} height={91} mt={4}/>
 
                         </View>
                     ) : (
-                        <View style={{marginHorizontal:35, backgroundColor:Colors.secondary, width:width/1.2, height:91, borderRadius:16,alignItems:'center', paddingTop:11,marginTop:21}}>
+                        <View style={{marginHorizontal:35, backgroundColor:Colors.secondary, width:width/1.18, height:91, borderRadius:16,alignItems:'center', paddingTop:11,marginTop:21}}>
                             <Text fontSize={getFontSize(15)} style={{fontWeight:'900', textTransform:'uppercase'}}>{t('profile_days_streak')}</Text>
                             <View flexDirection={'row'}>
                                 {getDaysInARow()}
