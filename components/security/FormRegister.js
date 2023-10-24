@@ -4,8 +4,9 @@ import logo from '../../assets/YNL.gif'
 import {useFormik} from 'formik';
 import * as Yup from 'yup'
 import {t} from "i18n-js";
-import { Linking } from 'react-native';
+import {Linking, TouchableOpacity} from 'react-native';
 import {getShadowCircleStyle} from "../../utils/functions";
+import {Colors} from "../../utils/Colors";
 
 
 export default ({onRegister, loading}) => {
@@ -85,11 +86,18 @@ export default ({onRegister, loading}) => {
                             aviso de privacidad
                         </Text>
                     </View>
-                    
-                    <Button isLoading={loading} mt="2" disabled={!privacidad}
-                            onPress={formik.handleSubmit} colorScheme={privacidad?'orange':'gray'}>
-                        {t('continue')}
-                    </Button>
+
+                    <TouchableOpacity
+                        onPress={formik.handleSubmit} disabled={!privacidad} style={{ width:'100%', height:40, backgroundColor: 'black', borderRadius:10, marginBottom:15, opacity:privacidad?1:0.5}}>
+                        <Text color={Colors.white} isLoading={loading} fontSize={'md'} textAlign={'center'} marginY={'auto'} >
+                            {t('continue')}
+                        </Text>
+                    </TouchableOpacity>
+
+                    {/*<Button isLoading={loading} mt="2" disabled={!privacidad}*/}
+                    {/*        onPress={formik.handleSubmit} colorScheme={privacidad?'orange':'gray'}>*/}
+                    {/*    {t('continue')}*/}
+                    {/*</Button>*/}
 
                 </View>
             </View>

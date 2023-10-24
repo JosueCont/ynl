@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {Box, Button, HStack, Icon, Image, Skeleton, Slider, Text, useToast, View, VStack} from "native-base";
-import {ScrollView} from "react-native";
+import {Box, Button, HStack, Icon, Image, Skeleton, Slider, Text, useToast, View, VStack, Center} from "native-base";
+import {ScrollView, TouchableOpacity} from "react-native";
 import {connect} from "react-redux";
 import bodyicon from '../assets/yourfeel/bodyicon.png'
 import { MaterialIcons } from "@expo/vector-icons";
@@ -100,7 +100,7 @@ const YourFeelScreen = ({authDuck, navigation}) => {
 
                     <VStack mt={5} w={'100%'}>
                         <VStack mb={4} alignItems={'center'}>
-                            <Text bold size={'md'} color={Colors.red} textAlign={'center'} mb={6}>{t('aspects_1_to_10')} {'\n'} {t('aspects_how_are_in')}</Text>
+                            <Text bold size={'md'} color={Colors.black} textAlign={'center'} mb={6}>{t('aspects_1_to_10')} {'\n'} {t('aspects_how_are_in')}</Text>
                         </VStack>
                         {
                             loading ?
@@ -131,9 +131,9 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                                             colorScheme="orange"
                                             onChange={(v) => v === 0? setPhysicalNumber(1):setPhysicalNumber(v)} size="lg">
                                         <Slider.Track bg={'red.100'}>
-                                            <Slider.FilledTrack bg={Colors.red}/>
+                                            <Slider.FilledTrack bg={Colors.yellowV2}/>
                                         </Slider.Track>
-                                        <Slider.Thumb bg={Colors.red}/>
+                                        <Slider.Thumb bg={Colors.black}/>
                                     </Slider>
                                     <View flexDirection={'row'}>
                                         <View justifyContent={'center'}>
@@ -174,9 +174,9 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                                     <Slider step={1} minValue={0} maxValue={10} value={mentalNumber} colorScheme="orange"
                                             onChange={(v) => v === 0? setMentalNumber(1):setMentalNumber(v)} size="lg">
                                         <Slider.Track bg={'red.100'}>
-                                            <Slider.FilledTrack bg={Colors.red}/>
+                                            <Slider.FilledTrack bg={Colors.yellowV2}/>
                                         </Slider.Track>
-                                        <Slider.Thumb bg={Colors.red}/>
+                                        <Slider.Thumb bg={Colors.black}/>
                                     </Slider>
 
                                     <View flexDirection={'row'}>
@@ -220,9 +220,9 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                                             colorScheme="orange"
                                             onChange={(v) => v === 0? setFinantialNumber(1):setFinantialNumber(v)} size="lg">
                                         <Slider.Track bg={'red.100'}>
-                                            <Slider.FilledTrack bg={Colors.red}/>
+                                            <Slider.FilledTrack bg={Colors.yellowV2}/>
                                         </Slider.Track>
-                                        <Slider.Thumb bg={Colors.red}/>
+                                        <Slider.Thumb bg={Colors.black}/>
                                     </Slider>
                                     <View flexDirection={'row'}>
                                         <View justifyContent={'center'}>
@@ -265,9 +265,9 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                                             colorScheme="orange"
                                             onChange={(v) => v === 0? setRelationNumber(1):setRelationNumber(v)} size="lg">
                                         <Slider.Track bg={'red.100'}>
-                                            <Slider.FilledTrack bg={Colors.red}/>
+                                            <Slider.FilledTrack bg={Colors.yellowV2}/>
                                         </Slider.Track>
-                                        <Slider.Thumb bg={Colors.red}/>
+                                        <Slider.Thumb bg={Colors.black}/>
                                     </Slider>
                                     <View flexDirection={'row'}>
                                         <View justifyContent={'center'}>
@@ -288,11 +288,21 @@ const YourFeelScreen = ({authDuck, navigation}) => {
                                 <VStack px={9} pb={3}>
                                     <Skeleton h={10}></Skeleton>
                                 </VStack> :
-                                <Button m={4} mt={5} size="lg" isLoading={loading} isLoadingText={'Guardando'}
-                                        colorScheme={'orange'}
-                                        onPress={() => saveYourFeel()}>
-                                    {t('save')}
-                                </Button>
+                                <Center>
+                                    <TouchableOpacity
+                                        onPress={() => saveYourFeel()} style={{ width:'80%', height:40, backgroundColor: 'black', borderRadius:10, marginBottom:15}}>
+                                        <Text color={Colors.white} isLoading={loading} isLoadingText={'Guardando'} fontSize={'md'} textAlign={'center'} marginY={'auto'} >
+                                            {t('continue')}
+                                        </Text>
+                                    </TouchableOpacity>
+                                </Center>
+
+
+                                // <Button m={4} mt={5} size="lg" isLoading={loading} isLoadingText={'Guardando'}
+                                //         colorScheme={'orange'}
+                                //         onPress={() => saveYourFeel()}>
+                                //     {t('save')}
+                                // </Button>
                         }
 
                     </VStack>
