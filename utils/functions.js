@@ -332,7 +332,7 @@ export const SharePdfProject = async (data) => {
 
                             </td>
                             <td colspan="2">
-                                Encuéntranos en las tiendas como YNL:”
+                                Encuéntranos en las tiendas como YNL:
                             </td>
                             <td>
                                 <img src="${appStoreUrl }" width="160px" height="50px" />

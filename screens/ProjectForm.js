@@ -1,4 +1,4 @@
-import {ScrollView , Text, View, HStack, Image, VStack, Progress, Center, Input, Spacer, TextArea, Skeleton } from 'native-base'
+import {ScrollView , Text, View, HStack, Image, VStack, Progress, Center, Input, Spacer, TextArea, Skeleton, KeyboardAvoidingView } from 'native-base'
 import { SafeAreaView, TouchableOpacity , StyleSheet, Dimensions} from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { getProjectId, updProject } from '../redux/ducks/projectsDuck'
@@ -6,7 +6,7 @@ import { getProgressProject } from '../utils/functions'
 import * as Print from 'expo-print';
 import { shareAsync } from 'expo-sharing';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import {Keyboard, Platform, TouchableWithoutFeedback} from "react-native";
 import FooterLines from '../components/FooterLines'
 import ProjectItem from '../components/projects/ProjectItem'
 import { SharePdfProject, printProject } from '../utils/functions'
@@ -168,9 +168,9 @@ const ProjectForm = ({route, ...props}) => {
 
   const renderContent = (section, _, isActive) => {
     return (
-      <View style={{ borderColor: Colors.orange, borderWidth: 2, borderStyle:'solid', borderRadius:7 }} >
-            <TextArea backgroundColor={'transparent'}  onChangeText={(text) => changeTextForm(section, text) }  value={ form ? form[section?.name] : null} />
-      </View>
+            <View style={{ borderColor: Colors.orange, borderWidth: 2, borderStyle:'solid', borderRadius:7 }} >
+                    <TextArea backgroundColor={'transparent'}  onChangeText={(text) => changeTextForm(section, text) }  value={ form ? form[section?.name] : null} />
+            </View>
     );
   };
 
@@ -228,6 +228,7 @@ const ProjectForm = ({route, ...props}) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <ScrollView showsVerticalScrollIndicator={false} position={'relative'}>
+      
         <View paddingBottom={130} flex={1} mx={4} style={{ flexDirection: 'column' }} minHeight={screenHeight}>
             <>
                 <HStack justifyContent={'center'} p={1} marginTop={20}>
@@ -268,6 +269,15 @@ const ProjectForm = ({route, ...props}) => {
                                 <Skeleton />
                             </VStack>
                             :
+                            <KeyboardAvoidingView
+                                style={{ flex: 1, width: "100%" }}
+                                behavior={Platform.OS === "ios" ? "position" : ""}
+                                keyboardVerticalOffset={-100}
+                                >
+                                <TouchableWithoutFeedback
+                                onPress={Keyboard.dismiss}
+                                accessible={true}
+                                >
                             <Accordion
                                 activeSections={activeSections}
                                 sections={CONTENT}
@@ -279,6 +289,8 @@ const ProjectForm = ({route, ...props}) => {
                                 duration={300}
                                 onChange={setSections}
                             />
+                            </TouchableWithoutFeedback>
+                            </KeyboardAvoidingView>
                         }
                     </VStack>
                 </HStack>
@@ -308,6 +320,7 @@ const ProjectForm = ({route, ...props}) => {
                 </HStack>
             </>
         </View>
+        
         <FooterLines />
       </ScrollView>
     </SafeAreaView>
