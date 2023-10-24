@@ -447,7 +447,6 @@ class ApiApp {
   }
 
   static delProject = (project_id) => {
-    alert(project_id)
     console.log(`/api/projects/${project_id}`)
     return ApiApp.ApisType(`/api/projects/${project_id}`, "delete");
   }
