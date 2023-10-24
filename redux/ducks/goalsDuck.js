@@ -46,6 +46,7 @@ export let getGoalCategories = (data) => async (dispatch) => {
 
 export let getDateGoal = (date, user_id) => async (dispatch) => {
     dispatch({type: LOADING, payload: true });
+    dispatch({type: DAILYGOALS, payload: [] });
     try {
         let response = await ApiApp.getDateGoal(date, user_id)
         if(response?.status === 200){
@@ -75,6 +76,8 @@ export const getGoalsReport = (data) => async (dispatch) => {
         dispatch({type: REPORT, payload: [] })
         let response = await ApiApp.getGoalsReport(data)
         if(response?.status === 200){
+            console.log('=========================>')
+            console.log(response.data)
             dispatch({type: REPORT, payload: response.data })
         }
         /* dispatch({type: LOADING, payload: false }); */

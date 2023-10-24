@@ -1,4 +1,4 @@
-import {ScrollView , Text, View, HStack, Image, VStack, Progress, Center, Input, Spacer, TextArea, Skeleton, useToast, Box, Icon } from 'native-base'
+import {ScrollView , Text, View, HStack, Image, VStack, Progress, Center, Input, Spacer, TextArea, Skeleton, useToast, Box, Icon, KeyboardAvoidingView } from 'native-base'
 import { SafeAreaView, TouchableOpacity , StyleSheet, Dimensions} from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { getProjectId, updProject, updProjectName } from '../redux/ducks/projectsDuck'
@@ -8,6 +8,7 @@ import { shareAsync } from 'expo-sharing';
 import { LinearGradient } from 'expo-linear-gradient';
 import {Ionicons, AntDesign, MaterialIcons} from "@expo/vector-icons";
 import * as Animatable from 'react-native-animatable';
+import {Keyboard, Platform, TouchableWithoutFeedback} from "react-native";
 import FooterLines from '../components/FooterLines'
 import ProjectItem from '../components/projects/ProjectItem'
 import { SharePdfProject, printProject } from '../utils/functions'
@@ -170,9 +171,9 @@ const ProjectForm = ({route, ...props}) => {
 
   const renderContent = (section, _, isActive) => {
     return (
-      <View style={{ borderColor: Colors.orange, borderWidth: 2, borderStyle:'solid', borderRadius:7 }} >
-            <TextArea backgroundColor={'transparent'}  onChangeText={(text) => changeTextForm(section, text) }  value={ form ? form[section?.name] : null} />
-      </View>
+            <View style={{ borderColor: Colors.orange, borderWidth: 2, borderStyle:'solid', borderRadius:7 }} >
+                    <TextArea backgroundColor={'transparent'}  onChangeText={(text) => changeTextForm(section, text) }  value={ form ? form[section?.name] : null} />
+            </View>
     );
   };
 
@@ -395,6 +396,7 @@ const ProjectForm = ({route, ...props}) => {
             </HStack>
           </>
         </View>
+        
         <FooterLines />
    
       </ScrollView>

@@ -197,18 +197,18 @@ const styles = StyleSheet.create({
         display: 'flex'
     },
     optionSelected:{
-        borderColor: Colors.orange,
+        borderColor: Colors.yellow,
         borderWidth: 1,
         height:40,
         display: 'flex',
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.yellow,
         color: Colors.white
     },
 
     orangeLeft:{
         flex: 0.4,
         height: 24,
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.yellow,
         borderTopRightRadius: 20,
         borderBottomRightRadius: 20,
         marginTop: 'auto'
@@ -216,14 +216,14 @@ const styles = StyleSheet.create({
       orangeLeftPadding:{
         flex: 0.2,
         height: 13,
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.yellow,
         borderRadius:20,
         marginBottom: 'auto'
       },
       orangeRight:{
         flex: 0.4,
         height: 24,
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.yellow,
         borderTopLeftRadius: 20,
         borderBottomLeftRadius: 20,
         marginTop: 'auto'
@@ -231,14 +231,14 @@ const styles = StyleSheet.create({
       orangeRightPadding:{
         flex: 0.2,
         height: 13,
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.yellow,
         borderRadius:20,
         marginBottom: 'auto'
       },
       orangeCenter:{
         flex: .75,
         height: 24,
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.yellow,
         borderRadius: 20
       }
 })

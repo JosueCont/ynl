@@ -76,7 +76,9 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
 
   useEffect(() => {
     let newList = []
-
+    console.log('<<<<<<<<<<<<<<<<<<<<<<<first>>>>>>>>>>>>>>>>>>>>>>>')
+    console.log(goalsDuck?.dailyGoals)
+    /* console.log('goalsDuck?.dailyGoals', goalsDuck?.dailyGoals) */
     goalsDuck?.dailyGoals?.map(item => {
       newList.push({
         id: item?.id,
@@ -86,7 +88,22 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
         target_date: dateSelected
       })
     })
-    setDataSend(newList)
+    if(newList[0]){
+      setGoalOne(newList[0])
+    }else{
+      setGoalOne({})
+    }
+    if(newList[1]){
+      setGoalTwo(newList[1])
+    }else{
+      setGoalTwo({})
+    }
+    if(newList[2]){
+      setGoalthree(newList[2])
+    }else{
+      setGoalthree({})
+    }
+    /* setDataSend(newList) */
 
   }, [goalsDuck?.dailyGoals])
   
@@ -102,28 +119,40 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
     if((goalOne.goal_category && !goalOne.description) || (goalOne.completed && !goalOne.description)){
       setGoalOne({...goalOne, error: "No puedes dejar vacía la descripción"})
       error_exist = true
+    }else{
+      setGoalOne({...goalOne, error: null})
     }
     if((!goalOne.goal_category && goalOne.description)){
       setGoalOne({...goalOne, error: "Debes elegir una categoria"})
       error_exist = true
+    }else{
+      setGoalOne({...goalOne, error: null})
     }
 
     if((goalTwo.goal_category && !goalTwo.description) || (goalTwo.completed && !goalTwo.description)){
       setGoalTwo({...goalTwo, error: "No puedes dejar vacía la descripción"})
       error_exist = true
+    }else{
+      setGoalTwo({...goalTwo, error: null})
     }
     if((!goalTwo.goal_category && goalTwo.description)){
       setGoalTwo({...goalTwo, error: "Debes elegir una categoria"})
       error_exist = true
+    }else{
+      setGoalTwo({...goalTwo, error: null})
     }
 
     if((goalthree.goal_category && !goalthree.description) || (goalthree.completed && !goalthree.description)){
       setGoalthree({...goalthree, error: "No puedes dejar vacía la descripción"})
       error_exist = true
+    }else{
+      setGoalthree({...goalthree, error: null})
     }
     if((!goalthree.goal_category && goalthree.description)){
-      setGoalTwo({...goalthree, error: "Debes elegir una categoria"})
+      setGoalthree({...goalthree, error: "Debes elegir una categoria"})
       error_exist = true
+    }else{
+      setGoalthree({...goalthree, error: null})
     }
     if(!error_exist){
       saveGoals()
@@ -165,10 +194,11 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
         }
       ]
 
+      console.log('newData===============================>>>>>>>>>>>>>>>>',newData)
       let resp = await saveDailyGoals(newData)
       if(resp['success']){
         toast.show({ title: 'Objetivos guardados' }) 
-        
+        getData()
       }else{
         toast.show({ title: resp?.data }) 
       }
@@ -177,7 +207,7 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
       setSaving(false)
     }finally{
       setSaving(false)
-      getDateGoal(dateSelected, authDuck?.user?.id)
+      
     }
 
   }
