@@ -46,16 +46,16 @@ const BarChartGoals = ({dataReport, loading, ...props}) => {
       {
         data: dataChart,
         colors: [
-            (opacity = 1) => Colors.yellow,
+            (opacity = 1) => Colors.yellowV2,
             (opacity = 1) => Colors.red,
-            (opacity = 1) => Colors.yellow,
-            (opacity = 1) => Colors.yellow,
+            (opacity = 1) => Colors.yellowV2,
+            (opacity = 1) => Colors.yellowV2,
             (opacity = 1) => Colors.red,
-            (opacity = 1) => Colors.yellow,
-            (opacity = 1) => Colors.yellow,
+            (opacity = 1) => Colors.yellowV2,
+            (opacity = 1) => Colors.yellowV2,
             (opacity = 1) => Colors.red,
-            (opacity = 1) => Colors.yellow,
-            (opacity = 1) => Colors.yellow,
+            (opacity = 1) => Colors.yellowV2,
+            (opacity = 1) => Colors.yellowV2,
             (opacity = 1) => Colors.red,
             (opacity = 1) => Colors.red,
         ]
