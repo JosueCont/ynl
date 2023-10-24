@@ -89,9 +89,9 @@ export const getProjectId = (project_id) => async (dispatch) => {
 
 export const updProject = (project_id, data) => async (dispatch) => {
     try {
-        dispatch({type: SAVING, payload: true })
+        //dispatch({type: SAVING, payload: true })
         let response = await ApiApp.updProject(project_id, data)
-        dispatch({type: SAVING, payload: false });
+        //dispatch({type: SAVING, payload: false });
         if(response?.status === 200){
             console.log(response?.data?.data)
             return response?.data?.data
@@ -100,6 +100,22 @@ export const updProject = (project_id, data) => async (dispatch) => {
     }catch (e) {
         dispatch({type: SAVING, payload: false });
         console.log('getReport error =>', e.toString())
+        return false
+    }
+}
+export const deleteProject = async(project_id)  => {
+    try {
+        //alert(`projectId API ${project_id}`)
+        //dispatch({type: SAVING, payload: true })
+        let response = await ApiApp.delProject(project_id)
+        //dispatch({type: SAVING, payload: false });
+        if(response?.status === 200){
+            console.log(response?.data?.data)
+            return response?.data?.data
+        }
+        
+    }catch (e) {
+        console.log('deleteReport error =>', e.toString())
         return false
     }
 }

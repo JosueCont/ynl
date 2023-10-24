@@ -82,7 +82,7 @@ const Projects = ({route, navigation, ...props}) => {
                                 <Skeleton height={20} borderRadius={12} />
                             </>:
                             projectsList.map(item => (
-                                <ProjectItem project={item} />
+                                <ProjectItem project={item} refreshProjects={refreshProjects} />
                             ))
                         }
                         <TouchableOpacity style={styles.addProjectBtn}

@@ -70,7 +70,7 @@ export const getMarkers = (user_id, book_code) => async (dispatch) => {
         }else{
             return false
         }
-    } catch (error) {
+    } catch (e) {
         console.log('get Markers error =>', e.toString())
         return false
     }

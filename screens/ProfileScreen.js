@@ -10,6 +10,7 @@ import ModalPasswordUpdate from "./Modals/ModalPasswordUpdate";
 import ModalDeleteAccount from "./Modals/ModalDeleteAccount";
 import {getShadowCircleStyle} from "../utils/functions";
 import bg1 from "../assets/bg1.png";
+import Lineas from '../assets/lineas.png'
 import {t} from 'i18n-js';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system'
@@ -263,7 +264,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
             refreshControl={
                 <RefreshControl
                     style={{backgroundColor: 'white'}}
-                    tintColor={Colors.red}
+                    tintColor={Colors.yellowd}
                     refreshing={loading}
                     onRefresh={() => getProfileFunction()}
                 />
@@ -296,7 +297,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                                           borderRadius={110} borderWidth={0.5}
                                           borderColor={"red.200"}>
                                         <Icon as={Entypo} name="camera" size={20} color={'gray.200'}/>
-                                        <Text fontSize={12} color={Colors.red}>Sube tu foto aquí</Text>
+                                        <Text fontSize={12} color={Colors.yellow}>Sube tu foto aquí</Text>
                                     </View>
                                 </View>
 
@@ -306,12 +307,12 @@ const ProfileScreen = ({authDuck, navigation}) => {
                 <View style={getShadowCircleStyle(10, 10)}>
 
                 </View>
-                <Image source={bg1} style={{
+                <Image source={Lineas} style={{
                     position: 'absolute',
-                    resizeMode: 'contain',
+                    resizeMode: 'stretch',
                     zIndex: -1,
-                    width: '150%',
-                    height: 100
+                    width: '100%',
+                    height: 150,
                 }} alt="img"></Image>
             </View>
 
@@ -356,7 +357,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                                         value={name}
                                         onChangeText={val => setName(val)}
                                         backgroundColor={Colors.white}
-                                        color={Colors.red}
+                                        color={Colors.yellow}
                                         fontSize={18}
                                     />
                                 </View>
@@ -370,7 +371,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                                         value={lastName}
                                         onChangeText={val => setLastName(val)}
                                         backgroundColor={Colors.white}
-                                        color={Colors.red}
+                                        color={Colors.yellow}
                                         fontSize={18}
                                     />
                                 </View>
@@ -384,7 +385,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                                         isReadOnly={true}
                                         onChangeText={val => setEmail(val)}
                                         backgroundColor={Colors.white}
-                                        color={Colors.red}
+                                        color={Colors.yellow}
                                         fontSize={18}
                                     />
                                 </View>
@@ -392,9 +393,9 @@ const ProfileScreen = ({authDuck, navigation}) => {
                         }
 
                         {/*<Input size={'2xl'} height={50} mb={4} placeholder={'Contraseña'} borderRadius={20}*/}
-                        {/*       placeholderTextColor={Colors.red} textAlign={'center'}/>*/}
+                        {/*       placeholderTextColor={Colors.yellow} textAlign={'center'}/>*/}
                         {/*<Input size={'2xl'} height={50} mb={6} placeholder={'Confirmar contraseña'} borderRadius={20}*/}
-                        {/*       placeholderTextColor={Colors.red} textAlign={'center'}/>*/}
+                        {/*       placeholderTextColor={Colors.yellow} textAlign={'center'}/>*/}
 
                         {
                             !authDuck?.userSiteConfig && <View mb={8}>
@@ -408,7 +409,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                                                   }
 
                                               }}>
-                                        <Text color={Colors.red} fontSize={12}>{t('fem')}</Text>
+                                        <Text color={Colors.yellow} fontSize={12}>{t('fem')}</Text>
                                     </Checkbox>
                                     <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
                                               value="info" colorScheme="orange" isChecked={gender === 1 ? true : false}
@@ -417,7 +418,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                                                       setGender(1)
                                                   }
                                               }}>
-                                        <Text color={Colors.red} fontSize={12}>{t('male')}</Text>
+                                        <Text color={Colors.yellow} fontSize={12}>{t('male')}</Text>
                                     </Checkbox>
                                 </View>
 
@@ -438,7 +439,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                                                   }
 
                                               }}>
-                                        <Text color={Colors.red} fontSize={12}>{t('yes')}</Text>
+                                        <Text color={Colors.yellow} fontSize={12}>{t('yes')}</Text>
                                     </Checkbox>
                                     <Checkbox style={getShadowCircleStyle(5, 2)} borderRadius={10} borderWidth={0.5}
                                               value="info" colorScheme="orange" isChecked={shareMyInfo === 0 ? true : false}
@@ -447,7 +448,7 @@ const ProfileScreen = ({authDuck, navigation}) => {
                                                       setShareMyInfo(0)
                                                   }
                                               }}>
-                                        <Text color={Colors.red} fontSize={12}>{t('no')}</Text>
+                                        <Text color={Colors.yellow} fontSize={12}>{t('no')}</Text>
                                     </Checkbox>
                                 </View>
 
@@ -459,10 +460,10 @@ const ProfileScreen = ({authDuck, navigation}) => {
                             !authDuck?.userSiteConfig && <>
                                 <TouchableOpacity style={{marginVertical: 20}}
                                                   onPress={() => setModalPasswordUpdateVisible(true)}>
-                                    <Text textAlign={'center'} size={'md'} color={Colors.red} textDecorationLine={'underline'}>{t('profile_upd_pass')}
+                                    <Text textAlign={'center'} size={'md'} color={Colors.yellow} textDecorationLine={'underline'}>{t('profile_upd_pass')}
                                     </Text>
                                 </TouchableOpacity>
-                                <Button isLoading={loading} colorScheme={'orange'} onPress={() => updateProfileFunction()}
+                                <Button isLoading={loading} colorScheme={Colors.yellow} onPress={() => updateProfileFunction()}
                                         mb={4}>{t('update')}</Button>
                             </>
                         }
