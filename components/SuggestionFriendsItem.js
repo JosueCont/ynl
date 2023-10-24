@@ -6,7 +6,7 @@ import { getFontSize } from "../utils/functions";
 import { Colors } from "../utils/Colors";
 import { t } from "i18n-js";
 
-const SuggestionsFriendsItem = ({item,userId,onSetActionFollow, changeRoute, deleteSuggestion}) => {
+const SuggestionsFriendsItem = ({item,userId,onSetActionFollow, changeRoute, deleteSuggestion,disableButton}) => {
     const [image, setImage] = useState(null)
     const [isFollowing, setIsFoloowing ] = useState(false)
 
@@ -60,8 +60,9 @@ const SuggestionsFriendsItem = ({item,userId,onSetActionFollow, changeRoute, del
                 <Text fontSize={getFontSize(9)} style={{fontWeight:'900'}}>{item.firstName}</Text>
                 <Text fontSize={getFontSize(6)} style={{fontWeight:'500', letterSpacing:0}}>{t('profile_your_contacts')}</Text>
                 <TouchableOpacity 
+                    disabled={disableButton}
                     onPress={() => onSetActionFollow(item.id,isFollowing)}
-                    style={{width:33,height:12, backgroundColor:Colors.yellowV2, borderRadius:2, justifyContent:'center',alignItems:'center', marginTop:5}}>
+                    style={{width:isFollowing ? 50 : 33,height:12, backgroundColor: Colors.yellowV2, borderRadius:2, justifyContent:'center',alignItems:'center', marginTop:5}}>
                     <Text fontSize={getFontSize(6)} color={Colors.white}>{isFollowing ? t('profile_unfollow') : t('profile_follow')}</Text>
                 </TouchableOpacity>
 
