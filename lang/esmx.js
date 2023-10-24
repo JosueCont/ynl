@@ -1,6 +1,6 @@
 export const esmx = {
     //  Language
-    'login_register': 'Registrarme',
+    'login_register': 'Regístrate',
     'login_forgot_password': '¿Olvidaste tu contraseña?',
     'login_hello': '¡Hola!',
     'login_how_are_you': '¿Cómo te sientes?',
@@ -47,7 +47,7 @@ export const esmx = {
     'profile_share_data':'Compartir mi información con grupos',
     'profile_upd_pass':'Actualizar contraseña',
     'profile_delete_account':'Eliminar mi cuenta',
-    'profile_success_update':'Actualizado correctamente.',
+    'profile_success_update':'Actualizado correctamente',
     'profile_upload_your_photo':'Sube tu foto aquí',
     'profile_previus_password':'Contraseña anterior',
     'profile_new_password':'Nueva contraseña',
@@ -139,7 +139,7 @@ export const esmx = {
     'error_password_minimun':'La contraseña debe ser de al menos 8 caracteres',
     'error_try_later':'Ocurrió un error, intentalo más tarde',
     'no_data':'Sin datos',
-    'delete_account':'¿Está seguro que desea eliminar sus datos?, esta acción es irreversible.',
+    'delete_account':'¿Está seguro que desea eliminar sus datos?, Esta acción es irreversible y no podrá recuperar sus datos una vez eliminados',
     'atention':'Atención',
 
     //Emotions

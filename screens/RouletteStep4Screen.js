@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Button, Image, KeyboardAvoidingView, ScrollView, Text, TextArea, View} from "native-base";
 import {connect} from "react-redux";
-import {Keyboard, Platform, TouchableWithoutFeedback} from "react-native";
+import {Keyboard, Platform, TouchableWithoutFeedback, Dimensions, ActivityIndicator, TouchableOpacity, Share} from "react-native";
 import {getDay, getFontSize, translateEmotions} from '../utils/functions'
 import {saveEmotion} from "../redux/ducks/feelingsDuck";
 import ScreenBaseV1 from "./Components/ScreenBaseV1";
@@ -13,6 +13,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import moment from "moment";
 import Style from '../utils/styles'
 import { useFonts } from 'expo-font';
+import { Feather } from "@expo/vector-icons";
+
+
+const {height, width} = Dimensions.get('window')
 
 const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionStatusAction}) => {
 
@@ -22,7 +26,9 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
       'Ole-Regular':require('../assets/fonts/Ole-Regular.ttf')
     }); 
     const [loading, setLoading] = useState(false)
-    const [comment, setComment] = useState("")
+    const [comment, setComment] = useState("");
+    const [imageUrl, setImageUrl] = useState(null);
+    const [loadingGif, setLoadingGif] = useState(false)
 
     useEffect(() => {
         console.log("route.params.color =====>", route.params);
@@ -30,6 +36,11 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
             headerStyle: {backgroundColor: '#' + route.params.color}
         }) */
         setComment("")
+        setImageUrl(route.params.parent.attributes.animation.data.attributes.url)
+        setLoadingGif(true)
+        setTimeout(() => {
+          setLoadingGif(false)
+        },1000)
     }, [route.params.emotion.id])
 
     const saveFeelings = async () => {
@@ -69,6 +80,27 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
         } finally {
             setLoading(false)
         }
+    }
+
+    const shareEmotion = async() => {
+      try {
+        const message = `Hoy me siento con ${route?.params?.parent?.attributes?.name} y ${route?.params?.emotion?.attributes?.name}`;
+        console.log('emociones',route.params)
+        const result = await Share.share({
+          message: message,
+          title:'Compartir emoción'
+          
+        });
+    
+        if (result.action === Share.sharedAction) {
+          console.log('Contenido compartido con éxito.');
+        } else if (result.action === Share.dismissedAction) {
+          console.log('Compartir cancelado.');
+        }
+      } catch (error) {
+        console.error('Error al compartir: ', error.message);
+      }
+    
     }
 
     return (
@@ -112,14 +144,16 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                   alignItems={"center"}
                   justifyContent={"center"}
                 >
-                  {_.has(
+                  {loadingGif ? (
+                    <ActivityIndicator size={'large'} color={'#'+route.params.parent.attributes.color} style={{ width: 50, height: 50 }}/>
+                  ):(
+                    _.has(
                     route.params,
                     "parent.attributes.animation.data.attributes.url"
                   ) && (
                     <Image
                       source={{
-                        uri: route.params.parent.attributes.animation.data
-                          .attributes.url,
+                        uri: imageUrl,
                       }}
                       style={{
                         width: "80%",
@@ -128,7 +162,7 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                       }}
                       alt="img"
                     ></Image>
-                  )}
+                  ))}
                 </View>
                 {fontsLoaded ? <Text
                   
@@ -188,13 +222,13 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
 
               <View mb={6} alignItems={"center"}>
                 {fontsLoaded ? (
-                  <View style={{ height:70}}>
+                  <View style={{ height:height * 0.1, justifyContent:'center'}}>
                     <Text
                       //bold
                       //color={Colors.black}
                       mt={2}
                       //style={styles.shadow}
-                      style={{fontFamily: 'Ole-Regular', fontSize:getFontSize(39), marginTop:5, paddingBottom:10,  paddingTop:20, paddingHorizontal:4, flex:1}}
+                      style={{fontFamily: 'Ole-Regular', fontSize:getFontSize(Platform.OS === 'ios' ? 39 : 35),  paddingBottom:10,  paddingTop:20, paddingHorizontal:4, flex:1}}
                     >
                       {t('roulette_share_why')}
                     </Text>
@@ -225,7 +259,7 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                 </View>
               </View>
 
-              <View mb={6}  style={{ paddingLeft:80, paddingRight:80, justifyContent:'center',alignItems:'center'}}>
+              <View mb={6}  style={{  justifyContent:'center',alignItems:'center', flexDirection:'row', }}>
                 <Button
                   isLoading={loading}
                   size="md"
@@ -237,6 +271,9 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                 >
                     {t('roulette_get_into')}
                 </Button>
+                <TouchableOpacity style={{position:'absolute', right:60}} onPress={() => shareEmotion()}>
+                  <Feather name='share' size={23} color={Colors.black} />
+                </TouchableOpacity>
               </View>
             </View>
           </TouchableWithoutFeedback>

@@ -12,13 +12,16 @@ import ApiApp from "../utils/ApiApp";
 import { getProjectsAvailable } from '../utils/functions'
 import {MaterialIcons, FontAwesome, Ionicons, FontAwesome5} from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
+import ModalDayPhrase from "../screens/Modals/ModalDayPhrase";
 
 const {height} = Dimensions.get('screen');
 
-const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck, logOutAction, ...props}) => {
+const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck, logOutAction, modulesDuck, ...props}) => {
 
     const [groups, setGroups] = useState([]);
     const [groupsRequests, setGroupsRequests] = useState([])
+    const [modalPhraseVisible, setModalPhraseVisible] = useState(false)
+    const [phraseDay, setPhraseDay] = useState(null)
 
     useEffect(() => {
         getGroupsRequests();
@@ -67,6 +70,11 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
         }
     }
 
+    const getPermissionsModules = (permission) => {
+      return modulesDuck.modules.includes(permission);
+  }
+
+
     return (
       <DrawerContentScrollView
         bounces={false}
@@ -99,6 +107,7 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
               </TouchableOpacity>
 
             </View>
+            {getPermissionsModules('EMOTIONS') ? (
             <View flexDirection={'row'} justifyContent={'center'} alignItems={'center'}>
               <MaterialIcons name="donut-large" size={25} color={Colors.white}/>
               <TouchableOpacity
@@ -111,8 +120,9 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
                       {t('home_my_emotions')}
                   </Text>
               </TouchableOpacity>
-            </View>
+            </View> ) : null}
 
+            {getPermissionsModules('EMOTIONS') ? (
             <View flexDirection={'row'} justifyContent={'center'} alignItems={'center'}>
               <Ionicons name="md-happy-outline" size={25} color={Colors.white}/>
               <TouchableOpacity
@@ -125,7 +135,7 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
                       Nueva emoción
                   </Text>
               </TouchableOpacity>
-            </View>   
+            </View> ) : null }
 
             <View flexDirection={'row'} justifyContent={'center'} alignItems={'center'}>
               <MaterialIcons  name="group" size={25} color={Colors.white} />
@@ -135,16 +145,16 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
                 </Text>
               </TouchableOpacity>
             </View>
-
+            { getPermissionsModules('SIXPACK') ? (
             <View flexDirection={'row'} justifyContent={'center'} alignItems={'center'}>
-              <FontAwesome name="trophy" size={25} color={Colors.white} />
-              <TouchableOpacity style={{marginLeft:15}} onPress={() => navigation.navigate("GoalsScreen")}>
+                <FontAwesome5 name="clipboard-list" size={25} color={Colors.white}/> 
+              <TouchableOpacity style={{marginLeft:15}} onPress={() => navigation.navigate('ProjectsList')}>
                 <Text color={"white"} fontSize={20} my={2}>
-                    {t('home_goals')}
+                    Mis proyectos
                 </Text>
               </TouchableOpacity>
-            </View>
-
+            </View> ) : null}
+            {getPermissionsModules('BOOKS') ? (
             <View flexDirection={'row'} justifyContent={'center'} alignItems={'center'} >
               <FontAwesome name="bookmark" size={25} color={Colors.white} />
               
@@ -154,22 +164,25 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
                 </Text>
               </TouchableOpacity>
               
-            </View>
+            </View> ) : null}
 
+            {getPermissionsModules('GOALS') ? (
             <View flexDirection={'row'} justifyContent={'center'} alignItems={'center'}>
-              <FontAwesome name="check-square-o" size={25} color={Colors.white} /> 
-              <TouchableOpacity style={{marginLeft:15}} onPress={() => console.log('pressed')}>
+              <FontAwesome name="trophy" size={25} color={Colors.white} />
+              <TouchableOpacity style={{marginLeft:15}} onPress={() => navigation.navigate("GoalsScreen")}>
                 <Text color={"white"} fontSize={20} my={2}>
-                    Tareas
+                    {t('home_goals')}
                 </Text>
               </TouchableOpacity>
-            </View>
+            </View> ) : null}
+
+
 
             <View flexDirection={'row'} justifyContent={'center'} alignItems={'center'}>
-              <FontAwesome5 name="question" size={25} color={Colors.white} />
-              <TouchableOpacity style={{marginLeft:15}} onPress={() => console.log('pressed')}>
+              <MaterialIcons name="textsms" size={25} color="white" />
+              <TouchableOpacity style={{marginLeft:15}} onPress={() => setModalPhraseVisible(true)}>
                 <Text color={"white"} fontSize={20} my={2}>
-                    Pregunta del día
+                    Frase del día
                 </Text>
               </TouchableOpacity>
             </View>
@@ -224,6 +237,7 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
             <Image source={logoKhor} alt="img" />
           </View>*/}
         </View>
+        <ModalDayPhrase phrase={modulesDuck.phrase}  visible={modalPhraseVisible} closeModalPhrase={() => setModalPhraseVisible(false)} />
       </DrawerContentScrollView>
     );
 }
@@ -232,7 +246,8 @@ const mapState = (state) => {
     return {
         authDuck: state.authDuck,
         navigationDuck: state.navigationDuck,
-        accountDuck: state.accountDuck
+        accountDuck: state.accountDuck,
+        modulesDuck: state.modulesDuck
     }
 }
 

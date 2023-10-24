@@ -1,6 +1,6 @@
 export const enus = {
     //  Language
-    'login_register': 'Register',
+    'login_register': 'Sign up',
     'login_forgot_password': 'Forgot password',
     'login_hello': 'HEY!',
     'login_how_are_you': 'How are you feeling?',
@@ -46,7 +46,7 @@ export const enus = {
     'profile_share_data':'Share information with my groups',
     'profile_upd_pass':'Update password',
     'profile_delete_account':'Delete my account',
-    'profile_success_update':'Updated correctly.',
+    'profile_success_update':'Updated correctly',
     'profile_upload_your_photo':'Upload photo',
     'profile_previus_password':'Previous password',
     'profile_new_password':'New password',
@@ -139,7 +139,7 @@ export const enus = {
     'error_password_minimun':'Password must be at least 8 characters',
     'error_try_later':'Error ocurred, plase try again later',
     'no_data':'No data',
-    'delete_account':'Are you sure you want to delete this data? This action cannot be undone.',
+    'delete_account':`Are you sure you want to delete this data?, This action is irreversible, and you won't be able to recover your data once deleted `,
     'atention':'Warning',
 
     //Emotions

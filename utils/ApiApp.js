@@ -502,6 +502,13 @@ class ApiApp {
     return ApiApp.ApisType('/api/follow/unFollow/', 'post', data)
   }
 
+  static getValidateSuscription = (id) => {
+    return ApiApp.ApisType(`/api/user-subscription-validate/${id}`, 'get');
+  }
+
+  static getModulesSuscription = (id) => {
+    return ApiApp.ApisType(`api/user-subscription-modules/${id}`, 'get');
+  }
 
   static _baseURL = baseURL;
 }

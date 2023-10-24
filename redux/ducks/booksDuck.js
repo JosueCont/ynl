@@ -33,7 +33,6 @@ export const getBooks = (user_id) => async (dispatch) => {
         dispatch({type: LOADING, payload: true })
         let response = await ApiApp.getUserBooks(user_id)
         if(response?.status === 200){
-            console.log(response?.data?.data[0].book)
             dispatch({type:SET_BOOKS, payload: response?.data?.data})
         }
         /* console.log(response?.data?.data) */
