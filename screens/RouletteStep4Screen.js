@@ -222,16 +222,8 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
 
               <View mb={6} alignItems={"center"}>
                 {fontsLoaded ? (
-                  <View style={{ height:height * 0.1, justifyContent:'center'}}>
-                    <Text
-                      //bold
-                      //color={Colors.black}
-                      mt={2}
-                      //style={styles.shadow}
-                      style={{fontFamily: 'Ole-Regular', fontSize:getFontSize(Platform.OS === 'ios' ? 39 : 35),  paddingBottom:10,  paddingTop:20, paddingHorizontal:4, flex:1}}
-                    >
-                      {t('roulette_share_why')}
-                    </Text>
+                  <View style={{ height:height * 0.1, width: width/1.2, justifyContent:'center'}}>
+                    <Image source={require('../assets/por_que.png')} style={{flex:1, resizeMode:'contain'}}/>
 
                   </View>
 
