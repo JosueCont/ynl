@@ -1,5 +1,5 @@
 import {ScrollView , Text, View, HStack, Image, VStack, Progress, Center, Input, Spacer, TextArea, Skeleton, useToast, Box, Icon, KeyboardAvoidingView } from 'native-base'
-import { SafeAreaView, TouchableOpacity , StyleSheet, Dimensions} from 'react-native'
+import { SafeAreaView, TouchableOpacity , StyleSheet, Dimensions, ActivityIndicator} from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { getProjectId, updProject, updProjectName } from '../redux/ducks/projectsDuck'
 import { getProgressProject } from '../utils/functions'
@@ -248,7 +248,8 @@ const ProjectForm = ({route, ...props}) => {
             toast.show({
                 duration: 1000,
                 render: () => {
-                    return <Box bg="rgba(245, 172, 0, 0.5)" rounded="sm">
+                    return <Box bg="#5E5C5C" rounded="sm"> 
+                    {/* //rgba(245, 172, 0, 0.5) */}
                         <Text color={"white"} fontSize={16} p={3}>Actualizado</Text>
                     </Box>;
                 }
@@ -301,14 +302,7 @@ const ProjectForm = ({route, ...props}) => {
                     //isReadOnly
                     InputRightElement={
                       saveLoading ? (
-                        <Animatable.View
-                          animation="rotate"
-                          easing="linear"
-                          iterationCount="infinite"
-                          duration={800}
-                        >
-                          <Ionicons style={{marginRight:4}} name="reload" size={20} color={Colors.yellowV2} />
-                        </Animatable.View>
+                        <ActivityIndicator style={{marginRight:4}} size={25} color={Colors.yellowV2} />
                       ) : (
                         <Ionicons
                           style={{marginRight:4}}
