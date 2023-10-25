@@ -459,7 +459,7 @@ class ApiApp {
 
   /* Books */
   static getPagesBook = (book_code) => {
-    return ApiApp.ApisType(`/api/book-pages/?populate=*&filters[book][code]=${book_code}&sort=page`, "get");
+    return ApiApp.ApisType(`/api/book-pages/?populate=*&filters[book][code]=${book_code}&sort=page&pagination[page]=1&pagination[pageSize]=1000`, "get");
   }
 
   /* Markers */
