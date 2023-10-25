@@ -81,5 +81,13 @@ module.exports = () => {
             ios: ios,
             android: android,
         };
+    }else if (process.env.APP_ENV === "OTA") {
+        return {
+            ...commonConfig,
+            slug: "ynl",
+            version: "1.9.2",
+            android: android,
+            ios: ios,
+        };
     }
 };
