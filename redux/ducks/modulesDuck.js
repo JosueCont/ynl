@@ -7,7 +7,8 @@ const initialData = {
 
 const SET_MODULE_LIST = 'set_module_list';
 const SET_PROGRESS_INFO = 'set_progress_info';
-const SET_PHRASE_DAY = 'set_phrase_day'
+const SET_PHRASE_DAY = 'set_phrase_day';
+const DELETE_MODULES_USER = 'delete_modules_user';
 
 
 const modulesDuck = (state = initialData, action) => {
@@ -18,6 +19,8 @@ const modulesDuck = (state = initialData, action) => {
             return {...state, progress: action.payload}
         case SET_PHRASE_DAY:
             return { ...state, phrase: action.payload}
+        case DELETE_MODULES_USER:
+            return {...state, modules:[], progress:[]}
         default:
             return state
     }
@@ -39,4 +42,9 @@ export const savePhraseDay = (data) => {
     }
 }
 
+export const removeModulesLogout = () => {
+    return{
+        type:DELETE_MODULES_USER,
+    }
+}
 export default modulesDuck;
