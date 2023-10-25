@@ -49,11 +49,11 @@ const NewHome = ({navigation,}) => {
 
     const screenWidth = Dimensions.get("window").width;
 
-    //useEffect(() => {
-    //    if(authDuck){
-    //        getInfoModules()
-    //    }
-    //},[authDuck])
+    useEffect(() => {
+        if(authDuck){
+            getInfoModules()
+        }
+    },[authDuck])
 
     useEffect(() => {
         if (isFocused) {
@@ -273,17 +273,21 @@ const NewHome = ({navigation,}) => {
                         />
                     </HStack>
                     <View style={{ width: screenWidth, justifyContent:'center', alignItems: 'center'  }}>
-                        <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen')}>
-                            {
-                                image ? 
-                                <Image w={220} h={220} source={{uri: image}} alt="img" style={styles.phtoContainer} />
-                                :
-                                <View style={styles.phtoContainer}>
-                                    <Icon as={MaterialIcons} name="person-outline" size={20} color={'gray.200'}/>
-                                </View>
-                            }
-                            
-                        </TouchableOpacity>
+                        {loading ? (
+                            <View style={getShadowCircleStyle(10, 10)}>
+                                <Skeleton endColor="warmGray.50" size="220" rounded="full"  />
+                            </View>
+                        ) :(
+                            <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen')}>
+                                {
+                                    image ? 
+                                    <Image w={220} h={220} source={{uri: image}} alt="img" style={styles.phtoContainer} />
+                                    :
+                                    <View style={styles.phtoContainer}>
+                                        <Icon as={MaterialIcons} name="person-outline" size={20} color={'gray.200'}/>
+                                    </View>
+                                }
+                        </TouchableOpacity> )}
                         <Image source={Lineas} style={{
                                 position: 'absolute',
                                 zIndex:-1,
@@ -298,24 +302,41 @@ const NewHome = ({navigation,}) => {
                         </Text>
                     </HStack>
                     <View style={{ width:'90%',  alignSelf:'center', justifyContent:'space-evenly', flexDirection:'row' }}>
-                        <View  backgroundColor={{ position:'relative', padding: 20, justifyContent:'center', backgroundColor:Colors.black }}>
-                            <CircularProgress radius={45} activeStrokeWidth={10} value={modules?.progress[0]?.percentToNext}  progressValueColor={'#F3BC38'} inActiveStrokeColor='#ECE8E8' />
-                            <View style={{ textAlign:'center', position:'absolute', justifyContent:'center', alignSelf:'center', marginTop:10, borderRadius:110, width: 66, height:66, left:12, top:2 }}>
-                                <Image source={EmotionalKargo} width={90} height={63} resizeMode='stretch' style={{ alignSelf:'center' }} />
-                            </View>
-                        </View>
-                        <View  backgroundColor={{ position:'relative', backgroundColor:'red', padding: 20 }}>
-                            <CircularProgress radius={45} activeStrokeWidth={10} value={modules?.progress[1]?.percentToNext}  progressValueColor={'#F3BC38'} inActiveStrokeColor='#ECE8E8' />
-                            <View style={{ position:'absolute', justifyContent:'center', alignSelf:'center', marginTop:10, borderRadius:110, width: 66, height:66, left:12, top:2 }}>
-                                <Image source={LifeMachine} width={90} height={63} resizeMode='stretch' style={{ alignSelf:'center' }} />
-                            </View>
-                        </View>
-                        <View  backgroundColor={{ position:'relative', backgroundColor:'red', padding: 20 }}>
-                            <CircularProgress radius={45} activeStrokeWidth={10} value={modules?.progress[2]?.percentToNext}  progressValueColor={'#F3BC38'} inActiveStrokeColor='#ECE8E8' />
-                            <View style={{ position:'absolute', justifyContent:'center', alignSelf:'center', marginTop:10, borderRadius:110, width: 65, height:65, left:13, top:2 }}>
-                                <Image source={SixPack} width={90} height={63} resizeMode='stretch' style={{ alignSelf:'center' }} />    
-                            </View>
-                        </View>
+                        {loading ? (
+                            <>
+                                <View style={getShadowCircleStyle(10, 10)}>
+                                    <Skeleton endColor="warmGray.50" size="90" rounded="full"  />
+                                </View>
+                                <View style={getShadowCircleStyle(10, 10)}>
+                                    <Skeleton endColor="warmGray.50" size="90" rounded="full"  />
+                                </View>
+                                <View style={getShadowCircleStyle(10, 10)}>
+                                    <Skeleton endColor="warmGray.50" size="90" rounded="full"  />
+                                </View>
+                            </>
+                        ):(
+                            <>
+                                <View  backgroundColor={{ position:'relative', padding: 20, justifyContent:'center', backgroundColor:Colors.black }}>
+                                    <CircularProgress radius={45} activeStrokeWidth={10} value={modules?.progress[0]?.percentToNext}  progressValueColor={'#F3BC38'} inActiveStrokeColor='#ECE8E8' />
+                                    <View style={{ textAlign:'center', position:'absolute', justifyContent:'center', alignSelf:'center', marginTop:10, borderRadius:110, width: 66, height:66, left:12, top:2 }}>
+                                        <Image source={EmotionalKargo} width={90} height={63} resizeMode='stretch' style={{ alignSelf:'center' }} />
+                                    </View>
+                                </View>
+                                <View  backgroundColor={{ position:'relative', backgroundColor:'red', padding: 20 }}>
+                                    <CircularProgress radius={45} activeStrokeWidth={10} value={modules?.progress[1]?.percentToNext}  progressValueColor={'#F3BC38'} inActiveStrokeColor='#ECE8E8' />
+                                    <View style={{ position:'absolute', justifyContent:'center', alignSelf:'center', marginTop:10, borderRadius:110, width: 66, height:66, left:12, top:2 }}>
+                                        <Image source={LifeMachine} width={90} height={63} resizeMode='stretch' style={{ alignSelf:'center' }} />
+                                    </View>
+                                </View>
+                                <View  backgroundColor={{ position:'relative', backgroundColor:'red', padding: 20 }}>
+                                    <CircularProgress radius={45} activeStrokeWidth={10} value={modules?.progress[2]?.percentToNext}  progressValueColor={'#F3BC38'} inActiveStrokeColor='#ECE8E8' />
+                                    <View style={{ position:'absolute', justifyContent:'center', alignSelf:'center', marginTop:10, borderRadius:110, width: 65, height:65, left:13, top:2 }}>
+                                        <Image source={SixPack} width={90} height={63} resizeMode='stretch' style={{ alignSelf:'center' }} />    
+                                    </View>
+                                </View> 
+                            
+                            </>
+                        )}
                         {/* <View width={'25%'} backgroundColor={{ position:'relative', backgroundColor:'red', padding: 20 }}>
                             <CircularProgress radius={45} activeStrokeWidth={5} value={58}  progressValueColor={'#F3BC38'} />
                             <View style={{ backgroundColor:"#CBA25F", position:'absolute', justifyContent:'center', alignSelf:'center', marginTop:10, borderRadius:110, width: 65, height:65, left:13, top:2 }}>
@@ -323,8 +344,10 @@ const NewHome = ({navigation,}) => {
                             </View>
                         </View> */}
                     </View>
-                    <HStack style={{ marginTop:30 }} space={5} justifyContent={'center'} >
-                        {getPermissionsModules('EMOTIONS') ? (
+                    <HStack style={{ marginTop:30 }} space={5} justifyContent={'center'}>
+                        {loading ? (
+                            <Skeleton lines={1} width={screenWidth/2.4} height={55} borderRadius={10}/>
+                        ) : getPermissionsModules('EMOTIONS') ? (
                         <TouchableOpacity  onPress={() => { navigation.navigate("StatisticsScreen") }}  >
                             <LinearGradient
                                 // Button Linear Gradient
@@ -339,7 +362,10 @@ const NewHome = ({navigation,}) => {
                                 </VStack>
                             </LinearGradient>
                         </TouchableOpacity> ): null}
-                        {getPermissionsModules('EMOTIONS') ? (
+                        {loading ? (
+                            <Skeleton lines={1} width={screenWidth/2.4} height={55} borderRadius={10}/>
+                        )
+                        : getPermissionsModules('EMOTIONS') ? (
                         <TouchableOpacity onPress={() => { navigation.navigate('RouletteStep1Screen')}} >
                             <LinearGradient
                                 // Button Linear Gradient
@@ -356,27 +382,36 @@ const NewHome = ({navigation,}) => {
                         </TouchableOpacity> ) : null}
                     </HStack>
                     <HStack style={{ marginTop:30 }} space={5} justifyContent={'center'} >
-                       { getPermissionsModules('SIXPACK') ? (
+                       {loading ? (
+                            <Skeleton lines={1} width={45} height={45} borderRadius={10} />
+                       ) : getPermissionsModules('SIXPACK') ? (
                         <TouchableOpacity onPress={() => navigation.navigate("ProjectsList")} >
                             <View style={{ position:'relative', justifyContent:'center' }} width={45} height={45}>
                                 <Image source={Yellow} resizeMode='contain' style={{ position:'absolute', zIndex:-1 }} />
                                 <Image source={ListIcon} style={{alignSelf:'center', height:25, width:20}}/>
                             </View>
                         </TouchableOpacity> ) : null}
-                        {getPermissionsModules('GOALS') ? (
+                        {loading ? (
+                            <Skeleton lines={1} width={45} height={45} borderRadius={10} />
+                        ):getPermissionsModules('GOALS') ? (
                         <TouchableOpacity onPress={() => navigation.navigate("GoalsScreen")}>
                             <View style={{ position:'relative', justifyContent:'center' }} width={45} height={45}>
                                 <Image source={Yellow} resizeMode='contain' style={{ position:'absolute', zIndex:-1 }} />
                                 <Image source={ObjetivosIcon} style={{alignSelf:'center', height:24, width:24}} />
                             </View>
                         </TouchableOpacity>) : null}
+                        {loading ? (
+                            <Skeleton lines={1} width={45} height={45} borderRadius={10} />
+                        ): (
                         <TouchableOpacity onPress={() => setModalPhraseVisible(true)}>
                             <View style={{ position:'relative', justifyContent:'center', alignItems:'center' }} width={45} height={45}>
                                 <Image source={Yellow} resizeMode='contain' style={{ position:'absolute', zIndex:-1 }} />
                                 <MaterialIcons name="textsms" size={24} color="white" />
                             </View>
-                        </TouchableOpacity>
-                        {getPermissionsModules('BOOKS') ? (
+                        </TouchableOpacity>)}
+                        {loading ? (
+                            <Skeleton lines={1} width={45} height={45} borderRadius={10} />
+                        ):getPermissionsModules('BOOKS') ? (
                         <TouchableOpacity onPress={() => navigation.navigate('BookList')}>
                             <View style={{ position:'relative', justifyContent:'center' }} width={45} height={45}>
                                 <Image source={Yellow} resizeMode='contain' style={{ position:'absolute', zIndex:-1 }} />
