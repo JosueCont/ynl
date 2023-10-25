@@ -67,12 +67,13 @@ const ReadBook = ({route, navigation, ...props}) => {
 
     const getBook = async (book_code) => {
         let bookPages = await dispatch(getPagesBook(book_code))
-        console.log('libro',bookPages)
+        console.log('===========>',bookPages.length)
         if(bookPages.length > 0){
             let imgs = []
             for (let i = 0; i < bookPages.length; i++) { 
                 imgs.push( {url: getUrlImage(bookPages[i]['attributes']['file']['data']['attributes']['url'])})
             }
+            console.log('=====>', imgs)
             setPages(imgs)
         }
     }
@@ -145,7 +146,6 @@ const ReadBook = ({route, navigation, ...props}) => {
 
     useEffect(() => {
         if(isFocused){
-            console.log('isLocked',route.params)
             if (route?.params?.book) {
                 setCurrentBook(route?.params?.book)
                 setLocked(route.params.isLocked)
@@ -165,9 +165,6 @@ const ReadBook = ({route, navigation, ...props}) => {
 
 
     useEffect(() => {
-        if(currentBook){
-            console.log('==>',currentBook)
-        }
       if(currentBook && currentBook.locked == false){
         getBook(currentBook.code)
         getMarkersBook()
@@ -279,7 +276,12 @@ const ReadBook = ({route, navigation, ...props}) => {
             {
                 isLocked === true ?
                 <View alignSelf={'center'} width={'90%'} h={Dimensions.get("window").height-(Dimensions.get("window").height*.25)}> 
-                    <Image width={'100%'} resizeMode='contain' flex={1} source={{ uri: getUrlImage(currentBook?.back_cover?.url) }} />
+                    {/* <Image width={'100%'} resizeMode='contain' flex={1} source={{ url: getUrlImage(currentBook?.back_cover?.url) }} /> */}
+                    <ImageViewer 
+                        imageUrls={[{url: getUrlImage(currentBook?.back_cover?.url)}]}
+                        
+                        backgroundColor={'white'}
+                    />
                 </View> 
                 :
                 <View >
@@ -291,14 +293,18 @@ const ReadBook = ({route, navigation, ...props}) => {
                         :
                         <>
                             <View height={Dimensions.get("window").height-(Dimensions.get("window").height*.25)} > 
+                            {
+                                pages.length > 0 &&
                                 <ImageViewer 
-                                index={currentPage}  
-                                imageUrls={pages}
-                                onChange={index =>  setTimeout(function(){
-                                    setCurrentPage(index)
-                                }, 200)}
-                                backgroundColor={'white'}
+                                    maxOverflow={1000}
+                                    index={currentPage}  
+                                    imageUrls={pages}
+                                    onChange={index =>  setTimeout(function(){
+                                        setCurrentPage(index)
+                                    }, 200)}
+                                    backgroundColor={'white'}
                                 />
+                            }
                             </View>
                             {/* <SliderBox     
                                 images={pages}
