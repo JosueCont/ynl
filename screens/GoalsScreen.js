@@ -19,7 +19,7 @@ import FooterLines from '../components/FooterLines'
 import Logo from '../assets/new_logo.png'
 import Tree from '../assets/tree.png'
 import Phrase from '../assets/phrase_goals.png'
-import ImgYellow from '../assets/Rectángulo.png'
+import ImgYellow from '../assets/rectangulo.png'
 import Lines from '../assets/lines.png'
 
 
