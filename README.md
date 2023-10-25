@@ -16,3 +16,10 @@ Implementaciones necesarias para iniciar una aplicaciones en React Native.
 - expo start
 - Instalar en el móvil Expo Go
 - Escanear el código QR
+
+Para compilar
+eas build --profile production_ios
+eas build --profile production_android
+
+Para enviar por OTA
+APP_ENV=OTA expo publish

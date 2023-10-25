@@ -19,7 +19,7 @@ import FooterLines from '../components/FooterLines'
 import Logo from '../assets/new_logo.png'
 import Tree from '../assets/tree.png'
 import Phrase from '../assets/phrase_goals.png'
-import ImgYellow from '../assets/Rectángulo.png'
+import ImgYellow from '../assets/rectangulo.png'
 import Lines from '../assets/lines.png'
 
 
@@ -327,13 +327,13 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
               {/* <HStack justifyContent={'center'}>
                 <View style={styles.orangeCenter} />
               </HStack> */}
-              <HStack space={1} justifyContent={'space-around'} marginTop={55} marginBottom={2} >
+              <HStack space={1} justifyContent={'space-around'} marginTop={0} marginBottom={2} >
                 <TouchableOpacity onPress={() => navigation.navigate('GoalsTree')}>
-                  <Image key={1} resizeMode='center' width={12} height={12} source={Tree} />
+                  <Image key={1} resizeMode='contain' width={12} height={12} source={Tree} />
                 </TouchableOpacity>
               </HStack>
             </VStack>
-            <FooterLines />
+            {/*<FooterLines />*/}
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>

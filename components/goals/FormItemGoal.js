@@ -4,7 +4,7 @@ import { FormControl, HStack, Icon, Image, TextArea, VStack, View, Text, Skeleto
 import { TouchableOpacity } from 'react-native'
 import {FontAwesome, Entypo, AntDesign } from "@expo/vector-icons";
 import {Colors} from '../../utils/Colors'
-import ImgYellow from '../../assets/Rectángulo.png'
+import ImgYellow from '../../assets/rectangulo.png'
 import {baseURL} from '../../utils/AxiosApi'
 import CategoriesOptionsList from './CategoriesOptionsList'
 import { useSelector } from 'react-redux';
