@@ -22,6 +22,7 @@ const BookList = ({navigation, ...props}) => {
     const loading = useSelector(state => state?.booksDuck?.loading)
     const books = useSelector(state => state?.booksDuck?.books)
     const modules = useSelector(state => state?.modulesDuck.progress)
+    const modulesData = useSelector(state => state?.modulesDuck.modules)
 
     const [refreshing, setRefreshing] = useState(false)
 
@@ -36,13 +37,36 @@ const BookList = ({navigation, ...props}) => {
     useEffect(() => { 
         if(user_id){
             dispatch(getBooks(user_id))  
-        }
+        }        
     }, [])
 
     
 
-    const getPermissionsBooks = (book,moduleIndex) => {
-        return !modules[moduleIndex] || modules[moduleIndex].percentToNext < 100;
+    const getPermissionsBooks = (book,moduleIndex) => {   
+        
+        const code = book.code;
+        switch (code) {
+          case "ek":
+            if (modulesData.indexOf("EMOTIONS") !== -1) {
+              return false;
+            }
+            return true;
+          case "file":
+            if (modulesData.indexOf("GOALS") !== -1) {
+              return false;
+            }
+            return true;
+          case "six":
+            if (modulesData.indexOf("SIXPACK") !== -1) {
+              return false;
+            }
+            return true;
+
+          default:
+            return true;
+        }
+        
+        //return !modules[moduleIndex] || modules[moduleIndex].percentToNext < 100;
     }    
 
   return (
