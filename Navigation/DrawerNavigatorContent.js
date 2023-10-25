@@ -13,10 +13,11 @@ import { getProjectsAvailable } from '../utils/functions'
 import {MaterialIcons, FontAwesome, Ionicons, FontAwesome5, Fontisto} from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
 import ModalDayPhrase from "../screens/Modals/ModalDayPhrase";
+import { removeModulesLogout } from "../redux/ducks/modulesDuck";
 
 const {height} = Dimensions.get('screen');
 
-const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck, logOutAction, modulesDuck, ...props}) => {
+const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck, logOutAction, modulesDuck,removeModulesLogout, ...props}) => {
 
     const [groups, setGroups] = useState([]);
     const [groupsRequests, setGroupsRequests] = useState([])
@@ -65,6 +66,7 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
         try {
             console.log('aqui')
             await logOutAction()
+            removeModulesLogout()
         } catch (e) {
             console.log('DrawerConfig logoutFunction error => ',e.toString())
         }
@@ -260,4 +262,4 @@ const mapState = (state) => {
     }
 }
 
-export default connect(mapState, {logOutAction})(CustomDrawerContent);
+export default connect(mapState, {logOutAction, removeModulesLogout})(CustomDrawerContent);

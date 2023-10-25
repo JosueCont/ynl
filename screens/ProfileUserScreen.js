@@ -152,8 +152,8 @@ const ProfileUserScreen = ({authDuck, navigation}) => {
                     firstName = response.data.firstName.split(' ');
                     lastName = response.data.lastName.split(' ');
                 }else{
-                    firstName = ['Actualiza']
-                    lastName = ['tus datos']
+                    firstName = ['Actualiza tus datos']
+                    lastName = ['↪' ] 
                 }
                 let dateCreated = moment(response.data.createdAt,).format("DD [de] MMMM [del] YYYY");
                 setImage(response?.data?.avatar?.url)
