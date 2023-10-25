@@ -280,10 +280,10 @@ const RouletteStep1Screen = ({navigation}) => {
 
 
                 <View  width={'100%'}>
-                    <View  style={{marginTop:15, marginBottom:-20}}>
-                     
-                    {fontsLoaded ? <Text color={Colors.black} style={{fontFamily: 'Amberla', fontSize:44, marginBottom:1,}} size={'xl'}  textAlign={'center'}>{t('roulette_how_i_feel')}</Text> : 
-                    (<Text> </Text> )}
+                    <View  style={{marginTop:15, marginBottom:-20, width:window_width/1.2, height:100, }}>
+                     <Image source={require('../assets/como_me.png')} style={{flex:1, resizeMode:'contain'}}/>
+                    {/*fontsLoaded ? <Text color={Colors.black} style={{fontFamily: 'Amberla', fontSize:44, marginBottom:1,}} size={'xl'}  textAlign={'center'}>{t('roulette_how_i_feel')}</Text> : 
+                    (<Text> </Text> )*/}
                         {/*<Text color={Colors.black} style={{marginBottom:1, marginTop:60, paddingLeft:20, paddingRight:20}} size={'lg'}  textAlign={'center'}>{t('roulette_how_are_you')}</Text> 
                         <Text color={'#FD5902'} style={{marginTop:10}}  textAlign={'center'}>{moment().format('LL')}</Text>
                         <Text color={'#FD5902'} style={{marginTop:10, paddingLeft:20, paddingRight:20}}  textAlign={'center'}>{t('roulette_istructions')}</Text> */}

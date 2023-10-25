@@ -300,20 +300,20 @@ const NewHome = ({navigation,}) => {
                     <View style={{ width:'90%',  alignSelf:'center', justifyContent:'space-evenly', flexDirection:'row' }}>
                         <View  backgroundColor={{ position:'relative', padding: 20, justifyContent:'center', backgroundColor:Colors.black }}>
                             <CircularProgress radius={45} activeStrokeWidth={10} value={modules?.progress[0]?.percentToNext}  progressValueColor={'#F3BC38'} inActiveStrokeColor='#ECE8E8' />
-                            <View style={{ textAlign:'center', backgroundColor:Colors.yellow, position:'absolute', justifyContent:'center', alignSelf:'center', marginTop:10, borderRadius:110, width: 66, height:66, left:12, top:2 }}>
-                                <Image source={EmotionalKargo} width={50} height={6} resizeMode='stretch' style={{ alignSelf:'center' }} />
+                            <View style={{ textAlign:'center', position:'absolute', justifyContent:'center', alignSelf:'center', marginTop:10, borderRadius:110, width: 66, height:66, left:12, top:2 }}>
+                                <Image source={EmotionalKargo} width={90} height={63} resizeMode='stretch' style={{ alignSelf:'center' }} />
                             </View>
                         </View>
                         <View  backgroundColor={{ position:'relative', backgroundColor:'red', padding: 20 }}>
                             <CircularProgress radius={45} activeStrokeWidth={10} value={modules?.progress[1]?.percentToNext}  progressValueColor={'#F3BC38'} inActiveStrokeColor='#ECE8E8' />
-                            <View style={{ backgroundColor:"#93973D", position:'absolute', justifyContent:'center', alignSelf:'center', marginTop:10, borderRadius:110, width: 66, height:66, left:12, top:2 }}>
-                                <Image source={LifeMachine} width={50} height={6} resizeMode='stretch' style={{ alignSelf:'center' }} />
+                            <View style={{ position:'absolute', justifyContent:'center', alignSelf:'center', marginTop:10, borderRadius:110, width: 66, height:66, left:12, top:2 }}>
+                                <Image source={LifeMachine} width={90} height={63} resizeMode='stretch' style={{ alignSelf:'center' }} />
                             </View>
                         </View>
                         <View  backgroundColor={{ position:'relative', backgroundColor:'red', padding: 20 }}>
                             <CircularProgress radius={45} activeStrokeWidth={10} value={modules?.progress[2]?.percentToNext}  progressValueColor={'#F3BC38'} inActiveStrokeColor='#ECE8E8' />
-                            <View style={{ backgroundColor:Colors.red2, position:'absolute', justifyContent:'center', alignSelf:'center', marginTop:10, borderRadius:110, width: 65, height:65, left:13, top:2 }}>
-                                <Image source={SixPack} width={50} height={6} resizeMode='stretch' style={{ alignSelf:'center' }} />    
+                            <View style={{ position:'absolute', justifyContent:'center', alignSelf:'center', marginTop:10, borderRadius:110, width: 65, height:65, left:13, top:2 }}>
+                                <Image source={SixPack} width={90} height={63} resizeMode='stretch' style={{ alignSelf:'center' }} />    
                             </View>
                         </View>
                         {/* <View width={'25%'} backgroundColor={{ position:'relative', backgroundColor:'red', padding: 20 }}>
@@ -360,14 +360,14 @@ const NewHome = ({navigation,}) => {
                         <TouchableOpacity onPress={() => navigation.navigate("ProjectsList")} >
                             <View style={{ position:'relative', justifyContent:'center' }} width={45} height={45}>
                                 <Image source={Yellow} resizeMode='contain' style={{ position:'absolute', zIndex:-1 }} />
-                                <Image source={ListIcon} style={{alignSelf:'center'}} />
+                                <Image source={ListIcon} style={{alignSelf:'center', height:25, width:20}}/>
                             </View>
                         </TouchableOpacity> ) : null}
                         {getPermissionsModules('GOALS') ? (
                         <TouchableOpacity onPress={() => navigation.navigate("GoalsScreen")}>
                             <View style={{ position:'relative', justifyContent:'center' }} width={45} height={45}>
                                 <Image source={Yellow} resizeMode='contain' style={{ position:'absolute', zIndex:-1 }} />
-                                <Image source={ObjetivosIcon} style={{alignSelf:'center'}} />
+                                <Image source={ObjetivosIcon} style={{alignSelf:'center', height:24, width:24}} />
                             </View>
                         </TouchableOpacity>) : null}
                         <TouchableOpacity onPress={() => setModalPhraseVisible(true)}>
@@ -380,7 +380,7 @@ const NewHome = ({navigation,}) => {
                         <TouchableOpacity onPress={() => navigation.navigate('BookList')}>
                             <View style={{ position:'relative', justifyContent:'center' }} width={45} height={45}>
                                 <Image source={Yellow} resizeMode='contain' style={{ position:'absolute', zIndex:-1 }} />
-                                <Image source={BookmarkIcon} style={{alignSelf:'center'}} />
+                                <Image source={BookmarkIcon} style={{alignSelf:'center', height:25, width:20}} />
                             </View>
                         </TouchableOpacity>) : null}
                         {/*<TouchableOpacity>

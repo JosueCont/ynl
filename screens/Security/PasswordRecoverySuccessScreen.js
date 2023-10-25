@@ -2,7 +2,7 @@ import React from 'react';
 import {ImageBackground} from "react-native";
 import {Button, Image, Text, View} from "native-base";
 import logoSmall from "../../assets/logoSmall.png";
-import bgIntro from "../../assets/bgIntro.jpg";
+import bgIntro from "../../assets/bgIntro.png";
 import {connect} from "react-redux";
 import {t} from 'i18n-js'
 import {loginEmail} from "../../redux/ducks/authDuck";

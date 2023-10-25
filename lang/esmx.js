@@ -32,11 +32,12 @@ export const esmx = {
     'roulette_how_are_you':'¿Cómo te sientes hoy?',
     'roulette_how_i_feel':'¿Cómo me siento?',
     'roulette_istructions':'Gira la ruleta para elegir el sentimiento que más describe tu situación actual',
-    'roulette_today_yourfeel':'Hoy te sientes...',
+    'roulette_today_yourfeel':'Hoy siento...',
     'roulette_share_why':'¿Por qué me siento así?',
     'roulette_finish':'Terminar',
     'roulette_get_into':'Ingresar',
     'select': 'Selecciona',
+    'i_feel': 'Me siento',
 
     //Aspectos
     'aspects_1_to_10':'Del 1 al 10',
@@ -139,7 +140,8 @@ export const esmx = {
     'error_password_minimun':'La contraseña debe ser de al menos 8 caracteres',
     'error_try_later':'Ocurrió un error, intentalo más tarde',
     'no_data':'Sin datos',
-    'delete_account':'¿Está seguro que desea eliminar sus datos?, Esta acción es irreversible y no podrá recuperar sus datos una vez eliminados',
+    'delete_account':'¿Está seguro de que desea eliminar sus datos?',
+    'delete_account2':'Esta acción es irreversible y no podrá recuperar sus datos una vez eliminados',
     'atention':'Atención',
 
     //Emotions
