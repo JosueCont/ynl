@@ -122,6 +122,7 @@ const NewHome = ({navigation,}) => {
     const getModulesAndProgress = async() => {
         try {
             const modules = await AsyncStorage.getItem(`modules${authDuck?.user?.id.toString()}`)
+            console.log('modules',`modules${authDuck?.user?.id.toString()}`,JSON.parse(modules))
             if(modules) dispatch(saveInfoModules(JSON.parse(modules)))
 
         } catch (e) {
