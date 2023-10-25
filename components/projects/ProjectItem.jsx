@@ -1,5 +1,5 @@
 import { View, VStack, HStack, Text, Image, Progress, Modal } from 'native-base'
-import { StyleSheet, TouchableOpacity, Alert} from 'react-native'
+import { StyleSheet, TouchableOpacity, Alert, ActivityIndicator} from 'react-native'
 import React,{useEffect,useState} from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import {Colors} from '../../utils/Colors'
@@ -12,13 +12,12 @@ import { deleteProject } from '../../redux/ducks/projectsDuck'
 import ApiApp from "../../utils/ApiApp";
 import { useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient';
-import {Ionicons, AntDesign, MaterialIcons} from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const ProjectItem = ({project, refreshProjects}) => {
     const [isDeleteDialogVisible, setDeleteDialogVisible] = useState(false);
     const dispatch = useDispatch()
-    const [loadingImage, setLoadingImage] = useState(null);
-
+    const [loadingImage, setLoadingImage] = useState(null); 
 
     const handleDeleteProject = async (projectId) => {
         
@@ -44,7 +43,7 @@ const ProjectItem = ({project, refreshProjects}) => {
     };
 
     const deleteConfirmation = () => {
-      Alert.alert("Eliminar proyecto", "¿Esta seguro de eliminar?", [
+      Alert.alert("Eliminar proyecto", `¿Está seguro de eliminar el proyecto:   ${project.attributes.name}?`, [
         {
           text: "Cancelar",
           onPress: () => setDeleteDialogVisible(false),
@@ -67,7 +66,7 @@ const ProjectItem = ({project, refreshProjects}) => {
 
     const pickImage = async () => {
       try {
-        setLoadingImage(true);
+        setLoadingImage(false);
 
         let result = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -78,6 +77,7 @@ const ProjectItem = ({project, refreshProjects}) => {
         if (result.cancelled) {
           setLoadingImage(false);
         } else {
+          setLoadingImage(true);
           const { uri, type } = result;
           const fileInfo = await getFileInfo(result.uri);
 
@@ -166,20 +166,29 @@ const ProjectItem = ({project, refreshProjects}) => {
                 {project?.attributes?.name}
               </Text>
             </VStack>
-             
-          
-            <TouchableOpacity style={styles.imageContainer} onPress={() => pickImage()}>
-              <Image
-                style={styles.imageProject}
-                resizeMode="center"
-                source={{
-                  uri: getUrlImage(
-                    project?.attributes?.image?.data?.attributes?.url
-                  ),
-                }}
-              />
+
+            <TouchableOpacity
+              style={styles.imageContainer}
+              onPress={() => pickImage()}
+            >
+              <View>
+                <Image
+                  style={styles.imageProject}
+                  resizeMode="center"
+                  source={{
+                    uri: getUrlImage(
+                      project?.attributes?.image?.data?.attributes?.url
+                    ),
+                  }}
+                />
+                {loadingImage && (
+                  <View style={styles.activityIndicator}>
+                    <ActivityIndicator size={70} color={Colors.yellowV2} />
+                  </View>
+                )}
+              </View>
             </TouchableOpacity>
-            
+
             <TouchableOpacity
               style={styles.deleteIconContainer}
               onPress={deleteConfirmation}
@@ -190,25 +199,9 @@ const ProjectItem = ({project, refreshProjects}) => {
                 name="cancel"
                 resizeMode="contain"
                 pl={14}
-                // onPress={() => handleDeleteProject(project.id)}
               />
             </TouchableOpacity>
           </HStack>
-          {/* <Modal
-            visible={isDeleteConfirmationOpen}
-            transparent={true}
-            animationType="slide"
-          >
-            <View style={styles.modalContainer}>
-              <Text>Are you sure you want to delete this project?</Text>
-              <TouchableOpacity onPress={handleConfirmDelete}>
-                <Text>Confirm</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={handleCancelDelete}>
-                <Text>Cancel</Text>
-              </TouchableOpacity>
-            </View>
-          </Modal> */}
           <Progress
             value={getProgressProject(project)}
             mt={2}
@@ -266,5 +259,17 @@ const styles = StyleSheet.create({
       },
       imageContainer: {
         width: '100%',
+      },
+      activityIndicator: {
+        position: 'absolute',
+        width: '50%',
+        height: 100,
+        top: 0,
+        left: 0,
+        right: 50,
+        bottom: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // A semi-transparent background to make it stand out
       },
 })
