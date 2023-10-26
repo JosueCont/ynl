@@ -197,7 +197,7 @@ export const printProject = async (data) => {
                 </td>
             </tr>
             <tr>
-                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>${logoYnl}</b></td>
+                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>Objetivo</b></td>
             </tr>
             <tr>
                 <td colspan="3" style="padding: 10px; padding-bottom: 50px;">${data.attributes.goal === null ? "" : data?.attributes.goal}</td>
