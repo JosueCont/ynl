@@ -8,7 +8,8 @@ const initialData = {
     loading: false,
     loadingOverlay: false,
     jwt: null,
-    userSiteConfig:null
+    userSiteConfig:null,
+    provitionalData:null
 }
 
 const START = 'START';
@@ -22,7 +23,10 @@ const LOGIN_EMAIL_ERROR = 'LOGIN_EMAIL_ERROR';
 const LOGIN_KHOR = 'LOGIN_KHOR';
 const LOGIN_KHOR_SUCCESS = 'LOGIN_KHOR_SUCCESS';
 const LOGIN_KHOR_ERROR = 'LOGIN_EMAIL_ERROR';
-const LOADING_OVERLAY = 'LOADING_OVERLAY'
+const LOADING_OVERLAY = 'LOADING_OVERLAY';
+const REGISTER_SUCCESS = 'register_success';
+const SET_PROVITIONAL_DATA = 'set_provitional_data';
+const DELETE_PROVITIONAL_DATA = 'delete_provitional_data';
 
 
 const authDuck = (state = initialData, action) => {
@@ -35,6 +39,8 @@ const authDuck = (state = initialData, action) => {
             return { ...state, loading: false, isLogged: false }
         case LOGIN_EMAIL_SUCCESS:
             return { ...state, loading: false, userSiteConfig:action.payload.site, user: action.payload.user, jwt: action.payload.jwt, isLogged: true }
+        case REGISTER_SUCCESS:
+            return { ...state, loading:false, user:action.payload.user, jwt: action.payload.jwt}
         case SUCCESS:
             return { ...state, ...action.payload }
         case LOGOUT:
@@ -51,6 +57,10 @@ const authDuck = (state = initialData, action) => {
             return {...state, loading: false, userSiteConfig:action.payload.site,  user: action.payload.user, jwt: action.payload.jwt, isLogged: true}
         case LOADING_OVERLAY: 
             return {...state, loadingOverlay: action.payload}
+        case SET_PROVITIONAL_DATA:
+            return {...state, provitionalData: action.payload }
+        case DELETE_PROVITIONAL_DATA:
+            return {...state, provitionalData:null}
         default:
             return state
     }
@@ -104,6 +114,10 @@ export let loginEmail = (username, password) => async (dispatch) => {
             identifier: username,
             password: password
         })
+
+        dispatch({type:DELETE_PROVITIONAL_DATA})
+
+        console.log('response',response.data)
 
 
         // console.log(response, 60)
@@ -251,8 +265,10 @@ export let logOutAction = () => async (dispatch) => {
 export let registerAction = (data) => async (dispatch) => {
     try {
         dispatch({ type: START });
+        dispatch({type: SET_PROVITIONAL_DATA, payload:data})
         let response = await ApiApp.register(data);
-        dispatch({ type: SUCCESS });
+        console.log('response sign up', response.data)
+        dispatch({ type: REGISTER_SUCCESS, payload:{user: response.data.user, jwt:response.data.jwt} });
 
     } catch (e) {
         console.log('authDuck registerAction error =>', e.toString())
