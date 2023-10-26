@@ -166,10 +166,14 @@ export const printProject = async (data) => {
     const { default: appStore } = await import('../assets/app_store.png')
     const { default: playStore } = await import('../assets/play_store.png')
 
-    const logoYnl = Image.resolveAssetSource(imageYnl).uri
-    const logoSixPack = Image.resolveAssetSource(imageSixPack).uri
-    const appStoreUrl = Image.resolveAssetSource(appStore).uri
-    const playStoreUrl = Image.resolveAssetSource(playStore).uri
+    /* const logoYnl = Image.resolveAssetSource(imageYnl).uri */
+    const logoYnl = "https://app-ynl.s3.us-west-1.amazonaws.com/new_logo_9f8f5943b8.png"
+    /* const logoSixPack = Image.resolveAssetSource(imageSixPack).uri */
+    const logoSixPack = "https://app-ynl.s3.us-west-1.amazonaws.com/six_pack_2773652b37.png"
+    /* const appStoreUrl = Image.resolveAssetSource(appStore).uri */
+    const appStoreUrl = "https://app-ynl.s3.us-west-1.amazonaws.com/app_store_0ee7e7bc79.png"
+    /* const playStoreUrl = Image.resolveAssetSource(playStore).uri */
+    const playStoreUrl = "https://app-ynl.s3.us-west-1.amazonaws.com/play_store_bab348f5ee.png"
     
 
     const html = `<!DOCTYPE html>
@@ -263,10 +267,14 @@ export const SharePdfProject = async (data) => {
     const { default: appStore } = await import('../assets/app_store.png')
     const { default: playStore } = await import('../assets/play_store.png')
 
-    const logoYnl = Image.resolveAssetSource(imageYnl).uri
-    const logoSixPack = Image.resolveAssetSource(imageSixPack).uri
-    const appStoreUrl = Image.resolveAssetSource(appStore).uri
-    const playStoreUrl = Image.resolveAssetSource(playStore).uri
+    /* const logoYnl = Image.resolveAssetSource(imageYnl).uri */
+    const logoYnl = "https://app-ynl.s3.us-west-1.amazonaws.com/new_logo_9f8f5943b8.png"
+    /* const logoSixPack = Image.resolveAssetSource(imageSixPack).uri */
+    const logoSixPack = "https://app-ynl.s3.us-west-1.amazonaws.com/six_pack_2773652b37.png"
+    /* const appStoreUrl = Image.resolveAssetSource(appStore).uri */
+    const appStoreUrl = "https://app-ynl.s3.us-west-1.amazonaws.com/app_store_0ee7e7bc79.png"
+    /* const playStoreUrl = Image.resolveAssetSource(playStore).uri */
+    const playStoreUrl = "https://app-ynl.s3.us-west-1.amazonaws.com/play_store_bab348f5ee.png"
 
     const html = `<!DOCTYPE html>
     <html lang="en">
