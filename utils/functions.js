@@ -187,17 +187,17 @@ export const printProject = async (data) => {
         <table style="width: 100%;">
             <tr>
                 <td style=" padding-top: 20px; padding-bottom:20px">
-                    <img src="${logoYnl }" width="100px" height="90px" />
+                    <img src=${logoYnl} width="100px" height="90px" />
                 </td>
                 <td style=" padding-top: 20px; padding-bottom:20px; ext-align: center; text-align: center;" >
                     ${data?.attributes?.name}
                 </td>
                 <td style=" padding-top: 20px; padding-bottom:20px; text-align: right;">
-                    <img src="${logoSixPack }" width="100px" height="80px" />
+                    <img src=${logoSixPack} width="100px" height="80px" />
                 </td>
             </tr>
             <tr>
-                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>Objetivo</b></td>
+                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>${logoYnl}</b></td>
             </tr>
             <tr>
                 <td colspan="3" style="padding: 10px; padding-bottom: 50px;">${data.attributes.goal === null ? "" : data?.attributes.goal}</td>
@@ -243,10 +243,10 @@ export const printProject = async (data) => {
                                 Encuéntranos en las tiendas como YNL:
                             </td>
                             <td>
-                                <img src="${appStoreUrl }" width="160px" height="50px" />
+                                <img src=${appStoreUrl} width="160px" height="50px" />
                             </td>
                             <td>
-                                <img src="${playStoreUrl }" width="150px" height="65px" />
+                                <img src=${playStoreUrl} width="150px" height="65px" />
                             </td>
                         </tr>
                     </table>
@@ -287,13 +287,13 @@ export const SharePdfProject = async (data) => {
         <table style="width: 100%;">
             <tr>
                 <td style=" padding-top: 20px; padding-bottom:20px">
-                    <img src="${logoYnl }" width="100px" height="90px" />
+                    <img src="${logoYnl}" width="100px" height="90px" />
                 </td>
                 <td style=" padding-top: 20px; padding-bottom:20px; ext-align: center; text-align: center;" >
                     ${data?.attributes?.name}
                 </td>
                 <td style=" padding-top: 20px; padding-bottom:20px; text-align: right;">
-                    <img src="${logoSixPack }" width="100px" height="80px" />
+                    <img src="${logoSixPack}" width="100px" height="80px" />
                 </td>
             </tr>
             <tr>
@@ -343,10 +343,10 @@ export const SharePdfProject = async (data) => {
                                 Encuéntranos en las tiendas como YNL:
                             </td>
                             <td>
-                                <img src="${appStoreUrl }" width="160px" height="50px" />
+                                <img src="${appStoreUrl}" width="160px" height="50px" />
                             </td>
                             <td>
-                                <img src="${playStoreUrl }" width="150px" height="65px" />
+                                <img src="${playStoreUrl}" width="150px" height="65px" />
                             </td>
                         </tr>
                     </table>
