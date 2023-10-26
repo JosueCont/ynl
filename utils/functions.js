@@ -166,10 +166,14 @@ export const printProject = async (data) => {
     const { default: appStore } = await import('../assets/app_store.png')
     const { default: playStore } = await import('../assets/play_store.png')
 
-    const logoYnl = Image.resolveAssetSource(imageYnl).uri
-    const logoSixPack = Image.resolveAssetSource(imageSixPack).uri
-    const appStoreUrl = Image.resolveAssetSource(appStore).uri
-    const playStoreUrl = Image.resolveAssetSource(playStore).uri
+    /* const logoYnl = Image.resolveAssetSource(imageYnl).uri */
+    const logoYnl = "https://app-ynl.s3.us-west-1.amazonaws.com/new_logo_9f8f5943b8.png"
+    /* const logoSixPack = Image.resolveAssetSource(imageSixPack).uri */
+    const logoSixPack = "https://app-ynl.s3.us-west-1.amazonaws.com/six_pack_2773652b37.png"
+    /* const appStoreUrl = Image.resolveAssetSource(appStore).uri */
+    const appStoreUrl = "https://app-ynl.s3.us-west-1.amazonaws.com/app_store_0ee7e7bc79.png"
+    /* const playStoreUrl = Image.resolveAssetSource(playStore).uri */
+    const playStoreUrl = "https://app-ynl.s3.us-west-1.amazonaws.com/play_store_bab348f5ee.png"
     
 
     const html = `<!DOCTYPE html>
@@ -183,17 +187,17 @@ export const printProject = async (data) => {
         <table style="width: 100%;">
             <tr>
                 <td style=" padding-top: 20px; padding-bottom:20px">
-                    <img src="${logoYnl }" width="100px" height="90px" />
+                    <img src=${logoYnl} width="100px" height="90px" />
                 </td>
                 <td style=" padding-top: 20px; padding-bottom:20px; ext-align: center; text-align: center;" >
                     ${data?.attributes?.name}
                 </td>
                 <td style=" padding-top: 20px; padding-bottom:20px; text-align: right;">
-                    <img src="${logoSixPack }" width="100px" height="80px" />
+                    <img src=${logoSixPack} width="100px" height="80px" />
                 </td>
             </tr>
             <tr>
-                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>Objetivo</b></td>
+                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>${logoYnl}</b></td>
             </tr>
             <tr>
                 <td colspan="3" style="padding: 10px; padding-bottom: 50px;">${data.attributes.goal === null ? "" : data?.attributes.goal}</td>
@@ -239,10 +243,10 @@ export const printProject = async (data) => {
                                 Encuéntranos en las tiendas como YNL:
                             </td>
                             <td>
-                                <img src="${appStoreUrl }" width="160px" height="50px" />
+                                <img src=${appStoreUrl} width="160px" height="50px" />
                             </td>
                             <td>
-                                <img src="${playStoreUrl }" width="150px" height="65px" />
+                                <img src=${playStoreUrl} width="150px" height="65px" />
                             </td>
                         </tr>
                     </table>
@@ -263,10 +267,14 @@ export const SharePdfProject = async (data) => {
     const { default: appStore } = await import('../assets/app_store.png')
     const { default: playStore } = await import('../assets/play_store.png')
 
-    const logoYnl = Image.resolveAssetSource(imageYnl).uri
-    const logoSixPack = Image.resolveAssetSource(imageSixPack).uri
-    const appStoreUrl = Image.resolveAssetSource(appStore).uri
-    const playStoreUrl = Image.resolveAssetSource(playStore).uri
+    /* const logoYnl = Image.resolveAssetSource(imageYnl).uri */
+    const logoYnl = "https://app-ynl.s3.us-west-1.amazonaws.com/new_logo_9f8f5943b8.png"
+    /* const logoSixPack = Image.resolveAssetSource(imageSixPack).uri */
+    const logoSixPack = "https://app-ynl.s3.us-west-1.amazonaws.com/six_pack_2773652b37.png"
+    /* const appStoreUrl = Image.resolveAssetSource(appStore).uri */
+    const appStoreUrl = "https://app-ynl.s3.us-west-1.amazonaws.com/app_store_0ee7e7bc79.png"
+    /* const playStoreUrl = Image.resolveAssetSource(playStore).uri */
+    const playStoreUrl = "https://app-ynl.s3.us-west-1.amazonaws.com/play_store_bab348f5ee.png"
 
     const html = `<!DOCTYPE html>
     <html lang="en">
@@ -279,13 +287,13 @@ export const SharePdfProject = async (data) => {
         <table style="width: 100%;">
             <tr>
                 <td style=" padding-top: 20px; padding-bottom:20px">
-                    <img src="${logoYnl }" width="100px" height="90px" />
+                    <img src="${logoYnl}" width="100px" height="90px" />
                 </td>
                 <td style=" padding-top: 20px; padding-bottom:20px; ext-align: center; text-align: center;" >
                     ${data?.attributes?.name}
                 </td>
                 <td style=" padding-top: 20px; padding-bottom:20px; text-align: right;">
-                    <img src="${logoSixPack }" width="100px" height="80px" />
+                    <img src="${logoSixPack}" width="100px" height="80px" />
                 </td>
             </tr>
             <tr>
@@ -335,10 +343,10 @@ export const SharePdfProject = async (data) => {
                                 Encuéntranos en las tiendas como YNL:
                             </td>
                             <td>
-                                <img src="${appStoreUrl }" width="160px" height="50px" />
+                                <img src="${appStoreUrl}" width="160px" height="50px" />
                             </td>
                             <td>
-                                <img src="${playStoreUrl }" width="150px" height="65px" />
+                                <img src="${playStoreUrl}" width="150px" height="65px" />
                             </td>
                         </tr>
                     </table>
