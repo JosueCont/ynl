@@ -25,13 +25,18 @@ const ModalDayPhrase = ({phrase = "", visible, closeModalPhrase, ...props}) => {
         try {
             const result = await Share.share({
                 message:
-                  phrase
+                phraseConvert(phrase)
               });
               
         } catch (error) {
             console.log(error)
         }
     }
+
+    const phraseConvert = (phrase) => {
+        if(/[?!.]$/.test(phrase)) return ( /[?.]$/.test(phrase) ? '¿' : '¡') + phrase.charAt(1).toUpperCase() + phrase.slice(2).toLowerCase()
+        else return phrase.charAt(0).toUpperCase() + phrase.slice(1).toLowerCase()
+      };
 
   return (
     <Modal
