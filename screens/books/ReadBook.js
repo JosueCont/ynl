@@ -89,6 +89,7 @@ const ReadBook = ({route, navigation, ...props}) => {
         if(save){
             setSavingProgress(false)
             toast.show({ title: 'Avance de lectura actualizado' }) 
+            setCurrentBook({...currentBook, last_page_read: currentPage })
         }
     }
 
