@@ -297,6 +297,7 @@ const ReadBook = ({route, navigation, ...props}) => {
                             {
                                 pages.length > 0 &&
                                 <ImageViewer 
+                                renderIndicator={() => null}
                                     maxOverflow={1000}
                                     index={currentPage}  
                                     imageUrls={pages}

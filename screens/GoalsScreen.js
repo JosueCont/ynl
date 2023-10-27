@@ -68,6 +68,12 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
   }
 
   useEffect(() => {
+    console.log('==========================>')
+    console.log(authDuck.user)
+  }, [authDuck])
+  
+
+  useEffect(() => {
     fillCategories()
     const today = moment()
     setDateToday(today)
@@ -76,8 +82,6 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
 
   useEffect(() => {
     let newList = []
-    console.log('<<<<<<<<<<<<<<<<<<<<<<<first>>>>>>>>>>>>>>>>>>>>>>>')
-    console.log(goalsDuck?.dailyGoals)
     /* console.log('goalsDuck?.dailyGoals', goalsDuck?.dailyGoals) */
     goalsDuck?.dailyGoals?.map(item => {
       newList.push({
@@ -271,8 +275,8 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
             <HStack justifyContent={'center'} marginTop={5} space={5}>
               {
                 loading ? <Skeleton width={10} />: 
-                <TouchableOpacity onPress={predDay}>
-                  <Icon as={<AntDesign name="left"/>} size={7} marginY={'auto'} /> 
+                <TouchableOpacity  onPress={predDay} disabled={moment(authDuck?.user?.createdAt).format("YYYY-MM-DD") === dateSelected?.format("YYYY-MM-DD") ? true : false} >
+                  <Icon opacity={moment(authDuck?.user?.createdAt).format("YYYY-MM-DD") === dateSelected?.format("YYYY-MM-DD") ? 0 : 1 } as={<AntDesign name="left"/>} size={7} marginY={'auto'} /> 
                 </TouchableOpacity>
               }
               
