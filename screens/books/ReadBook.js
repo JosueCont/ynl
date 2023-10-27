@@ -89,6 +89,7 @@ const ReadBook = ({route, navigation, ...props}) => {
         if(save){
             setSavingProgress(false)
             toast.show({ title: 'Avance de lectura actualizado' }) 
+            setCurrentBook({...currentBook, last_page_read: currentPage })
         }
     }
 
@@ -296,6 +297,7 @@ const ReadBook = ({route, navigation, ...props}) => {
                             {
                                 pages.length > 0 &&
                                 <ImageViewer 
+                                renderIndicator={() => null}
                                     maxOverflow={1000}
                                     index={currentPage}  
                                     imageUrls={pages}

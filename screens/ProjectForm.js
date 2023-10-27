@@ -1,5 +1,5 @@
-import {ScrollView , Text, View, HStack, Image, VStack, Progress, Center, Input, Spacer, TextArea, Skeleton, useToast, Box, Icon, KeyboardAvoidingView } from 'native-base'
-import { SafeAreaView, TouchableOpacity , StyleSheet, Dimensions, ActivityIndicator} from 'react-native'
+import {ScrollView , Text, View, HStack, Image, VStack, Progress, Center, Input, Spacer, TextArea, Skeleton, useToast, Box, Icon, KeyboardAvoidingView, Spinner } from 'native-base'
+import { SafeAreaView, TouchableOpacity , StyleSheet, Dimensions, ActivityIndicator, Image as Img, TouchableHighlight} from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { getProjectId, updProject, updProjectName } from '../redux/ducks/projectsDuck'
 import { getProgressProject } from '../utils/functions'
@@ -12,7 +12,7 @@ import {Keyboard, Platform, TouchableWithoutFeedback} from "react-native";
 import FooterLines from '../components/FooterLines'
 import ProjectItem from '../components/projects/ProjectItem'
 import { SharePdfProject, printProject } from '../utils/functions'
-
+import { useFonts } from 'expo-font';
 
 import Accordion from 'react-native-collapsible/Accordion';
 
@@ -46,11 +46,15 @@ const ProjectForm = ({route, ...props}) => {
     const saving = useSelector(state => state?.projectsDuck?.saving)
     const books = useSelector(state => state?.booksDuck?.books)
 
-    const [activeSections, setActiveSections] = useState([]);
+    const [activeSection, setActiveSection] = useState(null);
     const [project, setProject] = useState(null)
     const [form, setForm] = useState({})
     const [updinfo, setUpdinfo] = useState(false)
     const [saveLoading, setSaveLoading] = useState(false)
+
+    const [fontsLoaded] = useFonts({
+      'ContractRegular': require('../assets/fonts/ContractRegular.otf')
+    });
 
     const navigation = useNavigation();
     const toast = useToast();
@@ -102,7 +106,6 @@ const ProjectForm = ({route, ...props}) => {
 
     useEffect(() => {
         setProject(null)
-        setActiveSections([])
         setForm({})
         setUpdinfo(false)
         if (route?.params?.project_id) {
@@ -111,9 +114,11 @@ const ProjectForm = ({route, ...props}) => {
     }, [route.params])
     
 
-    const setSections = (sections) => {
-        setActiveSections(sections.includes(undefined) ? [] : sections);
-    };
+    
+
+
+  
+  
 
 
   const renderHeader = (section, _, isActive) => {
@@ -132,34 +137,34 @@ const ProjectForm = ({route, ...props}) => {
         <LinearGradient
         // Button Linear Gradient  131212
         colors={['#5E5C5C', '#5E5C5C']}
-        style={{ marginTop:10, height:40, backgroundColor:'#4F4C4C', paddingHorizontal:10, borderRadius:12 }}
+        style={{  height:40, backgroundColor:'#4F4C4C', paddingHorizontal:10, borderRadius:12 }}
       > 
-      <HStack justifyContent={'space-between'} paddingLeft={4} height={'100%'}>
-        <View flexDirection={'row'} >
-            <VStack justifyContent={'center'}>
-                <Image
-                    alt='goal' 
-                    source={section?.icon} height={5} resizeMode='contain'
+        <TouchableHighlight underlayColor={null} onPress={() => setActiveSection(section.name)}>
+          <HStack justifyContent={'space-between'} paddingLeft={4} height={'100%'}>
+            <View flexDirection={'row'} >
+                <VStack justifyContent={'center'}>
+                    <Image
+                        alt='goal' 
+                        source={section?.icon} height={5} resizeMode='contain'
+                    />
+                </VStack>
+                <VStack justifyContent={'center'}>
+                {fontsLoaded ?<Text style={styles.txtHeader} /* fontSize={'lg'}  */>
+                        {section.title}
+                    </Text>: <></>}
+                </VStack>
+            </View>
+            <VStack justifyContent={'center'} >
+                  <Img
+                    alt='check'
+                    source={validateIcon(section) === true ? CheckYellow : CirclePlus}
+                    resizeMode='contain'
+                    height={6}
+                    width={6}
                 />
             </VStack>
-            <VStack justifyContent={'center'}>
-                <Text style={styles.txtHeader} /* fontSize={'lg'}  */>
-                    {section.title}
-                </Text>
-            </VStack>
-        </View>
-        <VStack justifyContent={'center'} >
-            {
-                !saving && !loading && Object.keys(form).length > 0 && <Image 
-                        alt='check'
-                        source={validateIcon(section) ? CheckYellow : CirclePlus}
-                        resizeMode='contain'
-                        height={6}
-                        width={6}
-                    />
-            }
-        </VStack>
-      </HStack>
+          </HStack>
+        </TouchableHighlight>
       </LinearGradient>
     );
   };
@@ -169,7 +174,7 @@ const ProjectForm = ({route, ...props}) => {
     setForm({...form, [section?.name] : val })
   }
 
-  const renderContent = (section, _, isActive) => {
+  const renderContent = (section) => {
     return (
             <View style={{ borderColor: Colors.orange, borderWidth: 2, borderStyle:'solid', borderRadius:7 }} >
                     <TextArea backgroundColor={'transparent'}  onChangeText={(text) => changeTextForm(section, text) }  value={ form ? form[section?.name] : null} />
@@ -185,31 +190,31 @@ const ProjectForm = ({route, ...props}) => {
           icon: ObjetivoIcon
         },
         {
-            title: '¿POR QUE?',
+            title: '¿POR QUÉ?',
             name: 'reason',
             content: '',
             icon: PorQueIcon
         },
         {
-            title: '¿COMO?',
+            title: '¿CÓMO?',
             name: 'how',
             content: '',
             icon: ComoIcon
         },
         {
-            title: '¿CUANDO?',
+            title: '¿CUÁNDO?',
             name: 'when',
             content: '',
             icon: CuandoIcon
         },
         {
-            title: '¿DONDE?',
+            title: '¿DÓNDE?',
             name: 'where',
             content: '',
             icon: DondeIcon
         },
         {
-            title: '¿CUANTO?',
+            title: '¿CUÁNTO?',
             name: 'how_much',
             content: '',
             icon: CuantoIcon
@@ -302,7 +307,8 @@ const ProjectForm = ({route, ...props}) => {
                     //isReadOnly
                     InputRightElement={
                       saveLoading ? (
-                        <ActivityIndicator style={{marginRight:4}} size={25} color={Colors.yellowV2} />
+                        <Spinner color={Colors.yellowV2} style={{ marginRight :6 }} />
+                        
                       ) : (
                         <Ionicons
                           style={{marginRight:4}}
@@ -336,7 +342,14 @@ const ProjectForm = ({route, ...props}) => {
                     <Skeleton />
                   </VStack>
                 ) : (
-                  <Accordion
+                  <>
+                    { CONTENT.map(item => (
+                      <>
+                        {renderHeader(section=item)}
+                        {activeSection === item.name && renderContent(section=item)}
+                      </>
+                    ))}
+                  {/* <Accordion
                     activeSections={activeSections}
                     sections={CONTENT}
                     expandMultiple={false}
@@ -346,7 +359,8 @@ const ProjectForm = ({route, ...props}) => {
                     renderContent={renderContent}
                     duration={300}
                     onChange={setSections}
-                  />
+                  /> */}
+                  </>
                 )}
               </VStack>
             </HStack>
@@ -411,10 +425,10 @@ const styles = StyleSheet.create({
     },
     txtHeader:{
         marginLeft: 10,
-        fontFamily: 'Bebas-Regular',
+        fontFamily: 'ContractRegular',
         color: "#DCD7D7",
         height: 20,
-        fontSize: 20,
+        fontSize: 22,
         verticalAlign:'middle'
     },
     buttonsAction: { 

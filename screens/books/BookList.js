@@ -2,6 +2,7 @@ import React, {useEffect,useState} from 'react'
 import {ScrollView , Text, View, HStack, Image, VStack, Progress, Center, Skeleton } from 'native-base'
 import { SafeAreaView, TouchableOpacity , StyleSheet, Dimensions, RefreshControl} from 'react-native'
 import { getBooks } from '../../redux/ducks/booksDuck'
+import {useIsFocused} from "@react-navigation/native";
 
 /* Assets */
 import Logo from '../../assets/new_logo.png'
@@ -15,7 +16,7 @@ import { Colors } from '../../utils/Colors'
 
 
 
-const BookList = ({navigation, ...props}) => {
+const BookList = ({navigation, route, ...props}) => {
 
     const screenHeight = Dimensions.get("window").height;
     const user_id = useSelector(state => state?.authDuck?.user?.id)
@@ -24,6 +25,7 @@ const BookList = ({navigation, ...props}) => {
     const modules = useSelector(state => state?.modulesDuck.progress)
     const modulesData = useSelector(state => state?.modulesDuck.modules)
 
+    const isFocused = useIsFocused();
     const [refreshing, setRefreshing] = useState(false)
 
     const dispatch = useDispatch()
@@ -35,10 +37,10 @@ const BookList = ({navigation, ...props}) => {
     }
 
     useEffect(() => { 
-        if(user_id){
+        if(isFocused && user_id){
             dispatch(getBooks(user_id))  
         }        
-    }, [])
+    }, [isFocused, route])
 
     
 
