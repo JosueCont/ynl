@@ -18,11 +18,11 @@ const IntroScreen = ({navigation, authDuck}) => {
 
     const nextScreen = async () => {
         try {
-            if (authDuck.emotionStatus === 0 || authDuck.emotionStatus === undefined) {
-                navigation.navigate('RouletteStep1Screen', {from: 'intro'})
-            } else {
+            //if (authDuck.emotionStatus === 0 || authDuck.emotionStatus === undefined) {
+            //    navigation.navigate('RouletteStep1Screen', {from: 'intro'}) // cambiarla para que no mande directo a la ruleta
+            //} else {
                 navigation.navigate('HomeScreen')
-            }
+            //}
         } catch (e) {
             console.log(e.toString())
             console.log("IntroScreen nextScreen error =>",e.toString())
