@@ -34,7 +34,7 @@ const NewHome = ({navigation,}) => {
     moment.locale();
     const [loading, setLoading] = useState(false);
     const [image, setImage] = useState(null);
-    const [intro, setIntro] = useState(true);
+    const [intro, setIntro] = useState(null);
     const [refreshing, setRefreshing] = useState(false);
     const [modalPhraseVisible, setModalPhraseVisible] = useState(false)
     const [phraseDay, setPhraseDay] = useState(null)
@@ -200,7 +200,7 @@ const NewHome = ({navigation,}) => {
                 setPhraseDay(response?.data?.data?.phrase?.phrase)
                 dispatch(savePhraseDay(response?.data?.data?.phrase?.phrase))
                 if(response?.data?.data?.exist){ 
-                    setFirstDay(false)
+                    //setFirstDay(false)
                     return true
                 }else{
                     setFirstDay(true)
