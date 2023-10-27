@@ -9,7 +9,6 @@ const InputField = ({ name, formik, ...props }) => {
     setInputValue(textValue);
     formik.setFieldValue(name, textValue);
     if (props?.setEmail) {
-      alert("email");
       props.setEmail(textValue);
     }
   };
