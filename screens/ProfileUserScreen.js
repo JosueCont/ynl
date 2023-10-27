@@ -28,6 +28,7 @@ const ProfileUserScreen = ({authDuck, navigation}) => {
     const [isAllowSuggestions, setIsAllowSugges] = useState(false)
     const [suggestionFriends, setFriends] = useState([])
     const [myGoal, setGoal] = useState(null);
+    const [userData, setUserData] = useState(null)
     const [marksDays, setMarksDays] = useState([]);
     const [isFollowSomeone, setFollowSomeone] = useState(false)
     const [disableButtonFollow, setDisableButton] = useState(false)
@@ -159,6 +160,7 @@ const ProfileUserScreen = ({authDuck, navigation}) => {
                 setImage(response?.data?.avatar?.url)
                 setUserNane(`${firstName[0]} ${lastName[0]}`)
                 setDateUser(dateCreated)
+                setUserData(response?.data)
             }
             console.log('data',response)
         } catch (e) {
@@ -250,6 +252,7 @@ const ProfileUserScreen = ({authDuck, navigation}) => {
                         myGoal={myGoal}
                         loading={loading}
                         isMyProfile={true}
+                        userData={userData}
                         moveTo={() => navigation.navigate('Profile')}
                     />
 

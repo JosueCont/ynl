@@ -9,11 +9,13 @@ import StadisticPerson from "../components/StadisticPerson";
 import ApiApp from "../utils/ApiApp";
 import {connect} from "react-redux";
 import moment from "moment";
+import apiApp from "../utils/ApiApp";
 
 const ProfilePersonScreen = ({authDuck,navigation}) => {
     const isFocused = useIsFocused();
     const route = useRoute();
     const [userName, setUserNane] = useState(null)
+    const [userData, setUserData] = useState(null)
     const [loading, setLoading] = useState(false);
     const [image, setImage] = useState(null);
     const [dateCreatedUser, setDateUser] = useState(null)
@@ -30,17 +32,27 @@ const ProfilePersonScreen = ({authDuck,navigation}) => {
     const getData = async() => {
         try {
             setLoading(true)
-            await getPrifileData()
-            await getDailyGoal()
+            getPrifileData()
+            getDailyGoal()
             //await getDays()
-            await getCurrentStreak()
-
+            getCurrentStreak()
+            getGroupRequest()
             setTimeout(() => {
                 setLoading(false)
             }, 200)
         } catch (e) {
             console.log('error',e)
             setLoading(false)
+        }
+    }
+
+    const getGroupRequest=async ()=>{
+        try{
+            const res = await ApiApp.getGroupsRequests(route?.params?.id);
+            console.log(res)
+
+        }catch (e){
+
         }
     }
 
@@ -54,8 +66,10 @@ const ProfilePersonScreen = ({authDuck,navigation}) => {
                 setImage(response?.data?.avatar?.url)
                 setUserNane(`${firstName[0]} ${lastName[0]}`)
                 setDateUser(dateCreated)
+                setUserData(response?.data)
             }
-            console.log('data',response)
+            console.log('data----',response)
+            console.log('data----email',response?.data?.email)
         } catch (e) {
             console.log('error',e)
         }
@@ -96,13 +110,14 @@ const ProfilePersonScreen = ({authDuck,navigation}) => {
     console.log('route',route.params)
     return(
         <SafeAreaView style={{flex:1, backgroundColor:Colors.white}}>
-            <StadisticPerson 
+            <StadisticPerson
                 userName={userName}
                 dateCreatedUser={dateCreatedUser}
                 image={image}
                 currentStreakDay={currentStreakDay}
                 myGoal={myGoal}
                 loading={loading}
+                userData={{name:'ejemplo'}}
                 isMyProfile={false}
             />
         </SafeAreaView>
