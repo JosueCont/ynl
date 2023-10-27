@@ -10,7 +10,7 @@ import {t} from 'i18n-js';
 import {logOutAction} from "../redux/ducks/authDuck";
 import ApiApp from "../utils/ApiApp";
 import { getProjectsAvailable } from '../utils/functions'
-import {MaterialIcons, FontAwesome, Ionicons, FontAwesome5, Fontisto} from "@expo/vector-icons";
+import {MaterialIcons, FontAwesome, Ionicons, FontAwesome5, Fontisto, Entypo} from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
 import ModalDayPhrase from "../screens/Modals/ModalDayPhrase";
 import { removeModulesLogout } from "../redux/ducks/modulesDuck";
@@ -95,6 +95,20 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
           </View>
 
           <View flex={1} alignItems={"flex-start"} style={{marginLeft:45}}>
+            <View flexDirection={'row'} justifyContent={'center'} alignItems={'center'}>
+              <Entypo name="home" size={25} color={Colors.white} />
+              <TouchableOpacity
+                style={{marginLeft:15}}
+                onPress={() => {
+                  navigation.navigate("HomeScreen");
+                }}
+              >
+                <Text color={"white"} fontSize={20} my={2}>
+                    Inicio
+                </Text>
+              </TouchableOpacity>
+
+            </View>
             <View flexDirection={'row'} justifyContent={'center'} alignItems={'center'}>
               <FontAwesome name='vcard' size={20} color={Colors.white} />
               <TouchableOpacity
