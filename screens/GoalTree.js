@@ -115,10 +115,10 @@ const GoalTree = () => {
                                                             </View>
                                                         </HStack>
                                                         <Text textAlign={'center'} fontSize={14} style={{ fontWeight:'bold' }} >
-                                                                ¿Cuales son tu no negociables?
+                                                            ¿CUÁLES SON TUS NO NEGOCIABLES?
                                                         </Text>
                                                         <Text textAlign={'justify'} marginTop={3}>
-                                                            "Uno  de los grandes cambios realizados fue en todo aquello que integraba mi persona, hice un listado de todo aquello que tenía y quería cambiar, rutinas, hábitos, dietas, metodologias, plan de vida, evoluación etc. Dado esto la pregunta es constante ¿Que integra a Hiram como persona? pero lo más importante ha sido conocer mis No negociables, y los tuyos ¿Cuales son?"
+                                                            "Uno de los grandes cambios realizados fue en todo aquello que integraba mi persona, hice un listado de todo aquello que tenía y quería cambiar, rutinas, hábitos, dietas, metodologías, plan de vida, evolución etc, dado esto la pregunta es constante, ¿Qué integra a Hiram como persona? Pero lo más importante ha sido conocer mis No negociables, y los tuyos ¿Cuáles son?"
                                                         </Text>
                                                     </VStack>    
                                                 </View>
@@ -138,10 +138,10 @@ const GoalTree = () => {
                                                             </View>
                                                         </HStack>
                                                         <Text textAlign={'center'} fontSize={14} style={{ fontWeight:'bold' }} >
-                                                            ¿CUÁLES SON TU NO TANGIBLES DE TU PROFESIÓN?
+                                                            ¿CUÁLES SON LOS NO TANGIBLES DE TU PROFESIÓN?
                                                         </Text>
                                                         <Text textAlign={'justify'} marginTop={3}>
-                                                            "¡Ser profesional a toda costa! ¿En que consiste ser profesional y que tus acciones lo sean? Resultados, indicadores, evaluaciones, opiniones. ¿Cuál es tu actividad diaria que te convierte en un profesional? ¿Qué integra tu profesión, no tu tiluto?"
+                                                            "¡Ser profesional a toda costa! ¿En qué consiste ser profesional y que tus acciones lo sean? Resultados, indicadores, evaluaciones, opiniones. ¿Cuál es tu actividad diaria que te convierte en un profesional? ¿Qué integra tu profesión, no tu título?"
                                                         </Text>
                                                     </VStack>    
                                                 </View>
@@ -162,10 +162,10 @@ const GoalTree = () => {
                                                             </View>
                                                         </HStack>
                                                         <Text textAlign={'center'} fontSize={14} style={{ fontWeight:'bold' }} >
-                                                                EMPRENDER ¿PARA QUÉ?
+                                                            ¿EMPRENDER, PARA QUÉ?
                                                         </Text>
                                                         <Text textAlign={'justify'} marginTop={3}>
-                                                            "Con el paso del tiempo encontré que la mayoría de las personas, siempre están emprendiendo, desde proyectos personales, de negocios, de vida, etc. Lo triste es que la mayoría de estos planes también se quedan en el olvido, cuando un desbalance en otras áreas. ¿Cómo integras esta área? ¿Sabes que eres emprendedor y puedes llegar a ser empresario?"
+                                                            "Con el paso del tiempo encontré que la mayoría de las personas siempre están emprendiendo, desde proyectos personales, de negocios, de vida, etc. Lo triste es que la mayoría de estos planes también se quedan en el olvido, creando un desbalance en otras áreas. ¿Cómo integras esta área? ¿Sabes que eres emprendedor y puedes llegar a ser empresario?"
                                                         </Text>
                                                     </VStack>    
                                                 </View>
@@ -185,11 +185,11 @@ const GoalTree = () => {
                                                             </View>
                                                         </HStack>
                                                         <Text textAlign={'center'} fontSize={14} style={{ fontWeight:'bold' }} >
-                                                                ¿QUÉ COMPONE TU ESPIRITUALIDAD?
+                                                            ¿QUÉ COMPONE TU ESPIRITUALIDAD?
                                                         </Text>
                                                         <Text textAlign={'justify'} marginTop={3}>
-                                                            "La espiritualidad no consiste en saber lo que quieres, si no en comprender lo que no necesitas". En esta frase he basado esta área tan importante para su servidor, comprender que aquello que me hace viajar ligero es no llevar carga innecesaria me ofrece un regalo único y que esta dentro de mi. ¿Que elementos integran tu área espiritual? 
-                                                            "Cuanto más avanza la evoluación espiritual de la humanidad, más seguro me parece que el camino hacia la genuina religiosidad no reside en el miedo a la vida, y el miedo a la muerte, y la fe ciega, si no a través del esfuerzo del conocimiento racional." Albert Einstein
+                                                        "La espiritualidad no consiste en saber lo que quieres, sino en comprender lo que no necesitas". En esta frase he basado esta área tan importante para su servidor, comprender que aquello que me hace viajar ligero es no llevar carga innecesaria me ofrece un regalo único y que está dentro de mí. ¿Qué elementos integran tu área espiritual?
+                                                        "Cuanto más avanza la evolución espiritual de la humanidad, más seguro me parece que el camino hacia la genuina religiosidad no reside en el miedo a la vida, y el miedo a la muerte, y la fe ciega, sino a través del esfuerzo del conocimiento racional". Albert Einstein
                                                         </Text>
                                                     </VStack>    
                                                 </View>
