@@ -12,7 +12,7 @@ import {Keyboard, Platform, TouchableWithoutFeedback} from "react-native";
 import FooterLines from '../components/FooterLines'
 import ProjectItem from '../components/projects/ProjectItem'
 import { SharePdfProject, printProject } from '../utils/functions'
-
+import { useFonts } from 'expo-font';
 
 import Accordion from 'react-native-collapsible/Accordion';
 
@@ -51,6 +51,10 @@ const ProjectForm = ({route, ...props}) => {
     const [form, setForm] = useState({})
     const [updinfo, setUpdinfo] = useState(false)
     const [saveLoading, setSaveLoading] = useState(false)
+
+    const [fontsLoaded] = useFonts({
+      'ContractRegular': require('../assets/fonts/ContractRegular.otf')
+    });
 
     const navigation = useNavigation();
     const toast = useToast();
@@ -145,9 +149,9 @@ const ProjectForm = ({route, ...props}) => {
                     />
                 </VStack>
                 <VStack justifyContent={'center'}>
-                    <Text style={styles.txtHeader} /* fontSize={'lg'}  */>
+                {fontsLoaded ?<Text style={styles.txtHeader} /* fontSize={'lg'}  */>
                         {section.title}
-                    </Text>
+                    </Text>: <></>}
                 </VStack>
             </View>
             <VStack justifyContent={'center'} >
@@ -424,7 +428,7 @@ const styles = StyleSheet.create({
         fontFamily: 'ContractRegular',
         color: "#DCD7D7",
         height: 20,
-        fontSize: 20,
+        fontSize: 22,
         verticalAlign:'middle'
     },
     buttonsAction: { 
