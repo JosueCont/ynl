@@ -57,7 +57,7 @@ const SuggestionsFriendsItem = ({item,userId,onSetActionFollow, changeRoute, del
                     )}
 
                 </TouchableOpacity>
-                <Text fontSize={getFontSize(9)} style={{fontWeight:'900'}}>{item.firstName}</Text>
+                <Text fontSize={getFontSize(9)} style={{fontWeight:'900'}}>{item?.firstName.split(' ')[0]}</Text>
                 <Text fontSize={getFontSize(6)} style={{fontWeight:'500', letterSpacing:0}}>{t('profile_your_contacts')}</Text>
                 <TouchableOpacity 
                     disabled={disableButton}

@@ -1,5 +1,5 @@
-import {ScrollView , Text, View, HStack, Image, VStack, Progress, Center, Input, Spacer, TextArea, Skeleton, useToast, Box, Icon, KeyboardAvoidingView } from 'native-base'
-import { SafeAreaView, TouchableOpacity , StyleSheet, Dimensions, ActivityIndicator} from 'react-native'
+import {ScrollView , Text, View, HStack, Image, VStack, Progress, Center, Input, Spacer, TextArea, Skeleton, useToast, Box, Icon, KeyboardAvoidingView, Spinner } from 'native-base'
+import { SafeAreaView, TouchableOpacity , StyleSheet, Dimensions, ActivityIndicator, Image as Img} from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { getProjectId, updProject, updProjectName } from '../redux/ducks/projectsDuck'
 import { getProgressProject } from '../utils/functions'
@@ -120,8 +120,10 @@ const ProjectForm = ({route, ...props}) => {
 
     const validateIcon = (sec) => {
         if(form?.[sec.name]){    
+          console.log('true')
             return true
         }else{
+          console.log('no')
             return false
         }
          
@@ -149,15 +151,13 @@ const ProjectForm = ({route, ...props}) => {
             </VStack>
         </View>
         <VStack justifyContent={'center'} >
-            {
-                !saving && !loading && Object.keys(form).length > 0 && <Image 
-                        alt='check'
-                        source={validateIcon(section) ? CheckYellow : CirclePlus}
-                        resizeMode='contain'
-                        height={6}
-                        width={6}
-                    />
-            }
+              <Img
+                alt='check'
+                source={validateIcon(section) === true ? CheckYellow : CirclePlus}
+                resizeMode='contain'
+                height={6}
+                width={6}
+            />
         </VStack>
       </HStack>
       </LinearGradient>
@@ -302,7 +302,8 @@ const ProjectForm = ({route, ...props}) => {
                     //isReadOnly
                     InputRightElement={
                       saveLoading ? (
-                        <ActivityIndicator style={{marginRight:4}} size={25} color={Colors.yellowV2} />
+                        <Spinner color={Colors.yellowV2} style={{ marginRight :6 }} />
+                        
                       ) : (
                         <Ionicons
                           style={{marginRight:4}}

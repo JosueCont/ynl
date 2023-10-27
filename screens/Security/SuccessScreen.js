@@ -11,8 +11,8 @@ const SuccessScreen = ({navigation, authDuck, loginEmail}) => {
     const loginAutomatic = async () => {
         //console.log(authDuck);
         try {
-            const res = await loginEmail(authDuck.registerData.email, authDuck.registerData.password)
-            // console.log(res)
+            const res = await loginEmail(authDuck.user.email,authDuck.provitionalData.password)
+             console.log(res.data)
         } catch (e) {
             console.log('loginAutomatic error =>',e.toString())
             navigation.navigate('LoginScreen')
