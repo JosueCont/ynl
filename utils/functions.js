@@ -197,19 +197,19 @@ export const printProject = async (data) => {
                 </td>
             </tr>
             <tr>
-                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>${logoYnl}</b></td>
+                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>Objetivo</b></td>
             </tr>
             <tr>
                 <td colspan="3" style="padding: 10px; padding-bottom: 50px;">${data.attributes.goal === null ? "" : data?.attributes.goal}</td>
             </tr>
             <tr>
-                <td colspan="3"  style="background-color: #F5AC00; padding:10px ;" ><b>¿Por que?</b></td>
+                <td colspan="3"  style="background-color: #F5AC00; padding:10px ;" ><b>¿Por qué?</b></td>
             </tr>
             <tr>
                 <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.reason === null ? "" : data?.attributes?.reason}</td>
             </tr>
             <tr>
-                <td colspan="3"  style="background-color: #F5AC00; padding:10px ;" ><b>¿Como?</b></td>
+                <td colspan="3"  style="background-color: #F5AC00; padding:10px ;" ><b>¿Cómo?</b></td>
             </tr>
             <tr>
                 <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.how === null ? "" : data?.attributes?.how}</td>
@@ -221,7 +221,7 @@ export const printProject = async (data) => {
                 <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.when === null ? "" : data?.attributes?.when }</td>
             </tr>
             <tr>
-                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>¿Donde?</b></td>
+                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>¿Dónde?</b></td>
             </tr>
             <tr>
                 <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.where === null ? "" : data?.attributes?.where}</td>
@@ -303,13 +303,13 @@ export const SharePdfProject = async (data) => {
                 <td colspan="3" style="padding: 10px; padding-bottom: 50px;">${data?.attributes.goal === null ? "" : data?.attributes?.goal}</td>
             </tr>
             <tr>
-                <td colspan="3"  style="background-color: #F5AC00; padding:10px ;" ><b>¿Por que?</b></td>
+                <td colspan="3"  style="background-color: #F5AC00; padding:10px ;" ><b>¿Por qué?</b></td>
             </tr>
             <tr>
                 <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.reason === null ? "" : data?.attributes.reason}</td>
             </tr>
             <tr>
-                <td colspan="3"  style="background-color: #F5AC00; padding:10px ;" ><b>¿Como?</b></td>
+                <td colspan="3"  style="background-color: #F5AC00; padding:10px ;" ><b>¿Cómo?</b></td>
             </tr>
             <tr>
                 <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.how === null ? "" : data?.attributes?.how}</td>
@@ -321,7 +321,7 @@ export const SharePdfProject = async (data) => {
                 <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.when === null ? "" : data?.attributes?.when }</td>
             </tr>
             <tr>
-                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>¿Donde?</b></td>
+                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>¿Dónde?</b></td>
             </tr>
             <tr>
                 <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.where === null ? "" :data?.attributes?.where }</td>
