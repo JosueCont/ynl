@@ -185,6 +185,13 @@ const ReadBook = ({route, navigation, ...props}) => {
         
     }
 
+    const cancelSearch = () => {
+        setSearchResults(null)
+        setSearching(false)
+        setTextForSearch('')
+        setSearched(false);
+    }
+
     const backAction = () => {
         let flag;
         if(searchActive){
@@ -279,6 +286,7 @@ const ReadBook = ({route, navigation, ...props}) => {
                 <View alignSelf={'center'} width={'90%'} h={Dimensions.get("window").height-(Dimensions.get("window").height*.25)}> 
                     {/* <Image width={'100%'} resizeMode='contain' flex={1} source={{ url: getUrlImage(currentBook?.back_cover?.url) }} /> */}
                     <ImageViewer 
+                        renderIndicator={() => null}
                         imageUrls={[{url: getUrlImage(currentBook?.back_cover?.url)}]}
                         
                         backgroundColor={'white'}
@@ -289,7 +297,7 @@ const ReadBook = ({route, navigation, ...props}) => {
                     {
                         searchActive && searchResults ?
                             <>
-                                <SearchResultsList searching={searching} results={searchResults} pages={pages}  pageSelected={moveToPage} searched={searched} />
+                                <SearchResultsList searching={searching} results={searchResults} pages={pages}  pageSelected={moveToPage} searched={searched} cancelSearch={cancelSearch} />
                             </>
                         :
                         <>
@@ -297,7 +305,7 @@ const ReadBook = ({route, navigation, ...props}) => {
                             {
                                 pages.length > 0 &&
                                 <ImageViewer 
-                                renderIndicator={() => null}
+                                    renderIndicator={() => null}
                                     maxOverflow={1000}
                                     index={currentPage}  
                                     imageUrls={pages}

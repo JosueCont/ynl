@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Colors } from '../../utils/Colors'
 import { FontAwesome5, AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons'; 
 
-const SearchResultsList = ({pages, pageSelected, results, searched = false, searching}) => {
+const SearchResultsList = ({pages, pageSelected, results, searched = false, searching, cancelSearch}) => {
     
 
     const [idx, setIdx] = useState(0)
@@ -69,7 +69,7 @@ const SearchResultsList = ({pages, pageSelected, results, searched = false, sear
                                 </Box>
                             </VStack>
                         </Alert>
-                        <Button size="sm" variant="ghost">
+                        <Button size="sm" variant="ghost" onPress={() => cancelSearch()} >
                             <HStack>
                                 <Text>
                             Volver al libro
