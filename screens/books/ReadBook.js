@@ -185,6 +185,13 @@ const ReadBook = ({route, navigation, ...props}) => {
         
     }
 
+    const cancelSearch = () => {
+        setSearchResults(null)
+        setSearching(false)
+        setTextForSearch('')
+        setSearched(false);
+    }
+
     const backAction = () => {
         let flag;
         if(searchActive){
@@ -290,7 +297,7 @@ const ReadBook = ({route, navigation, ...props}) => {
                     {
                         searchActive && searchResults ?
                             <>
-                                <SearchResultsList searching={searching} results={searchResults} pages={pages}  pageSelected={moveToPage} searched={searched} />
+                                <SearchResultsList searching={searching} results={searchResults} pages={pages}  pageSelected={moveToPage} searched={searched} cancelSearch={cancelSearch} />
                             </>
                         :
                         <>
