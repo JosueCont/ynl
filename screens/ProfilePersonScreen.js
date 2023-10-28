@@ -114,6 +114,7 @@ const ProfilePersonScreen = ({authDuck,navigation}) => {
                 userName={userName}
                 dateCreatedUser={dateCreatedUser}
                 image={image}
+                navigation={navigation}
                 currentStreakDay={currentStreakDay}
                 myGoal={myGoal}
                 loading={loading}
