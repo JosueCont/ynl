@@ -18,10 +18,11 @@ const StadisticPerson = ({userName,dateCreatedUser,image,currentStreakDay,myGoal
 
     const getGroupRequest=async()=>{
         try{
+            console.log('res--> userData' , userData)
             const res = await ApiApp.getGroupsRequests(userData.id)
-            console.log('res' , res)
+            console.log('res--> grupos' , res?.data?.data)
         }catch (e){
-
+            console.log('userData',userData)
         }
     }
 
@@ -110,21 +111,21 @@ const StadisticPerson = ({userName,dateCreatedUser,image,currentStreakDay,myGoal
                             </View>
                         </View>
                     </View>
-                       {/*<View flexDirection={'row'} style={{marginTop:10}}>*/}
-                       {/*    <View style={{width:width/2.4, height:55, backgroundColor:Colors.secondary, borderRadius:9, justifyContent:'center', alignItems:'center' }}>*/}
-                       {/*        <View>*/}
-                       {/*            <Text  fontSize={getFontSize(15)} style={{fontWeight:'900', textTransform:'uppercase'}}>{t('last_emotion')}</Text>*/}
-                       {/*            <Text fontSize={getFontSize(10)} style={{fontWeight:'900', alignSelf:'flex-start'}}>{lastEmotion}</Text>*/}
-                       {/*        </View>*/}
-                       {/*    </View>*/}
-                       {/*    <View style={{width:width/2.4, height:55, backgroundColor:Colors.secondary,borderRadius:9, marginLeft:5,  paddingLeft:15, flexDirection:'row', alignItems:'center' }}>*/}
-                       {/*        <FontAwesome5 name="fire-alt" size={23} color={'black'}/>*/}
-                       {/*        <View style={{marginLeft:8}}>*/}
-                       {/*            <Text fontSize={getFontSize(15)} style={{fontWeight:'900',}}>{currentStreakDay}</Text>*/}
-                       {/*            <Text fontSize={getFontSize(10)} style={{fontWeight:'900'}}>{t('groups_invitation_to_groups')}</Text>*/}
-                       {/*        </View>*/}
-                       {/*    </View>*/}
-                       {/*</View>*/}
+                       <View flexDirection={'row'} style={{marginTop:10}}>
+                           <View style={{width:width/2.4, height:55, backgroundColor:Colors.secondary, borderRadius:9, justifyContent:'center', alignItems:'center' }}>
+                               <View>
+                                   <Text  fontSize={getFontSize(15)} style={{fontWeight:'900', textTransform:'uppercase'}}>{t('last_emotion')}</Text>
+                                   <Text fontSize={getFontSize(10)} style={{fontWeight:'900', alignSelf:'flex-start'}}>{lastEmotion}</Text>
+                               </View>
+                           </View>
+                           <View style={{width:width/2.4, height:55, backgroundColor:Colors.secondary,borderRadius:9, marginLeft:5,  paddingLeft:15, flexDirection:'row', alignItems:'center' }}>
+                               <FontAwesome5 name="fire-alt" size={23} color={'black'}/>
+                               <View style={{marginLeft:8}}>
+                                   <Text fontSize={getFontSize(15)} style={{fontWeight:'900',}}>{currentStreakDay}</Text>
+                                   <Text fontSize={getFontSize(10)} style={{fontWeight:'900'}}>{t('groups_invitation_to_groups')}</Text>
+                               </View>
+                           </View>
+                       </View>
                    </View>
 
                 )}

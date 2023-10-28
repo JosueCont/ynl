@@ -214,6 +214,7 @@ class ApiApp {
       url = `/api/group-requests?populate=*&filters[user][id][$eq]=${userId}`;
     // }
 
+    console.log('url-->',url)
     return ApiApp.ApisType(url, "get");
   };
 
