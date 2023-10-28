@@ -215,7 +215,7 @@ export const printProject = async (data) => {
                 <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.how === null ? "" : data?.attributes?.how}</td>
             </tr>
             <tr>
-                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>¿Cuando?</b></td>
+                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>¿Cuándo?</b></td>
             </tr>
             <tr>
                 <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.when === null ? "" : data?.attributes?.when }</td>
@@ -227,7 +227,7 @@ export const printProject = async (data) => {
                 <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.where === null ? "" : data?.attributes?.where}</td>
             </tr>
             <tr>
-                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>¿Cuanto?</b></td>
+                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>¿Cuánto?</b></td>
             </tr>
             <tr>
                 <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.how_much === null ? "" : data?.attributes?.how_much}</td>
@@ -315,7 +315,7 @@ export const SharePdfProject = async (data) => {
                 <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.how === null ? "" : data?.attributes?.how}</td>
             </tr>
             <tr>
-                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>¿Cuando?</b></td>
+                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>¿Cuándo?</b></td>
             </tr>
             <tr>
                 <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.when === null ? "" : data?.attributes?.when }</td>
@@ -327,7 +327,7 @@ export const SharePdfProject = async (data) => {
                 <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.where === null ? "" :data?.attributes?.where }</td>
             </tr>
             <tr>
-                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>¿Cuanto?</b></td>
+                <td colspan="3" style="background-color: #F5AC00; padding:10px ;" ><b>¿Cuánto?</b></td>
             </tr>
             <tr>
                 <td colspan="3" style="padding: 10px;padding-bottom: 50px;">${data?.attributes.how_much === null ? "" : data?.attributes?.how_much}</td>

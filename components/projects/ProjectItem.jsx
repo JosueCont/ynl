@@ -43,7 +43,7 @@ const ProjectItem = ({project, refreshProjects}) => {
     };
 
     const deleteConfirmation = () => {
-      Alert.alert("Eliminar proyecto", `¿Está seguro de eliminar el proyecto:   ${project.attributes.name}?`, [
+      Alert.alert("Eliminar proyecto", `¿Está seguro de eliminar el proyecto ${project.attributes.name}?`, [
         {
           text: "Cancelar",
           onPress: () => setDeleteDialogVisible(false),
