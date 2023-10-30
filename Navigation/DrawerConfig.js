@@ -166,7 +166,8 @@ const DrawerConfig = () => {
                   onPress={async () => {
                     try {
                       if (route.name.includes("GroupsScreen")) {
-                        navigation.navigate("HomeScreen");
+                        //navigation.navigate("HomeScreen");
+                        navigation.goBack(0);
                       } else if (route.params.from === "intro") {
                         navigation.navigate("HomeScreen");
                       } else {
