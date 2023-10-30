@@ -174,21 +174,21 @@ class ApiApp {
   //hace una busqueda basada en la palabra que le pasen como texto (username)
   static getUsersByUsername = (usernameLike = "", site) => {
     // console.log('aqui pasa')
-    return ApiApp.ApisType(
-        `/api/users?filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}&filters[$and][1][blocked]=false`,
+    // return ApiApp.ApisType(
+    //     `/api/users?filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}&filters[$and][1][blocked]=false`,
+    //     "get"
+    // );
+    if (site?.id) {
+      return ApiApp.ApisType(
+        `/api/users?filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}&filters[$and][1][blocked]=false&filters[sites][app_id][$eq]=${site?.id}`,
         "get"
-    );
-    // if (site?.id) {
-    //   return ApiApp.ApisType(
-    //     `/api/users?filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}&filters[sites][app_id][$eq]=${site.app_id}`,
-    //     "get"
-    //   );
-    // } else {
-    //   return ApiApp.ApisType(
-    //     `/api/users?filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}`,
-    //     "get"
-    //   );
-    // }
+      );
+    } else {
+      return ApiApp.ApisType(
+        `/api/users?populate=sites&filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}&filters[$and][1][blocked]=false`,
+        "get"
+      );
+    }
   };
 
   static getMyGroups = (userId, site = null) => {
