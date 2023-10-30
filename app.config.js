@@ -59,6 +59,10 @@ const android = {
     //     foregroundImage: "./assets/adaptive-icon.png",
     //     backgroundImage: "./assets/adaptive-icon-bg.png"
     // },
+    adaptiveIcon: {
+        "foregroundImage": "./assets/icon.png", //here put your icon
+        "backgroundColor": "#F4B21D"
+      },
     package: "com.hiumanlab.ynl",
     googleServicesFile: "./google-services.json",
     permissions: [
