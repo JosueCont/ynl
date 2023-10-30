@@ -54,10 +54,11 @@ const ios = {
 
 const android = {
     versionCode: 46,
-    adaptiveIcon: {
-        foregroundImage: "./assets/adaptive-icon.png",
-        backgroundImage: "./assets/adaptive-icon-bg.png"
-    },
+    icon: "./assets/icon.png",
+    // adaptiveIcon: {
+    //     foregroundImage: "./assets/adaptive-icon.png",
+    //     backgroundImage: "./assets/adaptive-icon-bg.png"
+    // },
     package: "com.hiumanlab.ynl",
     googleServicesFile: "./google-services.json",
     permissions: [
