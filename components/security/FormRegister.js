@@ -32,7 +32,7 @@ export default ({onRegister, loading}) => {
 
     return (
       <View flex={1}>
-        <View flex={'row'}>
+        <View flex={0.5}>
           <Image
               style={{ alignSelf: 'center' }}
               source={logo} alt="YNL" />

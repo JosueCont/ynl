@@ -36,7 +36,7 @@ export default ({ onRegister, loading }) => {
 
   return (
     <ScrollView _contentContainerStyle={{ flexGrow: 1,paddingTop:100 }} flex={1} mx={6}>
-      <View flex={'row'} >
+      <View flex={0.5} >
         <Image
             style={{ alignSelf: 'center' }}
             source={logo} alt="img" />
