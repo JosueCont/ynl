@@ -114,6 +114,18 @@ export let getUsersByUserName=(username='', userCurrent, siteCurrent, membersExi
                 }
             }
         }
+
+        if (!siteCurrent?.id) {
+            let usersResponse = []
+            if (dataSucces.length>0) {
+                dataSucces.map( u => {
+                    if (u.sites.length === 0) {
+                        usersResponse.push(u)
+                    }
+                })
+            }
+            dataSucces = usersResponse;
+        }
         dispatch({
             type: GET_USERS_SUCCESS,
             payload: dataSucces
