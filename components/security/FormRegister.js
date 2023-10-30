@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Button, FormControl, Image, Input, Text, View, Checkbox, Spacer} from "native-base";
-import logo from '../../assets/YNL.gif'
+import logo from '../../assets/new_logo.png'
 import {useFormik} from 'formik';
 import * as Yup from 'yup'
 import {t} from "i18n-js";
@@ -32,8 +32,10 @@ export default ({onRegister, loading}) => {
 
     return (
       <View flex={1}>
-        <View flex={0.5}>
-          <Image source={logo} alt="img" />
+        <View flex={'row'}>
+          <Image
+              style={{ alignSelf: 'center' }}
+              source={logo} alt="YNL" />
         </View>
         <View flex={1} mx={6}>
           <Text fontSize={16} textAlign={"center"} mb={4}>
