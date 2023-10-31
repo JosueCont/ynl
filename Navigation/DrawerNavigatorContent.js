@@ -247,22 +247,29 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
 
           </View>
 
-          <TouchableOpacity style={{marginBottom:40, alignSelf:'center'}}onPress={() => logoutFunction()}>
+          <TouchableOpacity style={{marginBottom:10, alignSelf:'center'}} onPress={() => logoutFunction()}>
               <Text
                   color={"white"}
                   fontSize={14}
+                  alignItems={'center'}
                   style={{ textDecorationLine: "underline" }}
-                  my={2}
               >
                   {t('home_logout')}
               </Text>
           </TouchableOpacity>
+            <Text
+                color={"white"}
+                style={{marginBottom:40, alignSelf:'center'}}
+                fontSize={14}
+            >
+                v. 2.1.5
+            </Text>
 
           {/*<View flex={0.5} style={{marginTop:10}} alignItems={"center"} justifyContent={"center"}>
             <Image source={logoKhor} alt="img" />
           </View>*/}
         </View>
-        <ModalDayPhrase phrase={modulesDuck.phrase}  visible={modalPhraseVisible} closeModalPhrase={() => setModalPhraseVisible(false)} />
+        <ModalDayPhrase onSetVisible={(val)=>setModalPhraseVisible(val)} phrase={modulesDuck.phrase}  visible={modalPhraseVisible} closeModalPhrase={() => setModalPhraseVisible(false)} />
       </DrawerContentScrollView>
     );
 }

@@ -1,5 +1,5 @@
 import { HStack, Image, VStack, Text,  } from 'native-base';
-import { Platform, Share} from 'react-native';
+import {BackHandler, Platform, Share} from 'react-native';
 
 import React, { Component, useEffect, useState } from 'react'
 import * as Sharing from 'expo-sharing';
@@ -18,9 +18,16 @@ import iconClose from '../../assets/icon_close.png'
 
 
 
-const ModalDayPhrase = ({phrase = "", visible, closeModalPhrase, ...props}) => {
+const ModalDayPhrase = ({phrase = "", visible,onSetVisible, closeModalPhrase, ...props}) => {
 
-    
+
+    useEffect(() => {
+        BackHandler.addEventListener("hardwareBackPress", onSetVisible(false));
+        return () => {
+            BackHandler.removeEventListener("hardwareBackPress", onSetVisible(false));
+        }
+    }, [])
+
     const share = async () => {
         try {
             const result = await Share.share({
