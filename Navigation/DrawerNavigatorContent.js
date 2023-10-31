@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {ImageBackground, TouchableOpacity, Dimensions, StatusBar} from "react-native";
 import sidebarImage from "../assets/bgmenu.png";
 import { Text, View, Image} from "native-base";
-import logoSmall from "../assets/logoSmall.png";
+import logoSmall from "../assets/ynl_white.png";
 import logoKhor from "../assets/logos.png";
 import {t} from 'i18n-js';
 import {logOutAction} from "../redux/ducks/authDuck";

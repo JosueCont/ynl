@@ -35,6 +35,8 @@ export default ({onRegister, loading}) => {
         <View flex={0.5}>
           <Image
               style={{ alignSelf: 'center' }}
+              height={77}
+              width={77}
               source={logo} alt="YNL" />
         </View>
         <View flex={1} mx={6}>

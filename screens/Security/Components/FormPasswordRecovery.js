@@ -38,7 +38,9 @@ export default ({ onRegister, loading }) => {
     <ScrollView _contentContainerStyle={{ flexGrow: 1,paddingTop:100 }} flex={1} mx={6}>
       <View flex={0.5} >
         <Image
-            style={{ alignSelf: 'center' }}
+            style={{ alignSelf: 'center',marginBottom:20 }}
+            width={70}
+            height={70}
             source={logo} alt="img" />
       </View>
       <View flex={1}>
