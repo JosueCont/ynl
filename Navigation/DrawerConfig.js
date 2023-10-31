@@ -94,7 +94,7 @@ const DrawerConfig = () => {
                 const onBackPress = () => {
                   console.log('pressed',route)
                   if (route.name === 'RouletteStep1Screen') {
-                    navigation.navigate('HomeScreen')
+                    navigation.navigate('')                    
                   }else if(route.name==='HomeScreen'){
                     return true;
                   }
