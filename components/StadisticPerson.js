@@ -160,7 +160,7 @@ const StadisticPerson = ({navigation,userName,dateCreatedUser,image,currentStrea
                            <TouchableOpacity onPress={() => {
                                navigation.navigate('HistoryFeelingScreen')
                            }}>
-                               <View style={{width:width/2.4, height:55, backgroundColor:lastEmotion?`#${lastEmotion?.feeling?.parent?.color}`:'auto', borderRadius:9, justifyContent:'center', alignItems:'center' }}>
+                               <View style={{width:width/2.4, height:55, backgroundColor:lastEmotion?`#${lastEmotion?.feeling?.parent?.color}`:Colors.secondary, borderRadius:9, justifyContent:'center', alignItems:'center' }}>
                                    <View>
                                        <Text  fontSize={getFontSize(15)} style={{fontWeight:'900', textTransform:'uppercase'}}>{t('last_emotion')}</Text>
                                        <Text fontSize={getFontSize(10)} style={{fontWeight:'900', alignSelf:'flex-start'}}>{lastEmotion?lastEmotion?.feeling?.name:'No registrado'}</Text>
