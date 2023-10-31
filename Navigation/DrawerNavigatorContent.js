@@ -154,7 +154,7 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
             </View> ) : null }
 
             <View flexDirection={'row'} justifyContent={'center'} alignItems={'center'}>
-              <Ionicons name="md-happy-outline" size={25} color={Colors.white}/>
+              <Ionicons name="options-outline" size={25} color={Colors.white}/>
               <TouchableOpacity style={{marginLeft:15}} onPress={() => navigation.navigate('YourFeelScreen')}>
                 <Text color={"white"} fontSize={20} my={2}>
                     {t('home_aspects')}
@@ -269,7 +269,7 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
             <Image source={logoKhor} alt="img" />
           </View>*/}
         </View>
-        <ModalDayPhrase onSetVisible={(val)=>setModalPhraseVisible(val)} phrase={modulesDuck.phrase}  visible={modalPhraseVisible} closeModalPhrase={() => setModalPhraseVisible(false)} />
+        <ModalDayPhrase phrase={modulesDuck.phrase}  visible={modalPhraseVisible} closeModalPhrase={() => setModalPhraseVisible(false)} />
       </DrawerContentScrollView>
     );
 }

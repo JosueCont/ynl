@@ -22,9 +22,9 @@ const ModalDayPhrase = ({phrase = "", visible,onSetVisible, closeModalPhrase, ..
 
 
     useEffect(() => {
-        BackHandler.addEventListener("hardwareBackPress", onSetVisible(false));
+        BackHandler.addEventListener("hardwareBackPress", closeModalPhrase);
         return () => {
-            BackHandler.removeEventListener("hardwareBackPress", onSetVisible(false));
+            BackHandler.removeEventListener("hardwareBackPress",closeModalPhrase);
         }
     }, [])
 

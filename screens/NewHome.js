@@ -603,7 +603,7 @@ const NewHome = ({navigation,}) => {
                 } */}
             </View>
             <FooterLines bottom={20} />
-            <ModalDayPhrase phrase={phraseDay} onSetVisible={(val)=>setModalPhraseVisible(val)} visible={modalPhraseVisible} closeModalPhrase={closeModalPhrase} />
+            <ModalDayPhrase phrase={phraseDay} visible={modalPhraseVisible} closeModalPhrase={closeModalPhrase} />
         </ScrollView>
     </SafeAreaView>
   )
