@@ -82,7 +82,7 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
         bounces={false}
         {...props}
         nestedScrollEnabled={true}
-        contentContainerStyle={{ flex:1, backgroundColor:'#161616', flexGrow:1 }}
+        contentContainerStyle={{ backgroundColor:'#161616', flexGrow:1 }}
       >
         <View  style={{ flex: 1, backgroundColor:'#161616' }}>
           <View flexDirection={'row'} justifyContent={'space-between'} style={{marginBottom:100}}>
@@ -248,23 +248,27 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
 
           </View>
 
-          <TouchableOpacity style={{marginTop:20, alignSelf:'center'}}onPress={() => logoutFunction()}>
+          <View style={{alignItems:'center', marginTop:20}}>
+            <TouchableOpacity onPress={() => logoutFunction()}>
+                <Text
+                    color={"white"}
+                    fontSize={14}
+                    alignItems={'center'}
+                    style={{ textDecorationLine: "underline" }}
+                >
+                    {t('home_logout')}
+                </Text>
+            </TouchableOpacity>
               <Text
                   color={"white"}
+                  //style={{ alignSelf:'center'}}
                   fontSize={14}
-                  alignItems={'center'}
-                  style={{ textDecorationLine: "underline" }}
               >
-                  {t('home_logout')}
+                  v. 2.1.5
               </Text>
-          </TouchableOpacity>
-            <Text
-                color={"white"}
-                style={{marginBottom:40, alignSelf:'center'}}
-                fontSize={14}
-            >
-                v. 2.1.5
-            </Text>
+
+          </View>
+
 
           {/*<View flex={0.5} style={{marginTop:10}} alignItems={"center"} justifyContent={"center"}>
             <Image source={logoKhor} alt="img" />
