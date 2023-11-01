@@ -155,8 +155,7 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-            <ScrollView _contentContainerStyle={{flexGrow: 1}} 
-                bgColor={Colors.gray}
+            <ScrollView _contentContainerStyle={{flexGrow: 1}}
                 refreshControl={
                     <RefreshControl
                         style={{backgroundColor: 'white'}}
@@ -218,6 +217,7 @@ const StatisticsScreen = ({authDuck, navigation, ...props}) => {
                                                 return (
                                                     <View key={i}>
                                                         <Image source={{uri: ele.icon}} width={30} height={30} mb={1} alt="img"/>
+                                                        <Text textAlign={'center'}  fontSize={8}>{ele.name}</Text>
                                                         <Text textAlign={'center'} color={`#${ele.color}`} fontSize={14}>{ele.count}</Text>
                                                     </View>
                                                 )

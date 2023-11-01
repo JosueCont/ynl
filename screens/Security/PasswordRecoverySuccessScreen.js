@@ -6,6 +6,7 @@ import bgIntro from "../../assets/bgIntro.png";
 import {connect} from "react-redux";
 import {t} from 'i18n-js'
 import {loginEmail} from "../../redux/ducks/authDuck";
+import {Colors} from "../../utils/Colors";
 
 const SuccessScreen = ({navigation, authDuck, loginEmail}) => {
 
@@ -22,7 +23,7 @@ const SuccessScreen = ({navigation, authDuck, loginEmail}) => {
                 </Text>
             </View>
             <View flex={0.5} mx={20}>
-                <Button colorScheme="orange" onPress={() => navigation.navigate('LoginScreen')}>
+                <Button backgroundColor={Colors.yellowV2} onPress={() => navigation.navigate('LoginScreen')}>
                     {t('ok')}
                 </Button>
             </View>

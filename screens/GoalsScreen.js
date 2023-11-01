@@ -67,10 +67,6 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
     getDateGoal(dateSelected.format("YYYY-MM-DD"), authDuck?.user?.id)
   }
 
-  useEffect(() => {
-    console.log('==========================>')
-    console.log(authDuck.user)
-  }, [authDuck])
   
 
   useEffect(() => {
@@ -197,8 +193,6 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
           "user": authDuck.user,
         }
       ]
-
-      console.log('newData===============================>>>>>>>>>>>>>>>>',newData)
       let resp = await saveDailyGoals(newData)
       if(resp['success']){
         toast.show({ title: 'Objetivos guardados' }) 
@@ -266,11 +260,11 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
         >
           <View flex={1} mx={4} style={{ flexDirection: 'column' }}>
             <HStack justifyContent={'center'} p={1} >
-              <Image
+            <Image
                 source={Logo}
                 alt='question1'
                 style={styles.logo}
-              />
+                resizeMode='contain'/>
             </HStack>
             <HStack justifyContent={'center'} marginTop={5} space={5}>
               {
@@ -349,7 +343,7 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
 
 const styles = {
   logo:{
-    height: 66
+    height: 50
   },
   orangeLeft:{
     flex: 0.4,

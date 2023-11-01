@@ -1,4 +1,4 @@
-import { Dimensions, Platform, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions,Platform, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableNativeFeedback, View } from 'react-native'
 import React, { useState, useRef } from 'react'
 import { Colors } from '../utils/Colors'
 import _ from 'lodash';
@@ -31,6 +31,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { saveInfoModules, savePhraseDay } from '../redux/ducks/modulesDuck';
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
+import { getBooks } from '../redux/ducks/booksDuck'
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -58,8 +59,11 @@ const NewHome = ({navigation,}) => {
 
 
     const isFocused = useIsFocused();
+    const user_id = useSelector(state => state?.authDuck?.user?.id)
     const authDuck = useSelector(state => state?.authDuck)
     const modules = useSelector(state => state?.modulesDuck)
+    const books = useSelector(state => state?.booksDuck?.books)
+    
     const dispatch = useDispatch();
 
     const screenWidth = Dimensions.get("window").width;
@@ -68,6 +72,9 @@ const NewHome = ({navigation,}) => {
         if(authDuck){
             getInfoModules()
         }
+        if(user_id){
+            dispatch(getBooks(user_id))  
+        } 
     },[authDuck])
 
     useEffect(() => {
@@ -103,6 +110,33 @@ const NewHome = ({navigation,}) => {
             sendPushTokenToBack()
         }
     }, [expoPushToken])
+
+    const getPermissionsBooks = (book) => {   
+        const modulesData = modules?.modules;
+        const code = book.code;
+        switch (code) {
+          case "ek":
+            if (modulesData.indexOf("EMOTIONS") !== -1) {
+              return false;
+            }
+            return true;
+          case "file":
+            if (modulesData.indexOf("GOALS") !== -1) {
+              return false;
+            }
+            return true;
+          case "six":
+            if (modulesData.indexOf("SIXPACK") !== -1) {
+              return false;
+            }
+            return true;
+
+          default:
+            return true;
+        }
+        
+        //return !modules[moduleIndex] || modules[moduleIndex].percentToNext < 100;
+    }
 
     const getInfoModules = async() => {
         try {
@@ -301,7 +335,7 @@ const NewHome = ({navigation,}) => {
                 "pushToken": expoPushToken,
                 "platform": Platform.OS,
                 "provider": "expo",
-                "users_permissions_user": authDuck.user.id
+                "users_permissions_user": authDuck?.user?.id
             }
             const res = await ApiApp.sendPushToken({data})
         } catch (e) {
@@ -418,20 +452,33 @@ const NewHome = ({navigation,}) => {
                                 <View  backgroundColor={{ position:'relative', padding: 20, justifyContent:'center', backgroundColor:Colors.black }}>
                                     <CircularProgress radius={45} activeStrokeWidth={10} value={modules?.progress[0]?.percentToNext}  progressValueColor={'#F3BC38'} inActiveStrokeColor='#ECE8E8' />
                                     <View style={{ textAlign:'center', position:'absolute', justifyContent:'center', alignSelf:'center', marginTop:10, borderRadius:110, width: 66, height:66, left:12, top:2 }}>
-                                        <Image source={EmotionalKargo} width={90} height={63} resizeMode='stretch' style={{ alignSelf:'center' }} />
+                                        <TouchableNativeFeedback onPress={() => {
+                                            navigation.navigate("ReadBook",{book: books.find(x=>x.code === 'ek'), isLocked:getPermissionsBooks(books.find(x=>x.code === 'ek'))})
+                                            }}>
+                                            <Image source={EmotionalKargo} width={90} height={63} resizeMode='stretch' style={{ alignSelf:'center' }} />
+                                        </TouchableNativeFeedback>
                                     </View>
                                 </View>
                                 <View  backgroundColor={{ position:'relative', backgroundColor:'red', padding: 20 }}>
                                     <CircularProgress radius={45} activeStrokeWidth={10} value={modules?.progress[1]?.percentToNext}  progressValueColor={'#F3BC38'} inActiveStrokeColor='#ECE8E8' />
                                     <View style={{ position:'absolute', justifyContent:'center', alignSelf:'center', marginTop:10, borderRadius:110, width: 66, height:66, left:12, top:2 }}>
-                                        <Image source={LifeMachine} width={90} height={63} resizeMode='stretch' style={{ alignSelf:'center' }} />
+                                        <TouchableNativeFeedback onPress={() => {
+                                            navigation.navigate("ReadBook",{book: books.find(x=>x.code === 'file'), isLocked:getPermissionsBooks(books.find(x=>x.code === 'file'))})
+                                            }}>
+                                            <Image source={LifeMachine} width={90} height={63} resizeMode='stretch' style={{ alignSelf:'center' }} />
+                                        </TouchableNativeFeedback>
                                     </View>
                                 </View>
                                 <View  backgroundColor={{ position:'relative', backgroundColor:'red', padding: 20 }}>
                                     <CircularProgress radius={45} activeStrokeWidth={10} value={modules?.progress[2]?.percentToNext}  progressValueColor={'#F3BC38'} inActiveStrokeColor='#ECE8E8' />
                                     <View style={{ position:'absolute', justifyContent:'center', alignSelf:'center', marginTop:10, borderRadius:110, width: 65, height:65, left:13, top:2 }}>
-                                        <Image source={SixPack} width={90} height={63} resizeMode='stretch' style={{ alignSelf:'center' }} />    
+                                        <TouchableNativeFeedback onPress={() => {
+                                            navigation.navigate("ReadBook",{book: books.find(x=>x.code === 'six'), isLocked:getPermissionsBooks(books.find(x=>x.code === 'six'))})
+                                            }}>
+                                            <Image source={SixPack} width={90} height={63} resizeMode='stretch' style={{ alignSelf:'center' }} />    
+                                        </TouchableNativeFeedback>
                                     </View>
+                                    
                                 </View> 
                             
                             </>
@@ -558,7 +605,7 @@ const NewHome = ({navigation,}) => {
                 } */}
             </View>
             <FooterLines bottom={20} />
-            <ModalDayPhrase phrase={phraseDay}  visible={modalPhraseVisible} closeModalPhrase={closeModalPhrase} />
+            <ModalDayPhrase phrase={phraseDay} visible={modalPhraseVisible} closeModalPhrase={closeModalPhrase} />
         </ScrollView>
     </SafeAreaView>
   )

@@ -4,13 +4,13 @@ import {
 } from "react-native";
 
 import {Button, FormControl, Image, Input, ScrollView, Text, View} from "native-base";
-import logo from '../../../assets/YNL.gif'
+import logo from "../../../assets/new_logo.png";
 import {useFormik} from 'formik';
 import * as Yup from 'yup'
 import {getShadowCircleStyle} from "../../../utils/functions";
 import {Colors} from "../../../utils/Colors";
 import { useEffect } from "react";
-
+import InputField from "../../../components/InputField";
 
 export default ({
   onRegister,
@@ -23,7 +23,7 @@ export default ({
   email,
   ...props
 }) => {
-  const { handleSubmit, errors, setFieldValue, touched } = useFormik({
+  const formik = useFormik({ //const { handleSubmit, errors, setFieldValue, touched }
     initialValues: {
       identifier: "",
       password: "",
@@ -44,12 +44,12 @@ export default ({
 
   useEffect(() => {
     if(email){
-        setFieldValue("identifier", email);
+      formik.setFieldValue("identifier", email);
     }
   }, [email]);
   
   const prevStep = () => {
-    setFieldValue("password", "");
+    formik.setFieldValue("password", "");
     goStepTwo();
   }
 
@@ -59,8 +59,12 @@ export default ({
 
   return (
     <ScrollView _contentContainerStyle={{ flexGrow: 1 }} flex={1} mx={6}>
-      <View flex={1}>
-        <Image source={logo} alt="img" />
+      <View flex={0.5} >
+        <Image
+            style={{ alignSelf: 'center',marginBottom:20,marginTop:50 }}
+            width={70}
+            height={70}
+            source={logo} alt="img" />
       </View>
       {step !== 2 && (
         <View flex={1}>
@@ -70,8 +74,19 @@ export default ({
                 ? "Ingresa tu usuario Khor"
                 : `Ingresa tu cuenta ${siteSelected?.khor_name}`}
             </Text>
-            <FormControl isInvalid={errors.email} mb={3}>
-              <Input
+            <FormControl isInvalid={formik.errors.email} mb={3}>
+            <InputField
+              name="identifier"
+              formik={formik}
+                borderRadius={20}
+                height={50}
+                placeholder={"Correo electrónico"}
+                autoCapitalize="none" 
+                setEmail={setEmail}
+                defaultValue={email}
+                autoCorrect={false}
+              />
+              {/* <Input
                 borderRadius={20}
                 height={50}
                 placeholder={"Correo electrónico"}
@@ -83,15 +98,26 @@ export default ({
                 value={touched.identifier}
                 defaultValue={email}
                 autoCorrect={false}
-              />
+              /> */}
               <FormControl.ErrorMessage>
-                {errors.identifier}
+                {formik.errors.identifier}
               </FormControl.ErrorMessage>
             </FormControl>
             {step === 3 && (
-              <FormControl isInvalid={errors.password} mb={2}>
+              <FormControl isInvalid={formik.errors.password} mb={2}>
                 <View flex={1} style={getShadowCircleStyle(5, 5)}>
-                  <Input
+                <InputField
+                 name="password"
+                 formik={formik}
+                    height={50}
+                    placeholder={"Contraseña"}
+                    type="password"
+                    returnKeyType={"done"}
+                    bgColor={"white"}
+                    borderRadius={20}
+                    color={Colors.red}
+                  />
+                  {/* <Input
                     height={50}
                     placeholder={"Contraseña"}
                     type="password"
@@ -101,10 +127,10 @@ export default ({
                     bgColor={"white"}
                     borderRadius={20}
                     color={Colors.red}
-                  />
+                  /> */}
                 </View>
                 <FormControl.ErrorMessage>
-                  {errors.password}
+                  {formik.errors.password}
                 </FormControl.ErrorMessage>
               </FormControl>
             )}
@@ -112,7 +138,7 @@ export default ({
             <Button
               isLoading={loading}
               mt="2"
-              onPress={handleSubmit}
+              onPress={formik.handleSubmit}
               colorScheme="darkBlue"
             >
               Continuar
