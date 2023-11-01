@@ -4,6 +4,7 @@ import {styles} from "./ModalStyleSheet";
 import {Button, Icon, Text, View} from "native-base";
 import {t} from 'i18n-js';
 import {AntDesign} from "@expo/vector-icons";
+import {Colors} from "../../utils/Colors";
 
 const ModalError = ({visible, setVisible, text = t('error_try_later')}) => {
     return (
@@ -18,7 +19,7 @@ const ModalError = ({visible, setVisible, text = t('error_try_later')}) => {
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
                     <View px={30} pt={10} width={'100%'} alignItems={'center'} justifyContent={'center'}>
-                        <Icon as={AntDesign} name={'exclamationcircleo'} color={'red.500'} size={'6xl'}/>
+                        <Icon as={AntDesign} name={'exclamationcircleo'} color={Colors.yellowV2} size={'6xl'}/>
                         <TouchableOpacity style={{position: 'absolute', right: 10, top: 15}}
                                           onPress={() => setVisible(false)}>
                             <Icon as={AntDesign} name={'close'} color={'gray'} size={'md'}></Icon>
@@ -27,7 +28,7 @@ const ModalError = ({visible, setVisible, text = t('error_try_later')}) => {
                     <View px={30} pt={10} mb={2}>
                         <Text textAlign={'center'} fontSize={20} style={{fontWeight: 'bold'}}>{t('warning')}</Text>
                         <Text fontSize={18} style={styles.modalText}>{text}</Text>
-                        <Button size={'xs'} colorScheme={'orange'} onPress={() => setVisible(false)}><Text size={'md'}
+                        <Button size={'xs'} backgroundColor={Colors.black} onPress={() => setVisible(false)}><Text size={'md'}
                                                                                                            color={'white'}>{t('ok')}</Text></Button>
                     </View>
                 </View>

@@ -20,7 +20,9 @@ export default ({onRegister, loading}) => {
             repeatPassword: ''
         },
         onSubmit: (formValue) => {
+          if (!loading) {
             onRegister(formValue)
+          }            
         },
         validateOnChange: false,
         validationSchema: Yup.object({
@@ -136,9 +138,10 @@ export default ({onRegister, loading}) => {
               </Text>
             </View>
 
-            <TouchableOpacity
-              onPress={formik.handleSubmit}
-              disabled={!privacidad}
+            <Button
+              isLoading={loading}
+              disabled ={loading || !privacidad}
+              onPress={formik.handleSubmit} 
               style={{
                 width: "100%",
                 height: 40,
@@ -149,15 +152,14 @@ export default ({onRegister, loading}) => {
               }}
             >
               <Text
-                color={Colors.white}
-                isLoading={loading}
+                color={Colors.white} 
                 fontSize={"md"}
                 textAlign={"center"}
                 marginY={"auto"}
               >
                 {t("continue")}
               </Text>
-            </TouchableOpacity>
+            </Button>
 
             {/*<Button isLoading={loading} mt="2" disabled={!privacidad}*/}
             {/*        onPress={formik.handleSubmit} colorScheme={privacidad?'orange':'gray'}>*/}

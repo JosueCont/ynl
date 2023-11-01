@@ -81,8 +81,8 @@ const IntroScreen = ({navigation, authDuck}) => {
                 renderItem={renderItem}
                 renderDoneButton={renderDoneButton}
                 renderNextButton={renderNextButton}
-                dotStyle={{backgroundColor: Colors.gray, borderWidth: 1, borderColor: 'red'}}
-                activeDotStyle={{backgroundColor: 'red', borderWidth: 1, borderColor: 'red'}}
+                dotStyle={{backgroundColor: Colors.gray, borderWidth: 1, borderColor: Colors.yellowV2}}
+                activeDotStyle={{backgroundColor: Colors.yellowV2, borderWidth: 1, borderColor: Colors.yellowV2}}
                 showDoneButton={true}
                 showNextButton={false}
                 keyExtractor={(item, index) => index.toString()}

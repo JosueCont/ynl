@@ -72,7 +72,9 @@ export default ({ onRegister, loading }) => {
             </FormControl.ErrorMessage>
           </FormControl>
 
-          <TouchableOpacity
+          <Button
+            isLoading={loading}
+            disabled={loading}
             onPress={formik.handleSubmit}
             style={{
               width: "100%",
@@ -84,14 +86,14 @@ export default ({ onRegister, loading }) => {
           >
             <Text
               color={Colors.white}
-              isLoading={loading}
+              //isLoading={loading}
               fontSize={"md"}
               textAlign={"center"}
               marginY={"auto"}
             >
               {t("continue")}
             </Text>
-          </TouchableOpacity>
+          </Button>
 
           {/*<Button isLoading={loading} mt="2" onPress={handleSubmit} colorScheme="orange">*/}
           {/*    {t('continue')}*/}
