@@ -39,7 +39,7 @@ const RouletteStep3Screen = ({route, navigation}) => {
 
             <View flex={1} alignItems={'center'}>
                 <Text
-                    fontSize={28} textAlign={'center'} color={Colors.white}>Hoy siento...</Text>
+                    fontSize={28} textAlign={'center'} color={Colors.white}>Hoy me siento...</Text>
                 <View w={200} h={200} bgColor={'white'} borderRadius={100} my={10} alignItems={'center'}
                       justifyContent={'center'}>
                     {

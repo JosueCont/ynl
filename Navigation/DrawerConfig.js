@@ -94,7 +94,7 @@ const DrawerConfig = () => {
                 const onBackPress = () => {
                   console.log('pressed',route)
                   if (route.name === 'RouletteStep1Screen') {
-                    navigation.navigate('HomeScreen')
+                    navigation.navigate('')                    
                   }else if(route.name==='HomeScreen'){
                     return true;
                   }
@@ -166,7 +166,8 @@ const DrawerConfig = () => {
                   onPress={async () => {
                     try {
                       if (route.name.includes("GroupsScreen")) {
-                        navigation.navigate("HomeScreen");
+                        //navigation.navigate("HomeScreen");
+                        navigation.goBack(0);
                       } else if (route.params.from === "intro") {
                         navigation.navigate("HomeScreen");
                       } else {

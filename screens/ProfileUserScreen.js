@@ -28,6 +28,7 @@ const ProfileUserScreen = ({authDuck, navigation}) => {
     const [isAllowSuggestions, setIsAllowSugges] = useState(false)
     const [suggestionFriends, setFriends] = useState([])
     const [myGoal, setGoal] = useState(null);
+    const [userData, setUserData] = useState(null)
     const [marksDays, setMarksDays] = useState([]);
     const [isFollowSomeone, setFollowSomeone] = useState(false)
     const [disableButtonFollow, setDisableButton] = useState(false)
@@ -104,7 +105,7 @@ const ProfileUserScreen = ({authDuck, navigation}) => {
             const response = await ApiApp.getMaxStreak(dataSend)
             if(response.data?.success)
                 setCurrentStreakDay(response.data.data.totalDays)
-            console.log('dias de racha',response.data)
+            //console.log('dias de racha',response.data)
         } catch (e) {
             console.log('error al obtener racha')
         }
@@ -118,7 +119,6 @@ const ProfileUserScreen = ({authDuck, navigation}) => {
             if(authDuck?.userSiteConfig?.id) dataSend.siteId = authDuck?.userSiteConfig?.id
             const response = await ApiApp.getDaysInRow(dataSend);
             setMarksDays(response?.data?.data)
-            console.log('response racha dias',response.data)
         } catch (e) {
             console.log('error al obtener racha',e)
         }
@@ -136,7 +136,6 @@ const ProfileUserScreen = ({authDuck, navigation}) => {
             }else{
                 setGoal('Ninguno por hoy')
             }
-            console.log('Dail goal',response.data)
         } catch (e) {
             console.log('error daily goal',e)
         }
@@ -153,14 +152,14 @@ const ProfileUserScreen = ({authDuck, navigation}) => {
                     lastName = response.data.lastName.split(' ');
                 }else{
                     firstName = ['Actualiza tus datos']
-                    lastName = ['↪' ] 
+                    lastName = ['' ]
                 }
                 let dateCreated = moment(response.data.createdAt,).format("DD [de] MMMM [del] YYYY");
                 setImage(response?.data?.avatar?.url)
                 setUserNane(`${firstName[0]} ${lastName[0]}`)
                 setDateUser(dateCreated)
+                setUserData(response?.data)
             }
-            console.log('data',response)
         } catch (e) {
             console.log('error',e)
         }
@@ -218,12 +217,12 @@ const ProfileUserScreen = ({authDuck, navigation}) => {
                 dataSend.unFollowId = id
                 const response = await ApiApp.unFollowFriend(dataSend)
                 if(response?.data?.success) setFollowSomeone(!isFollowSomeone)
-                console.log('Se tiene que dejar de seguir', response.data)
+                //console.log('Se tiene que dejar de seguir', response.data)
                 setDisableButton(false)
             }else{
                 dataSend.followId = id
                 const response = await ApiApp.followFriend(dataSend);
-                console.log('response follow',response.data)
+                //console.log('response follow',response.data)
                 if(response?.data?.success) setFollowSomeone(!isFollowSomeone)
                 setDisableButton(false)
             }
@@ -246,10 +245,12 @@ const ProfileUserScreen = ({authDuck, navigation}) => {
                         userName={userName}
                         dateCreatedUser={dateCreatedUser}
                         image={image}
+                        navigation={navigation}
                         currentStreakDay={currentStreakDay}
                         myGoal={myGoal}
                         loading={loading}
                         isMyProfile={true}
+                        userData={userData}
                         moveTo={() => navigation.navigate('Profile')}
                     />
 

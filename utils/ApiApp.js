@@ -35,7 +35,7 @@ class ApiApp {
   };
 
   static sendPushToken = (data) => {
-    return ApiApp.ApisType(`/api/push-tokens`, "post", data);
+    return ApiApp.ApisType(`/api/push-token/register/`, "post", data);
   };
 
   static registerPhone = (data) => {
@@ -174,21 +174,21 @@ class ApiApp {
   //hace una busqueda basada en la palabra que le pasen como texto (username)
   static getUsersByUsername = (usernameLike = "", site) => {
     // console.log('aqui pasa')
-    return ApiApp.ApisType(
-        `/api/users?filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}&filters[$and][1][blocked]=false`,
+    // return ApiApp.ApisType(
+    //     `/api/users?filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}&filters[$and][1][blocked]=false`,
+    //     "get"
+    // );
+    if (site?.id) {
+      return ApiApp.ApisType(
+        `/api/users?filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}&filters[$and][1][blocked]=false&filters[sites][app_id][$eq]=${site?.id}`,
         "get"
-    );
-    // if (site?.id) {
-    //   return ApiApp.ApisType(
-    //     `/api/users?filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}&filters[sites][app_id][$eq]=${site.app_id}`,
-    //     "get"
-    //   );
-    // } else {
-    //   return ApiApp.ApisType(
-    //     `/api/users?filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}`,
-    //     "get"
-    //   );
-    // }
+      );
+    } else {
+      return ApiApp.ApisType(
+        `/api/users?populate=sites&filters[$or][0][username][$contains]=${usernameLike}&filters[$or][1][email][$contains]=${usernameLike}&filters[$and][1][blocked]=false`,
+        "get"
+      );
+    }
   };
 
   static getMyGroups = (userId, site = null) => {
@@ -207,15 +207,43 @@ class ApiApp {
 
     let url = '';
 
-    // if(site?.id){
-    //   url = `api/group-requests?populate=*&filters[user][id][$eq]=${userId}&filters[site][id][$eq]=${site.id}`
-    //   console.log('url_invitaciones:::::::', url, JSON.stringify(site))
-    // }else{
+    if(site?.id){
+      url = `/api/group-requests?populate=*&filters[user][id][$eq]=${userId}&filters[site][id][$eq]=${site.id}`
+       console.log('url_invitaciones:::::::', url, JSON.stringify(site))
+     }else{
       url = `/api/group-requests?populate=*&filters[user][id][$eq]=${userId}`;
-    // }
-
+     }
     return ApiApp.ApisType(url, "get");
   };
+
+  static getGroupsRequestsLite = (userId, site=null) => {
+
+    let url = '';
+
+    if(site?.id){
+      url = `/api/group-requests?filters[user][id][$eq]=${userId}&filters[site][id][$eq]=${site?.id}`
+      console.log('url_invitaciones:::::::', url, JSON.stringify(site))
+    }else{
+      url = `/api/group-requests?filters[user][id][$eq]=${userId}`;
+    }
+    return ApiApp.ApisType(url, "get");
+  };
+
+  static getLastEmotionLite = (userId, site=null) => {
+
+    let url = '';
+
+    if(site?.id){
+      ///api/home/last_emotion?userId=${userId}&siteId=${site?.id}
+      url = `/api/home/last_emotion?userId=${userId}&siteId=${site?.id}`
+      console.log('url_invitaciones:::::::', url, JSON.stringify(site))
+    }else{
+      url = `/api/home/last_emotion?userId=${userId}`;
+    }
+    return ApiApp.ApisType(url, "get");
+  };
+
+
 
   static groupAcceptInvite = (token, accept) => {
     let url = `api/accept_invite?token=${token}&accept=${accept}`;
@@ -335,7 +363,7 @@ class ApiApp {
   };
 
   static getLastEmotion = async (userID = "", site = null, option = "") => { 
-    console.log("🚀 ~ file: ApiApp.js ~ line 254 ~ ApiApp ~ getUserProgress= ~ site", site, option, userID)
+    //console.log("🚀 ~ file: ApiApp.js ~ line 254 ~ ApiApp ~ getUserProgress= ~ site", site, option, userID)
     if (site?.id) { 
       return ApiApp.ApisType(
         `/api/feeling-records/getLastEmotion`,

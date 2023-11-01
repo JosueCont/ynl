@@ -134,7 +134,7 @@ const RouletteStep4Screen = ({navigation, route, saveEmotion, authDuck, emotionS
                  
                  <Text
                 fontSize={14}
-                 color={Colors.black} style={{marginTop:0, marginBottom:-2}}  textAlign={'center'}>{t('i_feel')}</Text>
+                 color={Colors.black} style={{marginTop:0, marginBottom:-2}}  textAlign={'center'}>Hoy me siento</Text>
 
                 <View
                   w={250}

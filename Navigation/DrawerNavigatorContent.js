@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {ImageBackground, TouchableOpacity, Dimensions, StatusBar} from "react-native";
 import sidebarImage from "../assets/bgmenu.png";
 import { Text, View, Image} from "native-base";
-import logoSmall from "../assets/logoSmall.png";
+import logoSmall from "../assets/ynl_white.png";
 import logoKhor from "../assets/logos.png";
 import {t} from 'i18n-js';
 import {logOutAction} from "../redux/ducks/authDuck";
@@ -154,7 +154,7 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
             </View> ) : null }
 
             <View flexDirection={'row'} justifyContent={'center'} alignItems={'center'}>
-              <Ionicons name="md-happy-outline" size={25} color={Colors.white}/>
+              <Ionicons name="options-outline" size={25} color={Colors.white}/>
               <TouchableOpacity style={{marginLeft:15}} onPress={() => navigation.navigate('YourFeelScreen')}>
                 <Text color={"white"} fontSize={20} my={2}>
                     {t('home_aspects')}
@@ -247,16 +247,23 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
 
           </View>
 
-          <TouchableOpacity style={{marginBottom:40, alignSelf:'center'}}onPress={() => logoutFunction()}>
+          <TouchableOpacity style={{marginBottom:10, alignSelf:'center'}} onPress={() => logoutFunction()}>
               <Text
                   color={"white"}
                   fontSize={14}
+                  alignItems={'center'}
                   style={{ textDecorationLine: "underline" }}
-                  my={2}
               >
                   {t('home_logout')}
               </Text>
           </TouchableOpacity>
+            <Text
+                color={"white"}
+                style={{marginBottom:40, alignSelf:'center'}}
+                fontSize={14}
+            >
+                v. 2.1.5
+            </Text>
 
           {/*<View flex={0.5} style={{marginTop:10}} alignItems={"center"} justifyContent={"center"}>
             <Image source={logoKhor} alt="img" />

@@ -12,6 +12,8 @@ import Style from '../utils/styles'
 import _ from "lodash";
 import {t} from 'i18n-js';
 import * as GH from 'react-native-gesture-handler';
+import simplepregunta from '../assets/una_simple_pregunta.png'
+import hoy_siento from '../assets/hoy_siento.png'
 import moment from 'moment'
 import Animated,{useSharedValue, useAnimatedGestureHandler,withSpring, useAnimatedStyle} from 'react-native-reanimated';
 import { useFonts } from 'expo-font';
@@ -280,18 +282,18 @@ const RouletteStep1Screen = ({navigation}) => {
 
 
                 <View  width={'100%'}>
-                    <View  style={{marginTop:15, marginBottom:-20, width:window_width/1.2, height:100, }}>
-                     <Image source={require('../assets/como_me.png')} style={{flex:1, resizeMode:'contain'}}/>
+                    <View  style={{marginTop:0, marginBottom:-20, width:window_width/1.2, height:100, }}>
+                     <Image source={simplepregunta} style={{flex:1, resizeMode:'contain'}}/>
                     {/*fontsLoaded ? <Text color={Colors.black} style={{fontFamily: 'Amberla', fontSize:44, marginBottom:1,}} size={'xl'}  textAlign={'center'}>{t('roulette_how_i_feel')}</Text> : 
                     (<Text> </Text> )*/}
                         {/*<Text color={Colors.black} style={{marginBottom:1, marginTop:60, paddingLeft:20, paddingRight:20}} size={'lg'}  textAlign={'center'}>{t('roulette_how_are_you')}</Text> 
                         <Text color={'#FD5902'} style={{marginTop:10}}  textAlign={'center'}>{moment().format('LL')}</Text>
                         <Text color={'#FD5902'} style={{marginTop:10, paddingLeft:20, paddingRight:20}}  textAlign={'center'}>{t('roulette_istructions')}</Text> */}
                     </View>
-                    <View  alignItems={'center'} justifyContent={'flex-end'} style={{marginTop:10}}>
+                    <View  alignItems={'center'} justifyContent={'flex-end'} style={{marginTop:10,zIndex:100}}>
                         {/* <Image alt={'roulette'} source={pointerImage} style={{resizeMode: 'contain'}} width={10} height={10}/> */}
                         <Icon
-                        style={{fontWeight:'bold', marginBottom:-16, position: 'relative',resizeMode: 'contain' }}
+                        style={{fontWeight:'bold', marginBottom:-25, position: 'relative',resizeMode: 'contain' }}
                         as={MaterialIcons}
                         name={"keyboard-arrow-down"}
                         color={Colors.black}
@@ -311,7 +313,10 @@ const RouletteStep1Screen = ({navigation}) => {
 
                 </View>
             </GH.GestureHandlerRootView>
-            <View   style={{marginTop:25, paddingLeft:80, paddingRight:80,}}>
+            <View  style={{marginTop:5, marginBottom:-20, width:window_width/1.7, height:100, }}>
+                <Image source={hoy_siento} style={{flex:1, resizeMode:'contain'}}/>
+            </View>
+            <View   style={{marginTop:30, paddingLeft:80, paddingRight:80,}}>
                 <Button style={Style.buttonGray}
                     onPress={() => navigation.navigate('RouletteStep2Screen', {parentItem: _.find(parents, (o)=> {
                             return o.attributes.slug_name === (definitionOfFeeling().slug)

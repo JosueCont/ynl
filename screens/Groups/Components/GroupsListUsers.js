@@ -38,7 +38,7 @@ const GroupsListUsers = ({usersSelected, groupDuck, registerGroup, isUserSelecte
                             <Avatar bg={'red.100'} mr={1} size="30px"></Avatar>
                             <VStack>
                                 <Text size={'md'} color="coolGray.800" bold>
-                                    {item.username}
+                                    { item.firstName ? <>{item.firstName} {item.lastName}</> : item.username } 
                                 </Text>
                                 <Text size={'sm'} color="coolGray.800" bold>
                                     {item.email}

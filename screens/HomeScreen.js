@@ -621,7 +621,7 @@ const HomeScreen = ({authDuck, navigation, groupDuck}) => {
                                 <Icon as={MaterialIcons} name={'groups'} size={6} color={'white'} mb={1}></Icon>
                                 <Text color={'white'} fontSize={11}>{t('home_my_groups')}</Text>
                             </TouchableOpacity>
-                            <ModalDayPhrase phrase={phraseDay}  visible={modalPhraseVisible} closeModalPhrase={closeModalPhrase} />
+                            <ModalDayPhrase phrase={phraseDay} onSetVisible={(val)=>setModalPhraseVisible(val)}  visible={modalPhraseVisible} closeModalPhrase={closeModalPhrase} />
                         </View>
                     </View>
                 </View>

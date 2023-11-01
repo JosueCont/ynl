@@ -8,7 +8,7 @@ import {
   Text,
   View,
 } from "native-base";
-import logo from "../../../assets/YNL.gif";
+import logo from "../../../assets/new_logo.png";
 import { useFormik } from "formik";
 import { t } from "i18n-js";
 import * as Yup from "yup";
@@ -35,9 +35,13 @@ export default ({ onRegister, loading }) => {
   });
 
   return (
-    <ScrollView _contentContainerStyle={{ flexGrow: 1 }} flex={1} mx={6}>
-      <View flex={1}>
-        <Image source={logo} alt="img" />
+    <ScrollView _contentContainerStyle={{ flexGrow: 1,paddingTop:100 }} flex={1} mx={6}>
+      <View flex={0.5} >
+        <Image
+            style={{ alignSelf: 'center',marginBottom:20 }}
+            width={70}
+            height={70}
+            source={logo} alt="img" />
       </View>
       <View flex={1}>
         <View flex={1}>
