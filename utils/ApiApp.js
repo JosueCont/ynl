@@ -35,7 +35,7 @@ class ApiApp {
   };
 
   static sendPushToken = (data) => {
-    return ApiApp.ApisType(`/api/push-tokens`, "post", data);
+    return ApiApp.ApisType(`/api/push-token/register/`, "post", data);
   };
 
   static registerPhone = (data) => {
