@@ -299,7 +299,7 @@ const NewHome = ({navigation,}) => {
                 "pushToken": expoPushToken,
                 "platform": Platform.OS,
                 "provider": "expo",
-                "users_permissions_user": authDuck.user.id
+                "users_permissions_user": authDuck?.user?.id
             }
             const res = await ApiApp.sendPushToken({data})
         } catch (e) {

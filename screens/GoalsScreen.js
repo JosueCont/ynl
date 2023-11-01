@@ -67,10 +67,6 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
     getDateGoal(dateSelected.format("YYYY-MM-DD"), authDuck?.user?.id)
   }
 
-  useEffect(() => {
-    console.log('==========================>')
-    console.log(authDuck.user)
-  }, [authDuck])
   
 
   useEffect(() => {
@@ -197,8 +193,6 @@ const GoalsScreen = ({goalsDuck, getGoalCategories, getDateGoal, saveDailyGoals,
           "user": authDuck.user,
         }
       ]
-
-      console.log('newData===============================>>>>>>>>>>>>>>>>',newData)
       let resp = await saveDailyGoals(newData)
       if(resp['success']){
         toast.show({ title: 'Objetivos guardados' }) 
