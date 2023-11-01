@@ -19,8 +19,7 @@ const FormItemGoal = ({data={}, updateData, upd, disabled = false, isActive= tru
 
 
     const [goal, setgoal] = useState('')
-    const loading = useSelector(state => state.goalsDuck?.loading);
-
+    const loading = useSelector(state => state.goalsDuck?.loading);    
 
     const onConfirm = (cat) => {
       updateData(cat, 'goal_category')
@@ -113,7 +112,7 @@ const FormItemGoal = ({data={}, updateData, upd, disabled = false, isActive= tru
               <Icon marginY={'auto'} color={"#fff"} as={<AntDesign name="caretdown" size={24} />} /> 
               {
                 data?.goal_category &&
-                <Image height={5}  resizeMode='contain' aspectRatio={1}  source={{ uri: baseURL+ data?.goal_category?.attributes?.icon_white?.data?.attributes?.url }} />
+                <Image height={5}  resizeMode='contain' aspectRatio={1}  source={{ uri: getUrlImage(data?.goal_category?.attributes?.icon_white?.data?.attributes?.url) }} />
               }
             </HStack>
           </VStack>

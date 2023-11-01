@@ -51,6 +51,7 @@ const ProjectForm = ({route, ...props}) => {
     const [form, setForm] = useState({})
     const [updinfo, setUpdinfo] = useState(false)
     const [saveLoading, setSaveLoading] = useState(false)
+    const [btnDisable, setBtnDisable] = useState(false)
 
     const [fontsLoaded] = useFonts({
       'ContractRegular': require('../assets/fonts/ContractRegular.otf')
@@ -266,6 +267,21 @@ const ProjectForm = ({route, ...props}) => {
         
      }
 
+
+  const btnPrintPdfProject = async (p) => {
+    setBtnDisable(true)
+    printProject(p)
+  }
+
+  useEffect(() => {
+    if(btnDisable){
+      setTimeout(() => {
+        setBtnDisable(false)
+      }, 2000);
+    }
+  }, [btnDisable])
+  
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <ScrollView showsVerticalScrollIndicator={false} position={"relative"}>
@@ -375,8 +391,9 @@ const ProjectForm = ({route, ...props}) => {
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => printProject(project)}
+                  onPress={() => btnPrintPdfProject(project)}
                   style={styles.buttonsAction}
+                  disabled={btnDisable}
                 >
                   <Text style={styles.txtBtnAction} fontSize={"md"}>
                     DESCARGAR
