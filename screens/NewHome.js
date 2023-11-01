@@ -1,4 +1,4 @@
-import { Dimensions, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, Platform, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState, useRef } from 'react'
 import { Colors } from '../utils/Colors'
 import _ from 'lodash';
@@ -129,7 +129,7 @@ const NewHome = ({navigation,}) => {
             setLoading(true)
             setTimeout(() => {
                 setFirstDay(false)
-                navigation.navigate('RouletteStep1Screen')
+                navigation.navigate('RouletteStep1Screen',{from: 'intro'})
             },500)
 
         }
@@ -216,6 +216,8 @@ const NewHome = ({navigation,}) => {
                     console.log('setintro========>',res.data.data.userInfo.intro)
 
                     setIntro(res.data.data.userInfo.intro)
+                    if(res.data.data.userInfo.intro) init();
+                        else navigation.navigate('IntroScreen')
                 }
             }
         } catch (e) {
@@ -227,12 +229,12 @@ const NewHome = ({navigation,}) => {
 
     useEffect( () => {
         // console.log(authDuck.emotionStatus)
-        if (intro === false) {
-            navigation.navigate('IntroScreen')
-        } else  {   //if (authDuck.emotionStatus === 0 || authDuck.emotionStatus === undefined)            
-            /* } */
-            init()
-        }
+        //if (intro === false) {
+        //    navigation.navigate('IntroScreen')
+        //} else  {   //if (authDuck.emotionStatus === 0 || authDuck.emotionStatus === undefined)            
+        //    /* } */
+        //    Platform.OS === 'android' ? setTimeout(() => {init()}, 500) :  init();
+        //}
 
     }, [intro])
 

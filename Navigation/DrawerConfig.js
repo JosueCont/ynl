@@ -106,7 +106,7 @@ const DrawerConfig = () => {
               }, [route])
             );
             //console.log("route", route?.params.parentItem.attributes.name);
-            if ((route.name.includes("HomeScreen") || route.name.includes("GoalsScreen") || route.name.includes("GoalsReport") || route.name.includes("GoalsTree") || route.name.includes('ProjectsList') || route.name.includes('ProjectForm') || route.name.includes("BookList") || route.name.includes("ReadBook") ) && Platform.OS !== "ios") {
+            if ((route.name.includes("HomeScreen") || /*route.name.includes("GoalsScreen") ||*/ route.name.includes("GoalsReport") || route.name.includes("GoalsTree") || /*route.name.includes('ProjectsList') ||*/ route.name.includes('ProjectForm') || /*route.name.includes("BookList") ||*/ route.name.includes("ReadBook") ) && Platform.OS !== "ios") {
               return <View />;
             } else if(route.name.includes("HomeScreen")  && Platform.OS === "ios"){
               return <View />;

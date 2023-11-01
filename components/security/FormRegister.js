@@ -25,7 +25,11 @@ export default ({onRegister, loading}) => {
         validateOnChange: false,
         validationSchema: Yup.object({
             email: Yup.string().email("El email no es correcto").required("El email es obligatorio."),
-            password: Yup.string().required("La contraseña es obligatoria").min(8, "La contraseña debe ser de al menos 8 caracteres."),
+            password: Yup.string().required("La contraseña es obligatoria")
+            .matches(
+                /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/,
+                'Mínimo 8 caracteres, una mayúscula, un número y un caracter especial'
+            ),
             repeatPassword: Yup.string().required("La contraseña es obligatoria").oneOf([Yup.ref('password')], "Las contraseñas tienen que ser iguales."),
         })
     });

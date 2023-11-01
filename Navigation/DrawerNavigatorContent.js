@@ -82,7 +82,7 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
         bounces={false}
         {...props}
         nestedScrollEnabled={true}
-        contentContainerStyle={{ flex:1, backgroundColor:'#161616' }}
+        contentContainerStyle={{ flex:1, backgroundColor:'#161616', flexGrow:1 }}
       >
         <View  style={{ flex: 1, backgroundColor:'#161616' }}>
           <View flexDirection={'row'} justifyContent={'space-between'} style={{marginBottom:100}}>
@@ -211,6 +211,7 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
                 </Text>
               </TouchableOpacity>
             </View>
+            
 
             {/*<TouchableOpacity
               onPress={() => {
@@ -247,7 +248,7 @@ const CustomDrawerContent = ({authDuck, navigation, navigationDuck, accountDuck,
 
           </View>
 
-          <TouchableOpacity style={{marginBottom:40, alignSelf:'center'}}onPress={() => logoutFunction()}>
+          <TouchableOpacity style={{marginTop:20, alignSelf:'center'}}onPress={() => logoutFunction()}>
               <Text
                   color={"white"}
                   fontSize={14}
