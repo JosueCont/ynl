@@ -37,6 +37,7 @@ import {
 import WebView from "react-native-webview";
 import querystring from "querystring";
 import InputField from "../InputField";
+import { color } from "react-native-reanimated";
 
 export default (props) => {
   const navigation = useNavigation();
@@ -297,7 +298,7 @@ export default (props) => {
                   isLoading={props.loading}
                   isLoadingText={t("starting")}
                   onPress={formik.handleSubmit}
-                  colorScheme="orange"
+                  backgroundColor={Colors.black}
                 >
                   {t("login_session")}
                 </Button>
@@ -311,22 +312,22 @@ export default (props) => {
                     _text={{
                       fontSize: "xs",
                       fontWeight: "500",
-                      color: Colors.red,
+                      color: Colors.yellowV2,
                     }}
                     alignSelf="flex-end"
                     mt="1"
                   >
-                    {t("login_forgot_password")}
+                    <Text style={{color: Colors.yellowV2, fontSize:12}}>{t("login_forgot_password")}</Text>
                   </Link>
                 </HStack>
                 <HStack justifyContent="center">
+                  
                   <Button
                     size="sm"
-                    colorScheme={"orange"}
                     onPress={() => navigation.navigate("Register")}
                     variant="link"
                   >
-                    {t("login_register")}
+                    <Text style={{color: Colors.yellowV2}}>{t("login_register")}</Text>
                   </Button>
                 </HStack>
                 <View flexDir={"row"} mb={2}>

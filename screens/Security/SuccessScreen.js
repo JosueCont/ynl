@@ -5,6 +5,7 @@ import logoSmall from "../../assets/logoSmall.png";
 import bgIntro from "../../assets/bgIntro.png";
 import {connect} from "react-redux";
 import {loginEmail} from "../../redux/ducks/authDuck";
+import {Colors} from "../../utils/Colors";
 
 const SuccessScreen = ({navigation, authDuck, loginEmail}) => {
 
@@ -29,7 +30,7 @@ const SuccessScreen = ({navigation, authDuck, loginEmail}) => {
                 <Text color={'white'} size={'lg'} textAlign={'center'} px={4}>Registro realizado exitosamente.</Text>
             </View>
             <View flex={0.5} mx={20}>
-                <Button colorScheme="orange"
+                <Button backgroundColor={Colors.yellowV2}
                         onPress={() => loginAutomatic()}>
                     Iniciar
                 </Button>
