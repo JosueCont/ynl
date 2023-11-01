@@ -3,7 +3,7 @@ import {getDataObject} from "../utils/functions"
 export const isprod = false
 export const isDev = true
 
-export const baseURL = isprod ? 'https://api.ynl.khorplus.com' :  isDev ? 'https://apisl.ynl.hiumanlab.com' : "https://3e3b-200-110-107-2.ngrok-free.app"
+export const baseURL = isprod ? 'https://api.ynl.khorplus.com' :  isDev ? 'https://apisl.ynl.hiumanlab.com' : "https://4ac6-187-147-255-235.ngrok-free.app"
 
 
 let config = {
